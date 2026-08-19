@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beatroot Food Delivery</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#171717}.app{max-width:430px;margin:auto;min-height:100vh;background:#fff}
+header{padding:20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:28px;font-weight:800;color:#e53935}.logo span{color:#222}.sub{font-size:12px;color:#777}
+.hero{margin:8px 18px;padding:22px;border-radius:22px;background:linear-gradient(135deg,#e53935,#ff7043);color:#fff}.hero h1{margin:0 0 7px;font-size:24px}.hero p{margin:0 0 15px}.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer}.primary{background:#e53935;color:#fff}.light{background:#fff;color:#e53935}
+.search{margin:16px 18px;padding:14px;border-radius:14px;background:#f1f1f1;color:#777}.section{padding:0 18px}.cats{display:flex;gap:10px;overflow:auto}.cat{min-width:76px;text-align:center;border:1px solid #eee;border-radius:15px;padding:9px}.cat div{font-size:27px}.cat small{font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{border:1px solid #eee;border-radius:17px;overflow:hidden;background:#fff;cursor:pointer}.pic{height:105px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:48px}.info{padding:11px}.info small{display:block;color:#777;margin-top:5px}
+.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:12px 5px}.bottom div{text-align:center;font-size:11px;color:#777;cursor:pointer}.bottom b{color:#e53935}
+.screen{padding-bottom:70px}.panelhead{padding:20px 18px 8px}.back{color:#e53935;font-weight:700;cursor:pointer;margin-bottom:12px}.food{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eee;align-items:center}.foodpic{width:70px;height:70px;border-radius:14px;background:#f2f2f2;display:flex;align-items:center;justify-content:center;font-size:36px}.foodinfo{flex:1}.foodinfo small{display:block;color:#777;margin:5px 0}.add{background:#e53935;color:#fff;padding:8px 10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer}
+.cartbox{padding:18px}.row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #eee}.status{margin-top:15px;padding:16px;border-radius:18px;background:#fff4f2}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:20}.sheet{width:min(430px,100%);background:#fff;border-radius:24px 24px 0 0;padding:24px}.input{width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;margin:7px 0 12px}.notice{font-size:12px;color:#777;margin-top:10px}.empty{text-align:center;padding:35px;color:#777}
+</style>
+</head>
+<body>
+<div class="app">
+<div id="home" class="screen">
+<header><div><div class="logo">Beat<span>root</span></div><div class="sub">Deliver to <b>Home ▾</b></div></div><div onclick="openCart()" style="font-size:25px;cursor:pointer">🛒 <sup id="count">0</sup></div></header>
+<div class="hero"><h1>Hungry? We've got you.</h1><p>Fresh food delivered to your doorstep.</p><button class="btn light" onclick="document.getElementById('restaurants').scrollIntoView()">Order Now →</button></div>
+<div class="search">🔍 &nbsp; <input id="search" oninput="filterRestaurants()" placeholder="Search restaurants or food" style="border:0;background:transparent;outline:0;font-size:16px;width:80%"></div>
+<div class="section"><h2>Categories</h2><div class="cats"><div class="cat"><div>🍕</div><small>Pizza</small></div><div class="cat"><div>🍔</div><small>Burgers</small></div><div class="cat"><div>🍗</div><small>Chicken</small></div><div class="cat"><div>🍛</div><small>Meals</small></div></div>
+<h2 id="restaurants">Popular near you</h2><div class="grid" id="restaurantGrid"><div class="empty">Loading restaurants…</div></div></div>
+<div class="bottom"><div onclick="home()">⌂<br><b>Home</b></div><div onclick="alert('Favorites coming next')">♡<br>Favorites</div><div onclick="openOrders()">▣<br>Orders</div><div onclick="openLogin()">●<br>Profile</div></div>
+</div>
+
+<div id="menu" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1 id="rname"></h1><p class="sub">Menu</p><div id="foodList"></div></div></div>
+<div id="cart" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1>Your Cart</h1></div><div class="cartbox" id="cartItems"></div></div>
+<div id="orders" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1>My Orders</h1></div><div class="cartbox" id="orderList"></div></div>
+<div id="tracking" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="openOrders()">← Orders</div><h1>Order Tracking</h1></div><div class="cartbox" id="trackingBox"></div></div>
+</div>
+
+<div id="login" class="modal"><div class="sheet"><h2>Login to Beatroot</h2><p class="sub">Use your mobile number for OTP login.</p><input id="phone" class="input" placeholder="+91 9876543210"><button class="btn primary" style="width:100%" onclick="sendOtp()">Send OTP</button><div id="otpArea" style="display:none"><input id="otp" class="input" placeholder="6-digit OTP"><button class="btn primary" style="width:100%" onclick="verifyOtp()">Verify OTP</button></div><p class="notice" id="loginNote">Phone OTP requires Supabase Phone Auth + SMS provider.</p><button class="btn" style="width:100%;margin-top:8px" onclick="closeLogin()">Close</button></div></div>
+
+<script>
+const SUPABASE_URL="https://jhihjnsxazmftdqlitgk.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="YOUR_SUPABASE_PUBLISHABLE_KEY";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+
+let restaurants=[], currentRestaurant=null;
+let cart=JSON.parse(localStorage.getItem("beatroot_cart")||"[]");
+
+function hide(){document.querySelectorAll(".screen").forEach(x=>x.style.display="none")}
+function home(){hide();homeEl.style.display="block"}
+const homeEl=document.getElementById("home");
+
+async function loadRestaurants(){
+  const {data,error}=await sb.from("restaurants").select("*").eq("is_open",true).order("id");
+  if(error){restaurantGrid.innerHTML='<div class="empty">Could not load restaurants. Check Supabase key.</div>';console.error(error);return}
+  restaurants=data||[]; renderRestaurants(restaurants);
+}
+function renderRestaurants(list){
+  restaurantGrid.innerHTML=list.length?list.map(r=>`<div class="card" onclick="openMenu(${r.id})"><div class="pic">🍽️</div><div class="info"><b>${escapeHtml(r.name)}</b><small>📍 ${escapeHtml(r.address||"Nearby")} · Open</small></div></div>`).join(""):'<div class="empty">No restaurants found.</div>';
+}
+function filterRestaurants(){const q=search.value.toLowerCase();renderRestaurants(restaurants.filter(r=>r.name.toLowerCase().includes(q)||(r.description||"").toLowerCase().includes(q)))}
+async function openMenu(id){
+  hide();menu.style.display="block";
+  const r=restaurants.find(x=>x.id===id); currentRestaurant=r; rname.textContent=r?r.name:"Restaurant";
+  foodList.innerHTML='<div class="empty">Loading menu…</div>';
+  const {data,error}=await sb.from("menu_items").select("*").eq("restaurant_id",id).eq("is_available",true).order("id");
+  if(error){foodList.innerHTML='<div class="empty">Could not load menu.</div>';return}
+  foodList.innerHTML=data.length?data.map(f=>`<div class="food"><div class="foodpic">🍴</div><div class="foodinfo"><b>${escapeHtml(f.name)}</b><small>${escapeHtml(f.description||"Freshly prepared")}</small><b>₹${Number(f.price).toFixed(0)}</b></div><div class="add" onclick='add(${JSON.stringify(f)},${JSON.stringify(r.name)})'>ADD</div></div>`).join(""):'<div class="empty">Menu is empty.</div>';
+}
+function add(f,r){cart.push({menu_item_id:f.id,name:f.name,price:Number(f.price),restaurant:r});localStorage.setItem("beatroot_cart",JSON.stringify(cart));updateCount();alert("Added to cart")}
+function updateCount(){count.textContent=cart.length}
+function openCart(){
+  hide();cartEl.style.display="block";
+  if(!cart.length){cartItems.innerHTML='<div class="empty">Your cart is empty.</div>';return}
+  const total=cart.reduce((a,x)=>a+x.price,0);
+  cartItems.innerHTML=cart.map((x,i)=>`<div class="row"><span>${escapeHtml(x.name)}</span><b>₹${x.price}</b></div>`).join("")+
+  `<div class="row"><b>Total</b><b>₹${total}</b></div><button class="btn primary" style="width:100%;margin-top:15px" onclick="placeOrder()">Place Order</button>`;
+}
+const cartEl=document.getElementById("cart");
+async function placeOrder(){
+  if(!cart.length)return;
+  const {data:{user}}=await sb.auth.getUser();
+  if(!user){alert("Please login before placing an order.");openLogin();return}
+  const restaurant=restaurants.find(r=>r.name===cart[0].restaurant);
+  const total=cart.reduce((a,x)=>a+x.price,0);
+  const {data:order,error}=await sb.from("orders").insert({
+    customer_id:user.id,restaurant_id:restaurant?.id||null,total,
+    payment_method:"cod",status:"confirmed"
+  }).select().single();
+  if(error){alert(error.message);return}
+  const items=cart.map(x=>({order_id:order.id,menu_item_id:x.menu_item_id,item_name:x.name,quantity:1,unit_price:x.price}));
+  const {error:itemError}=await sb.from("order_items").insert(items);
+  if(itemError){alert(itemError.message);return}
+  cart=[];localStorage.setItem("beatroot_cart","[]");updateCount();
+  alert("Order placed successfully! Order #"+order.id);openOrders();
+}
+async function openOrders(){
+  hide();ordersEl.style.display="block";
+  const {data:{user}}=await sb.auth.getUser();
+  if(!user){orderList.innerHTML='<div class="empty">Please login to see your orders.<br><br><button class="btn primary" onclick="openLogin()">Login</button></div>';return}
+  const {data,error}=await sb.from("orders").select("*,restaurants(name)").eq("customer_id",user.id).order("created_at",{ascending:false});
+  if(error){orderList.innerHTML='<div class="empty">Could not load orders.</div>';return}
+  orderList.innerHTML=data.length?data.map(o=>`<div class="row" onclick="openTracking(${o.id})"><span><b>#${o.id}</b><small style="display:block;color:#777">${escapeHtml(o.restaurants?.name||"Restaurant")} · ${escapeHtml(o.status)}</small></span><b>₹${Number(o.total).toFixed(0)}</b></div>`).join(""):'<div class="empty">No orders yet.</div>';
+}
+async function openTracking(id){
+  hide();tracking.style.display="block";
+  const {data:o}=await sb.from("orders").select("*,restaurants(name)").eq("id",id).single();
+  if(!o){trackingBox.innerHTML='<div class="empty">Order not found.</div>';return}
+  trackingBox.innerHTML=`<div class="status"><h3>Order #${o.id}</h3><div class="row">Restaurant <span>${escapeHtml(o.restaurants?.name||"—")}</span></div><div class="row">Status <b>${escapeHtml(o.status)}</b></div><div class="row">Payment <span>${escapeHtml(o.payment_method)}</span></div><div class="row">Total <b>₹${Number(o.total).toFixed(0)}</b></div></div><button class="btn primary" style="width:100%;margin-top:15px" onclick="alert('Google Maps tracking will be connected in the delivery module.')">📍 Track Delivery</button>`;
+}
+function openLogin(){login.style.display="flex"}
+function closeLogin(){login.style.display="none"}
+async function sendOtp(){
+ const p=phone.value.trim(); if(!p)return alert("Enter mobile number");
+ const {error}=await sb.auth.signInWithOtp({phone:p});
+ if(error){alert(error.message);return}
+ otpArea.style.display="block";loginNote.textContent="OTP sent. Enter the code received on your phone.";
+}
+async function verifyOtp(){
+ const p=phone.value.trim(),o=otp.value.trim(); if(!o)return alert("Enter OTP");
+ const {error}=await sb.auth.verifyOtp({phone:p,token:o,type:"sms"});
+ if(error){alert(error.message);return}
+ alert("Login successful");closeLogin();openOrders();
+}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+loadRestaurants();updateCount();
+</script>
+</body></html>
