@@ -37,7 +37,7 @@ header{padding:20px;display:flex;justify-content:space-between;align-items:cente
 <div id="login" class="modal"><div class="sheet"><h2>Login to Beatroot</h2><p class="sub">Use your mobile number for OTP login.</p><input id="phone" class="input" placeholder="+91 9876543210"><button class="btn primary" style="width:100%" onclick="sendOtp()">Send OTP</button><div id="otpArea" style="display:none"><input id="otp" class="input" placeholder="6-digit OTP"><button class="btn primary" style="width:100%" onclick="verifyOtp()">Verify OTP</button></div><p class="notice" id="loginNote">Demo mode works until Supabase credentials are added.</p><button class="btn" style="width:100%;margin-top:8px" onclick="closeLogin()">Close</button></div></div>
 
 <script>
-const SUPABASE_URL="YOUR_SUPABASE_URL", SUPABASE_PUBLISHABLE_KEY="YOUR_SUPABASE_PUBLISHABLE_KEY";
+const SUPABASE_URL="https://jhihjnsxazmftdqlitgk.supabase.co", SUPABASE_PUBLISHABLE_KEY="sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 const connected=SUPABASE_URL.startsWith("https://") && !SUPABASE_PUBLISHABLE_KEY.startsWith("YOUR_");
 const sb=connected?window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY):null;
 const restaurants=[["Pizza Hub","🍕","4.6 · 25–35 min"],["Food Corner","🍔","4.5 · 20–30 min"],["Chicken House","🍗","4.7 · 30–40 min"],["Spice Kitchen","🍛","4.8 · 25–35 min"]];
