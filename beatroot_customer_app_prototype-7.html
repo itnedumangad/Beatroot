@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beatroot Food Delivery</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#171717}
+.app{max-width:430px;margin:auto;min-height:100vh;background:#fff}
+header{padding:22px 20px 14px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:28px;font-weight:800;color:#e53935}.logo span{color:#222}
+.location{font-size:12px;color:#777}.location b{color:#222;font-size:14px}
+.hero{margin:8px 18px;padding:22px;border-radius:22px;background:linear-gradient(135deg,#e53935,#ff7043);color:#fff}
+.hero h1{margin:0 0 7px;font-size:25px}.hero p{margin:0 0 16px}.search{margin:16px 18px;display:flex;background:#f1f1f1;border-radius:14px;padding:13px;color:#777}
+.section{padding:5px 18px}.section h2{font-size:19px;margin:12px 0}
+.cats{display:flex;gap:10px;overflow:auto;padding-bottom:8px}.cat{min-width:78px;text-align:center;background:#fff;border:1px solid #eee;border-radius:15px;padding:10px 6px}.cat div{font-size:28px}.cat small{font-weight:600}
+.restaurants{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{border:1px solid #eee;border-radius:17px;overflow:hidden;background:#fff}.pic{height:105px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:48px}.info{padding:11px}.info b{font-size:14px}.info small{display:block;color:#777;margin-top:5px}
+.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:12px 5px}.bottom div{text-align:center;font-size:11px;color:#777}.bottom b{color:#e53935}
+button{border:0;border-radius:12px;padding:12px 18px;background:#fff;color:#e53935;font-weight:700}
+
+.menu{padding:18px}.back{display:inline-block;margin-bottom:10px;color:#e53935;font-weight:700;cursor:pointer}.menu h1{margin:5px 0}.food{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #eee;align-items:center}.foodpic{width:75px;height:75px;border-radius:14px;background:#f3f3f3;display:flex;align-items:center;justify-content:center;font-size:38px}.foodinfo{flex:1}.foodinfo b{font-size:15px}.foodinfo small{display:block;color:#777;margin:5px 0}.add{background:#e53935;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer}.cartbox{padding:18px}.cartrow{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #eee}.checkout{margin-top:18px;width:100%;background:#e53935;color:white;font-size:16px}.status{margin:18px;padding:18px;border-radius:18px;background:#fff4f2}.step{padding:13px 0;border-bottom:1px solid #eee}.done{color:#e53935;font-weight:700}
+
+.navgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px}
+.panelcard{padding:18px;border:1px solid #eee;border-radius:18px;background:#fff;cursor:pointer}
+.panelcard b{display:block;margin-top:8px}.panelcard small{color:#777}
+.mapmock{margin-top:15px;height:260px;border-radius:18px;background:linear-gradient(#e8f0e8 1px,transparent 1px),linear-gradient(90deg,#e8f0e8 1px,transparent 1px);background-size:38px 38px;position:relative;overflow:hidden}
+.pin{position:absolute;font-size:30px}.route{position:absolute;left:22%;top:45%;width:55%;height:5px;background:#e53935;transform:rotate(-18deg);border-radius:5px}
+.panelhead{padding:20px 18px 8px}.pill{display:inline-block;padding:7px 10px;border-radius:20px;background:#fff0ed;color:#e53935;font-size:12px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="app">
+<div id="home" class="screen">
+<header>
+  <div><div class="logo">Beat<span>root</span></div><div class="location">Deliver to <b>Home ▾</b></div></div>
+  <div style="display:flex;gap:10px;align-items:center"><span onclick="openPanels()" style="font-size:22px;cursor:pointer">☰</span><span style="font-size:25px;cursor:pointer" onclick="openCart()">🛒<sup id="cartCount">0</sup></span></div>
+</header>
+<div class="hero"><h1>Hungry? We've got you.</h1><p>Fresh food delivered to your doorstep.</p><button>Order Now →</button></div>
+<div class="search">🔍 &nbsp; Search restaurants or food</div>
+<div class="section">
+<h2>Categories</h2>
+<div class="cats">
+<div class="cat"><div>🍕</div><small>Pizza</small></div>
+<div class="cat"><div>🍔</div><small>Burgers</small></div>
+<div class="cat"><div>🍗</div><small>Chicken</small></div>
+<div class="cat"><div>🍛</div><small>Meals</small></div>
+<div class="cat"><div>🥤</div><small>Drinks</small></div>
+</div>
+<h2>Popular near you</h2>
+<div class="restaurants">
+<div class="card" onclick="openMenu('Pizza Hub')"><div class="pic">🍕</div><div class="info"><b>Pizza Hub</b><small>⭐ 4.6 · 25–35 min</small></div></div>
+<div class="card" onclick="openMenu('Food Corner')"><div class="pic">🍔</div><div class="info"><b>Food Corner</b><small>⭐ 4.5 · 20–30 min</small></div></div>
+<div class="card" onclick="openMenu('Chicken House')"><div class="pic">🍗</div><div class="info"><b>Chicken House</b><small>⭐ 4.7 · 30–40 min</small></div></div>
+<div class="card" onclick="openMenu('Spice Kitchen')"><div class="pic">🍛</div><div class="info"><b>Spice Kitchen</b><small>⭐ 4.8 · 25–35 min</small></div></div>
+</div>
+</div>
+<div class="bottom"><div><b onclick="home()">⌂<br>Home</b></div><div>♡<br>Favorites</div><div>▣<br>Orders</div><div>●<br>Profile</div></div>
+</div>
+
+
+<div id="panels" class="screen" style="display:none">
+ <div class="panelhead"><div class="back" onclick="home()">← Back</div><h1>Beatroot</h1><p style="color:#777">Management & delivery panels</p></div>
+ <div class="navgrid">
+  <div class="panelcard" onclick="openPanel('Restaurant Panel','Manage incoming orders, menu and food preparation.')">🏪<b>Restaurant Panel</b><small>Orders & Menu</small></div>
+  <div class="panelcard" onclick="openPanel('Delivery Partner','Assigned deliveries, pickup and customer drop.')">🛵<b>Delivery Partner</b><small>Deliveries & Earnings</small></div>
+  <div class="panelcard" onclick="openPanel('Admin Dashboard','Restaurants, users, orders, payments and reports.')">🖥️<b>Admin Dashboard</b><small>Complete control</small></div>
+  <div class="panelcard" onclick="openMap()">📍<b>Maps & Tracking</b><small>Pickup → Customer route</small></div>
+ </div>
+</div>
+
+<div id="panelDetail" class="screen" style="display:none">
+ <div class="panelhead"><div class="back" onclick="openPanels()">← Back</div><h1 id="panelTitle">Panel</h1><p id="panelDesc" style="color:#777"></p></div>
+ <div class="cartbox">
+  <div class="pill">Beatroot Live System</div>
+  <div class="cartrow"><span>New Orders</span><b>12</b></div>
+  <div class="cartrow"><span>Active Deliveries</span><b>7</b></div>
+  <div class="cartrow"><span>Completed Today</span><b>34</b></div>
+  <button class="checkout" onclick="openMap()">Open Location / Delivery Map</button>
+ </div>
+</div>
+
+<div id="mapScreen" class="screen" style="display:none">
+ <div class="panelhead"><div class="back" onclick="openPanels()">← Back</div><h1>Delivery Map</h1><p style="color:#777">Prototype location & route view</p></div>
+ <div class="cartbox">
+  <div class="pill">Live Delivery</div>
+  <div class="mapmock">
+   <div class="route"></div>
+   <div class="pin" style="left:18%;top:34%">🏪</div>
+   <div class="pin" style="right:17%;bottom:22%">🏠</div>
+   <div class="pin" style="left:49%;top:48%">🛵</div>
+  </div>
+  <div class="cartrow"><span>Pickup</span><b>Restaurant</b></div>
+  <div class="cartrow"><span>Drop</span><b>Customer Home</b></div>
+  <div class="cartrow"><span>ETA</span><b>18 min</b></div>
+  <button class="checkout" onclick="alert('Google Maps API key will be connected here.')">Open Google Maps</button>
+ </div>
+</div>
+
+<script>
+let cart=[];
+const menuItems=[
+ ['🍕','Margherita Pizza','Classic cheese & tomato','₹199'],
+ ['🍔','Classic Burger','Chicken patty, cheese & sauce','₹149'],
+ ['🍗','Crispy Chicken','Crispy chicken with dip','₹179'],
+ ['🍟','French Fries','Golden crispy fries','₹99'],
+ ['🥤','Cold Drink','Chilled soft drink','₹59']
+];
+
+function openPanels(){hideAll();document.getElementById('panels').style.display='block'}
+function openPanel(title,desc){hideAll();document.getElementById('panelDetail').style.display='block';document.getElementById('panelTitle').textContent=title;document.getElementById('panelDesc').textContent=desc}
+function openMap(){hideAll();document.getElementById('mapScreen').style.display='block'}
+
+function hideAll(){document.querySelectorAll('.screen').forEach(x=>x.style.display='none');}
+function openMenu(name){
+ hideAll(); document.getElementById('menu').style.display='block';
+ document.getElementById('restaurantName').textContent=name;
+ document.getElementById('foodList').innerHTML=menuItems.map((x,i)=>`<div class="food"><div class="foodpic">${x[0]}</div><div class="foodinfo"><b>${x[1]}</b><small>${x[2]}</small><b>${x[3]}</b></div><div class="add" onclick="addCart(${i})">ADD</div></div>`).join('');
+}
+function addCart(i){cart.push(menuItems[i]);alert(menuItems[i][1]+' added to cart');updateCart();}
+function updateCart(){
+ document.getElementById('cartCount').textContent=cart.length;
+ document.getElementById('cartItems').innerHTML=cart.length?cart.map(x=>`<div class="cartrow"><span>${x[0]} ${x[1]}</span><b>${x[3]}</b></div>`).join(''):'<p>Your cart is empty.</p>';
+}
+function openCart(){hideAll();document.getElementById('cart').style.display='block';updateCart();}
+function checkout(){
+ if(!cart.length){alert('Please add food to cart first');return}
+ hideAll();document.getElementById('tracking').style.display='block';
+}
+function home(){hideAll();document.getElementById('home').style.display='block'}
+</script>
+</body>
+</html>
