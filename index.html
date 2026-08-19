@@ -33,8 +33,66 @@ header{padding:20px;display:flex;justify-content:space-between;align-items:cente
 <div id="tracking" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="openOrders()">← Orders</div><h1>Order Tracking</h1></div><div class="cartbox" id="trackingBox"></div></div>
 </div>
 
-<div id="login" class="modal"><div class="sheet"><h2>Login to Beatroot</h2><p class="sub">Use your mobile number for OTP login.</p><input id="phone" class="input" placeholder="+91 9876543210"><button class="btn primary" style="width:100%" onclick="sendOtp()">Send OTP</button><div id="otpArea" style="display:none"><input id="otp" class="input" placeholder="6-digit OTP"><button class="btn primary" style="width:100%" onclick="verifyOtp()">Verify OTP</button></div><p class="notice" id="loginNote">Phone OTP requires Supabase Phone Auth + SMS provider.</p><button class="btn" style="width:100%;margin-top:8px" onclick="closeLogin()">Close</button></div></div>
+<div id="login" class="modal">
+  <div class="sheet">
+    <h2 id="authTitle">Login to Beatroot</h2>
+    <p class="sub" id="authSubtitle">
+      Login using your email and password.
+    </p>
 
+    <input
+      id="email"
+      type="email"
+      class="input"
+      placeholder="Email address"
+    >
+
+    <input
+      id="password"
+      type="password"
+      class="input"
+      placeholder="Password"
+    >
+
+    <button
+      class="btn primary"
+      style="width:100%"
+      onclick="submitAuth()"
+      id="authButton"
+    >
+      Login
+    </button>
+
+    <button
+      class="btn"
+      style="width:100%;margin-top:8px"
+      onclick="toggleAuthMode()"
+      id="toggleAuthButton"
+    >
+      Create New Account
+    </button>
+
+    <button
+      class="btn"
+      style="width:100%;margin-top:8px"
+      onclick="forgotPassword()"
+    >
+      Forgot Password?
+    </button>
+
+    <p class="notice" id="loginNote">
+      Use your email address and password.
+    </p>
+
+    <button
+      class="btn"
+      style="width:100%;margin-top:8px"
+      onclick="closeLogin()"
+    >
+      Close
+    </button>
+  </div>
+</div>
 <script>
 const SUPABASE_URL="https://jhihjnsxazmftdqlitgk.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
@@ -105,13 +163,117 @@ async function openTracking(id){
   if(!o){trackingBox.innerHTML='<div class="empty">Order not found.</div>';return}
   trackingBox.innerHTML=`<div class="status"><h3>Order #${o.id}</h3><div class="row">Restaurant <span>${escapeHtml(o.restaurants?.name||"—")}</span></div><div class="row">Status <b>${escapeHtml(o.status)}</b></div><div class="row">Payment <span>${escapeHtml(o.payment_method)}</span></div><div class="row">Total <b>₹${Number(o.total).toFixed(0)}</b></div></div><button class="btn primary" style="width:100%;margin-top:15px" onclick="alert('Google Maps tracking will be connected in the delivery module.')">📍 Track Delivery</button>`;
 }
-function openLogin(){login.style.display="flex"}
-function closeLogin(){login.style.display="none"}
-async function sendOtp(){
- const p=phone.value.trim(); if(!p)return alert("Enter mobile number");
- const {error}=await sb.auth.signInWithOtp({phone:p});
- if(error){alert(error.message);return}
- otpArea.style.display="block";loginNote.textContent="OTP sent. Enter the code received on your phone.";
+let authMode = "login";
+
+function openLogin(){
+  document.getElementById("login").style.display="flex";
+  authMode="login";
+  updateAuthUI();
+}
+
+function closeLogin(){
+  document.getElementById("login").style.display="none";
+}
+
+function toggleAuthMode(){
+  authMode = authMode === "login" ? "signup" : "login";
+  updateAuthUI();
+}
+
+function updateAuthUI(){
+  const title = document.getElementById("authTitle");
+  const subtitle = document.getElementById("authSubtitle");
+  const button = document.getElementById("authButton");
+  const toggle = document.getElementById("toggleAuthButton");
+  const note = document.getElementById("loginNote");
+
+  if(authMode === "login"){
+    title.textContent = "Login to Beatroot";
+    subtitle.textContent = "Login using your email and password.";
+    button.textContent = "Login";
+    toggle.textContent = "Create New Account";
+    note.textContent = "Enter your registered email and password.";
+  }else{
+    title.textContent = "Create Beatroot Account";
+    subtitle.textContent = "Create your account using email.";
+    button.textContent = "Create Account";
+    toggle.textContent = "Already have an account? Login";
+    note.textContent = "After signup, check your email if confirmation is required.";
+  }
+}
+
+async function submitAuth(){
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(!email){
+    alert("Please enter your email address.");
+    return;
+  }
+
+  if(!password || password.length < 6){
+    alert("Password must contain at least 6 characters.");
+    return;
+  }
+
+  if(authMode === "signup"){
+
+    const {data,error} = await sb.auth.signUp({
+      email: email,
+      password: password
+    });
+
+    if(error){
+      alert(error.message);
+      return;
+    }
+
+    alert(
+      "Account created successfully! " +
+      "Please check your email if confirmation is required."
+    );
+
+    authMode = "login";
+    updateAuthUI();
+
+  }else{
+
+    const {data,error} = await sb.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+    if(error){
+      alert(error.message);
+      return;
+    }
+
+    alert("Login successful!");
+    closeLogin();
+    openOrders();
+  }
+}
+
+async function forgotPassword(){
+
+  const email = document.getElementById("email").value.trim();
+
+  if(!email){
+    alert("Please enter your email address first.");
+    return;
+  }
+
+  const {error} = await sb.auth.resetPasswordForEmail(email,{
+    redirectTo: window.location.origin + window.location.pathname
+  });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("Password reset email has been sent.");
 }
 async function verifyOtp(){
  const p=phone.value.trim(),o=otp.value.trim(); if(!o)return alert("Enter OTP");
