@@ -4,284 +4,1622 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Beatroot Food Delivery</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#171717}.app{max-width:430px;margin:auto;min-height:100vh;background:#fff}
-header{padding:20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:28px;font-weight:800;color:#e53935}.logo span{color:#222}.sub{font-size:12px;color:#777}
-.hero{margin:8px 18px;padding:22px;border-radius:22px;background:linear-gradient(135deg,#e53935,#ff7043);color:#fff}.hero h1{margin:0 0 7px;font-size:24px}.hero p{margin:0 0 15px}.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer}.primary{background:#e53935;color:#fff}.light{background:#fff;color:#e53935}
-.search{margin:16px 18px;padding:14px;border-radius:14px;background:#f1f1f1;color:#777}.section{padding:0 18px}.cats{display:flex;gap:10px;overflow:auto}.cat{min-width:76px;text-align:center;border:1px solid #eee;border-radius:15px;padding:9px}.cat div{font-size:27px}.cat small{font-weight:700}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{border:1px solid #eee;border-radius:17px;overflow:hidden;background:#fff;cursor:pointer}.pic{height:105px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:48px}.info{padding:11px}.info small{display:block;color:#777;margin-top:5px}
-.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:12px 5px}.bottom div{text-align:center;font-size:11px;color:#777;cursor:pointer}.bottom b{color:#e53935}
-.screen{padding-bottom:70px}.panelhead{padding:20px 18px 8px}.back{color:#e53935;font-weight:700;cursor:pointer;margin-bottom:12px}.food{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eee;align-items:center}.foodpic{width:70px;height:70px;border-radius:14px;background:#f2f2f2;display:flex;align-items:center;justify-content:center;font-size:36px}.foodinfo{flex:1}.foodinfo small{display:block;color:#777;margin:5px 0}.add{background:#e53935;color:#fff;padding:8px 10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer}
-.cartbox{padding:18px}.row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #eee}.status{margin-top:15px;padding:16px;border-radius:18px;background:#fff4f2}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:20}.sheet{width:min(430px,100%);background:#fff;border-radius:24px 24px 0 0;padding:24px}.input{width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;margin:7px 0 12px}.notice{font-size:12px;color:#777;margin-top:10px}.empty{text-align:center;padding:35px;color:#777}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f6f6f6;
+ color:#171717
+}
+.app{
+ max-width:430px;
+ margin:auto;
+ min-height:100vh;
+ background:#fff
+}
+header{
+ padding:20px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center
+}
+.logo{
+ font-size:29px;
+ font-weight:800;
+ color:#e53935
+}
+.logo span{color:#222}
+.sub{
+ font-size:12px;
+ color:#777
+}
+.hero{
+ margin:8px 18px;
+ padding:22px;
+ border-radius:22px;
+ background:linear-gradient(135deg,#e53935,#ff7043);
+ color:#fff
+}
+.hero h1{
+ margin:0 0 7px;
+ font-size:24px
+}
+.hero p{
+ margin:0 0 15px
+}
+.btn{
+ border:0;
+ border-radius:12px;
+ padding:12px 18px;
+ font-weight:700;
+ cursor:pointer
+}
+.primary{
+ background:#e53935;
+ color:#fff
+}
+.light{
+ background:#fff;
+ color:#e53935
+}
+.dark{
+ background:#222;
+ color:#fff
+}
+.search{
+ margin:16px 18px;
+ padding:14px;
+ border-radius:14px;
+ background:#f1f1f1
+}
+.search input{
+ border:0;
+ background:transparent;
+ outline:0;
+ font-size:16px;
+ width:80%
+}
+.section{
+ padding:0 18px
+}
+.cats{
+ display:flex;
+ gap:10px;
+ overflow:auto
+}
+.cat{
+ min-width:76px;
+ text-align:center;
+ border:1px solid #eee;
+ border-radius:15px;
+ padding:9px
+}
+.cat div{
+ font-size:27px
+}
+.cat small{
+ font-weight:700
+}
+.grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px
+}
+.card{
+ border:1px solid #eee;
+ border-radius:17px;
+ overflow:hidden;
+ background:#fff;
+ cursor:pointer
+}
+.pic{
+ height:105px;
+ background:#eee;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:48px
+}
+.info{
+ padding:11px
+}
+.info small{
+ display:block;
+ color:#777;
+ margin-top:5px
+}
+.bottom{
+ position:sticky;
+ bottom:0;
+ background:#fff;
+ border-top:1px solid #eee;
+ display:flex;
+ justify-content:space-around;
+ padding:12px 5px;
+ z-index:10
+}
+.bottom div{
+ text-align:center;
+ font-size:11px;
+ color:#777;
+ cursor:pointer
+}
+.bottom b{
+ color:#e53935
+}
+.screen{
+ padding-bottom:70px
+}
+.panelhead{
+ padding:20px 18px 8px
+}
+.back{
+ color:#e53935;
+ font-weight:700;
+ cursor:pointer;
+ margin-bottom:12px
+}
+.food{
+ display:flex;
+ gap:10px;
+ padding:12px 0;
+ border-bottom:1px solid #eee;
+ align-items:center
+}
+.foodpic{
+ width:70px;
+ height:70px;
+ border-radius:14px;
+ background:#f2f2f2;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:36px
+}
+.foodinfo{
+ flex:1
+}
+.foodinfo small{
+ display:block;
+ color:#777;
+ margin:5px 0
+}
+.add{
+ background:#e53935;
+ color:#fff;
+ padding:8px 10px;
+ border-radius:10px;
+ font-size:12px;
+ font-weight:700;
+ cursor:pointer
+}
+.cartbox{
+ padding:18px
+}
+.row{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ padding:13px 0;
+ border-bottom:1px solid #eee
+}
+.status{
+ margin-top:15px;
+ padding:16px;
+ border-radius:18px;
+ background:#fff4f2
+}
+.modal{
+ position:fixed;
+ inset:0;
+ background:#0008;
+ display:none;
+ align-items:flex-end;
+ justify-content:center;
+ z-index:20
+}
+.sheet{
+ width:min(430px,100%);
+ background:#fff;
+ border-radius:24px 24px 0 0;
+ padding:24px;
+ max-height:90vh;
+ overflow:auto
+}
+.input{
+ width:100%;
+ padding:13px;
+ border:1px solid #ddd;
+ border-radius:12px;
+ margin:7px 0 12px
+}
+.notice{
+ font-size:12px;
+ color:#777;
+ margin-top:10px
+}
+.empty{
+ text-align:center;
+ padding:35px;
+ color:#777
+}
+
+/* ADMIN */
+.adminHeader{
+ background:#171717;
+ color:#fff;
+ padding:20px;
+ border-radius:0 0 22px 22px
+}
+.adminHeader h1{
+ margin:0 0 5px
+}
+.adminGrid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+ padding:18px
+}
+.stat{
+ background:#fff;
+ border:1px solid #eee;
+ border-radius:18px;
+ padding:17px
+}
+.stat b{
+ display:block;
+ font-size:25px;
+ margin-top:6px
+}
+.adminMenu{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+ padding:0 18px
+}
+.adminBtn{
+ background:#f7f7f7;
+ border:1px solid #eee;
+ border-radius:14px;
+ padding:15px;
+ text-align:left;
+ font-weight:700
+}
+.adminSection{
+ padding:18px
+}
+.adminCard{
+ border:1px solid #eee;
+ border-radius:16px;
+ padding:14px;
+ margin-bottom:10px;
+ background:#fff
+}
+.badge{
+ display:inline-block;
+ padding:5px 9px;
+ border-radius:8px;
+ background:#fff0ed;
+ color:#e53935;
+ font-size:11px;
+ font-weight:bold
+}
+select{
+ width:100%;
+ padding:11px;
+ border:1px solid #ddd;
+ border-radius:10px;
+ margin-top:8px
+}
+.smallBtn{
+ border:0;
+ padding:8px 10px;
+ border-radius:9px;
+ background:#e53935;
+ color:#fff;
+ font-weight:bold;
+ margin-top:8px
+}
+hr{
+ border:0;
+ border-top:1px solid #eee;
+ margin:15px 0
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
+
+<!-- CUSTOMER HOME -->
 <div id="home" class="screen">
-<header><div><div class="logo">Beat<span>root</span></div><div class="sub">Deliver to <b>Home ▾</b></div></div><div onclick="openCart()" style="font-size:25px;cursor:pointer">🛒 <sup id="count">0</sup></div></header>
-<div class="hero"><h1>Hungry? We've got you.</h1><p>Fresh food delivered to your doorstep.</p><button class="btn light" onclick="document.getElementById('restaurants').scrollIntoView()">Order Now →</button></div>
-<div class="search">🔍 &nbsp; <input id="search" oninput="filterRestaurants()" placeholder="Search restaurants or food" style="border:0;background:transparent;outline:0;font-size:16px;width:80%"></div>
-<div class="section"><h2>Categories</h2><div class="cats"><div class="cat"><div>🍕</div><small>Pizza</small></div><div class="cat"><div>🍔</div><small>Burgers</small></div><div class="cat"><div>🍗</div><small>Chicken</small></div><div class="cat"><div>🍛</div><small>Meals</small></div></div>
-<h2 id="restaurants">Popular near you</h2><div class="grid" id="restaurantGrid"><div class="empty">Loading restaurants…</div></div></div>
-<div class="bottom"><div onclick="home()">⌂<br><b>Home</b></div><div onclick="alert('Favorites coming next')">♡<br>Favorites</div><div onclick="openOrders()">▣<br>Orders</div><div onclick="openLogin()">●<br>Profile</div></div>
+
+<header>
+<div>
+<div class="logo">Beat<span>root</span></div>
+<div class="sub">Deliver to <b>Home ▾</b></div>
 </div>
 
-<div id="menu" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1 id="rname"></h1><p class="sub">Menu</p><div id="foodList"></div></div></div>
-<div id="cart" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1>Your Cart</h1></div><div class="cartbox" id="cartItems"></div></div>
-<div id="orders" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1>My Orders</h1></div><div class="cartbox" id="orderList"></div></div>
-<div id="tracking" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="openOrders()">← Orders</div><h1>Order Tracking</h1></div><div class="cartbox" id="trackingBox"></div></div>
+<div onclick="openCart()" style="font-size:25px;cursor:pointer">
+🛒 <sup id="count">0</sup>
+</div>
+</header>
+
+<div class="hero">
+<h1>Hungry? We've got you.</h1>
+<p>Fresh food delivered to your doorstep.</p>
+<button class="btn light"
+onclick="document.getElementById('restaurants').scrollIntoView()">
+Order Now →
+</button>
 </div>
 
+<div class="search">
+🔍
+<input id="search"
+oninput="filterRestaurants()"
+placeholder="Search restaurants or food">
+</div>
+
+<div class="section">
+
+<h2>Categories</h2>
+
+<div class="cats">
+<div class="cat"><div>🍕</div><small>Pizza</small></div>
+<div class="cat"><div>🍔</div><small>Burgers</small></div>
+<div class="cat"><div>🍗</div><small>Chicken</small></div>
+<div class="cat"><div>🍛</div><small>Meals</small></div>
+</div>
+
+<h2 id="restaurants">Popular near you</h2>
+
+<div class="grid" id="restaurantGrid">
+<div class="empty">Loading restaurants…</div>
+</div>
+
+</div>
+
+<div class="bottom">
+<div onclick="home()">⌂<br><b>Home</b></div>
+<div onclick="openOrders()">▣<br>Orders</div>
+<div onclick="openProfile()">●<br>Profile</div>
+</div>
+
+</div>
+
+
+<!-- MENU -->
+<div id="menu" class="screen" style="display:none">
+
+<div class="panelhead">
+<div class="back" onclick="home()">← Back</div>
+<h1 id="rname"></h1>
+<p class="sub">Menu</p>
+<div id="foodList"></div>
+</div>
+
+</div>
+
+
+<!-- CART -->
+<div id="cart" class="screen" style="display:none">
+
+<div class="panelhead">
+<div class="back" onclick="home()">← Back</div>
+<h1>Your Cart</h1>
+</div>
+
+<div class="cartbox" id="cartItems"></div>
+
+</div>
+
+
+<!-- ORDERS -->
+<div id="orders" class="screen" style="display:none">
+
+<div class="panelhead">
+<div class="back" onclick="home()">← Back</div>
+<h1>My Orders</h1>
+</div>
+
+<div class="cartbox" id="orderList"></div>
+
+</div>
+
+
+<!-- TRACKING -->
+<div id="tracking" class="screen" style="display:none">
+
+<div class="panelhead">
+<div class="back" onclick="openOrders()">← Orders</div>
+<h1>Order Tracking</h1>
+</div>
+
+<div class="cartbox" id="trackingBox"></div>
+
+</div>
+
+
+<!-- PROFILE -->
+<div id="profile" class="screen" style="display:none">
+
+<div class="panelhead">
+<div class="back" onclick="home()">← Back</div>
+<h1>Profile</h1>
+</div>
+
+<div class="cartbox" id="profileBox"></div>
+
+</div>
+
+
+<!-- ADMIN -->
+<div id="admin" class="screen" style="display:none">
+
+<div class="adminHeader">
+<div class="back" style="color:#fff" onclick="home()">← Back</div>
+<h1>Admin Dashboard</h1>
+<div class="sub" style="color:#ccc">Beatroot Management</div>
+</div>
+
+<div class="adminGrid">
+
+<div class="stat">
+Orders
+<b id="statOrders">0</b>
+</div>
+
+<div class="stat">
+Restaurants
+<b id="statRestaurants">0</b>
+</div>
+
+<div class="stat">
+Menu Items
+<b id="statMenu">0</b>
+</div>
+
+<div class="stat">
+Sales
+<b id="statSales">₹0</b>
+</div>
+
+</div>
+
+<div class="adminMenu">
+
+<button class="adminBtn" onclick="adminRestaurants()">
+🏪 Restaurants
+</button>
+
+<button class="adminBtn" onclick="adminMenuItems()">
+🍔 Menu Items
+</button>
+
+<button class="adminBtn" onclick="adminOrders()">
+🛒 All Orders
+</button>
+
+<button class="adminBtn" onclick="adminCustomers()">
+👥 Customers
+</button>
+
+</div>
+
+<div class="adminSection" id="adminContent">
+<div class="empty">
+Select an option above.
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- LOGIN MODAL -->
 <div id="login" class="modal">
-  <div class="sheet">
-    <h2 id="authTitle">Login to Beatroot</h2>
-    <p class="sub" id="authSubtitle">
-      Login using your email and password.
-    </p>
 
-    <input
-      id="email"
-      type="email"
-      class="input"
-      placeholder="Email address"
-    >
+<div class="sheet">
 
-    <input
-      id="password"
-      type="password"
-      class="input"
-      placeholder="Password"
-    >
+<h2 id="authTitle">Login to Beatroot</h2>
 
-    <button
-      class="btn primary"
-      style="width:100%"
-      onclick="submitAuth()"
-      id="authButton"
-    >
-      Login
-    </button>
+<p class="sub">
+Login using your email and password.
+</p>
 
-    <button
-      class="btn"
-      style="width:100%;margin-top:8px"
-      onclick="toggleAuthMode()"
-      id="toggleAuthButton"
-    >
-      Create New Account
-    </button>
+<input
+id="email"
+type="email"
+class="input"
+placeholder="Email address">
 
-    <button
-      class="btn"
-      style="width:100%;margin-top:8px"
-      onclick="forgotPassword()"
-    >
-      Forgot Password?
-    </button>
+<input
+id="password"
+type="password"
+class="input"
+placeholder="Password">
 
-    <p class="notice" id="loginNote">
-      Use your email address and password.
-    </p>
+<button
+class="btn primary"
+style="width:100%"
+onclick="submitAuth()">
+Login
+</button>
 
-    <button
-      class="btn"
-      style="width:100%;margin-top:8px"
-      onclick="closeLogin()"
-    >
-      Close
-    </button>
-  </div>
+<button
+class="btn"
+style="width:100%;margin-top:8px"
+onclick="toggleAuthMode()">
+Create New Account
+</button>
+
+<p id="loginNote" class="notice"></p>
+
+<button
+class="btn"
+style="width:100%;margin-top:8px"
+onclick="closeLogin()">
+Close
+</button>
+
 </div>
+</div>
+
+
 <script>
-const SUPABASE_URL="https://jhihjnsxazmftdqlitgk.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 
-let restaurants=[], currentRestaurant=null;
-let cart=JSON.parse(localStorage.getItem("beatroot_cart")||"[]");
+const SUPABASE_URL =
+"https://jhihjnsxazmftdqlitgk.supabase.co";
 
-function hide(){document.querySelectorAll(".screen").forEach(x=>x.style.display="none")}
-function home(){hide();homeEl.style.display="block"}
-const homeEl=document.getElementById("home");
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-async function loadRestaurants(){
-  const {data,error}=await sb.from("restaurants").select("*").eq("is_open",true).order("id");
-  if(error){restaurantGrid.innerHTML='<div class="empty">Could not load restaurants. Check Supabase key.</div>';console.error(error);return}
-  restaurants=data||[]; renderRestaurants(restaurants);
+const sb =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+
+
+let restaurants = [];
+let currentRestaurant = null;
+let cart = JSON.parse(
+localStorage.getItem("beatroot_cart") || "[]"
+);
+
+let createAccount = false;
+
+
+const homeEl = document.getElementById("home");
+const menuEl = document.getElementById("menu");
+const cartEl = document.getElementById("cart");
+const ordersEl = document.getElementById("orders");
+const trackingEl = document.getElementById("tracking");
+const profileEl = document.getElementById("profile");
+const adminEl = document.getElementById("admin");
+
+
+function hide(){
+document.querySelectorAll(".screen")
+.forEach(x=>x.style.display="none");
 }
-function renderRestaurants(list){
-  restaurantGrid.innerHTML=list.length?list.map(r=>`<div class="card" onclick="openMenu(${r.id})"><div class="pic">🍽️</div><div class="info"><b>${escapeHtml(r.name)}</b><small>📍 ${escapeHtml(r.address||"Nearby")} · Open</small></div></div>`).join(""):'<div class="empty">No restaurants found.</div>';
+
+
+function home(){
+hide();
+homeEl.style.display="block";
 }
-function filterRestaurants(){const q=search.value.toLowerCase();renderRestaurants(restaurants.filter(r=>r.name.toLowerCase().includes(q)||(r.description||"").toLowerCase().includes(q)))}
-async function openMenu(id){
-  hide();menu.style.display="block";
-  const r=restaurants.find(x=>x.id===id); currentRestaurant=r; rname.textContent=r?r.name:"Restaurant";
-  foodList.innerHTML='<div class="empty">Loading menu…</div>';
-  const {data,error}=await sb.from("menu_items").select("*").eq("restaurant_id",id).eq("is_available",true).order("id");
-  if(error){foodList.innerHTML='<div class="empty">Could not load menu.</div>';return}
-  foodList.innerHTML=data.length?data.map(f=>`<div class="food"><div class="foodpic">🍴</div><div class="foodinfo"><b>${escapeHtml(f.name)}</b><small>${escapeHtml(f.description||"Freshly prepared")}</small><b>₹${Number(f.price).toFixed(0)}</b></div><div class="add" onclick='add(${JSON.stringify(f)},${JSON.stringify(r.name)})'>ADD</div></div>`).join(""):'<div class="empty">Menu is empty.</div>';
-}
-function add(f,r){cart.push({menu_item_id:f.id,name:f.name,price:Number(f.price),restaurant:r});localStorage.setItem("beatroot_cart",JSON.stringify(cart));updateCount();alert("Added to cart")}
-function updateCount(){count.textContent=cart.length}
-function openCart(){
-  hide();cartEl.style.display="block";
-  if(!cart.length){cartItems.innerHTML='<div class="empty">Your cart is empty.</div>';return}
-  const total=cart.reduce((a,x)=>a+x.price,0);
-  cartItems.innerHTML=cart.map((x,i)=>`<div class="row"><span>${escapeHtml(x.name)}</span><b>₹${x.price}</b></div>`).join("")+
-  `<div class="row"><b>Total</b><b>₹${total}</b></div><button class="btn primary" style="width:100%;margin-top:15px" onclick="placeOrder()">Place Order</button>`;
-}
-const cartEl=document.getElementById("cart");
-async function placeOrder(){
-  if(!cart.length)return;
-  const {data:{user}}=await sb.auth.getUser();
-  if(!user){alert("Please login before placing an order.");openLogin();return}
-  const restaurant=restaurants.find(r=>r.name===cart[0].restaurant);
-  const total=cart.reduce((a,x)=>a+x.price,0);
-  const {data:order,error}=await sb.from("orders").insert({
-    customer_id:user.id,restaurant_id:restaurant?.id||null,total,
-    payment_method:"cod",status:"confirmed"
-  }).select().single();
-  if(error){alert(error.message);return}
-  const items=cart.map(x=>({order_id:order.id,menu_item_id:x.menu_item_id,item_name:x.name,quantity:1,unit_price:x.price}));
-  const {error:itemError}=await sb.from("order_items").insert(items);
-  if(itemError){alert(itemError.message);return}
-  cart=[];localStorage.setItem("beatroot_cart","[]");updateCount();
-  alert("Order placed successfully! Order #"+order.id);openOrders();
-}
-async function openOrders(){
-  hide();ordersEl.style.display="block";
-  const {data:{user}}=await sb.auth.getUser();
-  if(!user){orderList.innerHTML='<div class="empty">Please login to see your orders.<br><br><button class="btn primary" onclick="openLogin()">Login</button></div>';return}
-  const {data,error}=await sb.from("orders").select("*,restaurants(name)").eq("customer_id",user.id).order("created_at",{ascending:false});
-  if(error){orderList.innerHTML='<div class="empty">Could not load orders.</div>';return}
-  orderList.innerHTML=data.length?data.map(o=>`<div class="row" onclick="openTracking(${o.id})"><span><b>#${o.id}</b><small style="display:block;color:#777">${escapeHtml(o.restaurants?.name||"Restaurant")} · ${escapeHtml(o.status)}</small></span><b>₹${Number(o.total).toFixed(0)}</b></div>`).join(""):'<div class="empty">No orders yet.</div>';
-}
-async function openTracking(id){
-  hide();tracking.style.display="block";
-  const {data:o}=await sb.from("orders").select("*,restaurants(name)").eq("id",id).single();
-  if(!o){trackingBox.innerHTML='<div class="empty">Order not found.</div>';return}
-  trackingBox.innerHTML=`<div class="status"><h3>Order #${o.id}</h3><div class="row">Restaurant <span>${escapeHtml(o.restaurants?.name||"—")}</span></div><div class="row">Status <b>${escapeHtml(o.status)}</b></div><div class="row">Payment <span>${escapeHtml(o.payment_method)}</span></div><div class="row">Total <b>₹${Number(o.total).toFixed(0)}</b></div></div><button class="btn primary" style="width:100%;margin-top:15px" onclick="alert('Google Maps tracking will be connected in the delivery module.')">📍 Track Delivery</button>`;
-}
-let authMode = "login";
+
 
 function openLogin(){
-  document.getElementById("login").style.display="flex";
-  authMode="login";
-  updateAuthUI();
+document.getElementById("login").style.display="flex";
 }
+
 
 function closeLogin(){
-  document.getElementById("login").style.display="none";
+document.getElementById("login").style.display="none";
 }
+
 
 function toggleAuthMode(){
-  authMode = authMode === "login" ? "signup" : "login";
-  updateAuthUI();
+
+createAccount=!createAccount;
+
+document.getElementById("authTitle").textContent =
+createAccount
+? "Create Beatroot Account"
+: "Login to Beatroot";
+
+document.querySelector("#login .btn.primary").textContent =
+createAccount
+? "Create Account"
+: "Login";
+
+document.getElementById("loginNote").textContent="";
 }
 
-function updateAuthUI(){
-  const title = document.getElementById("authTitle");
-  const subtitle = document.getElementById("authSubtitle");
-  const button = document.getElementById("authButton");
-  const toggle = document.getElementById("toggleAuthButton");
-  const note = document.getElementById("loginNote");
-
-  if(authMode === "login"){
-    title.textContent = "Login to Beatroot";
-    subtitle.textContent = "Login using your email and password.";
-    button.textContent = "Login";
-    toggle.textContent = "Create New Account";
-    note.textContent = "Enter your registered email and password.";
-  }else{
-    title.textContent = "Create Beatroot Account";
-    subtitle.textContent = "Create your account using email.";
-    button.textContent = "Create Account";
-    toggle.textContent = "Already have an account? Login";
-    note.textContent = "After signup, check your email if confirmation is required.";
-  }
-}
 
 async function submitAuth(){
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+const email =
+document.getElementById("email").value.trim();
 
-  if(!email){
-    alert("Please enter your email address.");
-    return;
-  }
+const password =
+document.getElementById("password").value;
 
-  if(!password || password.length < 6){
-    alert("Password must contain at least 6 characters.");
-    return;
-  }
-
-  if(authMode === "signup"){
-
-    const {data,error} = await sb.auth.signUp({
-      email: email,
-      password: password
-    });
-
-    if(error){
-      alert(error.message);
-      return;
-    }
-
-    alert(
-      "Account created successfully! " +
-      "Please check your email if confirmation is required."
-    );
-
-    authMode = "login";
-    updateAuthUI();
-
-  }else{
-
-    const {data,error} = await sb.auth.signInWithPassword({
-      email: email,
-      password: password
-    });
-
-    if(error){
-      alert(error.message);
-      return;
-    }
-
-    alert("Login successful!");
-    closeLogin();
-    openOrders();
-  }
+if(!email || !password){
+alert("Enter email and password");
+return;
 }
 
-async function forgotPassword(){
+let result;
 
-  const email = document.getElementById("email").value.trim();
+if(createAccount){
 
-  if(!email){
-    alert("Please enter your email address first.");
-    return;
-  }
+result =
+await sb.auth.signUp({
+email,
+password
+});
 
-  const {error} = await sb.auth.resetPasswordForEmail(email,{
-    redirectTo: window.location.origin + window.location.pathname
-  });
+}else{
 
-  if(error){
-    alert(error.message);
-    return;
-  }
+result =
+await sb.auth.signInWithPassword({
+email,
+password
+});
 
-  alert("Password reset email has been sent.");
 }
-async function verifyOtp(){
- const p=phone.value.trim(),o=otp.value.trim(); if(!o)return alert("Enter OTP");
- const {error}=await sb.auth.verifyOtp({phone:p,token:o,type:"sms"});
- if(error){alert(error.message);return}
- alert("Login successful");closeLogin();openOrders();
+
+if(result.error){
+alert(result.error.message);
+return;
 }
-function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-loadRestaurants();updateCount();
+
+alert(
+createAccount
+? "Account created successfully."
+: "Login successful."
+);
+
+closeLogin();
+
+await checkAdmin();
+
+}
+
+
+async function checkAdmin(){
+
+const {
+data:{user}
+} = await sb.auth.getUser();
+
+if(!user){
+return false;
+}
+
+const {data,error} =
+await sb.rpc("is_admin");
+
+if(error){
+console.log("Admin check:",error);
+return false;
+}
+
+return data === true;
+}
+
+
+async function openProfile(){
+
+hide();
+profileEl.style.display="block";
+
+const {
+data:{user}
+} = await sb.auth.getUser();
+
+if(!user){
+
+profileBox.innerHTML=`
+<div class="empty">
+<h3>Welcome to Beatroot</h3>
+<p>Please login to continue.</p>
+<button class="btn primary"
+onclick="openLogin()">
+Login
+</button>
+</div>`;
+return;
+}
+
+const admin = await checkAdmin();
+
+profileBox.innerHTML=`
+
+<div class="status">
+
+<h3>Account</h3>
+
+<div class="row">
+Email
+<b>${escapeHtml(user.email)}</b>
+</div>
+
+${admin ? `
+<button
+class="btn dark"
+style="width:100%;margin-top:15px"
+onclick="openAdmin()">
+⚙️ Admin Dashboard
+</button>
+` : ""}
+
+<button
+class="btn primary"
+style="width:100%;margin-top:10px"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+`;
+
+}
+
+
+async function logout(){
+
+await sb.auth.signOut();
+
+alert("Logged out");
+
+home();
+
+}
+
+
+async function loadRestaurants(){
+
+const {
+data,
+error
+} =
+await sb
+.from("restaurants")
+.select("*")
+.eq("is_open",true)
+.order("id");
+
+if(error){
+
+restaurantGrid.innerHTML=
+'<div class="empty">Could not load restaurants.</div>';
+
+console.error(error);
+return;
+}
+
+restaurants=data || [];
+
+renderRestaurants(restaurants);
+
+}
+
+
+function renderRestaurants(list){
+
+restaurantGrid.innerHTML =
+list.length
+?
+list.map(r=>`
+
+<div class="card"
+onclick="openMenu(${r.id})">
+
+<div class="pic">🍽️</div>
+
+<div class="info">
+
+<b>${escapeHtml(r.name)}</b>
+
+<small>
+📍 ${escapeHtml(r.address || "Nearby")}
+· Open
+</small>
+
+</div>
+
+</div>
+
+`).join("")
+:
+'<div class="empty">No restaurants found.</div>';
+
+}
+
+
+function filterRestaurants(){
+
+const q =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+renderRestaurants(
+restaurants.filter(r=>
+(r.name||"").toLowerCase().includes(q) ||
+(r.description||"").toLowerCase().includes(q)
+)
+);
+
+}
+
+
+async function openMenu(id){
+
+hide();
+
+menuEl.style.display="block";
+
+const r =
+restaurants.find(x=>x.id===id);
+
+currentRestaurant=r;
+
+document.getElementById("rname").textContent =
+r ? r.name : "Restaurant";
+
+foodList.innerHTML =
+'<div class="empty">Loading menu…</div>';
+
+const {
+data,
+error
+} =
+await sb
+.from("menu_items")
+.select("*")
+.eq("restaurant_id",id)
+.eq("is_available",true)
+.order("id");
+
+if(error){
+
+foodList.innerHTML=
+'<div class="empty">Could not load menu.</div>';
+
+return;
+}
+
+foodList.innerHTML =
+data.length
+?
+data.map(f=>`
+
+<div class="food">
+
+<div class="foodpic">🍴</div>
+
+<div class="foodinfo">
+
+<b>${escapeHtml(f.name)}</b>
+
+<small>
+${escapeHtml(
+f.description || "Freshly prepared"
+)}
+</small>
+
+<b>₹${Number(f.price).toFixed(0)}</b>
+
+</div>
+
+<div class="add"
+onclick='add(${JSON.stringify(f)},${JSON.stringify(r.name)})'>
+ADD
+</div>
+
+</div>
+
+`).join("")
+:
+'<div class="empty">Menu is empty.</div>';
+
+}
+
+
+function add(f,r){
+
+cart.push({
+menu_item_id:f.id,
+name:f.name,
+price:Number(f.price),
+restaurant:r
+});
+
+localStorage.setItem(
+"beatroot_cart",
+JSON.stringify(cart)
+);
+
+updateCount();
+
+alert("Added to cart");
+
+}
+
+
+function updateCount(){
+
+document.getElementById("count")
+.textContent=cart.length;
+
+}
+
+
+function openCart(){
+
+hide();
+
+cartEl.style.display="block";
+
+if(!cart.length){
+
+cartItems.innerHTML=
+'<div class="empty">Your cart is empty.</div>';
+
+return;
+}
+
+const total =
+cart.reduce(
+(a,x)=>a+x.price,
+0
+);
+
+cartItems.innerHTML =
+
+cart.map((x,i)=>`
+
+<div class="row">
+
+<span>
+${escapeHtml(x.name)}
+<br>
+<small style="color:#777">
+${escapeHtml(x.restaurant)}
+</small>
+</span>
+
+<b>₹${x.price}</b>
+
+</div>
+
+`).join("") +
+
+`
+
+<div class="row">
+<b>Total</b>
+<b>₹${total}</b>
+</div>
+
+<button
+class="btn primary"
+style="width:100%;margin-top:15px"
+onclick="placeOrder()">
+Place Order
+</button>
+
+`;
+
+}
+
+
+async function placeOrder(){
+
+if(!cart.length)return;
+
+const {
+data:{user}
+} =
+await sb.auth.getUser();
+
+if(!user){
+
+alert("Please login before placing an order.");
+
+openLogin();
+
+return;
+}
+
+const restaurant =
+restaurants.find(
+r=>r.name===cart[0].restaurant
+);
+
+const total =
+cart.reduce(
+(a,x)=>a+x.price,
+0
+);
+
+const {
+data:order,
+error
+} =
+await sb
+.from("orders")
+.insert({
+customer_id:user.id,
+restaurant_id:restaurant?.id || null,
+total,
+payment_method:"cod",
+status:"confirmed"
+})
+.select()
+.single();
+
+if(error){
+
+alert(error.message);
+
+return;
+}
+
+
+const items =
+cart.map(x=>({
+
+order_id:order.id,
+menu_item_id:x.menu_item_id,
+item_name:x.name,
+quantity:1,
+unit_price:x.price
+
+}));
+
+
+const {
+error:itemError
+} =
+await sb
+.from("order_items")
+.insert(items);
+
+
+if(itemError){
+
+alert(
+"Order created but items could not be saved: "
++itemError.message
+);
+
+return;
+}
+
+
+cart=[];
+
+localStorage.setItem(
+"beatroot_cart",
+"[]"
+);
+
+updateCount();
+
+alert(
+"Order placed successfully! Order #"
++order.id
+);
+
+openOrders();
+
+}
+
+
+async function openOrders(){
+
+hide();
+
+ordersEl.style.display="block";
+
+const {
+data:{user}
+} =
+await sb.auth.getUser();
+
+if(!user){
+
+orderList.innerHTML=`
+<div class="empty">
+Please login to see your orders.
+<br><br>
+<button class="btn primary"
+onclick="openLogin()">
+Login
+</button>
+</div>`;
+
+return;
+}
+
+
+const {
+data,
+error
+} =
+await sb
+.from("orders")
+.select("*,restaurants(name)")
+.eq("customer_id",user.id)
+.order("created_at",{ascending:false});
+
+
+if(error){
+
+orderList.innerHTML=
+'<div class="empty">Could not load orders.</div>';
+
+return;
+}
+
+
+orderList.innerHTML =
+data.length
+?
+data.map(o=>`
+
+<div class="row"
+onclick="openTracking(${o.id})">
+
+<span>
+
+<b>#${o.id}</b>
+
+<small style="display:block;color:#777">
+
+${escapeHtml(
+o.restaurants?.name ||
+"Restaurant"
+)}
+
+<br>
+
+${escapeHtml(o.status)}
+
+</small>
+
+</span>
+
+<b>
+₹${Number(o.total).toFixed(0)}
+</b>
+
+</div>
+
+`).join("")
+:
+'<div class="empty">No orders yet.</div>';
+
+}
+
+
+async function openTracking(id){
+
+hide();
+
+trackingEl.style.display="block";
+
+const {
+data:o
+} =
+await sb
+.from("orders")
+.select("*,restaurants(name)")
+.eq("id",id)
+.single();
+
+if(!o){
+
+trackingBox.innerHTML=
+'<div class="empty">Order not found.</div>';
+
+return;
+}
+
+
+trackingBox.innerHTML=`
+
+<div class="status">
+
+<h3>Order #${o.id}</h3>
+
+<div class="row">
+Restaurant
+<span>
+${escapeHtml(
+o.restaurants?.name || "—"
+)}
+</span>
+</div>
+
+<div class="row">
+Status
+<b>${escapeHtml(o.status)}</b>
+</div>
+
+<div class="row">
+Payment
+<span>${escapeHtml(o.payment_method)}</span>
+</div>
+
+<div class="row">
+Total
+<b>₹${Number(o.total).toFixed(0)}</b>
+</div>
+
+</div>
+
+`;
+
+}
+
+
+async function openAdmin(){
+
+const admin =
+await checkAdmin();
+
+if(!admin){
+
+alert("Admin access denied.");
+
+return;
+}
+
+hide();
+
+adminEl.style.display="block";
+
+loadAdminStats();
+
+}
+
+
+async function loadAdminStats(){
+
+const r =
+await sb
+.from("restaurants")
+.select("id");
+
+const m =
+await sb
+.from("menu_items")
+.select("id");
+
+const o =
+await sb
+.from("orders")
+.select("id,total");
+
+document.getElementById("statRestaurants")
+.textContent =
+r.data?.length || 0;
+
+document.getElementById("statMenu")
+.textContent =
+m.data?.length || 0;
+
+document.getElementById("statOrders")
+.textContent =
+o.data?.length || 0;
+
+const sales =
+(o.data || [])
+.reduce(
+(a,x)=>a+Number(x.total||0),
+0
+);
+
+document.getElementById("statSales")
+.textContent =
+"₹"+sales.toFixed(0);
+
+}
+
+
+async function adminRestaurants(){
+
+const {
+data,
+error
+} =
+await sb
+.from("restaurants")
+.select("*")
+.order("id");
+
+if(error){
+
+adminContent.innerHTML=
+`<div class="empty">${escapeHtml(error.message)}</div>`;
+
+return;
+}
+
+
+adminContent.innerHTML=`
+
+<h2>Restaurants</h2>
+
+${(data||[]).map(r=>`
+
+<div class="adminCard">
+
+<b>${escapeHtml(r.name)}</b>
+
+<p class="sub">
+${escapeHtml(r.address||"")}
+</p>
+
+<span class="badge">
+${r.is_open ? "OPEN":"CLOSED"}
+</span>
+
+</div>
+
+`).join("")}
+
+`;
+
+}
+
+
+async function adminMenuItems(){
+
+const {
+data,
+error
+} =
+await sb
+.from("menu_items")
+.select("*,restaurants(name)")
+.order("id");
+
+if(error){
+
+adminContent.innerHTML=
+`<div class="empty">${escapeHtml(error.message)}</div>`;
+
+return;
+}
+
+
+adminContent.innerHTML=`
+
+<h2>Menu Items</h2>
+
+${(data||[]).map(m=>`
+
+<div class="adminCard">
+
+<b>${escapeHtml(m.name)}</b>
+
+<p class="sub">
+${escapeHtml(
+m.restaurants?.name || "Restaurant"
+)}
+</p>
+
+<div>
+₹${Number(m.price).toFixed(0)}
+</div>
+
+<span class="badge">
+${m.is_available ? "AVAILABLE":"UNAVAILABLE"}
+</span>
+
+</div>
+
+`).join("")}
+
+`;
+
+}
+
+
+async function adminOrders(){
+
+const {
+data,
+error
+} =
+await sb
+.from("orders")
+.select("*,restaurants(name)")
+.order("created_at",{ascending:false});
+
+if(error){
+
+adminContent.innerHTML=
+`<div class="empty">${escapeHtml(error.message)}</div>`;
+
+return;
+}
+
+
+adminContent.innerHTML=`
+
+<h2>All Orders</h2>
+
+${(data||[]).map(o=>`
+
+<div class="adminCard">
+
+<b>Order #${o.id}</b>
+
+<p class="sub">
+${escapeHtml(
+o.restaurants?.name || "Restaurant"
+)}
+</p>
+
+<div>
+Total: <b>₹${Number(o.total).toFixed(0)}</b>
+</div>
+
+<select
+onchange="changeOrderStatus(${o.id},this.value)">
+
+<option value="confirmed"
+${o.status==="confirmed"?"selected":""}>
+Confirmed
+</option>
+
+<option value="preparing"
+${o.status==="preparing"?"selected":""}>
+Preparing
+</option>
+
+<option value="out_for_delivery"
+${o.status==="out_for_delivery"?"selected":""}>
+Out for Delivery
+</option>
+
+<option value="delivered"
+${o.status==="delivered"?"selected":""}>
+Delivered
+</option>
+
+<option value="cancelled"
+${o.status==="cancelled"?"selected":""}>
+Cancelled
+</option>
+
+</select>
+
+</div>
+
+`).join("")}
+
+`;
+
+}
+
+
+async function changeOrderStatus(id,status){
+
+const {
+error
+} =
+await sb
+.from("orders")
+.update({status})
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+}
+
+alert("Order status updated");
+
+adminOrders();
+
+}
+
+
+async function adminCustomers(){
+
+const {
+data,
+error
+} =
+await sb
+.from("orders")
+.select("customer_id");
+
+if(error){
+
+adminContent.innerHTML=
+`<div class="empty">${escapeHtml(error.message)}</div>`;
+
+return;
+}
+
+
+const ids =
+[...new Set(
+(data||[])
+.map(x=>x.customer_id)
+)];
+
+adminContent.innerHTML=`
+
+<h2>Customers</h2>
+
+<div class="adminCard">
+
+<b>Total Customers with Orders</b>
+
+<h2>${ids.length}</h2>
+
+</div>
+
+`;
+
+}
+
+
+function escapeHtml(s){
+
+return String(s??"")
+.replace(/[&<>"']/g,m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m]));
+
+}
+
+
+sb.auth.onAuthStateChange(
+async(event,session)=>{
+
+if(event==="SIGNED_IN"){
+console.log("User logged in");
+}
+
+if(event==="SIGNED_OUT"){
+console.log("User logged out");
+}
+
+});
+
+
+loadRestaurants();
+
+updateCount();
+
 </script>
-</body></html>
+
+</body>
+</html>
