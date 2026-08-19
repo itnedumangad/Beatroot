@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beatroot Food Delivery</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#171717}.app{max-width:430px;margin:auto;min-height:100vh;background:#fff}
+header{padding:20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:28px;font-weight:800;color:#e53935}.logo span{color:#222}.sub{font-size:12px;color:#777}
+.hero{margin:8px 18px;padding:22px;border-radius:22px;background:linear-gradient(135deg,#e53935,#ff7043);color:#fff}.hero h1{margin:0 0 7px;font-size:24px}.hero p{margin:0 0 15px}.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer}.primary{background:#e53935;color:#fff}.light{background:#fff;color:#e53935}
+.search{margin:16px 18px;padding:14px;border-radius:14px;background:#f1f1f1;color:#777}.section{padding:0 18px}.cats{display:flex;gap:10px;overflow:auto}.cat{min-width:76px;text-align:center;border:1px solid #eee;border-radius:15px;padding:9px}.cat div{font-size:27px}.cat small{font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{border:1px solid #eee;border-radius:17px;overflow:hidden;background:#fff;cursor:pointer}.pic{height:105px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:48px}.info{padding:11px}.info small{display:block;color:#777;margin-top:5px}
+.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:12px 5px}.bottom div{text-align:center;font-size:11px;color:#777;cursor:pointer}.bottom b{color:#e53935}
+.screen{padding-bottom:70px}.panelhead{padding:20px 18px 8px}.back{color:#e53935;font-weight:700;cursor:pointer;margin-bottom:12px}.food{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eee;align-items:center}.foodpic{width:70px;height:70px;border-radius:14px;background:#f2f2f2;display:flex;align-items:center;justify-content:center;font-size:36px}.foodinfo{flex:1}.foodinfo small{display:block;color:#777;margin:5px 0}.add{background:#e53935;color:#fff;padding:8px 10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer}
+.cartbox{padding:18px}.row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #eee}.status{margin-top:15px;padding:16px;border-radius:18px;background:#fff4f2}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:20}.sheet{width:min(430px,100%);background:#fff;border-radius:24px 24px 0 0;padding:24px}.input{width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;margin:7px 0 12px}.notice{font-size:12px;color:#777;margin-top:10px}
+</style></head>
+<body>
+<div class="app">
+<div id="home" class="screen">
+<header><div><div class="logo">Beat<span>root</span></div><div class="sub">Deliver to <b>Home ▾</b></div></div><div onclick="openCart()" style="font-size:25px;cursor:pointer">🛒 <sup id="count">0</sup></div></header>
+<div class="hero"><h1>Hungry? We've got you.</h1><p>Fresh food delivered to your doorstep.</p><button class="btn light" onclick="document.getElementById('restaurants').scrollIntoView()">Order Now →</button></div>
+<div class="search">🔍 &nbsp; Search restaurants or food</div>
+<div class="section"><h2>Categories</h2><div class="cats"><div class="cat"><div>🍕</div><small>Pizza</small></div><div class="cat"><div>🍔</div><small>Burgers</small></div><div class="cat"><div>🍗</div><small>Chicken</small></div><div class="cat"><div>🍛</div><small>Meals</small></div></div>
+<h2 id="restaurants">Popular near you</h2><div class="grid" id="restaurantGrid"></div></div>
+<div class="bottom"><div onclick="home()">⌂<br><b>Home</b></div><div onclick="alert('Favorites coming next')">♡<br>Favorites</div><div onclick="openOrders()">▣<br>Orders</div><div onclick="openLogin()">●<br>Profile</div></div>
+</div>
+
+<div id="menu" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1 id="rname"></h1><p class="sub">Popular food items</p><div id="foodList"></div></div></div>
+
+<div id="cart" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1>Your Cart</h1></div><div class="cartbox" id="cartItems"></div></div>
+
+<div id="orders" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="home()">← Back</div><h1>My Orders</h1></div><div class="cartbox" id="orderList"></div></div>
+
+<div id="tracking" class="screen" style="display:none"><div class="panelhead"><div class="back" onclick="openOrders()">← Orders</div><h1>Order Tracking</h1></div><div class="cartbox"><div class="status"><b>Order Confirmed</b><div class="row">Restaurant <span>Preparing</span></div><div class="row">Delivery Partner <span>Assigned</span></div><div class="row">Delivery <span>25–35 min</span></div></div><button class="btn primary" style="width:100%;margin-top:15px" onclick="alert('Google Maps API will be connected here')">📍 Track on Map</button></div></div>
+</div>
+
+<div id="login" class="modal"><div class="sheet"><h2>Login to Beatroot</h2><p class="sub">Use your mobile number for OTP login.</p><input id="phone" class="input" placeholder="+91 9876543210"><button class="btn primary" style="width:100%" onclick="sendOtp()">Send OTP</button><div id="otpArea" style="display:none"><input id="otp" class="input" placeholder="6-digit OTP"><button class="btn primary" style="width:100%" onclick="verifyOtp()">Verify OTP</button></div><p class="notice" id="loginNote">Demo mode works until Supabase credentials are added.</p><button class="btn" style="width:100%;margin-top:8px" onclick="closeLogin()">Close</button></div></div>
+
+<script>
+const SUPABASE_URL="YOUR_SUPABASE_URL", SUPABASE_PUBLISHABLE_KEY="YOUR_SUPABASE_PUBLISHABLE_KEY";
+const connected=SUPABASE_URL.startsWith("https://") && !SUPABASE_PUBLISHABLE_KEY.startsWith("YOUR_");
+const sb=connected?window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY):null;
+const restaurants=[["Pizza Hub","🍕","4.6 · 25–35 min"],["Food Corner","🍔","4.5 · 20–30 min"],["Chicken House","🍗","4.7 · 30–40 min"],["Spice Kitchen","🍛","4.8 · 25–35 min"]];
+const foods=[["🍕","Margherita Pizza",199],["🍔","Classic Burger",149],["🍗","Crispy Chicken",179],["🍟","French Fries",99],["🥤","Cold Drink",59]];
+let cart=JSON.parse(localStorage.getItem("beatroot_cart")||"[]");
+let orders=JSON.parse(localStorage.getItem("beatroot_orders")||"[]");
+function hide(){document.querySelectorAll(".screen").forEach(x=>x.style.display="none")}
+function home(){hide();document.getElementById("home").style.display="block"}
+function renderRestaurants(){restaurantGrid.innerHTML=restaurants.map((r,i)=>`<div class="card" onclick="openMenu(${i})"><div class="pic">${r[1]}</div><div class="info"><b>${r[0]}</b><small>⭐ ${r[2]}</small></div></div>`).join("")}
+function openMenu(i){hide();menu.style.display="block";rname.textContent=restaurants[i][0];foodList.innerHTML=foods.map((f,j)=>`<div class="food"><div class="foodpic">${f[0]}</div><div class="foodinfo"><b>${f[1]}</b><small>Freshly prepared</small><b>₹${f[2]}</b></div><div class="add" onclick="add(${j},'${restaurants[i][0]}')">ADD</div></div>`).join("")}
+function add(i,r){cart.push({name:foods[i][1],price:foods[i][2],restaurant:r});localStorage.setItem("beatroot_cart",JSON.stringify(cart));updateCount();alert("Added to cart")}
+function updateCount(){count.textContent=cart.length}
+function openCart(){hide();cart.style.display="block";cartItems.innerHTML=cart.length?cart.map((x,i)=>`<div class="row"><span>${x.name}</span><b>₹${x.price}</b></div>`).join("")+`<div class="row"><b>Total</b><b>₹${cart.reduce((a,x)=>a+x.price,0)}</b></div><button class="btn primary" style="width:100%;margin-top:15px" onclick="placeOrder()">Place Order</button>`:"<p>Your cart is empty.</p>"}
+async function placeOrder(){if(!cart.length)return;const total=cart.reduce((a,x)=>a+x.price,0);const order={id:"BR"+Date.now().toString().slice(-6),total,status:"confirmed",items:cart,created_at:new Date().toISOString()};orders.unshift(order);localStorage.setItem("beatroot_orders",JSON.stringify(orders));cart=[];localStorage.setItem("beatroot_cart","[]");updateCount();if(sb){/* real insert will be enabled after SQL setup */}hide();tracking.style.display="block"}
+function openOrders(){hide();orders.style.display="block";orderList.innerHTML=orders.length?orders.map(o=>`<div class="row" onclick="openTracking()"><span><b>#${o.id}</b><small style="display:block;color:#777">${o.status}</small></span><b>₹${o.total}</b></div>`).join(""):"<p>No orders yet.</p>"}
+function openTracking(){hide();tracking.style.display="block"}
+function openLogin(){login.style.display="flex"}
+function closeLogin(){login.style.display="none"}
+async function sendOtp(){const p=phone.value.trim();if(!p)return alert("Enter mobile number");if(sb){const {error}=await sb.auth.signInWithOtp({phone:p});if(error)return alert(error.message);loginNote.textContent="OTP sent. Check your phone."}else{otpArea.style.display="block";loginNote.textContent="Demo mode: enter any 6 digits."}}
+async function verifyOtp(){const p=phone.value.trim(),o=otp.value.trim();if(!o)return alert("Enter OTP");if(sb){const {error}=await sb.auth.verifyOtp({phone:p,token:o,type:"sms"});if(error)return alert(error.message);alert("Login successful");closeLogin()}else{if(/^\d{6}$/.test(o)){alert("Demo login successful");closeLogin()}else alert("Enter 6 digits")}}
+renderRestaurants();updateCount();
+</script></body></html>
