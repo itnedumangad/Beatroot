@@ -1,1 +1,1485 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beatroot - Orders</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f5f7fb;color:#171717}.side{position:fixed;inset:0 auto 0 0;width:250px;background:#111827;color:white;padding:25px 15px}.brand{font-size:27px;font-weight:800;padding:0 15px 30px}.brand span{color:#ef4444}.label{font-size:12px;color:#9ca3af;padding:0 15px 10px;text-transform:uppercase}.menu button,.logout{width:100%;border:0;background:transparent;color:#d1d5db;padding:13px 15px;text-align:left;border-radius:10px;cursor:pointer;margin:3px 0}.menu button:hover,.active{background:#ef4444!important;color:white!important}.bottom{position:absolute;bottom:20px;left:15px;right:15px}.logout{border:1px solid #374151}.main{margin-left:250px}.top{height:75px;background:white;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;padding:0 30px;position:sticky;top:0}.title{font-size:22px;font-weight:700}.profile{display:flex;align-items:center;gap:10px}.avatar{width:40px;height:40px;border-radius:50%;background:#ef4444;color:white;display:grid;place-items:center;font-weight:bold}.content{padding:30px}.head{margin-bottom:22px}.head h1{margin:0 0 6px;font-size:27px}.head p{margin:0;color:#6b7280}.card{background:white;border:1px solid #e5e7eb;border-radius:16px;padding:22px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:15px}.search{flex:1;min-width:220px;height:44px;border:1px solid #ddd;border-radius:10px;padding:0 13px}.filter,.refresh{height:44px;border:1px solid #ddd;border-radius:10px;padding:0 12px;background:white}.refresh{background:#111827;color:white;cursor:pointer}.count{font-size:13px;color:#6b7280;margin-bottom:10px}.table{overflow:auto}table{width:100%;border-collapse:collapse;min-width:760px}th,td{text-align:left;padding:14px 10px;border-bottom:1px solid #eee;font-size:13px}th{font-size:12px;color:#6b7280}.customer{max-width:180px;word-break:break-all;color:#6b7280}.status{border:0;border-radius:20px;padding:7px 10px;font-size:11px;font-weight:bold}.pending{background:#fef3c7;color:#92400e}.confirmed{background:#dbeafe;color:#2563eb}.preparing{background:#ffedd5;color:#c2410c}.delivered{background:#dcfce7;color:#15803d}.cancelled{background:#fee2e2;color:#dc2626}.msg{text-align:center;padding:35px;color:#777}.error{display:none;background:#fee2e2;color:#b91c1c;padding:14px;border-radius:10px;margin-bottom:18px}@media(max-width:700px){.side{transform:translateX(-100%)}.main{margin-left:0}.content{padding:20px 15px}.top{padding:0 15px}.profile small{display:none}} </style></head><body><aside class="side"><div class="brand">Beat<span>root</span></div><div class="label">Admin Panel</div><div class="menu"><button onclick="go('admin-dashboard.html')">📊 Dashboard</button><button class="active">🛒 Orders</button><button onclick="go('admin-customers.html')">👥 Customers</button><button onclick="go('admin-restaurants.html')">🍔 Restaurants</button><button onclick="go('admin-reports.html')">📈 Reports</button><button onclick="go('settings.html')">⚙️ Settings</button></div><div class="bottom"><button class="logout" onclick="logout()">🚪 Logout</button></div></aside><div class="main"><header class="top"><div class="title">Orders</div><div class="profile"><div class="avatar" id="avatar">A</div><strong id="adminName">Admin</strong></div></header><main class="content"><div class="head"><h1>Orders</h1><p>Manage customer orders and update their status.</p></div><div class="error" id="error"></div><section class="card"><div class="toolbar"><input id="search" class="search" placeholder="Search order ID or customer ID..."><select id="filter" class="filter"><option value="">All Status</option><option>pending</option><option>confirmed</option><option>preparing</option><option>delivered</option><option>cancelled</option></select><button class="refresh" onclick="loadOrders()">↻ Refresh</button></div><div id="count" class="count">Loading...</div><div class="table"><table><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>DATE & TIME</th><th>STATUS</th><th>TOTAL</th></tr></thead><tbody id="rows"><tr><td colspan="5" class="msg">Loading orders...</td></tr></tbody></table></div></section></main></div><script>const URL="https://jhihjnsxazmftdqlitgk.supabase.co",KEY="sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57",ADMIN="itnedumangad@gmail.com",sb=supabase.createClient(URL,KEY);let orders=[];const norm=s=>{s=String(s||"pending").toLowerCase();return s==="processing"?"preparing":s==="completed"?"delivered":s==="canceled"?"cancelled":["pending","confirmed","preparing","delivered","cancelled"].includes(s)?s:"pending"};function go(p){location.href=p}function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#039;"}[m]))}async function auth(){const r=await sb.auth.getUser();if(r.error||!r.data.user){location.href="login.html";return false}if(r.data.user.email!==ADMIN){alert("Access denied. Admin only.");location.href="../index.html";return false}let e=r.data.user.email;adminName.textContent=e.split("@")[0];avatar.textContent=e[0].toUpperCase();return true}async function loadOrders(){error.style.display="none";if(!await auth())return;const r=await sb.from("orders").select("id,status,total,customer_id,created_at").order("created_at",{ascending:false});if(r.error){error.textContent="Orders loading error: "+r.error.message;error.style.display="block";return}orders=r.data||[];render()}function render(){let q=search.value.toLowerCase().trim(),f=filter.value;let a=orders.filter(o=>(!q||String(o.id).toLowerCase().includes(q)||String(o.customer_id||"").toLowerCase().includes(q))&&(!f||norm(o.status)===f));count.textContent=a.length+" order"+(a.length===1?"":"s");rows.innerHTML=a.length?a.map(o=>{let s=norm(o.status),d=o.created_at?new Date(o.created_at).toLocaleString("en-IN"):"-";return `<tr><td><b>#${esc(o.id)}</b></td><td class="customer">${esc(o.customer_id||"Customer")}</td><td>${esc(d)}</td><td><select class="status ${s}" onchange="updateStatus('${String(o.id).replaceAll("'","\'")}',this.value)"><option value="pending" ${s==="pending"?"selected":""}>Pending</option><option value="confirmed" ${s==="confirmed"?"selected":""}>Confirmed</option><option value="preparing" ${s==="preparing"?"selected":""}>Preparing</option><option value="delivered" ${s==="delivered"?"selected":""}>Delivered</option><option value="cancelled" ${s==="cancelled"?"selected":""}>Cancelled</option></select></td><td><b>₹${Number(o.total||0).toLocaleString("en-IN")}</b></td></tr>`}).join(""):"<tr><td colspan=5 class=msg>No orders found.</td></tr>"}async function updateStatus(id,status){let r=await sb.from("orders").update({status}).eq("id",id);if(r.error){alert("Status update failed: "+r.error.message);render();return}let o=orders.find(x=>String(x.id)===String(id));if(o)o.status=status;render()}search.addEventListener("input",render);filter.addEventListener("change",render);async function logout(){if(!confirm("Are you sure you want to logout?"))return;await sb.auth.signOut();location.href="login.html"}loadOrders();</script></body></html>
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>Beatroot - Orders</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#171717;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.side{
+    position:fixed;
+    inset:0 auto 0 0;
+    width:250px;
+    background:#111827;
+    color:white;
+    padding:25px 15px;
+    z-index:100;
+}
+
+.brand{
+    font-size:27px;
+    font-weight:800;
+    padding:0 15px 30px;
+}
+
+.brand span{
+    color:#ef4444;
+}
+
+.label{
+    font-size:12px;
+    color:#9ca3af;
+    padding:0 15px 10px;
+    text-transform:uppercase;
+}
+
+.menu button,
+.logout{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#d1d5db;
+    padding:13px 15px;
+    text-align:left;
+    border-radius:10px;
+    cursor:pointer;
+    margin:3px 0;
+    font-size:14px;
+}
+
+.menu button:hover,
+.menu .active{
+    background:#ef4444 !important;
+    color:white !important;
+}
+
+.bottom{
+    position:absolute;
+    bottom:20px;
+    left:15px;
+    right:15px;
+}
+
+.logout{
+    border:1px solid #374151;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.top{
+    height:75px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.title{
+    font-size:22px;
+    font-weight:700;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#ef4444;
+    color:white;
+    display:grid;
+    place-items:center;
+    font-weight:bold;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:30px;
+}
+
+.head{
+    margin-bottom:22px;
+}
+
+.head h1{
+    margin:0 0 6px;
+    font-size:27px;
+}
+
+.head p{
+    margin:0;
+    color:#6b7280;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error{
+    display:none;
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:18px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:22px;
+}
+
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search{
+    flex:1;
+    min-width:220px;
+    height:44px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:0 13px;
+    font-size:14px;
+    outline:none;
+}
+
+.search:focus{
+    border-color:#ef4444;
+}
+
+.filter,
+.refresh{
+    height:44px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:0 12px;
+    background:white;
+    cursor:pointer;
+}
+
+.refresh{
+    background:#111827;
+    color:white;
+}
+
+.refresh:hover{
+    background:#1f2937;
+}
+
+
+/* =========================
+   COUNT
+========================= */
+
+.count{
+    font-size:13px;
+    color:#6b7280;
+    margin-bottom:10px;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:760px;
+}
+
+th,
+td{
+    text-align:left;
+    padding:14px 10px;
+    border-bottom:1px solid #eee;
+    font-size:13px;
+}
+
+th{
+    font-size:12px;
+    color:#6b7280;
+}
+
+.customer{
+    max-width:180px;
+    word-break:break-all;
+    color:#6b7280;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+    border:0;
+    border-radius:20px;
+    padding:7px 10px;
+    font-size:11px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.status.pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status.confirmed{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.status.preparing{
+    background:#ffedd5;
+    color:#c2410c;
+}
+
+.status.delivered{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.status.cancelled{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.msg{
+    text-align:center;
+    padding:35px;
+    color:#777;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    .side{
+        transform:translateX(-100%);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .content{
+        padding:20px 15px;
+    }
+
+    .top{
+        padding:0 15px;
+    }
+
+    .profile small{
+        display:none;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="side">
+
+    <div class="brand">
+        Beat<span>root</span>
+    </div>
+
+
+    <div class="label">
+        Admin Panel
+    </div>
+
+
+    <div class="menu">
+
+        <button
+            onclick="go('admin-dashboard.html')"
+        >
+            📊 Dashboard
+        </button>
+
+
+        <button class="active">
+            🛒 Orders
+        </button>
+
+
+        <button
+            onclick="go('admin-customers.html')"
+        >
+            👥 Customers
+        </button>
+
+
+        <button
+            onclick="go('admin-restaurants.html')"
+        >
+            🍔 Restaurants
+        </button>
+
+
+        <button
+            onclick="go('admin-reports.html')"
+        >
+            📈 Reports
+        </button>
+
+
+        <button
+            onclick="go('settings.html')"
+        >
+            ⚙️ Settings
+        </button>
+
+    </div>
+
+
+    <div class="bottom">
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            🚪 Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+
+    <!-- TOP BAR -->
+
+    <header class="top">
+
+        <div class="title">
+            Orders
+        </div>
+
+
+        <div class="profile">
+
+            <div
+                class="avatar"
+                id="avatar"
+            >
+                A
+            </div>
+
+
+            <strong id="adminName">
+                Admin
+            </strong>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+
+        <div class="head">
+
+            <h1>
+                Orders
+            </h1>
+
+            <p>
+                Manage customer orders and update their status.
+            </p>
+
+        </div>
+
+
+
+        <!-- ERROR -->
+
+        <div
+            class="error"
+            id="error"
+        ></div>
+
+
+
+        <!-- CARD -->
+
+        <section class="card">
+
+
+            <!-- TOOLBAR -->
+
+            <div class="toolbar">
+
+                <input
+                    id="search"
+                    class="search"
+                    type="text"
+                    placeholder="Search order ID or customer ID..."
+                >
+
+
+                <select
+                    id="filter"
+                    class="filter"
+                >
+
+                    <option value="">
+                        All Status
+                    </option>
+
+                    <option value="pending">
+                        Pending
+                    </option>
+
+                    <option value="confirmed">
+                        Confirmed
+                    </option>
+
+                    <option value="preparing">
+                        Preparing
+                    </option>
+
+                    <option value="delivered">
+                        Delivered
+                    </option>
+
+                    <option value="cancelled">
+                        Cancelled
+                    </option>
+
+                </select>
+
+
+                <button
+                    class="refresh"
+                    onclick="loadOrders()"
+                >
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+
+
+            <!-- COUNT -->
+
+            <div
+                id="count"
+                class="count"
+            >
+                Loading...
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="table">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ORDER
+                            </th>
+
+                            <th>
+                                CUSTOMER
+                            </th>
+
+                            <th>
+                                DATE & TIME
+                            </th>
+
+                            <th>
+                                STATUS
+                            </th>
+
+                            <th>
+                                TOTAL
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="rows">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="msg"
+                            >
+                                Loading orders...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+/* =========================================
+   SUPABASE CONFIG
+========================================= */
+
+const SUPABASE_URL =
+    "https://jhihjnsxazmftdqlitgk.supabase.co";
+
+
+const SUPABASE_KEY =
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
+
+const ADMIN_EMAIL =
+    "itnedumangad@gmail.com";
+
+
+const sb =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+let orders = [];
+
+
+
+/* =========================================
+   NORMALIZE STATUS
+========================================= */
+
+function normalizeStatus(status){
+
+    status =
+        String(
+            status || "pending"
+        ).toLowerCase();
+
+
+    if(status === "processing"){
+
+        return "preparing";
+
+    }
+
+
+    if(status === "completed"){
+
+        return "delivered";
+
+    }
+
+
+    if(status === "canceled"){
+
+        return "cancelled";
+
+    }
+
+
+    const allowed = [
+
+        "pending",
+        "confirmed",
+        "preparing",
+        "delivered",
+        "cancelled"
+
+    ];
+
+
+    if(
+        allowed.includes(status)
+    ){
+
+        return status;
+
+    }
+
+
+    return "pending";
+
+}
+
+
+
+/* =========================================
+   PAGE NAVIGATION
+========================================= */
+
+function go(page){
+
+    window.location.href =
+        page;
+
+}
+
+
+
+/* =========================================
+   HTML ESCAPE
+========================================= */
+
+function escapeHTML(value){
+
+    return String(
+        value ?? ""
+    ).replace(
+        /[&<>"']/g,
+        function(character){
+
+            const map = {
+
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#039;"
+
+            };
+
+            return map[character];
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   AUTH CHECK
+========================================= */
+
+async function checkAdmin(){
+
+    try{
+
+        const result =
+            await sb.auth.getUser();
+
+
+        if(
+            result.error ||
+            !result.data ||
+            !result.data.user
+        ){
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
+
+
+        const user =
+            result.data.user;
+
+
+        const email =
+            user.email || "";
+
+
+        if(
+            email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ){
+
+            alert(
+                "Access denied. Admin only."
+            );
+
+
+            window.location.href =
+                "../index.html";
+
+
+            return false;
+
+        }
+
+
+        const name =
+            email.split("@")[0];
+
+
+        document.getElementById(
+            "adminName"
+        ).textContent =
+            name;
+
+
+        document.getElementById(
+            "avatar"
+        ).textContent =
+            name
+                .charAt(0)
+                .toUpperCase();
+
+
+        return true;
+
+    }
+    catch(error){
+
+        console.error(
+            "Authentication error:",
+            error
+        );
+
+
+        window.location.href =
+            "login.html";
+
+
+        return false;
+
+    }
+
+}
+
+
+
+/* =========================================
+   LOAD ORDERS
+========================================= */
+
+async function loadOrders(){
+
+    const errorBox =
+        document.getElementById(
+            "error"
+        );
+
+
+    const count =
+        document.getElementById(
+            "count"
+        );
+
+
+    const rows =
+        document.getElementById(
+            "rows"
+        );
+
+
+    errorBox.style.display =
+        "none";
+
+
+    count.textContent =
+        "Loading...";
+
+
+    rows.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="5"
+                class="msg"
+            >
+                Loading orders...
+            </td>
+
+        </tr>
+
+    `;
+
+
+    const isAdmin =
+        await checkAdmin();
+
+
+    if(!isAdmin){
+
+        return;
+
+    }
+
+
+    try{
+
+        const result =
+            await sb
+                .from("orders")
+                .select(
+                    "id,status,total,customer_id,created_at"
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                );
+
+
+        if(result.error){
+
+            console.error(
+                "Orders query error:",
+                result.error
+            );
+
+
+            errorBox.textContent =
+                "Orders loading error: " +
+                result.error.message;
+
+
+            errorBox.style.display =
+                "block";
+
+
+            count.textContent =
+                "Unable to load orders";
+
+
+            rows.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="msg"
+                    >
+                        Could not load orders.
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            return;
+
+        }
+
+
+        orders =
+            result.data || [];
+
+
+        renderOrders();
+
+    }
+    catch(error){
+
+        console.error(
+            "Unexpected error:",
+            error
+        );
+
+
+        errorBox.textContent =
+            "Something went wrong while loading orders.";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        count.textContent =
+            "Unable to load orders";
+
+    }
+
+}
+
+
+
+/* =========================================
+   RENDER ORDERS
+========================================= */
+
+function renderOrders(){
+
+    const search =
+        document.getElementById(
+            "search"
+        );
+
+
+    const filter =
+        document.getElementById(
+            "filter"
+        );
+
+
+    const count =
+        document.getElementById(
+            "count"
+        );
+
+
+    const rows =
+        document.getElementById(
+            "rows"
+        );
+
+
+    const query =
+        search.value
+            .toLowerCase()
+            .trim();
+
+
+    const selectedStatus =
+        filter.value;
+
+
+    const filtered =
+        orders.filter(
+            function(order){
+
+                const orderID =
+                    String(
+                        order.id || ""
+                    ).toLowerCase();
+
+
+                const customerID =
+                    String(
+                        order.customer_id || ""
+                    ).toLowerCase();
+
+
+                const status =
+                    normalizeStatus(
+                        order.status
+                    );
+
+
+                const matchesSearch =
+                    !query ||
+                    orderID.includes(query) ||
+                    customerID.includes(query);
+
+
+                const matchesStatus =
+                    !selectedStatus ||
+                    status === selectedStatus;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    count.textContent =
+        filtered.length +
+        " order" +
+        (
+            filtered.length === 1
+                ? ""
+                : "s"
+        );
+
+
+    if(
+        filtered.length === 0
+    ){
+
+        rows.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="msg"
+                >
+                    No orders found.
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    rows.innerHTML =
+        filtered.map(
+            function(order){
+
+                const status =
+                    normalizeStatus(
+                        order.status
+                    );
+
+
+                let date = "-";
+
+
+                if(order.created_at){
+
+                    const parsedDate =
+                        new Date(
+                            order.created_at
+                        );
+
+
+                    if(
+                        !isNaN(
+                            parsedDate.getTime()
+                        )
+                    ){
+
+                        date =
+                            parsedDate.toLocaleString(
+                                "en-IN"
+                            );
+
+                    }
+
+                }
+
+
+                const total =
+                    Number(
+                        order.total || 0
+                    ).toLocaleString(
+                        "en-IN"
+                    );
+
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            <b>
+                                #${escapeHTML(
+                                    order.id
+                                )}
+                            </b>
+                        </td>
+
+
+                        <td
+                            class="customer"
+                        >
+                            ${escapeHTML(
+                                order.customer_id ||
+                                "Customer"
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${escapeHTML(
+                                date
+                            )}
+                        </td>
+
+
+                        <td>
+
+                            <select
+                                class="status ${status}"
+                                onchange="updateStatus(this.dataset.id,this.value)"
+                                data-id="${escapeHTML(
+                                    order.id
+                                )}"
+                            >
+
+                                <option
+                                    value="pending"
+                                    ${
+                                        status ===
+                                        "pending"
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    Pending
+                                </option>
+
+
+                                <option
+                                    value="confirmed"
+                                    ${
+                                        status ===
+                                        "confirmed"
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    Confirmed
+                                </option>
+
+
+                                <option
+                                    value="preparing"
+                                    ${
+                                        status ===
+                                        "preparing"
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    Preparing
+                                </option>
+
+
+                                <option
+                                    value="delivered"
+                                    ${
+                                        status ===
+                                        "delivered"
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    Delivered
+                                </option>
+
+
+                                <option
+                                    value="cancelled"
+                                    ${
+                                        status ===
+                                        "cancelled"
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    Cancelled
+                                </option>
+
+                            </select>
+
+                        </td>
+
+
+                        <td>
+
+                            <b>
+                                ₹${total}
+                            </b>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+
+/* =========================================
+   UPDATE ORDER STATUS
+========================================= */
+
+async function updateStatus(
+    id,
+    newStatus
+){
+
+    try{
+
+        const result =
+            await sb
+                .from("orders")
+                .update({
+                    status:newStatus
+                })
+                .eq(
+                    "id",
+                    id
+                );
+
+
+        if(result.error){
+
+            console.error(
+                "Status update error:",
+                result.error
+            );
+
+
+            alert(
+                "Status update failed: " +
+                result.error.message
+            );
+
+
+            renderOrders();
+
+            return;
+
+        }
+
+
+        const order =
+            orders.find(
+                function(item){
+
+                    return String(
+                        item.id
+                    ) === String(id);
+
+                }
+            );
+
+
+        if(order){
+
+            order.status =
+                newStatus;
+
+        }
+
+
+        renderOrders();
+
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            "Something went wrong while updating status."
+        );
+
+
+        renderOrders();
+
+    }
+
+}
+
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+document
+    .getElementById("search")
+    .addEventListener(
+        "input",
+        function(){
+
+            renderOrders();
+
+        }
+    );
+
+
+
+/* =========================================
+   FILTER
+========================================= */
+
+document
+    .getElementById("filter")
+    .addEventListener(
+        "change",
+        function(){
+
+            renderOrders();
+
+        }
+    );
+
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+async function logout(){
+
+    const confirmLogout =
+        confirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if(!confirmLogout){
+
+        return;
+
+    }
+
+
+    try{
+
+        await sb.auth.signOut();
+
+    }
+    catch(error){
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+
+/* =========================================
+   START PAGE
+========================================= */
+
+loadOrders();
+
+</script>
+
+
+</body>
+
+</html>
