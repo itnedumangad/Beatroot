@@ -1,803 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Order Confirmed - Beatroot</title>
-
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/desktop.css">
 
 <style>
 
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f5f6f7;
-    color:#171717;
+    background:#f7f7f7;
+    color:#222;
 }
-
-.page{
-    max-width:900px;
-    min-height:100vh;
-    margin:auto;
-    background:#fff;
-}
-
-
-/* HEADER */
 
 .header{
-    padding:18px 20px;
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    border-bottom:1px solid #eee;
+    padding:0 6%;
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
 .logo{
-    font-size:28px;
+    font-size:26px;
     font-weight:800;
-    color:#e53935;
+    color:#ff4d00;
+    text-decoration:none;
 }
 
-.cart{
-    font-size:24px;
+.nav{
+    display:flex;
+    gap:20px;
+    align-items:center;
 }
 
+.nav a{
+    text-decoration:none;
+    color:#333;
+    font-size:14px;
+    font-weight:600;
+}
 
-/* CONTENT */
+.cart-btn{
+    background:#ff4d00;
+    color:#fff !important;
+    padding:10px 16px;
+    border-radius:8px;
+}
 
 .container{
-    padding:35px 20px 50px;
+    max-width:900px;
+    margin:45px auto;
+    padding:0 20px;
 }
 
-
-/* SUCCESS */
-
-.success{
+.success-box{
+    background:#fff;
+    border-radius:18px;
+    padding:40px 30px;
     text-align:center;
-    padding:20px 10px 35px;
+    box-shadow:0 5px 25px rgba(0,0,0,.07);
 }
 
 .success-icon{
     width:80px;
     height:80px;
-
     margin:0 auto 20px;
-
     border-radius:50%;
-
-    background:#e8f5e9;
-    color:#2e7d32;
-
+    background:#e9f8ee;
+    color:#20a44b;
     display:flex;
     align-items:center;
     justify-content:center;
-
     font-size:42px;
-}
-
-.success h1{
-    margin:0 0 10px;
-    font-size:30px;
-}
-
-.success p{
-    color:#666;
-    margin:0;
-}
-
-
-/* ORDER ID */
-
-.order-id{
-    display:inline-block;
-
-    margin-top:18px;
-
-    padding:10px 18px;
-
-    background:#fff5f5;
-
-    border-radius:10px;
-
-    color:#e53935;
-
     font-weight:bold;
 }
 
-
-/* CARD */
-
-.card{
-    background:#fff;
-
-    border:1px solid #e5e5e5;
-
-    border-radius:16px;
-
-    padding:22px;
-
-    margin-bottom:20px;
+.success-box h1{
+    font-size:30px;
+    margin-bottom:10px;
 }
 
-.card h2{
-    margin:0 0 20px;
-
-    font-size:20px;
+.success-box p{
+    color:#666;
+    font-size:15px;
 }
 
+.order-id{
+    display:inline-block;
+    margin-top:18px;
+    padding:10px 18px;
+    background:#fff4ee;
+    color:#ff4d00;
+    border-radius:8px;
+    font-weight:800;
+}
 
-/* DETAILS */
+.details{
+    margin-top:30px;
+    text-align:left;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.detail-box{
+    border:1px solid #eee;
+    border-radius:12px;
+    padding:20px;
+}
+
+.detail-box h3{
+    font-size:17px;
+    margin-bottom:15px;
+}
 
 .detail-row{
     display:flex;
-
     justify-content:space-between;
-
-    gap:20px;
-
-    padding:12px 0;
-
-    border-bottom:1px solid #eee;
+    gap:15px;
+    padding:8px 0;
+    font-size:14px;
 }
 
-.detail-row:last-child{
-    border-bottom:0;
-}
-
-.detail-label{
+.detail-row span:first-child{
     color:#777;
 }
 
-.detail-value{
-    text-align:right;
-    font-weight:600;
+.items{
+    margin-top:25px;
+    text-align:left;
 }
 
-
-/* ITEMS */
+.items h2{
+    font-size:21px;
+    margin-bottom:15px;
+}
 
 .item{
     display:flex;
-
     justify-content:space-between;
-
     gap:15px;
-
-    padding:12px 0;
-
+    padding:14px 0;
     border-bottom:1px solid #eee;
 }
 
 .item:last-child{
-    border-bottom:0;
+    border-bottom:none;
 }
 
 .item-name{
-    flex:1;
+    font-weight:600;
 }
 
 .item-qty{
     color:#777;
+    font-size:13px;
+    margin-top:4px;
 }
 
 .item-price{
-    font-weight:bold;
+    font-weight:700;
+    white-space:nowrap;
 }
 
-
-/* TOTAL */
+.total-box{
+    margin-top:20px;
+    border-top:1px solid #eee;
+    padding-top:18px;
+}
 
 .total-row{
     display:flex;
-
     justify-content:space-between;
-
-    margin-top:12px;
-
-    color:#666;
+    padding:8px 0;
+    color:#555;
 }
 
 .grand-total{
     display:flex;
-
     justify-content:space-between;
-
-    margin-top:15px;
-
-    padding-top:15px;
-
-    border-top:1px solid #eee;
-
     font-size:21px;
-
-    font-weight:bold;
+    font-weight:800;
+    color:#111;
+    margin-top:8px;
 }
-
-
-/* BUTTONS */
 
 .buttons{
     display:flex;
-
+    justify-content:center;
     gap:12px;
-
-    margin-top:25px;
+    margin-top:30px;
+    flex-wrap:wrap;
 }
 
 .btn{
-    flex:1;
-
-    border:0;
-
-    border-radius:11px;
-
-    padding:14px;
-
-    font-size:15px;
-
-    font-weight:bold;
-
+    display:inline-block;
+    padding:13px 22px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:700;
+    border:none;
     cursor:pointer;
+    font-size:14px;
 }
 
-.btn-primary{
-    background:#e53935;
+.primary{
+    background:#ff4d00;
     color:#fff;
 }
 
-.btn-secondary{
+.secondary{
     background:#f1f1f1;
     color:#333;
 }
 
-.btn-primary:hover{
-    background:#c62828;
-}
-
-
-/* NO ORDER */
-
-.no-order{
+.loading{
     text-align:center;
-
-    padding:80px 20px;
-
-    color:#777;
+    padding:70px 20px;
 }
 
-.no-order-icon{
-    font-size:55px;
+@media(max-width:700px){
 
-    margin-bottom:15px;
-}
-
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-    .container{
-        padding:25px 15px 40px;
+    .header{
+        padding:0 20px;
     }
 
-    .success h1{
+    .nav a:not(.cart-btn){
+        display:none;
+    }
+
+    .success-box{
+        padding:30px 18px;
+    }
+
+    .success-box h1{
         font-size:25px;
     }
 
-    .detail-row{
-        display:block;
-    }
-
-    .detail-value{
-        text-align:left;
-
-        margin-top:5px;
-    }
-
-    .buttons{
-        flex-direction:column;
+    .details{
+        grid-template-columns:1fr;
     }
 
 }
 
 </style>
-
 </head>
 
 
 <body>
 
-<div class="page">
+<header class="header">
 
+    <a href="home.html" class="logo">
+        Beatroot
+    </a>
 
-    <!-- HEADER -->
+    <nav class="nav">
 
-    <header class="header">
+        <a href="home.html">
+            Home
+        </a>
 
-        <div class="logo">
-            Beat<span style="color:#333">root</span>
-        </div>
+        <a href="restaurants.html">
+            Restaurants
+        </a>
 
-        <div class="cart">
-            🛒
-        </div>
+        <a href="my-orders.html">
+            My Orders
+        </a>
 
-    </header>
+        <a href="profile.html">
+            Profile
+        </a>
 
+        <a href="cart.html" class="cart-btn">
+            🛒 Cart
+        </a>
 
+    </nav>
 
-    <!-- MAIN -->
+</header>
 
-    <main class="container">
 
+<main class="container">
 
-        <!-- ORDER CONFIRMATION -->
+<div id="confirmationArea">
 
-        <div id="confirmation">
-
-
-            <div class="success">
-
-                <div class="success-icon">
-                    ✓
-                </div>
-
-                <h1>
-                    Order Confirmed!
-                </h1>
-
-                <p>
-                    Thank you for ordering from Beatroot.
-                </p>
-
-                <div class="order-id">
-
-                    Order ID:
-                    <span id="orderId">
-                        —
-                    </span>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- ORDER DETAILS -->
-
-            <div class="card">
-
-                <h2>
-                    Delivery Details
-                </h2>
-
-
-                <div class="detail-row">
-
-                    <span class="detail-label">
-                        Customer
-                    </span>
-
-                    <span
-                        class="detail-value"
-                        id="customerName">
-                        —
-                    </span>
-
-                </div>
-
-
-                <div class="detail-row">
-
-                    <span class="detail-label">
-                        Mobile
-                    </span>
-
-                    <span
-                        class="detail-value"
-                        id="customerMobile">
-                        —
-                    </span>
-
-                </div>
-
-
-                <div class="detail-row">
-
-                    <span class="detail-label">
-                        Address
-                    </span>
-
-                    <span
-                        class="detail-value"
-                        id="customerAddress">
-                        —
-                    </span>
-
-                </div>
-
-
-                <div class="detail-row">
-
-                    <span class="detail-label">
-                        Payment
-                    </span>
-
-                    <span
-                        class="detail-value"
-                        id="paymentMethod">
-                        —
-                    </span>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- ORDER ITEMS -->
-
-            <div class="card">
-
-                <h2>
-                    Order Summary
-                </h2>
-
-
-                <div id="orderItems">
-                </div>
-
-
-                <div class="total-row">
-
-                    <span>
-                        Subtotal
-                    </span>
-
-                    <span id="subtotal">
-                        ₹0
-                    </span>
-
-                </div>
-
-
-                <div class="total-row">
-
-                    <span>
-                        Delivery
-                    </span>
-
-                    <span id="delivery">
-                        ₹40
-                    </span>
-
-                </div>
-
-
-                <div class="grand-total">
-
-                    <span>
-                        Total
-                    </span>
-
-                    <span id="grandTotal">
-                        ₹0
-                    </span>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- BUTTONS -->
-
-            <div class="buttons">
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="goHome()">
-
-                    Continue Shopping
-
-                </button>
-
-
-                <button
-                    class="btn btn-primary"
-                    onclick="viewOrders()">
-
-                    My Orders
-
-                </button>
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- NO ORDER -->
-
-        <div
-            id="noOrder"
-            class="no-order"
-            style="display:none;">
-
-            <div class="no-order-icon">
-                📦
-            </div>
-
-            <h2>
-                No Order Found
-            </h2>
-
-            <p>
-                We couldn't find a recent order.
-            </p>
-
-            <button
-                class="btn btn-primary"
-                onclick="goHome()">
-
-                Go to Home
-
-            </button>
-
-        </div>
-
-
-    </main>
+    <div class="loading">
+        Loading order details...
+    </div>
 
 </div>
 
+</main>
 
 
 <script>
 
-
-/* GET ORDERS */
-
-const orders =
-    JSON.parse(
-        localStorage.getItem(
-            "beatrootOrders"
-        )
-    ) || [];
-
-
-
-/* GET LATEST ORDER */
-
 const order =
-    orders.length > 0
-        ? orders[orders.length - 1]
-        : null;
+JSON.parse(
+    localStorage.getItem("beatrootCurrentOrder")
+);
 
 
+function showConfirmation(){
 
-/* LOAD ORDER */
+    const area =
+    document.getElementById("confirmationArea");
 
-function loadOrder(){
 
     if(!order){
 
-        document.getElementById(
-            "confirmation"
-        ).style.display =
-            "none";
+        area.innerHTML = `
 
-        document.getElementById(
-            "noOrder"
-        ).style.display =
-            "block";
+            <div class="success-box">
+
+                <div class="success-icon">
+                    !
+                </div>
+
+                <h1>
+                    No Order Found
+                </h1>
+
+                <p>
+                    We couldn't find a recent order.
+                </p>
+
+                <div class="buttons">
+
+                    <a
+                        href="restaurants.html"
+                        class="btn primary"
+                    >
+                        Browse Restaurants
+                    </a>
+
+                    <a
+                        href="my-orders.html"
+                        class="btn secondary"
+                    >
+                        My Orders
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
 
         return;
-
     }
 
 
-    /* BASIC DETAILS */
-
-    document.getElementById(
-        "orderId"
-    ).textContent =
-        order.id || "—";
+    let itemsHTML = "";
 
 
-    document.getElementById(
-        "customerName"
-    ).textContent =
-        order.name || "—";
+    order.items.forEach(item=>{
+
+        const quantity =
+        Number(item.quantity || 1);
+
+        const price =
+        Number(item.price || 0);
+
+        const total =
+        price * quantity;
 
 
-    document.getElementById(
-        "customerMobile"
-    ).textContent =
-        order.mobile || "—";
+        itemsHTML += `
 
+            <div class="item">
 
-    document.getElementById(
-        "customerAddress"
-    ).textContent =
-        order.address || "—";
-
-
-    document.getElementById(
-        "paymentMethod"
-    ).textContent =
-        formatPayment(
-            order.payment
-        );
-
-
-    /* ITEMS */
-
-    const itemsBox =
-        document.getElementById(
-            "orderItems"
-        );
-
-
-    itemsBox.innerHTML = "";
-
-
-    if(order.items &&
-       order.items.length > 0){
-
-        order.items.forEach(
-            item => {
-
-                const total =
-                    Number(item.price) *
-                    Number(item.quantity);
-
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                div.className =
-                    "item";
-
-
-                div.innerHTML = `
+                <div>
 
                     <div class="item-name">
-                        ${escapeHtml(item.name)}
+                        ${item.name || "Food Item"}
                     </div>
 
                     <div class="item-qty">
-                        × ${item.quantity}
+                        Quantity: ${quantity}
                     </div>
 
-                    <div class="item-price">
-                        ₹${total}
+                </div>
+
+                <div class="item-price">
+                    ₹${total.toFixed(2)}
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    const address = order.address || {};
+
+    const customer = order.customer || {};
+
+
+    area.innerHTML = `
+
+        <div class="success-box">
+
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <h1>
+                Order Placed Successfully!
+            </h1>
+
+
+            <p>
+                Thank you for ordering with Beatroot.
+            </p>
+
+
+            <div class="order-id">
+
+                Order ID:
+                ${order.orderId}
+
+            </div>
+
+
+            <div class="details">
+
+
+                <!-- CUSTOMER -->
+
+                <div class="detail-box">
+
+                    <h3>
+                        👤 Customer Details
+                    </h3>
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            Name
+                        </span>
+
+                        <strong>
+                            ${customer.name || "-"}
+                        </strong>
+
                     </div>
 
-                `;
+
+                    <div class="detail-row">
+
+                        <span>
+                            Mobile
+                        </span>
+
+                        <strong>
+                            ${customer.phone || "-"}
+                        </strong>
+
+                    </div>
 
 
-                itemsBox.appendChild(div);
+                    <div class="detail-row">
 
-            }
-        );
+                        <span>
+                            Email
+                        </span>
 
-    }
+                        <strong>
+                            ${customer.email || "-"}
+                        </strong>
 
+                    </div>
 
-    /* TOTALS */
-
-    document.getElementById(
-        "subtotal"
-    ).textContent =
-        "₹" +
-        Number(
-            order.subtotal || 0
-        );
+                </div>
 
 
-    document.getElementById(
-        "delivery"
-    ).textContent =
-        "₹" +
-        Number(
-            order.delivery || 0
-        );
+                <!-- DELIVERY -->
+
+                <div class="detail-box">
+
+                    <h3>
+                        📍 Delivery Address
+                    </h3>
 
 
-    document.getElementById(
-        "grandTotal"
-    ).textContent =
-        "₹" +
-        Number(
-            order.total || 0
-        );
+                    <div class="detail-row">
+
+                        <span>
+                            Address
+                        </span>
+
+                        <strong>
+                            ${address.house || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            Area
+                        </span>
+
+                        <strong>
+                            ${address.street || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            City
+                        </span>
+
+                        <strong>
+                            ${address.city || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span>
+                            PIN
+                        </span>
+
+                        <strong>
+                            ${address.pincode || "-"}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ITEMS -->
+
+            <div class="items">
+
+                <h2>
+                    🧾 Order Items
+                </h2>
+
+                ${itemsHTML}
+
+
+                <div class="total-box">
+
+
+                    <div class="total-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong>
+                            ₹${Number(order.subtotal || 0).toFixed(2)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="total-row">
+
+                        <span>
+                            Delivery Fee
+                        </span>
+
+                        <strong>
+
+                            ${
+                                Number(order.deliveryFee || 0) === 0
+                                ? "FREE"
+                                : "₹" +
+                                Number(order.deliveryFee).toFixed(2)
+                            }
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="grand-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <span>
+                            ₹${Number(order.total || 0).toFixed(2)}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <a
+                    href="my-orders.html"
+                    class="btn primary"
+                >
+                    📦 View My Orders
+                </a>
+
+
+                <a
+                    href="restaurants.html"
+                    class="btn secondary"
+                >
+                    🍽️ Order More
+                </a>
+
+            </div>
+
+
+        </div>
+
+    `;
 
 }
 
 
-
-/* PAYMENT NAME */
-
-function formatPayment(payment){
-
-    if(payment === "COD")
-        return "Cash on Delivery";
-
-    if(payment === "ONLINE")
-        return "Online Payment";
-
-    if(payment === "UPI")
-        return "UPI Payment";
-
-    return payment || "—";
-
-}
-
-
-
-/* HOME */
-
-function goHome(){
-
-    window.location.href =
-        "home.html";
-
-}
-
-
-
-/* MY ORDERS */
-
-function viewOrders(){
-
-    window.location.href =
-        "my-orders.html";
-
-}
-
-
-
-/* ESCAPE HTML */
-
-function escapeHtml(text){
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent =
-        text || "";
-
-    return div.innerHTML;
-
-}
-
-
-
-/* START */
-
-loadOrder();
+showConfirmation();
 
 </script>
 
 </body>
-
 </html>
