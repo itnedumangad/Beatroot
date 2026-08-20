@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,99 +10,370 @@
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/desktop.css">
 
+<style>
+.loginPage{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:30px 20px;
+    background:#f7f7f7;
+}
+
+.loginLogo{
+    font-size:38px;
+    font-weight:900;
+    color:#e53935;
+    margin-bottom:8px;
+}
+
+.loginLogo span{
+    color:#171717;
+}
+
+.loginWelcome{
+    color:#777;
+    margin-bottom:25px;
+}
+
+.loginCard{
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+}
+
+.loginCard h1{
+    margin:0 0 8px;
+    font-size:25px;
+}
+
+.loginSub{
+    color:#777;
+    font-size:14px;
+    margin-bottom:22px;
+}
+
+.loginCard input{
+    width:100%;
+    padding:14px 15px;
+    margin-bottom:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+.loginCard input:focus{
+    border-color:#e53935;
+}
+
+.loginCard button{
+    width:100%;
+    border:0;
+    padding:14px;
+    border-radius:10px;
+    background:#e53935;
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.loginCard button:hover{
+    background:#d8322f;
+}
+
+.createAccount{
+    text-align:center;
+    margin-top:20px;
+    color:#e53935;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.closeLogin{
+    text-align:center;
+    margin-top:15px;
+    color:#777;
+    cursor:pointer;
+}
+
+#loginMessage{
+    margin-top:18px;
+    text-align:center;
+    font-size:14px;
+    color:#d52d2d;
+}
+
+@media(max-width:500px){
+
+    .loginCard{
+        padding:22px;
+    }
+
+    .loginLogo{
+        font-size:32px;
+    }
+
+}
+</style>
+
 </head>
 
 <body>
 
 <div class="app">
 
-    <div class="loginPage">
+<div class="loginPage">
 
-        <div class="loginLogo">
-            Beat<span>root</span>
+    <div class="loginLogo">
+        Beat<span>root</span>
+    </div>
+
+    <p class="loginWelcome">
+        Welcome to Beatroot
+    </p>
+
+    <div class="loginCard">
+
+        <h1>Login to Beatroot</h1>
+
+        <p class="loginSub">
+            Login using your email and password.
+        </p>
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email address"
+            autocomplete="email"
+        >
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
+
+        <button
+            id="loginButton"
+            onclick="loginUser()">
+            Login
+        </button>
+
+        <div
+            class="createAccount"
+            onclick="createAccount()">
+            Create New Account
         </div>
 
-        <p class="loginWelcome">Welcome to Beatroot</p>
-
-        <div class="loginCard">
-
-            <h1>Login to Beatroot</h1>
-
-            <p class="loginSub">
-                Login using your email and password.
-            </p>
-
-            <input
-                type="email"
-                id="loginEmail"
-                placeholder="Email address"
-            >
-
-            <input
-                type="password"
-                id="loginPassword"
-                placeholder="Password"
-            >
-
-            <button onclick="loginUser()">
-                Login
-            </button>
-
-            <div class="createAccount">
-                Create New Account
-            </div>
-
-            <div class="closeLogin" onclick="history.back()">
-                Close
-            </div>
-
-            <p id="loginMessage"></p>
-
+        <div
+            class="closeLogin"
+            onclick="goBack()">
+            Close
         </div>
+
+        <p id="loginMessage"></p>
 
     </div>
 
 </div>
 
+</div>
+
+
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+/* ==========================================
+   SUPABASE CONNECTION
+   ========================================== */
+
+const SUPABASE_URL =
+    "https://jihjnsxazmftdqlitgk.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
 
 const sb = supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_ANON_KEY
+    SUPABASE_PUBLISHABLE_KEY
 );
+
+
+/* ==========================================
+   LOGIN
+   ========================================== */
 
 async function loginUser(){
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document.getElementById("loginEmail")
+        .value
+        .trim();
 
     const password =
-        document.getElementById("loginPassword").value;
+        document.getElementById("loginPassword")
+        .value;
 
     const message =
         document.getElementById("loginMessage");
 
+    const button =
+        document.getElementById("loginButton");
+
+
+    message.textContent = "";
+
+
+    /* Check fields */
+
     if(!email || !password){
-        message.textContent = "Please enter email and password.";
+
+        message.textContent =
+            "Please enter email and password.";
+
         return;
     }
 
-    const { error } = await sb.auth.signInWithPassword({
-        email,
-        password
-    });
 
-    if(error){
-        message.textContent = error.message;
-        return;
+    /* Loading */
+
+    button.disabled = true;
+    button.textContent = "Logging in...";
+
+
+    try{
+
+        const {
+            data,
+            error
+        } = await sb.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+        /* Login error */
+
+        if(error){
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            message.textContent =
+                error.message;
+
+            button.disabled = false;
+            button.textContent = "Login";
+
+            return;
+        }
+
+
+        /* Check session */
+
+        if(!data || !data.session){
+
+            message.textContent =
+                "Login successful, but session was not created.";
+
+            button.disabled = false;
+            button.textContent = "Login";
+
+            return;
+        }
+
+
+        console.log(
+            "Login successful:",
+            data.user
+        );
+
+
+        /*
+         * IMPORTANT:
+         * index.html aanu ippo main page.
+         */
+
+        window.location.href =
+            "../index.html";
+
+
+    }catch(error){
+
+        console.error(
+            "Unexpected login error:",
+            error
+        );
+
+        message.textContent =
+            "Something went wrong. Please try again.";
+
+        button.disabled = false;
+        button.textContent = "Login";
+
     }
 
-    window.location.href = "home.html";
 }
+
+
+/* ==========================================
+   CREATE ACCOUNT
+   ========================================== */
+
+function createAccount(){
+
+    alert(
+        "Create Account page will be added next."
+    );
+
+}
+
+
+/* ==========================================
+   CLOSE
+   ========================================== */
+
+function goBack(){
+
+    window.history.back();
+
+}
+
+
+/* ==========================================
+   ENTER KEY LOGIN
+   ========================================== */
+
+document
+    .getElementById("loginPassword")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(event.key === "Enter"){
+
+                loginUser();
+
+            }
+
+        }
+    );
+
 </script>
 
 </body>
