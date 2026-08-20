@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Cart - Beatroot</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/desktop.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f6f7f8;
+    color:#171717;
+}
+
+.page{
+    max-width:1000px;
+    min-height:100vh;
+    margin:auto;
+    background:#fff;
+}
+
+
+/* HEADER */
+
+.header{
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #eee;
+    background:#fff;
+}
+
+.back{
+    font-size:30px;
+    cursor:pointer;
+    width:35px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:800;
+    color:#e53935;
+}
+
+
+/* CONTENT */
+
+.container{
+    padding:25px 20px 40px;
+}
+
+.title{
+    font-size:28px;
+    margin:0 0 20px;
+}
+
+
+/* CART ITEM */
+
+.cart-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:16px 0;
+    border-bottom:1px solid #eee;
+}
+
+.food-icon{
+    width:65px;
+    height:65px;
+    border-radius:12px;
+    background:#fff1ed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    flex-shrink:0;
+}
+
+.item-info{
+    flex:1;
+}
+
+.item-info h3{
+    margin:0 0 6px;
+    font-size:17px;
+}
+
+.item-price{
+    color:#777;
+    font-size:14px;
+}
+
+
+/* QUANTITY */
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.qty-btn{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:8px;
+    background:#f0f0f0;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.qty{
+    min-width:22px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.item-total{
+    min-width:75px;
+    text-align:right;
+    font-weight:bold;
+}
+
+
+/* REMOVE */
+
+.remove{
+    border:0;
+    background:none;
+    color:#e53935;
+    cursor:pointer;
+    font-size:13px;
+}
+
+
+/* SUMMARY */
+
+.summary{
+    margin-top:25px;
+    padding:20px;
+    border:1px solid #eee;
+    border-radius:15px;
+    background:#fff;
+}
+
+.summary h2{
+    margin:0 0 18px;
+    font-size:20px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    margin:11px 0;
+    color:#666;
+}
+
+.summary-row.total{
+    color:#171717;
+    font-size:20px;
+    font-weight:bold;
+    border-top:1px solid #eee;
+    padding-top:15px;
+    margin-top:15px;
+}
+
+
+/* CHECKOUT */
+
+.checkout{
+    width:100%;
+    border:0;
+    padding:14px;
+    margin-top:18px;
+    border-radius:11px;
+    background:#e53935;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.checkout:hover{
+    background:#c62828;
+}
+
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:80px 20px;
+    color:#777;
+}
+
+.empty-icon{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+.empty h2{
+    color:#333;
+}
+
+.back-menu{
+    border:0;
+    padding:11px 18px;
+    border-radius:10px;
+    background:#e53935;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+/* DESKTOP */
+
+@media(min-width:768px){
+
+    .container{
+        padding:35px 45px;
+    }
+
+    .cart-item{
+        padding:20px 10px;
+    }
+
+    .summary{
+        max-width:500px;
+        margin-left:auto;
+    }
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .cart-item{
+        flex-wrap:wrap;
+    }
+
+    .item-info{
+        min-width:calc(100% - 85px);
+    }
+
+    .quantity{
+        margin-left:80px;
+    }
+
+    .item-total{
+        margin-left:auto;
+    }
+
+    .remove{
+        margin-left:80px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="back"
+             onclick="goBack()">
+            ‹
+        </div>
+
+        <div class="logo">
+            Beat<span style="color:#333">root</span>
+        </div>
+
+    </div>
+
+
+
+    <!-- CONTENT -->
+
+    <div class="container">
+
+        <h1 class="title">
+            Your Cart
+        </h1>
+
+
+        <!-- CART -->
+
+        <div id="cartList"></div>
+
+
+        <!-- EMPTY -->
+
+        <div id="emptyCart"
+             class="empty"
+             style="display:none;">
+
+            <div class="empty-icon">
+                🛒
+            </div>
+
+            <h2>
+                Your cart is empty
+            </h2>
+
+            <p>
+                Add some delicious food to continue.
+            </p>
+
+            <button
+                class="back-menu"
+                onclick="goToRestaurants()">
+
+                Browse Restaurants
+
+            </button>
+
+        </div>
+
+
+
+        <!-- SUMMARY -->
+
+        <div id="summary"
+             class="summary"
+             style="display:none;">
+
+            <h2>
+                Order Summary
+            </h2>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span id="subtotal">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Delivery Charge
+                </span>
+
+                <span id="delivery">
+                    ₹40
+                </span>
+
+            </div>
+
+
+            <div class="summary-row total">
+
+                <span>
+                    Grand Total
+                </span>
+
+                <span id="grandTotal">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <button
+                class="checkout"
+                onclick="checkout()">
+
+                Proceed to Checkout →
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* LOAD CART */
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("beatrootCart")
+    ) || [];
+
+
+const DELIVERY_CHARGE = 40;
+
+
+
+/* SAVE */
+
+function saveCart(){
+
+    localStorage.setItem(
+        "beatrootCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+
+/* RENDER */
+
+function renderCart(){
+
+    const cartList =
+        document.getElementById(
+            "cartList"
+        );
+
+    const empty =
+        document.getElementById(
+            "emptyCart"
+        );
+
+    const summary =
+        document.getElementById(
+            "summary"
+        );
+
+
+    cartList.innerHTML = "";
+
+
+    if(cart.length === 0){
+
+        empty.style.display =
+            "block";
+
+        summary.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    empty.style.display =
+        "none";
+
+    summary.style.display =
+        "block";
+
+
+    let subtotal = 0;
+
+
+    cart.forEach(
+        (item,index)=>{
+
+            const total =
+                item.price *
+                item.quantity;
+
+
+            subtotal += total;
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "cart-item";
+
+
+            div.innerHTML = `
+
+                <div class="food-icon">
+                    🍽️
+                </div>
+
+                <div class="item-info">
+
+                    <h3>
+                        ${escapeHtml(item.name)}
+                    </h3>
+
+                    <div class="item-price">
+                        ₹${item.price} each
+                    </div>
+
+                </div>
+
+                <div class="quantity">
+
+                    <button
+                        class="qty-btn"
+                        onclick="decrease(${index})">
+                        −
+                    </button>
+
+                    <span class="qty">
+                        ${item.quantity}
+                    </span>
+
+                    <button
+                        class="qty-btn"
+                        onclick="increase(${index})">
+                        +
+                    </button>
+
+                </div>
+
+                <div class="item-total">
+                    ₹${total}
+                </div>
+
+                <button
+                    class="remove"
+                    onclick="removeItem(${index})">
+
+                    Remove
+
+                </button>
+
+            `;
+
+
+            cartList.appendChild(div);
+
+        }
+    );
+
+
+    document.getElementById(
+        "subtotal"
+    ).textContent =
+        "₹" + subtotal;
+
+
+    const grandTotal =
+        subtotal +
+        DELIVERY_CHARGE;
+
+
+    document.getElementById(
+        "delivery"
+    ).textContent =
+        "₹" + DELIVERY_CHARGE;
+
+
+    document.getElementById(
+        "grandTotal"
+    ).textContent =
+        "₹" + grandTotal;
+
+}
+
+
+
+/* INCREASE */
+
+function increase(index){
+
+    cart[index].quantity++;
+
+    saveCart();
+
+    renderCart();
+
+}
+
+
+
+/* DECREASE */
+
+function decrease(index){
+
+    if(cart[index].quantity > 1){
+
+        cart[index].quantity--;
+
+    }else{
+
+        cart.splice(index,1);
+
+    }
+
+    saveCart();
+
+    renderCart();
+
+}
+
+
+
+/* REMOVE */
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    saveCart();
+
+    renderCart();
+
+}
+
+
+
+/* CHECKOUT */
+
+function checkout(){
+
+    if(cart.length === 0){
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    window.location.href =
+        "checkout.html";
+
+}
+
+
+
+/* BACK */
+
+function goBack(){
+
+    window.location.href =
+        "restaurant.html";
+
+}
+
+
+
+/* RESTAURANTS */
+
+function goToRestaurants(){
+
+    window.location.href =
+        "restaurants.html";
+
+}
+
+
+
+/* SECURITY */
+
+function escapeHtml(text){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+
+/* START */
+
+renderCart();
+
+</script>
+
+</body>
+</html>
