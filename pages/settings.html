@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings - Beatroot</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f6f7f9;
+    color: #222;
+}
+
+.header {
+    background: #ffffff;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+    color: #e53935;
+}
+
+.back {
+    text-decoration: none;
+    color: #555;
+    font-size: 15px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.title {
+    margin-bottom: 25px;
+}
+
+.title h1 {
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.title p {
+    color: #777;
+}
+
+.settings-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+}
+
+.section-title {
+    padding: 20px 24px 12px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #333;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 19px 24px;
+    border-top: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.setting-item:hover {
+    background: #fafafa;
+}
+
+.item-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #fff1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.item-text h3 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.item-text p {
+    font-size: 13px;
+    color: #888;
+}
+
+.arrow {
+    color: #aaa;
+    font-size: 22px;
+}
+
+.toggle {
+    width: 46px;
+    height: 25px;
+    background: #ddd;
+    border-radius: 20px;
+    position: relative;
+}
+
+.toggle::after {
+    content: "";
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.toggle.active {
+    background: #e53935;
+}
+
+.toggle.active::after {
+    left: 23px;
+}
+
+.logout {
+    width: 100%;
+    border: none;
+    background: #fff;
+    color: #e53935;
+    padding: 18px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+.logout:hover {
+    background: #fff4f4;
+}
+
+.footer {
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+    padding: 25px 0 40px;
+}
+
+@media(max-width:600px) {
+
+    .header {
+        padding: 0 20px;
+        height: 62px;
+    }
+
+    .logo {
+        font-size: 23px;
+    }
+
+    .container {
+        margin: 25px auto;
+        padding: 0 14px;
+    }
+
+    .title h1 {
+        font-size: 25px;
+    }
+
+    .setting-item {
+        padding: 17px 16px;
+    }
+
+    .section-title {
+        padding: 18px 16px 10px;
+    }
+
+    .icon {
+        width: 39px;
+        height: 39px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="home.html" class="back">← Back</a>
+    <div class="logo">Beatroot</div>
+    <div style="width:45px;"></div>
+</header>
+
+<main class="container">
+
+    <div class="title">
+        <h1>Settings</h1>
+        <p>Manage your account and app preferences</p>
+    </div>
+
+    <!-- Account -->
+    <div class="settings-card">
+
+        <div class="section-title">
+            Account
+        </div>
+
+        <div class="setting-item"
+             onclick="location.href='profile.html'">
+
+            <div class="item-left">
+                <div class="icon">👤</div>
+
+                <div class="item-text">
+                    <h3>Profile</h3>
+                    <p>Manage your personal information</p>
+                </div>
+            </div>
+
+            <div class="arrow">›</div>
+        </div>
+
+        <div class="setting-item"
+             onclick="location.href='addresses.html'">
+
+            <div class="item-left">
+                <div class="icon">📍</div>
+
+                <div class="item-text">
+                    <h3>Addresses</h3>
+                    <p>Manage your delivery addresses</p>
+                </div>
+            </div>
+
+            <div class="arrow">›</div>
+        </div>
+
+        <div class="setting-item"
+             onclick="changePassword()">
+
+            <div class="item-left">
+                <div class="icon">🔒</div>
+
+                <div class="item-text">
+                    <h3>Change Password</h3>
+                    <p>Update your account password</p>
+                </div>
+            </div>
+
+            <div class="arrow">›</div>
+        </div>
+
+    </div>
+
+
+    <!-- Preferences -->
+    <div class="settings-card">
+
+        <div class="section-title">
+            Preferences
+        </div>
+
+        <div class="setting-item"
+             onclick="toggleNotification()">
+
+            <div class="item-left">
+                <div class="icon">🔔</div>
+
+                <div class="item-text">
+                    <h3>Notifications</h3>
+                    <p>Receive order and promotional updates</p>
+                </div>
+            </div>
+
+            <div class="toggle active" id="notificationToggle"></div>
+
+        </div>
+
+        <div class="setting-item"
+             onclick="location.href='notifications.html'">
+
+            <div class="item-left">
+                <div class="icon">📢</div>
+
+                <div class="item-text">
+                    <h3>Notification Center</h3>
+                    <p>View all your notifications</p>
+                </div>
+            </div>
+
+            <div class="arrow">›</div>
+        </div>
+
+    </div>
+
+
+    <!-- Support -->
+    <div class="settings-card">
+
+        <div class="section-title">
+            Support
+        </div>
+
+        <div class="setting-item"
+             onclick="helpSupport()">
+
+            <div class="item-left">
+                <div class="icon">❓</div>
+
+                <div class="item-text">
+                    <h3>Help & Support</h3>
+                    <p>Get help with your orders and account</p>
+                </div>
+            </div>
+
+            <div class="arrow">›</div>
+        </div>
+
+        <div class="setting-item"
+             onclick="showPrivacy()">
+
+            <div class="item-left">
+                <div class="icon">🛡️</div>
+
+                <div class="item-text">
+                    <h3>Privacy Policy</h3>
+                    <p>Learn how we protect your information</p>
+                </div>
+            </div>
+
+            <div class="arrow">›</div>
+        </div>
+
+        <div class="setting-item"
+             onclick="showTerms()">
+
+            <div class="item-left">
+                <div class="icon">📄</div>
+
+                <div class="item-text">
+                    <h3>Terms & Conditions</h3>
+                    <p>Read our terms of service</p>
+                </div>
+            </div>
+
+            <div class="arrow">›</div>
+        </div>
+
+    </div>
+
+
+    <button class="logout" onclick="logout()">
+        🚪 Logout
+    </button>
+
+    <div class="footer">
+        Beatroot © 2026
+    </div>
+
+</main>
+
+
+<script>
+
+function toggleNotification() {
+
+    const toggle =
+        document.getElementById("notificationToggle");
+
+    toggle.classList.toggle("active");
+
+    if (toggle.classList.contains("active")) {
+        alert("Notifications enabled");
+    } else {
+        alert("Notifications disabled");
+    }
+}
+
+
+function changePassword() {
+
+    alert("Change Password page will be connected here.");
+}
+
+
+function helpSupport() {
+
+    alert("Help & Support will be connected here.");
+}
+
+
+function showPrivacy() {
+
+    alert("Privacy Policy page will be connected here.");
+}
+
+
+function showTerms() {
+
+    alert("Terms & Conditions page will be connected here.");
+}
+
+
+function logout() {
+
+    const confirmLogout =
+        confirm("Are you sure you want to logout?");
+
+    if (confirmLogout) {
+
+        localStorage.clear();
+
+        window.location.href = "login.html";
+    }
+}
+
+</script>
+
+</body>
+</html>
