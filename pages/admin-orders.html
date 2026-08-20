@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,9 +14,9 @@
 
 <style>
 
-/* ================================
+/* =========================
    RESET
-================================ */
+========================= */
 
 *{
     box-sizing:border-box;
@@ -30,25 +30,30 @@ body{
 }
 
 
-/* ================================
+/* =========================
    SIDEBAR
-================================ */
+========================= */
 
 .side{
     position:fixed;
     top:0;
     left:0;
     bottom:0;
+
     width:250px;
+
     background:#111827;
     color:white;
+
     padding:25px 15px;
-    z-index:100;
+
+    z-index:1000;
 }
 
 .brand{
-    font-size:27px;
+    font-size:28px;
     font-weight:800;
+
     padding:0 15px 30px;
 }
 
@@ -59,33 +64,46 @@ body{
 .label{
     font-size:12px;
     color:#9ca3af;
+
     padding:0 15px 10px;
+
     text-transform:uppercase;
 }
 
 .menu button,
 .logout{
     width:100%;
+
     border:0;
+
     background:transparent;
+
     color:#d1d5db;
+
     padding:13px 15px;
+
     text-align:left;
+
     border-radius:10px;
+
     cursor:pointer;
+
     margin:3px 0;
+
     font-size:14px;
 }
 
 .menu button:hover,
-.menu .active{
+.menu button.active{
     background:#ef4444;
     color:white;
 }
 
 .bottom{
     position:absolute;
+
     bottom:20px;
+
     left:15px;
     right:15px;
 }
@@ -99,9 +117,9 @@ body{
 }
 
 
-/* ================================
+/* =========================
    MAIN
-================================ */
+========================= */
 
 .main{
     margin-left:250px;
@@ -109,19 +127,24 @@ body{
 
 .top{
     height:75px;
+
     background:white;
+
     border-bottom:1px solid #e5e7eb;
 
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 
     padding:0 30px;
 
     position:sticky;
+
     top:0;
 
-    z-index:50;
+    z-index:500;
 }
 
 .title{
@@ -131,27 +154,33 @@ body{
 
 .profile{
     display:flex;
+
     align-items:center;
+
     gap:10px;
 }
 
 .avatar{
     width:40px;
     height:40px;
+
     border-radius:50%;
+
     background:#ef4444;
+
     color:white;
 
     display:grid;
+
     place-items:center;
 
     font-weight:bold;
 }
 
 
-/* ================================
+/* =========================
    CONTENT
-================================ */
+========================= */
 
 .content{
     padding:30px;
@@ -163,23 +192,26 @@ body{
 
 .head h1{
     margin:0 0 6px;
+
     font-size:28px;
 }
 
 .head p{
     margin:0;
+
     color:#6b7280;
 }
 
 
-/* ================================
+/* =========================
    ERROR
-================================ */
+========================= */
 
 .error{
     display:none;
 
     background:#fee2e2;
+
     color:#b91c1c;
 
     padding:14px;
@@ -192,41 +224,50 @@ body{
 }
 
 
-/* ================================
+/* =========================
    CARD
-================================ */
+========================= */
 
 .card{
     background:white;
+
     border:1px solid #e5e7eb;
+
     border-radius:16px;
+
     padding:22px;
 }
 
 
-/* ================================
+/* =========================
    TOOLBAR
-================================ */
+========================= */
 
 .toolbar{
     display:flex;
+
     gap:12px;
+
     flex-wrap:wrap;
+
     margin-bottom:15px;
 }
 
 .search{
     flex:1;
+
     min-width:220px;
 
     height:44px;
 
     border:1px solid #ddd;
+
     border-radius:10px;
 
     padding:0 13px;
 
     font-size:14px;
+
     outline:none;
 }
 
@@ -238,6 +279,7 @@ body{
     height:44px;
 
     border:1px solid #ddd;
+
     border-radius:10px;
 
     padding:0 12px;
@@ -251,11 +293,13 @@ body{
     height:44px;
 
     border:0;
+
     border-radius:10px;
 
     padding:0 16px;
 
     background:#111827;
+
     color:white;
 
     cursor:pointer;
@@ -266,21 +310,22 @@ body{
 }
 
 
-/* ================================
+/* =========================
    COUNT
-================================ */
+========================= */
 
 .count{
     font-size:13px;
+
     color:#6b7280;
 
     margin-bottom:10px;
 }
 
 
-/* ================================
+/* =========================
    TABLE
-================================ */
+========================= */
 
 .table{
     overflow:auto;
@@ -288,9 +333,10 @@ body{
 
 table{
     width:100%;
+
     border-collapse:collapse;
 
-    min-width:800px;
+    min-width:850px;
 }
 
 th,
@@ -306,16 +352,21 @@ td{
 
 th{
     font-size:12px;
+
     color:#6b7280;
 }
 
-.order-number{
+.order-link{
+    font-weight:bold;
+
     color:#111827;
+
     cursor:pointer;
 }
 
-.order-number:hover{
+.order-link:hover{
     color:#ef4444;
+
     text-decoration:underline;
 }
 
@@ -328,9 +379,9 @@ th{
 }
 
 
-/* ================================
+/* =========================
    STATUS
-================================ */
+========================= */
 
 .status{
     border:0;
@@ -348,57 +399,67 @@ th{
 
 .status.pending{
     background:#fef3c7;
+
     color:#92400e;
 }
 
 .status.confirmed{
     background:#dbeafe;
+
     color:#2563eb;
 }
 
 .status.preparing{
     background:#ffedd5;
+
     color:#c2410c;
 }
 
 .status.delivered{
     background:#dcfce7;
+
     color:#15803d;
 }
 
 .status.cancelled{
     background:#fee2e2;
+
     color:#dc2626;
 }
 
 
-/* ================================
+/* =========================
    VIEW BUTTON
-================================ */
+========================= */
 
 .view-btn{
     border:0;
 
     background:#f3f4f6;
 
-    padding:7px 11px;
+    color:#111827;
+
+    padding:8px 13px;
 
     border-radius:8px;
 
     cursor:pointer;
 
     font-size:12px;
+
+    font-weight:600;
 }
 
 .view-btn:hover{
     background:#fee2e2;
+
     color:#ef4444;
 }
 
 
-/* ================================
+/* =========================
    MESSAGE
-================================ */
+========================= */
 
 .msg{
     text-align:center;
@@ -409,9 +470,9 @@ th{
 }
 
 
-/* ================================
+/* =========================
    MODAL
-================================ */
+========================= */
 
 .modal{
     display:none;
@@ -422,9 +483,10 @@ th{
 
     background:rgba(0,0,0,.55);
 
-    z-index:999;
+    z-index:5000;
 
     align-items:center;
+
     justify-content:center;
 
     padding:20px;
@@ -436,7 +498,8 @@ th{
 
 .modal-box{
     width:100%;
-    max-width:650px;
+
+    max-width:680px;
 
     max-height:90vh;
 
@@ -444,21 +507,35 @@ th{
 
     background:white;
 
-    border-radius:18px;
+    border-radius:20px;
 
-    box-shadow:0 25px 80px rgba(0,0,0,.25);
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.30);
 }
 
+
+/* =========================
+   MODAL HEADER
+========================= */
+
 .modal-head{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
     padding:20px 22px;
 
     border-bottom:1px solid #eee;
 
-    display:flex;
+    position:sticky;
 
-    justify-content:space-between;
+    top:0;
 
-    align-items:center;
+    background:white;
+
+    z-index:2;
 }
 
 .modal-head h2{
@@ -468,8 +545,9 @@ th{
 }
 
 .close-btn{
-    width:35px;
-    height:35px;
+    width:36px;
+
+    height:36px;
 
     border:0;
 
@@ -477,24 +555,89 @@ th{
 
     background:#f3f4f6;
 
-    cursor:pointer;
+    font-size:20px;
 
-    font-size:18px;
+    cursor:pointer;
 }
 
 .close-btn:hover{
     background:#fee2e2;
+
     color:#ef4444;
 }
+
+
+/* =========================
+   MODAL BODY
+========================= */
 
 .modal-body{
     padding:22px;
 }
 
 
-/* ================================
+/* =========================
+   CUSTOMER SECTION
+========================= */
+
+.customer-box{
+    background:#f8fafc;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:14px;
+
+    padding:16px;
+
+    margin-bottom:20px;
+}
+
+.customer-title{
+    font-size:15px;
+
+    font-weight:700;
+
+    margin-bottom:12px;
+}
+
+.customer-row{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+}
+
+.customer-field{
+    background:white;
+
+    border:1px solid #eee;
+
+    border-radius:10px;
+
+    padding:11px;
+}
+
+.field-label{
+    font-size:11px;
+
+    color:#6b7280;
+
+    margin-bottom:5px;
+}
+
+.field-value{
+    font-size:13px;
+
+    font-weight:600;
+
+    word-break:break-word;
+}
+
+
+/* =========================
    ORDER INFO
-================================ */
+========================= */
 
 .info-grid{
     display:grid;
@@ -516,33 +659,17 @@ th{
     padding:12px;
 }
 
-.info-label{
-    font-size:11px;
 
-    color:#6b7280;
-
-    margin-bottom:5px;
-}
-
-.info-value{
-    font-size:14px;
-
-    font-weight:600;
-
-    word-break:break-word;
-}
-
-
-/* ================================
+/* =========================
    ITEMS
-================================ */
+========================= */
 
 .items-title{
     font-size:17px;
 
     font-weight:700;
 
-    margin-bottom:10px;
+    margin-bottom:5px;
 }
 
 .item-row{
@@ -552,7 +679,7 @@ th{
 
     gap:15px;
 
-    padding:13px 0;
+    padding:14px 0;
 
     border-bottom:1px solid #eee;
 }
@@ -568,7 +695,7 @@ th{
 
     font-size:12px;
 
-    margin-top:4px;
+    margin-top:5px;
 }
 
 .item-price{
@@ -577,29 +704,32 @@ th{
     white-space:nowrap;
 }
 
+
+/* =========================
+   TOTAL
+========================= */
+
 .order-total{
     display:flex;
 
     justify-content:space-between;
 
-    padding-top:18px;
+    padding:18px 0;
 
-    font-size:18px;
+    font-size:19px;
 
     font-weight:800;
+
+    border-bottom:1px solid #eee;
 }
 
 
-/* ================================
-   MODAL STATUS
-================================ */
+/* =========================
+   STATUS UPDATE
+========================= */
 
 .status-area{
-    margin-top:20px;
-
-    padding-top:18px;
-
-    border-top:1px solid #eee;
+    margin-top:18px;
 }
 
 .status-area label{
@@ -615,7 +745,7 @@ th{
 .status-select{
     width:100%;
 
-    height:44px;
+    height:46px;
 
     border:1px solid #ddd;
 
@@ -626,12 +756,14 @@ th{
     background:white;
 
     cursor:pointer;
+
+    font-size:14px;
 }
 
 
-/* ================================
+/* =========================
    MOBILE
-================================ */
+========================= */
 
 @media(max-width:700px){
 
@@ -651,12 +783,23 @@ th{
         padding:0 15px;
     }
 
-    .profile small{
+    .profile strong{
         display:none;
     }
 
+    .customer-row,
     .info-grid{
         grid-template-columns:1fr;
+    }
+
+    .modal{
+        padding:10px;
+    }
+
+    .modal-box{
+        max-height:95vh;
+
+        border-radius:16px;
     }
 
 }
@@ -669,9 +812,9 @@ th{
 <body>
 
 
-<!-- ================================
+<!-- =========================
      SIDEBAR
-================================ -->
+========================= -->
 
 <aside class="side">
 
@@ -682,6 +825,7 @@ th{
     <div class="label">
         Admin Panel
     </div>
+
 
     <div class="menu">
 
@@ -714,8 +858,9 @@ th{
 
     <div class="bottom">
 
-        <button class="logout"
-                onclick="logout()">
+        <button
+            class="logout"
+            onclick="logout()">
 
             🚪 Logout
 
@@ -727,9 +872,9 @@ th{
 
 
 
-<!-- ================================
+<!-- =========================
      MAIN
-================================ -->
+========================= -->
 
 <div class="main">
 
@@ -740,10 +885,12 @@ th{
         Orders
     </div>
 
+
     <div class="profile">
 
-        <div class="avatar"
-             id="avatar">
+        <div
+            class="avatar"
+            id="avatar">
 
             A
 
@@ -775,10 +922,9 @@ th{
 </div>
 
 
-
-<div class="error"
-     id="error">
-
+<div
+    class="error"
+    id="error">
 </div>
 
 
@@ -838,8 +984,9 @@ th{
 
 
 
-<div id="count"
-     class="count">
+<div
+    id="count"
+    class="count">
 
     Loading...
 
@@ -855,29 +1002,17 @@ th{
 
 <tr>
 
-<th>
-    ORDER
-</th>
+<th>ORDER</th>
 
-<th>
-    CUSTOMER
-</th>
+<th>CUSTOMER</th>
 
-<th>
-    DATE & TIME
-</th>
+<th>DATE & TIME</th>
 
-<th>
-    STATUS
-</th>
+<th>STATUS</th>
 
-<th>
-    TOTAL
-</th>
+<th>TOTAL</th>
 
-<th>
-    VIEW
-</th>
+<th>VIEW</th>
 
 </tr>
 
@@ -888,7 +1023,8 @@ th{
 
 <tr>
 
-<td colspan="6"
+<td
+    colspan="6"
     class="msg">
 
     Loading orders...
@@ -913,14 +1049,14 @@ th{
 
 
 
-<!-- ================================
+<!-- =========================
      ORDER DETAILS MODAL
-================================ -->
+========================= -->
 
 <div
     class="modal"
     id="orderModal"
-    onclick="closeModalOutside(event)"
+    onclick="closeOutside(event)"
 >
 
 
@@ -933,6 +1069,7 @@ th{
         Order Details
     </h2>
 
+
     <button
         class="close-btn"
         onclick="closeModal()">
@@ -942,7 +1079,6 @@ th{
     </button>
 
 </div>
-
 
 
 <div
@@ -962,9 +1098,9 @@ th{
 
 <script>
 
-/* =========================================
+/* =========================
    SUPABASE
-========================================= */
+========================= */
 
 const SUPABASE_URL =
     "https://jhihjnsxazmftdqlitgk.supabase.co";
@@ -983,32 +1119,32 @@ const sb =
     );
 
 
-/* =========================================
+/* =========================
    VARIABLES
-========================================= */
+========================= */
 
 let orders = [];
 
 let selectedOrder = null;
 
 
-/* =========================================
+/* =========================
    ELEMENTS
-========================================= */
+========================= */
 
-const searchInput =
+const search =
     document.getElementById("search");
 
-const filterInput =
+const filter =
     document.getElementById("filter");
 
-const rowsElement =
+const rows =
     document.getElementById("rows");
 
-const countElement =
+const count =
     document.getElementById("count");
 
-const errorElement =
+const errorBox =
     document.getElementById("error");
 
 const modal =
@@ -1017,16 +1153,16 @@ const modal =
 const modalBody =
     document.getElementById("modalBody");
 
-const adminNameElement =
+const adminName =
     document.getElementById("adminName");
 
-const avatarElement =
+const avatar =
     document.getElementById("avatar");
 
 
-/* =========================================
-   ESCAPE HTML
-========================================= */
+/* =========================
+   ESCAPE
+========================= */
 
 function esc(value){
 
@@ -1040,9 +1176,9 @@ function esc(value){
 }
 
 
-/* =========================================
-   STATUS NORMALIZE
-========================================= */
+/* =========================
+   STATUS
+========================= */
 
 function normalizeStatus(value){
 
@@ -1070,18 +1206,16 @@ function normalizeStatus(value){
         "cancelled"
     ];
 
-    if(allowed.includes(s)){
-        return s;
-    }
-
-    return "pending";
+    return allowed.includes(s)
+        ? s
+        : "pending";
 
 }
 
 
-/* =========================================
+/* =========================
    NAVIGATION
-========================================= */
+========================= */
 
 function go(page){
 
@@ -1090,9 +1224,9 @@ function go(page){
 }
 
 
-/* =========================================
-   AUTH CHECK
-========================================= */
+/* =========================
+   AUTH
+========================= */
 
 async function checkAuth(){
 
@@ -1120,9 +1254,7 @@ async function checkAuth(){
             result.data.user;
 
 
-        if(
-            user.email !== ADMIN_EMAIL
-        ){
+        if(user.email !== ADMIN_EMAIL){
 
             alert(
                 "Access denied. Admin only."
@@ -1140,11 +1272,11 @@ async function checkAuth(){
             user.email || "Admin";
 
 
-        adminNameElement.textContent =
+        adminName.textContent =
             email.split("@")[0];
 
 
-        avatarElement.textContent =
+        avatar.textContent =
             email.charAt(0).toUpperCase();
 
 
@@ -1154,10 +1286,7 @@ async function checkAuth(){
 
     catch(error){
 
-        console.error(
-            "Auth error:",
-            error
-        );
+        console.error(error);
 
         window.location.href =
             "login.html";
@@ -1169,16 +1298,17 @@ async function checkAuth(){
 }
 
 
-/* =========================================
+/* =========================
    LOAD ORDERS
-========================================= */
+========================= */
 
 async function loadOrders(){
 
-    errorElement.style.display =
+    errorBox.style.display =
         "none";
 
-    rowsElement.innerHTML = `
+
+    rows.innerHTML = `
         <tr>
             <td colspan="6" class="msg">
                 Loading orders...
@@ -1187,11 +1317,7 @@ async function loadOrders(){
     `;
 
 
-    const authenticated =
-        await checkAuth();
-
-
-    if(!authenticated){
+    if(!await checkAuth()){
         return;
     }
 
@@ -1213,9 +1339,7 @@ async function loadOrders(){
 
 
         if(result.error){
-
             throw result.error;
-
         }
 
 
@@ -1223,28 +1347,25 @@ async function loadOrders(){
             result.data || [];
 
 
-        renderOrders();
+        render();
 
     }
 
     catch(error){
 
-        console.error(
-            "Orders error:",
-            error
-        );
+        console.error(error);
 
 
-        errorElement.textContent =
+        errorBox.textContent =
             "Orders loading error: " +
             error.message;
 
 
-        errorElement.style.display =
+        errorBox.style.display =
             "block";
 
 
-        rowsElement.innerHTML = `
+        rows.innerHTML = `
             <tr>
                 <td colspan="6" class="msg">
                     Unable to load orders.
@@ -1257,41 +1378,33 @@ async function loadOrders(){
 }
 
 
-/* =========================================
-   RENDER ORDERS
-========================================= */
+/* =========================
+   RENDER
+========================= */
 
-function renderOrders(){
+function render(){
 
-    const query =
-        searchInput.value
+    const q =
+        search.value
         .toLowerCase()
         .trim();
 
 
-    const selectedFilter =
-        filterInput.value;
+    const f =
+        filter.value;
 
 
-    const filtered =
+    const list =
         orders.filter(function(order){
 
-            const idMatch =
+            const id =
                 String(order.id || "")
-                .toLowerCase()
-                .includes(query);
+                .toLowerCase();
 
 
-            const customerMatch =
+            const customer =
                 String(order.customer_id || "")
-                .toLowerCase()
-                .includes(query);
-
-
-            const searchMatch =
-                !query ||
-                idMatch ||
-                customerMatch;
+                .toLowerCase();
 
 
             const status =
@@ -1300,36 +1413,41 @@ function renderOrders(){
                 );
 
 
-            const statusMatch =
-                !selectedFilter ||
-                status === selectedFilter;
+            const searchMatch =
+                !q ||
+                id.includes(q) ||
+                customer.includes(q);
+
+
+            const filterMatch =
+                !f ||
+                status === f;
 
 
             return (
                 searchMatch &&
-                statusMatch
+                filterMatch
             );
 
         });
 
 
-    countElement.textContent =
-        filtered.length +
+    count.textContent =
+        list.length +
         " order" +
-        (
-            filtered.length === 1
-                ? ""
-                : "s"
-        );
+        (list.length === 1 ? "" : "s");
 
 
-    if(filtered.length === 0){
+    if(!list.length){
 
-        rowsElement.innerHTML = `
+        rows.innerHTML = `
             <tr>
-                <td colspan="6"
+                <td
+                    colspan="6"
                     class="msg">
+
                     No orders found.
+
                 </td>
             </tr>
         `;
@@ -1339,8 +1457,8 @@ function renderOrders(){
     }
 
 
-    rowsElement.innerHTML =
-        filtered.map(function(order){
+    rows.innerHTML =
+        list.map(function(order){
 
             const status =
                 normalizeStatus(
@@ -1352,18 +1470,14 @@ function renderOrders(){
                 order.created_at
                 ? new Date(
                     order.created_at
-                  ).toLocaleString(
-                    "en-IN"
-                  )
+                  ).toLocaleString("en-IN")
                 : "-";
 
 
             const total =
                 Number(
                     order.total || 0
-                ).toLocaleString(
-                    "en-IN"
-                );
+                ).toLocaleString("en-IN");
 
 
             return `
@@ -1372,13 +1486,13 @@ function renderOrders(){
 
 <td>
 
-    <b
-        class="order-number"
+    <span
+        class="order-link"
         onclick="openOrder(${Number(order.id)})">
 
         #${esc(order.id)}
 
-    </b>
+    </span>
 
 </td>
 
@@ -1394,9 +1508,7 @@ function renderOrders(){
 
 
 <td>
-
     ${esc(date)}
-
 </td>
 
 
@@ -1411,52 +1523,32 @@ function renderOrders(){
 
     <option
         value="pending"
-        ${status === "pending"
-            ? "selected"
-            : ""}>
-
+        ${status === "pending" ? "selected" : ""}>
         Pending
-
     </option>
 
     <option
         value="confirmed"
-        ${status === "confirmed"
-            ? "selected"
-            : ""}>
-
+        ${status === "confirmed" ? "selected" : ""}>
         Confirmed
-
     </option>
 
     <option
         value="preparing"
-        ${status === "preparing"
-            ? "selected"
-            : ""}>
-
+        ${status === "preparing" ? "selected" : ""}>
         Preparing
-
     </option>
 
     <option
         value="delivered"
-        ${status === "delivered"
-            ? "selected"
-            : ""}>
-
+        ${status === "delivered" ? "selected" : ""}>
         Delivered
-
     </option>
 
     <option
         value="cancelled"
-        ${status === "cancelled"
-            ? "selected"
-            : ""}>
-
+        ${status === "cancelled" ? "selected" : ""}>
         Cancelled
-
     </option>
 
 </select>
@@ -1494,9 +1586,9 @@ function renderOrders(){
 }
 
 
-/* =========================================
+/* =========================
    OPEN ORDER
-========================================= */
+========================= */
 
 async function openOrder(orderId){
 
@@ -1511,12 +1603,12 @@ async function openOrder(orderId){
 
 
     const order =
-        orders.find(
-            function(item){
-                return Number(item.id) ===
-                       Number(orderId);
-            }
-        );
+        orders.find(function(item){
+
+            return Number(item.id) ===
+                   Number(orderId);
+
+        });
 
 
     if(!order){
@@ -1535,7 +1627,11 @@ async function openOrder(orderId){
     selectedOrder = order;
 
 
-    const result =
+    /* =====================
+       ORDER ITEMS
+    ===================== */
+
+    const itemResult =
         await sb
         .from("order_items")
         .select(
@@ -1553,19 +1649,19 @@ async function openOrder(orderId){
         );
 
 
-    if(result.error){
-
-        console.error(
-            "Order items error:",
-            result.error
-        );
-
+    if(itemResult.error){
 
         modalBody.innerHTML = `
             <div class="msg">
-                Could not load order items.
+
+                Unable to load order items.
+
                 <br><br>
-                ${esc(result.error.message)}
+
+                ${esc(
+                    itemResult.error.message
+                )}
+
             </div>
         `;
 
@@ -1575,8 +1671,47 @@ async function openOrder(orderId){
 
 
     const items =
-        result.data || [];
+        itemResult.data || [];
 
+
+    /* =====================
+       CUSTOMER PROFILE
+    ===================== */
+
+    let profile = null;
+
+
+    if(order.customer_id){
+
+        const profileResult =
+            await sb
+            .from("profiles")
+            .select(
+                "id,full_name,phone,role"
+            )
+            .eq(
+                "id",
+                order.customer_id
+            )
+            .maybeSingle();
+
+
+        if(
+            !profileResult.error &&
+            profileResult.data
+        ){
+
+            profile =
+                profileResult.data;
+
+        }
+
+    }
+
+
+    /* =====================
+       BASIC INFO
+    ===================== */
 
     const status =
         normalizeStatus(
@@ -1588,28 +1723,46 @@ async function openOrder(orderId){
         order.created_at
         ? new Date(
             order.created_at
-          ).toLocaleString(
-            "en-IN"
-          )
+          ).toLocaleString("en-IN")
         : "-";
 
 
     const total =
         Number(
             order.total || 0
-        ).toLocaleString(
-            "en-IN"
-        );
+        ).toLocaleString("en-IN");
 
+
+    /* =====================
+       CUSTOMER
+    ===================== */
+
+    const customerName =
+        profile &&
+        profile.full_name
+        ? profile.full_name
+        : "Customer";
+
+
+    const phone =
+        profile &&
+        profile.phone
+        ? profile.phone
+        : "Not available";
+
+
+    /* =====================
+       ITEMS HTML
+    ===================== */
 
     let itemsHTML = "";
 
 
-    if(items.length === 0){
+    if(!items.length){
 
         itemsHTML = `
             <div class="msg">
-                No items found for this order.
+                No items found.
             </div>
         `;
 
@@ -1620,21 +1773,20 @@ async function openOrder(orderId){
         itemsHTML =
             items.map(function(item){
 
-                const quantity =
+                const qty =
                     Number(
                         item.quantity || 0
                     );
 
 
-                const unitPrice =
+                const price =
                     Number(
                         item.unit_price || 0
                     );
 
 
                 const lineTotal =
-                    quantity *
-                    unitPrice;
+                    qty * price;
 
 
                 return `
@@ -1652,13 +1804,12 @@ async function openOrder(orderId){
 
         </div>
 
+
         <div class="item-meta">
 
-            ${quantity}
+            ${qty}
             ×
-            ₹${unitPrice.toLocaleString(
-                "en-IN"
-            )}
+            ₹${price.toLocaleString("en-IN")}
 
         </div>
 
@@ -1667,9 +1818,7 @@ async function openOrder(orderId){
 
     <div class="item-price">
 
-        ₹${lineTotal.toLocaleString(
-            "en-IN"
-        )}
+        ₹${lineTotal.toLocaleString("en-IN")}
 
     </div>
 
@@ -1682,18 +1831,105 @@ async function openOrder(orderId){
     }
 
 
+    /* =====================
+       MODAL
+    ===================== */
+
     modalBody.innerHTML = `
+
+
+<div class="customer-box">
+
+    <div class="customer-title">
+        👤 Customer Details
+    </div>
+
+
+    <div class="customer-row">
+
+
+        <div class="customer-field">
+
+            <div class="field-label">
+                Name
+            </div>
+
+            <div class="field-value">
+
+                ${esc(customerName)}
+
+            </div>
+
+        </div>
+
+
+        <div class="customer-field">
+
+            <div class="field-label">
+                Phone
+            </div>
+
+            <div class="field-value">
+
+                ${esc(phone)}
+
+            </div>
+
+        </div>
+
+
+        <div class="customer-field">
+
+            <div class="field-label">
+                Customer ID
+            </div>
+
+            <div class="field-value">
+
+                ${esc(
+                    order.customer_id ||
+                    "-"
+                )}
+
+            </div>
+
+        </div>
+
+
+        <div class="customer-field">
+
+            <div class="field-label">
+                Role
+            </div>
+
+            <div class="field-value">
+
+                ${esc(
+                    profile?.role ||
+                    "Customer"
+                )}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
 
 <div class="info-grid">
 
 
     <div class="info-box">
 
-        <div class="info-label">
+        <div class="field-label">
             Order ID
         </div>
 
-        <div class="info-value">
+        <div class="field-value">
             #${esc(order.id)}
         </div>
 
@@ -1702,44 +1938,12 @@ async function openOrder(orderId){
 
     <div class="info-box">
 
-        <div class="info-label">
+        <div class="field-label">
             Date & Time
         </div>
 
-        <div class="info-value">
+        <div class="field-value">
             ${esc(date)}
-        </div>
-
-    </div>
-
-
-    <div class="info-box">
-
-        <div class="info-label">
-            Customer ID
-        </div>
-
-        <div class="info-value">
-            ${esc(
-                order.customer_id ||
-                "Customer"
-            )}
-        </div>
-
-    </div>
-
-
-    <div class="info-box">
-
-        <div class="info-label">
-            Current Status
-        </div>
-
-        <div class="info-value">
-
-            ${status.charAt(0).toUpperCase()
-              + status.slice(1)}
-
         </div>
 
     </div>
@@ -1750,11 +1954,12 @@ async function openOrder(orderId){
 
 
 <div class="items-title">
-    Ordered Items
+    🍔 Ordered Items
 </div>
 
 
 ${itemsHTML}
+
 
 
 <div class="order-total">
@@ -1783,55 +1988,51 @@ ${itemsHTML}
         class="status-select"
         onchange="updateModalStatus(this.value)">
 
+
         <option
             value="pending"
             ${status === "pending"
                 ? "selected"
                 : ""}>
-
             Pending
-
         </option>
+
 
         <option
             value="confirmed"
             ${status === "confirmed"
                 ? "selected"
                 : ""}>
-
             Confirmed
-
         </option>
+
 
         <option
             value="preparing"
             ${status === "preparing"
                 ? "selected"
                 : ""}>
-
             Preparing
-
         </option>
+
 
         <option
             value="delivered"
             ${status === "delivered"
                 ? "selected"
                 : ""}>
-
             Delivered
-
         </option>
+
 
         <option
             value="cancelled"
             ${status === "cancelled"
                 ? "selected"
                 : ""}>
-
             Cancelled
-
         </option>
+
 
     </select>
 
@@ -1842,9 +2043,9 @@ ${itemsHTML}
 }
 
 
-/* =========================================
+/* =========================
    UPDATE STATUS
-========================================= */
+========================= */
 
 async function updateStatus(
     orderId,
@@ -1866,19 +2067,17 @@ async function updateStatus(
 
 
         if(result.error){
-
             throw result.error;
-
         }
 
 
         const order =
-            orders.find(
-                function(item){
-                    return Number(item.id) ===
-                           Number(orderId);
-                }
-            );
+            orders.find(function(item){
+
+                return Number(item.id) ===
+                       Number(orderId);
+
+            });
 
 
         if(order){
@@ -1889,7 +2088,7 @@ async function updateStatus(
         }
 
 
-        renderOrders();
+        render();
 
 
         if(
@@ -1901,20 +2100,7 @@ async function updateStatus(
             selectedOrder.status =
                 newStatus;
 
-            const modalStatus =
-                document.getElementById(
-                    "modalStatus"
-                );
-
-            if(modalStatus){
-
-                modalStatus.value =
-                    newStatus;
-
-            }
-
         }
-
 
     }
 
@@ -1923,23 +2109,23 @@ async function updateStatus(
         console.error(error);
 
         alert(
-            "Status update failed: " +
+            "Status update failed:\n" +
             error.message
         );
 
-        renderOrders();
+        render();
 
     }
 
 }
 
 
-/* =========================================
-   UPDATE MODAL STATUS
-========================================= */
+/* =========================
+   MODAL STATUS
+========================= */
 
 async function updateModalStatus(
-    newStatus
+    status
 ){
 
     if(!selectedOrder){
@@ -1949,15 +2135,15 @@ async function updateModalStatus(
 
     await updateStatus(
         selectedOrder.id,
-        newStatus
+        status
     );
 
 }
 
 
-/* =========================================
+/* =========================
    CLOSE MODAL
-========================================= */
+========================= */
 
 function closeModal(){
 
@@ -1968,7 +2154,7 @@ function closeModal(){
 }
 
 
-function closeModalOutside(event){
+function closeOutside(event){
 
     if(event.target === modal){
 
@@ -1979,55 +2165,29 @@ function closeModalOutside(event){
 }
 
 
-/* =========================================
+/* =========================
    SEARCH
-========================================= */
+========================= */
 
-searchInput.addEventListener(
+search.addEventListener(
     "input",
-    renderOrders
+    render
 );
 
 
-/* =========================================
+/* =========================
    FILTER
-========================================= */
+========================= */
 
-filterInput.addEventListener(
+filter.addEventListener(
     "change",
-    renderOrders
+    render
 );
 
 
-/* =========================================
-   LOGOUT
-========================================= */
-
-async function logout(){
-
-    const confirmed =
-        confirm(
-            "Are you sure you want to logout?"
-        );
-
-
-    if(!confirmed){
-        return;
-    }
-
-
-    await sb.auth.signOut();
-
-
-    window.location.href =
-        "login.html";
-
-}
-
-
-/* =========================================
-   ESC KEY
-========================================= */
+/* =========================
+   ESCAPE KEY
+========================= */
 
 document.addEventListener(
     "keydown",
@@ -2043,9 +2203,35 @@ document.addEventListener(
 );
 
 
-/* =========================================
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout(){
+
+    if(
+        !confirm(
+            "Are you sure you want to logout?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    await sb.auth.signOut();
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================
    START
-========================================= */
+========================= */
 
 loadOrders();
 
