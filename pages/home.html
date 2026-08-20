@@ -6,381 +6,704 @@
 
 <title>Beatroot - Home</title>
 
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/desktop.css">
-
 <style>
-.home-page{
-    min-height:100vh;
-    background:#f7f8fa;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
 }
 
-.home-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px;
+body{
+    background:#f7f7f7;
+    color:#222;
+}
+
+/* HEADER */
+
+.header{
+    height:70px;
     background:#fff;
+    border-bottom:1px solid #eee;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
-.home-logo{
+.logo{
     font-size:28px;
     font-weight:800;
     color:#e53935;
 }
 
-.home-logo span{
-    color:#222;
+.nav{
+    display:flex;
+    align-items:center;
+    gap:25px;
 }
 
-.location{
-    font-size:13px;
-    color:#777;
-    margin-top:3px;
+.nav a{
+    text-decoration:none;
+    color:#444;
+    font-size:14px;
+    font-weight:600;
 }
 
-.cart-btn{
-    border:0;
-    background:#fff;
-    font-size:25px;
-    cursor:pointer;
+.nav a:hover{
+    color:#e53935;
 }
+
+.icon-btn{
+    text-decoration:none;
+    font-size:21px;
+    position:relative;
+}
+
+.badge{
+    position:absolute;
+    top:-8px;
+    right:-9px;
+    background:#e53935;
+    color:#fff;
+    width:17px;
+    height:17px;
+    border-radius:50%;
+    font-size:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* HERO */
 
 .hero{
-    margin:15px 20px;
-    padding:28px 22px;
+    max-width:1200px;
+    margin:30px auto;
+    padding:0 20px;
+}
+
+.hero-box{
+    background:linear-gradient(135deg,#e53935,#ff7043);
     border-radius:22px;
-    background:linear-gradient(135deg,#e53935,#ff8a65);
-    color:#fff;
+    min-height:300px;
+    padding:50px;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    overflow:hidden;
+}
+
+.hero-content{
+    max-width:600px;
 }
 
 .hero h1{
-    margin:0 0 8px;
-    font-size:28px;
-}
-
-.hero p{
-    margin:0 0 18px;
-    font-size:15px;
-}
-
-.order-btn{
-    border:0;
-    padding:11px 18px;
-    border-radius:12px;
-    background:#fff;
-    color:#e53935;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.search-box{
-    margin:18px 20px;
-}
-
-.search-box input{
-    width:100%;
-    padding:14px 16px;
-    border:1px solid #ddd;
-    border-radius:14px;
-    font-size:15px;
-    box-sizing:border-box;
-}
-
-.section{
-    padding:0 20px;
-    margin-top:25px;
-}
-
-.section h2{
-    font-size:20px;
+    font-size:44px;
+    line-height:1.1;
     margin-bottom:15px;
 }
 
+.hero p{
+    font-size:17px;
+    opacity:.95;
+    margin-bottom:25px;
+}
+
+.order-btn{
+    display:inline-block;
+    background:#fff;
+    color:#e53935;
+    padding:13px 24px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.hero-icon{
+    font-size:130px;
+    opacity:.9;
+}
+
+/* SEARCH */
+
+.search-area{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 20px;
+}
+
+.search{
+    width:100%;
+    height:52px;
+    border:none;
+    background:#fff;
+    border-radius:12px;
+    padding:0 20px;
+    font-size:15px;
+    outline:none;
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+/* SECTION */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:0 20px;
+}
+
+.section{
+    margin:35px 0;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.section-header h2{
+    font-size:23px;
+}
+
+.view-all{
+    color:#e53935;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* CATEGORIES */
+
 .categories{
     display:flex;
-    gap:14px;
+    gap:15px;
     overflow-x:auto;
+    padding-bottom:5px;
 }
 
 .category{
-    min-width:75px;
-    text-align:center;
+    min-width:110px;
     background:#fff;
-    padding:12px 8px;
-    border-radius:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,.05);
-    cursor:pointer;
+    border-radius:14px;
+    padding:18px 10px;
+    text-align:center;
+    text-decoration:none;
+    color:#222;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
 }
 
 .category-icon{
-    font-size:30px;
+    font-size:34px;
+    margin-bottom:9px;
 }
 
-.category-name{
-    font-size:12px;
-    margin-top:5px;
+.category span{
+    font-size:13px;
+    font-weight:600;
 }
+
+/* RESTAURANTS */
 
 .restaurants{
     display:grid;
-    gap:14px;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
 }
 
-.restaurant-card{
+.restaurant{
     background:#fff;
-    padding:16px;
     border-radius:16px;
-    box-shadow:0 2px 10px rgba(0,0,0,.06);
-    cursor:pointer;
+    overflow:hidden;
+    text-decoration:none;
+    color:#222;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
+    transition:.2s;
 }
 
-.restaurant-card h3{
-    margin:0 0 5px;
+.restaurant:hover{
+    transform:translateY(-3px);
 }
 
-.restaurant-card p{
-    margin:0;
+.restaurant-img{
+    height:170px;
+    background:#eee;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:70px;
+}
+
+.restaurant-info{
+    padding:17px;
+}
+
+.restaurant-info h3{
+    font-size:17px;
+    margin-bottom:7px;
+}
+
+.restaurant-info p{
     color:#777;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.rating{
+    color:#f59e0b;
     font-size:13px;
 }
 
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    max-width:430px;
-    display:flex;
-    justify-content:space-around;
-    padding:12px 0;
+/* QUICK LINKS */
+
+.quick-links{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.quick{
     background:#fff;
-    border-top:1px solid #eee;
-}
-
-.nav-item{
+    border-radius:14px;
+    padding:20px;
+    text-decoration:none;
+    color:#222;
     text-align:center;
-    font-size:12px;
-    color:#777;
-    cursor:pointer;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
 }
 
-.nav-icon{
-    font-size:21px;
-    display:block;
-    margin-bottom:3px;
+.quick-icon{
+    font-size:30px;
+    margin-bottom:8px;
 }
 
-@media(min-width:768px){
+.quick h3{
+    font-size:14px;
+}
 
-    .home-page{
-        max-width:1200px;
-        margin:auto;
-        background:#fff;
+/* FOOTER */
+
+.footer{
+    background:#222;
+    color:#aaa;
+    text-align:center;
+    padding:30px 20px;
+    margin-top:50px;
+}
+
+.footer-logo{
+    color:#fff;
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .header{
+        padding:0 20px;
     }
 
-    .home-header{
-        padding:25px 45px;
+    .nav a{
+        display:none;
     }
 
-    .hero{
-        margin:25px 45px;
-        padding:40px;
+    .hero-box{
+        padding:35px 25px;
+        min-height:280px;
     }
 
-    .search-box{
-        margin:25px 45px;
+    .hero h1{
+        font-size:34px;
     }
 
-    .section{
-        padding:0 45px;
+    .hero-icon{
+        font-size:80px;
     }
 
     .restaurants{
-        grid-template-columns:repeat(3,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .bottom-nav{
-        max-width:1200px;
+    .quick-links{
+        grid-template-columns:repeat(2,1fr);
     }
 }
+
+@media(max-width:500px){
+
+    .logo{
+        font-size:23px;
+    }
+
+    .hero-icon{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .restaurants{
+        grid-template-columns:1fr;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="home-page">
+<!-- HEADER -->
 
-    <!-- HEADER -->
-    <header class="home-header">
+<header class="header">
 
-        <div>
-            <div class="home-logo">
-                Beat<span>root</span>
-            </div>
+    <a href="home.html" class="logo">
+        Beatroot
+    </a>
 
-            <div class="location">
-                📍 Deliver to <b>Home</b>
-            </div>
+    <nav class="nav">
+
+        <a href="home.html">Home</a>
+
+        <a href="restaurants.html">Restaurants</a>
+
+        <a href="my-orders.html">Orders</a>
+
+        <a href="favorites.html">Favorites</a>
+
+        <a href="notifications.html" class="icon-btn">
+            🔔
+            <span class="badge">2</span>
+        </a>
+
+        <a href="cart.html" class="icon-btn">
+            🛒
+            <span class="badge">0</span>
+        </a>
+
+        <a href="profile.html" class="icon-btn">
+            👤
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-box">
+
+        <div class="hero-content">
+
+            <h1>
+                Delicious food,<br>
+                delivered to you.
+            </h1>
+
+            <p>
+                Discover the best restaurants around you
+                and order your favourite food with Beatroot.
+            </p>
+
+            <a href="restaurants.html" class="order-btn">
+                Explore Restaurants →
+            </a>
+
         </div>
 
-        <button class="cart-btn" onclick="openCart()">
-            🛒 <sup id="cartCount">0</sup>
-        </button>
+        <div class="hero-icon">
+            🍔
+        </div>
 
-    </header>
+    </div>
 
-
-    <!-- HERO -->
-    <section class="hero">
-
-        <h1>Hungry? We've got you.</h1>
-
-        <p>
-            Fresh food delivered to your doorstep.
-        </p>
-
-        <button class="order-btn" onclick="goRestaurants()">
-            Order Now →
-        </button>
-
-    </section>
+</section>
 
 
-    <!-- SEARCH -->
-    <div class="search-box">
+<!-- SEARCH -->
 
-        <input
-            type="search"
-            id="searchInput"
-            placeholder="🔍 Search restaurants or food"
-            oninput="searchFood()"
-        >
+<section class="search-area">
+
+    <input
+        type="text"
+        class="search"
+        id="searchBox"
+        placeholder="🔍  Search restaurants or food..."
+        onkeyup="searchRestaurants()"
+    >
+
+</section>
+
+
+<main class="container">
+
+
+<!-- CATEGORIES -->
+
+<section class="section">
+
+    <div class="section-header">
+
+        <h2>Categories</h2>
+
+    </div>
+
+    <div class="categories">
+
+        <a href="restaurants.html" class="category">
+            <div class="category-icon">🍔</div>
+            <span>Burgers</span>
+        </a>
+
+        <a href="restaurants.html" class="category">
+            <div class="category-icon">🍕</div>
+            <span>Pizza</span>
+        </a>
+
+        <a href="restaurants.html" class="category">
+            <div class="category-icon">🍗</div>
+            <span>Chicken</span>
+        </a>
+
+        <a href="restaurants.html" class="category">
+            <div class="category-icon">🍛</div>
+            <span>Indian</span>
+        </a>
+
+        <a href="restaurants.html" class="category">
+            <div class="category-icon">🥤</div>
+            <span>Drinks</span>
+        </a>
+
+        <a href="restaurants.html" class="category">
+            <div class="category-icon">🍰</div>
+            <span>Desserts</span>
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- RESTAURANTS -->
+
+<section class="section">
+
+    <div class="section-header">
+
+        <h2>Popular Restaurants</h2>
+
+        <a href="restaurants.html" class="view-all">
+            View All →
+        </a>
 
     </div>
 
 
-    <!-- CATEGORIES -->
-    <section class="section">
+    <div class="restaurants" id="restaurantList">
 
-        <h2>Categories</h2>
 
-        <div class="categories">
+        <a href="restaurant.html" class="restaurant">
 
-            <div class="category" onclick="selectCategory('Pizza')">
-                <div class="category-icon">🍕</div>
-                <div class="category-name">Pizza</div>
+            <div class="restaurant-img">
+                🍔
             </div>
 
-            <div class="category" onclick="selectCategory('Burgers')">
-                <div class="category-icon">🍔</div>
-                <div class="category-name">Burgers</div>
+            <div class="restaurant-info">
+
+                <h3>Beatroot Burger House</h3>
+
+                <p>
+                    Burgers • Fast Food
+                </p>
+
+                <div class="rating">
+                    ★ 4.8 • 25-35 min
+                </div>
+
             </div>
 
-            <div class="category" onclick="selectCategory('Chicken')">
-                <div class="category-icon">🍗</div>
-                <div class="category-name">Chicken</div>
+        </a>
+
+
+        <a href="restaurant.html" class="restaurant">
+
+            <div class="restaurant-img">
+                🍕
             </div>
 
-            <div class="category" onclick="selectCategory('Meals')">
-                <div class="category-icon">🍛</div>
-                <div class="category-name">Meals</div>
+            <div class="restaurant-info">
+
+                <h3>Pizza Corner</h3>
+
+                <p>
+                    Pizza • Italian
+                </p>
+
+                <div class="rating">
+                    ★ 4.6 • 30-40 min
+                </div>
+
             </div>
 
-        </div>
-
-    </section>
+        </a>
 
 
-    <!-- RESTAURANTS -->
-    <section class="section">
+        <a href="restaurant.html" class="restaurant">
 
-        <h2>Popular near you</h2>
-
-        <div class="restaurants" id="restaurantList">
-
-            <div class="restaurant-card">
-                <h3>Restaurant 1</h3>
-                <p>Delicious food • ⭐ 4.5</p>
+            <div class="restaurant-img">
+                🍗
             </div>
 
-            <div class="restaurant-card">
-                <h3>Restaurant 2</h3>
-                <p>Fresh food • ⭐ 4.4</p>
+            <div class="restaurant-info">
+
+                <h3>Chicken Hub</h3>
+
+                <p>
+                    Chicken • Grill
+                </p>
+
+                <div class="rating">
+                    ★ 4.7 • 25-35 min
+                </div>
+
             </div>
 
-            <div class="restaurant-card">
-                <h3>Restaurant 3</h3>
-                <p>Fast delivery • ⭐ 4.6</p>
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- QUICK ACCESS -->
+
+<section class="section">
+
+    <div class="section-header">
+
+        <h2>Quick Access</h2>
+
+    </div>
+
+
+    <div class="quick-links">
+
+        <a href="my-orders.html" class="quick">
+
+            <div class="quick-icon">
+                📦
             </div>
 
-        </div>
+            <h3>My Orders</h3>
 
-    </section>
+        </a>
 
 
-    <!-- BOTTOM NAV -->
-    <nav class="bottom-nav">
+        <a href="favorites.html" class="quick">
 
-        <div class="nav-item" onclick="goHome()">
-            <span class="nav-icon">🏠</span>
-            Home
-        </div>
+            <div class="quick-icon">
+                ❤️
+            </div>
 
-        <div class="nav-item" onclick="goOrders()">
-            <span class="nav-icon">📦</span>
-            Orders
-        </div>
+            <h3>Favorites</h3>
 
-        <div class="nav-item" onclick="goProfile()">
-            <span class="nav-icon">👤</span>
-            Profile
-        </div>
+        </a>
 
-    </nav>
 
-</div>
+        <a href="addresses.html" class="quick">
+
+            <div class="quick-icon">
+                📍
+            </div>
+
+            <h3>My Addresses</h3>
+
+        </a>
+
+
+        <a href="settings.html" class="quick">
+
+            <div class="quick-icon">
+                ⚙️
+            </div>
+
+            <h3>Settings</h3>
+
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <div class="footer-logo">
+        Beatroot
+    </div>
+
+    <p>
+        Delicious food. Fast delivery. Happy customers.
+    </p>
+
+    <br>
+
+    <small>
+        © 2026 Beatroot. All rights reserved.
+    </small>
+
+</footer>
 
 
 <script>
 
-function goHome(){
-    window.location.href="home.html";
-}
+function searchRestaurants(){
 
-function goRestaurants(){
-    window.location.href="restaurants.html";
-}
-
-function goOrders(){
-    window.location.href="orders.html";
-}
-
-function goProfile(){
-    window.location.href="profile.html";
-}
-
-function openCart(){
-    window.location.href="cart.html";
-}
-
-function selectCategory(category){
-    window.location.href =
-        "restaurants.html?category=" +
-        encodeURIComponent(category);
-}
-
-function searchFood(){
-
-    const value =
-        document.getElementById("searchInput")
+    const search =
+        document.getElementById("searchBox")
         .value
-        .trim();
+        .toLowerCase();
 
-    if(value.length > 0){
-        console.log("Searching:",value);
-    }
+    const restaurants =
+        document.querySelectorAll(".restaurant");
+
+    restaurants.forEach(function(item){
+
+        const text =
+            item.innerText.toLowerCase();
+
+        if(text.includes(search)){
+
+            item.style.display = "";
+
+        }else{
+
+            item.style.display = "none";
+
+        }
+
+    });
+
 }
 
 </script>
