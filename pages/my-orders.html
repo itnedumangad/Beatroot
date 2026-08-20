@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <title>My Orders - Beatroot</title>
 
 <link rel="stylesheet" href="../css/style.css">
 
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -27,7 +31,10 @@ body{
     background:#fff;
 }
 
-/* Header */
+/* =========================
+   HEADER
+========================= */
+
 .header{
     display:flex;
     align-items:center;
@@ -59,14 +66,17 @@ body{
     font-weight:600;
 }
 
-/* Content */
+/* =========================
+   CONTENT
+========================= */
+
 .content{
-    padding:25px 20px 40px;
+    padding:25px 20px 50px;
 }
 
 .title{
-    font-size:28px;
-    margin:0 0 6px;
+    font-size:30px;
+    margin:0 0 5px;
 }
 
 .subtitle{
@@ -74,25 +84,63 @@ body{
     margin:0 0 25px;
 }
 
-/* Order Card */
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+    text-align:center;
+    padding:60px 20px;
+    color:#777;
+}
+
+.spinner{
+    width:35px;
+    height:35px;
+    border:4px solid #eee;
+    border-top:4px solid #e53935;
+    border-radius:50%;
+    margin:0 auto 15px;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================
+   ORDER CARD
+========================= */
+
 .order-card{
     border:1px solid #e5e5e5;
-    border-radius:16px;
-    padding:18px;
+    border-radius:18px;
+    padding:20px;
     margin-bottom:18px;
-    box-shadow:0 3px 12px rgba(0,0,0,.05);
+    box-shadow:0 4px 14px rgba(0,0,0,.06);
+    transition:.2s;
 }
+
+.order-card:hover{
+    box-shadow:0 6px 20px rgba(0,0,0,.09);
+}
+
+/* =========================
+   ORDER TOP
+========================= */
 
 .order-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:10px;
-    margin-bottom:15px;
+    margin-bottom:14px;
 }
 
 .order-id{
-    font-weight:700;
+    font-weight:800;
     font-size:16px;
 }
 
@@ -101,24 +149,45 @@ body{
     border-radius:20px;
     font-size:12px;
     font-weight:700;
+    white-space:nowrap;
 }
 
-.delivered{
+/* STATUS COLORS */
+
+.status-confirmed{
     background:#e8f7ed;
     color:#18864b;
 }
 
-.preparing{
+.status-preparing{
     background:#fff4df;
     color:#b76b00;
 }
 
-.cancelled{
+.status-out-for-delivery{
+    background:#e8f1ff;
+    color:#2868c7;
+}
+
+.status-delivered{
+    background:#e8f7ed;
+    color:#18864b;
+}
+
+.status-cancelled{
     background:#ffe8e8;
     color:#d52d2d;
 }
 
-/* Restaurant */
+.status-default{
+    background:#f1f1f1;
+    color:#555;
+}
+
+/* =========================
+   RESTAURANT
+========================= */
+
 .restaurant{
     font-size:18px;
     font-weight:700;
@@ -128,10 +197,30 @@ body{
 .date{
     font-size:13px;
     color:#777;
-    margin-bottom:15px;
+    margin-bottom:16px;
 }
 
-/* Items */
+/* =========================
+   ADDRESS
+========================= */
+
+.delivery-address{
+    background:#f8f8f8;
+    border-radius:10px;
+    padding:10px 12px;
+    margin-bottom:15px;
+    font-size:13px;
+    color:#555;
+}
+
+.delivery-address strong{
+    color:#222;
+}
+
+/* =========================
+   ITEMS
+========================= */
+
 .items{
     border-top:1px solid #eee;
     border-bottom:1px solid #eee;
@@ -141,7 +230,9 @@ body{
 .item{
     display:flex;
     justify-content:space-between;
-    margin:8px 0;
+    align-items:center;
+    gap:15px;
+    margin:9px 0;
     font-size:14px;
 }
 
@@ -151,15 +242,23 @@ body{
 
 .item-price{
     font-weight:600;
+    white-space:nowrap;
 }
 
-/* Bottom */
+.item-qty{
+    color:#777;
+}
+
+/* =========================
+   BOTTOM
+========================= */
+
 .order-bottom{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-top:15px;
-    gap:10px;
+    margin-top:16px;
+    gap:15px;
 }
 
 .total{
@@ -174,7 +273,7 @@ body{
 
 .btn{
     border:0;
-    padding:9px 13px;
+    padding:10px 14px;
     border-radius:9px;
     cursor:pointer;
     font-weight:600;
@@ -186,25 +285,28 @@ body{
     color:#222;
 }
 
-.reorder-btn{
-    background:#e53935;
-    color:white;
-}
-
 .track-btn{
     background:#171717;
     color:white;
 }
 
-/* Empty */
+.reorder-btn{
+    background:#e53935;
+    color:white;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
 .empty{
     text-align:center;
-    padding:60px 20px;
+    padding:70px 20px;
     display:none;
 }
 
 .empty-icon{
-    font-size:50px;
+    font-size:52px;
     margin-bottom:10px;
 }
 
@@ -227,28 +329,67 @@ body{
     cursor:pointer;
 }
 
-/* Mobile */
+/* =========================
+   ERROR
+========================= */
+
+.error-box{
+    display:none;
+    background:#fff0f0;
+    border:1px solid #ffd0d0;
+    color:#c62828;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:600px){
 
     .content{
-        padding:20px 15px 35px;
+        padding:20px 15px 40px;
     }
 
     .title{
-        font-size:24px;
+        font-size:25px;
+    }
+
+    .header{
+        padding:15px;
     }
 
     .order-card{
         padding:15px;
+        border-radius:15px;
     }
 
     .order-top{
         align-items:flex-start;
     }
 
+    .order-id{
+        font-size:14px;
+    }
+
+    .status{
+        font-size:11px;
+        padding:6px 9px;
+    }
+
+    .restaurant{
+        font-size:17px;
+    }
+
     .order-bottom{
         flex-direction:column;
-        align-items:flex-start;
+        align-items:stretch;
+    }
+
+    .total{
+        font-size:17px;
     }
 
     .actions{
@@ -257,16 +398,21 @@ body{
 
     .btn{
         flex:1;
+        padding:11px 8px;
     }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
 <div class="page">
 
     <!-- HEADER -->
+
     <header class="header">
 
         <button class="back" onclick="goHome()">
@@ -283,120 +429,68 @@ body{
 
 
     <!-- CONTENT -->
+
     <main class="content">
 
-        <h1 class="title">My Orders</h1>
+        <h1 class="title">
+            My Orders
+        </h1>
 
         <p class="subtitle">
-            View and manage your previous orders
+            View and manage your orders
         </p>
 
 
-        <!-- ORDER 1 -->
-        <div class="order-card">
+        <!-- ERROR -->
 
-            <div class="order-top">
-
-                <div class="order-id">
-                    Order #BR10245
-                </div>
-
-                <div class="status delivered">
-                    Delivered
-                </div>
-
-            </div>
+        <div
+            class="error-box"
+            id="errorBox">
+        </div>
 
 
-            <div class="restaurant">
-                🍔 Burger House
-            </div>
+        <!-- LOADING -->
 
-            <div class="date">
-                20 Aug 2026 • 12:45 PM
-            </div>
+        <div
+            class="loading"
+            id="loadingOrders">
 
+            <div class="spinner"></div>
 
-            <div class="items">
-
-                <div class="item">
-                    <span class="item-name">
-                        2 × Chicken Burger
-                    </span>
-
-                    <span class="item-price">
-                        ₹240
-                    </span>
-                </div>
-
-                <div class="item">
-                    <span class="item-name">
-                        1 × French Fries
-                    </span>
-
-                    <span class="item-price">
-                        ₹90
-                    </span>
-                </div>
-
-                <div class="item">
-                    <span class="item-name">
-                        2 × Soft Drink
-                    </span>
-
-                    <span class="item-price">
-                        ₹80
-                    </span>
-                </div>
-
-            </div>
-
-
-            <div class="order-bottom">
-
-                <div class="total">
-                    Total: ₹410
-                </div>
-
-                <div class="actions">
-
-                    <button class="btn view-btn"
-                            onclick="viewOrder('BR10245')">
-                        View
-                    </button>
-
-                    <button class="btn reorder-btn"
-                            onclick="reorder('BR10245')">
-                        Reorder
-                    </button>
-
-                </div>
-
-            </div>
+            Loading your orders...
 
         </div>
 
 
-        <!-- ORDER 2 -->
+        <!-- ORDERS WILL APPEAR HERE -->
 
+        <div id="ordersList"></div>
 
-        
 
         <!-- EMPTY ORDERS -->
-        <div class="empty" id="emptyOrders">
+
+        <div
+            class="empty"
+            id="emptyOrders">
 
             <div class="empty-icon">
                 📦
             </div>
 
-            <h2>No Orders Yet</h2>
+            <h2>
+                No Orders Yet
+            </h2>
 
             <p>
                 Your orders will appear here after you place an order.
             </p>
 
-            <button class="home-btn" onclick="goHome()">
+            <button
+                class="home-btn"
+                onclick="goHome()">
+
                 Start Ordering
+
             </button>
 
         </div>
@@ -408,12 +502,20 @@ body{
 
 <script>
 
+/* ==========================================
+   NAVIGATION
+========================================== */
+
 function goHome(){
 
     window.location.href = "home.html";
 
 }
 
+
+/* ==========================================
+   VIEW ORDER
+========================================== */
 
 function viewOrder(orderId){
 
@@ -424,75 +526,289 @@ function viewOrder(orderId){
 }
 
 
-function trackOrder(orderId){
+/* ==========================================
+   TRACK ORDER
+========================================== */
+
+function trackOrder(orderId, status){
 
     alert(
-        "Tracking Order: " +
+        "Order " +
         orderId +
-        "\n\nYour order is currently being prepared."
+        "\n\nCurrent Status: " +
+        formatStatus(status)
     );
 
 }
 
 
+/* ==========================================
+   REORDER
+========================================== */
+
 function reorder(orderId){
 
     const confirmReorder =
         confirm(
-            "Would you like to add the items from " +
-            orderId +
-            " to your cart?"
+            "Would you like to reorder this order?"
         );
 
     if(confirmReorder){
+
+        /*
+         * For now we open the cart page.
+         * Later we can connect this directly
+         * with cart items from Supabase.
+         */
 
         window.location.href = "cart.html";
 
     }
 
 }
-// ===============================
-// SUPABASE CONNECTION
-// ===============================
 
-const SUPABASE_URL = "https://jihjnsxazmftdqlitgk.supabase.co";
+
+/* ==========================================
+   FORMAT STATUS
+========================================== */
+
+function formatStatus(status){
+
+    if(!status){
+        return "Processing";
+    }
+
+    const value =
+        status
+        .toString()
+        .toLowerCase()
+        .replace(/_/g," ");
+
+    return value
+        .replace(/\b\w/g, function(letter){
+            return letter.toUpperCase();
+        });
+
+}
+
+
+/* ==========================================
+   STATUS CLASS
+========================================== */
+
+function getStatusClass(status){
+
+    if(!status){
+        return "status-default";
+    }
+
+    const value =
+        status
+        .toString()
+        .toLowerCase()
+        .replace(/_/g,"-")
+        .replace(/\s+/g,"-");
+
+    if(value === "confirmed"){
+        return "status-confirmed";
+    }
+
+    if(value === "preparing"){
+        return "status-preparing";
+    }
+
+    if(
+        value === "out-for-delivery" ||
+        value === "outfordelivery"
+    ){
+        return "status-out-for-delivery";
+    }
+
+    if(value === "delivered"){
+        return "status-delivered";
+    }
+
+    if(value === "cancelled" ||
+       value === "canceled"){
+        return "status-cancelled";
+    }
+
+    return "status-default";
+
+}
+
+
+/* ==========================================
+   FORMAT DATE
+========================================== */
+
+function formatDate(dateValue){
+
+    if(!dateValue){
+        return "";
+    }
+
+    const date =
+        new Date(dateValue);
+
+    if(isNaN(date.getTime())){
+        return dateValue;
+    }
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    )
+    +
+    " • "
+    +
+    date.toLocaleTimeString(
+        "en-IN",
+        {
+            hour:"numeric",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* ==========================================
+   FORMAT MONEY
+========================================== */
+
+function formatMoney(amount){
+
+    const value =
+        Number(amount || 0);
+
+    return "₹" +
+        value.toLocaleString("en-IN", {
+            maximumFractionDigits:2
+        });
+
+}
+
+
+/* ==========================================
+   SUPABASE CONNECTION
+========================================== */
+
+const SUPABASE_URL =
+    "https://jihjnsxazmftdqlitgk.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
-// ===============================
-// LOAD USER ORDERS FROM SUPABASE
-// ===============================
+/* ==========================================
+   LOAD USER ORDERS
+========================================== */
 
-async function loadSupabaseOrders() {
+async function loadSupabaseOrders(){
 
-    try {
+    const loading =
+        document.getElementById(
+            "loadingOrders"
+        );
+
+    const ordersList =
+        document.getElementById(
+            "ordersList"
+        );
+
+    const emptyOrders =
+        document.getElementById(
+            "emptyOrders"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    try{
+
+        loading.style.display = "block";
+
+        ordersList.innerHTML = "";
+
+        emptyOrders.style.display = "none";
+
+        errorBox.style.display = "none";
+
+
+        /* =========================
+           GET LOGGED USER
+        ========================= */
 
         const {
             data: { user },
             error: authError
-        } = await supabaseClient.auth.getUser();
+        } =
+        await supabaseClient
+            .auth
+            .getUser();
 
-        if (authError) {
-            console.error("Authentication error:", authError);
+
+        if(authError){
+
+            console.error(
+                "Authentication error:",
+                authError
+            );
+
+            showError(
+                "Unable to verify your account."
+            );
+
             return;
         }
 
-        if (!user) {
-            console.log("No Supabase user logged in.");
+
+        if(!user){
+
+            console.log(
+                "No Supabase user logged in."
+            );
+
+            emptyOrders.style.display =
+                "block";
+
             return;
         }
 
-        console.log("Logged in user:", user.id);
 
-        const { data: orders, error } = await supabaseClient
+        console.log(
+            "Logged in user:",
+            user.id
+        );
+
+
+        /* =========================
+           GET ORDERS
+        ========================= */
+
+        const {
+            data: orders,
+            error
+        } =
+        await supabaseClient
+
             .from("orders")
+
             .select(`
                 id,
                 status,
@@ -501,6 +817,7 @@ async function loadSupabaseOrders() {
                 latitude,
                 longitude,
                 created_at,
+
                 order_items (
                     id,
                     item_name,
@@ -508,35 +825,485 @@ async function loadSupabaseOrders() {
                     unit_price
                 )
             `)
-            .eq("customer_id", user.id)
-            .order("created_at", {
-                ascending: false
-            });
 
-        if (error) {
-            console.error("Orders loading error:", error);
+            .eq(
+                "customer_id",
+                user.id
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Orders loading error:",
+                error
+            );
+
+            showError(
+                "Unable to load your orders."
+            );
+
             return;
         }
 
-        console.log("Orders from Supabase:", orders);
 
-        // Temporary test
-        // This confirms that Supabase data is reaching the page.
-        window.supabaseOrders = orders || [];
+        console.log(
+            "Orders from Supabase:",
+            orders
+        );
 
-    } catch (error) {
+
+        /* =========================
+           SAVE ORDERS
+        ========================= */
+
+        window.supabaseOrders =
+            orders || [];
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        if(
+            !orders ||
+            orders.length === 0
+        ){
+
+            emptyOrders.style.display =
+                "block";
+
+            return;
+        }
+
+
+        /* =========================
+           RENDER
+        ========================= */
+
+        renderOrders(
+            orders
+        );
+
+
+    }
+    catch(error){
 
         console.error(
             "Unexpected Supabase error:",
             error
         );
 
+        showError(
+            "Something went wrong while loading your orders."
+        );
+
     }
+    finally{
+
+        loading.style.display =
+            "none";
+
+    }
+
 }
 
 
-// Load orders when page opens
+/* ==========================================
+   RENDER ORDERS
+========================================== */
+
+function renderOrders(orders){
+
+    const ordersList =
+        document.getElementById(
+            "ordersList"
+        );
+
+
+    ordersList.innerHTML = "";
+
+
+    orders.forEach(
+        function(order){
+
+            const card =
+                createOrderCard(
+                    order
+                );
+
+            ordersList.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   CREATE ORDER CARD
+========================================== */
+
+function createOrderCard(order){
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+    card.className =
+        "order-card";
+
+
+    const orderId =
+        order.id || "";
+
+
+    const status =
+        order.status ||
+        "Processing";
+
+
+    const items =
+        order.order_items ||
+        [];
+
+
+    let itemsHTML = "";
+
+
+    if(items.length > 0){
+
+        items.forEach(
+            function(item){
+
+                const quantity =
+                    Number(
+                        item.quantity || 0
+                    );
+
+                const unitPrice =
+                    Number(
+                        item.unit_price || 0
+                    );
+
+                const itemTotal =
+                    quantity *
+                    unitPrice;
+
+
+                itemsHTML += `
+
+                    <div class="item">
+
+                        <span class="item-name">
+
+                            <span class="item-qty">
+                                ${quantity} ×
+                            </span>
+
+                            ${escapeHTML(
+                                item.item_name || "Item"
+                            )}
+
+                        </span>
+
+                        <span class="item-price">
+
+                            ${formatMoney(
+                                itemTotal
+                            )}
+
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+    }
+    else{
+
+        itemsHTML = `
+
+            <div class="item">
+
+                <span class="item-name">
+                    Order items unavailable
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+
+    const trackButton =
+        isTrackable(status)
+        ?
+
+        `
+
+        <button
+            class="btn track-btn"
+            onclick="trackOrder(
+                '${escapeJS(orderId)}',
+                '${escapeJS(status)}'
+            )">
+
+            Track
+
+        </button>
+
+        `
+
+        :
+
+        "";
+
+
+    card.innerHTML = `
+
+        <div class="order-top">
+
+            <div class="order-id">
+
+                Order #${escapeHTML(
+                    String(orderId)
+                )}
+
+            </div>
+
+            <div class="status ${
+                getStatusClass(status)
+            }">
+
+                ${escapeHTML(
+                    formatStatus(status)
+                )}
+
+            </div>
+
+        </div>
+
+
+        <div class="restaurant">
+
+            🍽️ Beatroot Food Order
+
+        </div>
+
+
+        <div class="date">
+
+            ${escapeHTML(
+                formatDate(
+                    order.created_at
+                )
+            )}
+
+        </div>
+
+
+        ${
+            order.delivery_address
+            ?
+
+            `
+
+            <div class="delivery-address">
+
+                <strong>
+                    📍 Delivery Address
+                </strong>
+
+                <br>
+
+                ${escapeHTML(
+                    order.delivery_address
+                )}
+
+            </div>
+
+            `
+
+            :
+
+            ""
+        }
+
+
+        <div class="items">
+
+            ${itemsHTML}
+
+        </div>
+
+
+        <div class="order-bottom">
+
+            <div class="total">
+
+                Total:
+                ${formatMoney(
+                    order.total
+                )}
+
+            </div>
+
+
+            <div class="actions">
+
+                ${trackButton}
+
+
+                <button
+                    class="btn view-btn"
+                    onclick="viewOrder(
+                        '${escapeJS(orderId)}'
+                    )">
+
+                    View
+
+                </button>
+
+
+                ${
+                    status.toString()
+                        .toLowerCase()
+                        .includes("delivered")
+
+                    ?
+
+                    `
+
+                    <button
+                        class="btn reorder-btn"
+                        onclick="reorder(
+                            '${escapeJS(orderId)}'
+                        )">
+
+                        Reorder
+
+                    </button>
+
+                    `
+
+                    :
+
+                    ""
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    return card;
+
+}
+
+
+/* ==========================================
+   TRACKABLE STATUS
+========================================== */
+
+function isTrackable(status){
+
+    if(!status){
+        return false;
+    }
+
+    const value =
+        status
+        .toString()
+        .toLowerCase()
+        .replace(/_/g,"-")
+        .replace(/\s+/g,"-");
+
+
+    return (
+        value === "confirmed" ||
+        value === "preparing" ||
+        value === "out-for-delivery" ||
+        value === "outfordelivery"
+    );
+
+}
+
+
+/* ==========================================
+   ERROR
+========================================== */
+
+function showError(message){
+
+    const errorBox =
+        document.getElementById(
+            "errorBox"
+        );
+
+    errorBox.textContent =
+        message;
+
+    errorBox.style.display =
+        "block";
+
+}
+
+
+/* ==========================================
+   HTML ESCAPE
+========================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ==========================================
+   JAVASCRIPT STRING ESCAPE
+========================================== */
+
+function escapeJS(value){
+
+    return String(value)
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'")
+        .replace(/"/g,'\\"')
+        .replace(/\n/g,"\\n")
+        .replace(/\r/g,"\\r");
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
 loadSupabaseOrders();
+
 </script>
 
 </body>
