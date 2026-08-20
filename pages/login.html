@@ -400,7 +400,21 @@ async function loginUser(){
 
         /* SUCCESS */
 
-        window.location.href = "../index.html";
+       if (
+    data.user.email &&
+    data.user.email.toLowerCase() ===
+    "itnedumangad@gmail.com"
+) {
+
+    window.location.href =
+        "./admin-dashboard.html";
+
+} else {
+
+    window.location.href =
+        "../index.html";
+
+}
 
 
     }catch(error){
