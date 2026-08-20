@@ -1242,56 +1242,15 @@ async function registerUser(){
 
 
         /* =========================
-           SAVE PROFILE
+           PROFILE
         ========================= */
 
-        const {
-            error:profileError
-        } =
-        await sb
-        .from("profiles")
-        .upsert({
+        /*
+          Profile is created automatically by the Supabase
+          database trigger after the Auth user is created.
 
-            id:data.user.id,
-
-            full_name:name,
-
-            phone:phone,
-
-            role:"customer"
-
-        });
-
-
-        if(profileError){
-
-            console.error(
-                "Profile error:",
-                profileError
-            );
-
-
-            /*
-              Auth account created.
-              Profile save failed.
-            */
-
-            showRegisterMessage(
-                "Account create aayi, pakse profile save cheyyan kazhinjilla. Admin policy check cheyyanam.",
-                "error"
-            );
-
-
-            button.disabled =
-                false;
-
-            button.textContent =
-                "Create Account";
-
-
-            return;
-
-        }
+          Do NOT insert/upsert into public.profiles here.
+        */
 
 
         /* =========================
@@ -1299,7 +1258,7 @@ async function registerUser(){
         ========================= */
 
         showRegisterMessage(
-            "Account successfully created!",
+            "Account successfully created! Check your email if confirmation is required.",
             "success"
         );
 
