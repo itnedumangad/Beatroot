@@ -5,8 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Beatroot - Login</title>
 
@@ -18,26 +20,39 @@ content="width=device-width, initial-scale=1.0">
     box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
     margin:0;
     padding:0;
     width:100%;
     min-height:100%;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
     background:
-        radial-gradient(circle at top left,#ffe8e6,transparent 35%),
-        radial-gradient(circle at bottom right,#ffecec,transparent 35%),
+        radial-gradient(
+            circle at top left,
+            #ffe8e6,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #ffecec,
+            transparent 35%
+        ),
         #f6f7f9;
 }
 
 .login-page{
     min-height:100vh;
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
+
     padding:25px;
 }
 
@@ -48,10 +63,15 @@ body{
 
 .logo{
     text-align:center;
+
     font-size:42px;
+
     font-weight:900;
+
     letter-spacing:-2px;
+
     color:#e53935;
+
     margin-bottom:8px;
 }
 
@@ -61,28 +81,40 @@ body{
 
 .welcome{
     text-align:center;
+
     color:#777;
+
     font-size:15px;
+
     margin:0 0 28px;
 }
 
 .login-card{
-    background:#ffffff;
+    background:#fff;
+
     border-radius:24px;
+
     padding:32px;
-    box-shadow:0 20px 60px rgba(0,0,0,.10);
-    border:1px solid #eeeeee;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.10);
+
+    border:1px solid #eee;
 }
 
 .login-card h1{
     margin:0;
+
     font-size:27px;
+
     color:#171717;
 }
 
 .subtitle{
     color:#777;
+
     font-size:14px;
+
     margin:9px 0 25px;
 }
 
@@ -92,69 +124,111 @@ body{
 
 .input-group label{
     display:block;
+
     font-size:13px;
+
     font-weight:700;
+
     margin-bottom:7px;
+
     color:#333;
 }
 
 .input-group input{
     width:100%;
+
     height:50px;
-    border:1px solid #dddddd;
+
+    border:1px solid #ddd;
+
     border-radius:12px;
+
     padding:0 15px;
+
     font-size:15px;
+
     outline:none;
+
     transition:.2s;
+
     background:#fafafa;
 }
 
 .input-group input:focus{
     border-color:#e53935;
+
     background:#fff;
-    box-shadow:0 0 0 3px rgba(229,57,53,.10);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(229,57,53,.10);
 }
 
 .login-button{
     width:100%;
+
     height:52px;
+
     border:0;
+
     border-radius:12px;
+
     background:#e53935;
+
     color:#fff;
+
     font-size:15px;
+
     font-weight:800;
+
     cursor:pointer;
+
     transition:.2s;
+
     margin-top:5px;
 }
 
 .login-button:hover{
     background:#d92f2b;
+
     transform:translateY(-1px);
 }
 
 .login-button:disabled{
     opacity:.65;
+
     cursor:not-allowed;
+
     transform:none;
 }
 
 .create-account{
     text-align:center;
+
     margin-top:22px;
+
     font-size:14px;
+
     color:#e53935;
+
     font-weight:700;
+
     cursor:pointer;
+}
+
+.create-account:hover{
+    text-decoration:underline;
 }
 
 .close-login{
     text-align:center;
+
     margin-top:16px;
+
     color:#777;
+
     font-size:14px;
+
     cursor:pointer;
 }
 
@@ -162,15 +236,176 @@ body{
     color:#222;
 }
 
-#loginMessage{
+#loginMessage,
+#registerMessage{
+
     display:none;
+
     margin-top:18px;
+
     padding:12px;
+
     border-radius:10px;
+
     font-size:13px;
+
     line-height:1.5;
+
     text-align:center;
 }
+
+
+/* =========================
+   REGISTER MODAL
+========================= */
+
+.register-modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    z-index:1000;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.register-modal.show{
+    display:flex;
+}
+
+.register-box{
+
+    width:100%;
+
+    max-width:450px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.25);
+}
+
+.register-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:8px;
+}
+
+.register-header h2{
+
+    margin:0;
+
+    font-size:25px;
+}
+
+.register-close{
+
+    width:35px;
+
+    height:35px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#f3f4f6;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+.register-close:hover{
+
+    background:#fee2e2;
+
+    color:#e53935;
+}
+
+.register-subtitle{
+
+    color:#777;
+
+    font-size:14px;
+
+    margin:0 0 22px;
+}
+
+.register-button{
+
+    width:100%;
+
+    height:50px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:#e53935;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.register-button:hover{
+
+    background:#d92f2b;
+}
+
+.register-button:disabled{
+
+    opacity:.65;
+
+    cursor:not-allowed;
+}
+
+.back-login{
+
+    text-align:center;
+
+    margin-top:15px;
+
+    color:#e53935;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:500px){
 
@@ -180,6 +415,7 @@ body{
 
     .login-card{
         padding:25px 20px;
+
         border-radius:20px;
     }
 
@@ -191,99 +427,290 @@ body{
         font-size:24px;
     }
 
+    .register-box{
+        padding:24px 20px;
+
+        border-radius:20px;
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     LOGIN
+========================= -->
 
 <div class="login-page">
 
-    <div class="login-container">
+<div class="login-container">
 
-        <div class="logo">
-            Beat<span>root</span>
-        </div>
 
-        <p class="welcome">
-            Welcome to Beatroot
-        </p>
+<div class="logo">
 
-        <div class="login-card">
-
-            <h1>
-                Login to Beatroot
-            </h1>
-
-            <p class="subtitle">
-                Login using your email and password.
-            </p>
-
-            <div class="input-group">
-
-                <label>
-                    Email Address
-                </label>
-
-                <input
-                    type="email"
-                    id="loginEmail"
-                    placeholder="Enter your email"
-                    autocomplete="email"
-                >
-
-            </div>
-
-            <div class="input-group">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                >
-
-            </div>
-
-            <button
-                class="login-button"
-                id="loginButton"
-                type="button"
-                onclick="loginUser()">
-
-                Login
-
-            </button>
-
-            <div
-                class="create-account"
-                onclick="createAccount()">
-
-                Create New Account
-
-            </div>
-
-            <div
-                class="close-login"
-                onclick="goBack()">
-
-                Close
-
-            </div>
-
-            <div id="loginMessage"></div>
-
-        </div>
-
-    </div>
+    Beat<span>root</span>
 
 </div>
+
+
+<p class="welcome">
+
+    Welcome to Beatroot
+
+</p>
+
+
+<div class="login-card">
+
+
+<h1>
+    Login to Beatroot
+</h1>
+
+
+<p class="subtitle">
+    Login using your email and password.
+</p>
+
+
+<div class="input-group">
+
+<label>
+    Email Address
+</label>
+
+<input
+    type="email"
+    id="loginEmail"
+    placeholder="Enter your email"
+    autocomplete="email"
+>
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+    Password
+</label>
+
+<input
+    type="password"
+    id="loginPassword"
+    placeholder="Enter your password"
+    autocomplete="current-password"
+>
+
+</div>
+
+
+<button
+    class="login-button"
+    id="loginButton"
+    type="button"
+    onclick="loginUser()">
+
+    Login
+
+</button>
+
+
+<div
+    class="create-account"
+    onclick="openRegister()">
+
+    Create New Account
+
+</div>
+
+
+<div
+    class="close-login"
+    onclick="goBack()">
+
+    Close
+
+</div>
+
+
+<div
+    id="loginMessage">
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     REGISTER MODAL
+========================= -->
+
+<div
+    class="register-modal"
+    id="registerModal"
+    onclick="closeRegisterOutside(event)"
+>
+
+
+<div class="register-box">
+
+
+<div class="register-header">
+
+<h2>
+    Create Account
+</h2>
+
+
+<button
+    class="register-close"
+    onclick="closeRegister()">
+
+    ×
+
+</button>
+
+</div>
+
+
+<p class="register-subtitle">
+
+    Create your Beatroot customer account.
+
+</p>
+
+
+<!-- FULL NAME -->
+
+<div class="input-group">
+
+<label>
+    Full Name
+</label>
+
+<input
+    type="text"
+    id="registerName"
+    placeholder="Enter your full name"
+    autocomplete="name"
+>
+
+</div>
+
+
+<!-- PHONE -->
+
+<div class="input-group">
+
+<label>
+    Phone Number
+</label>
+
+<input
+    type="tel"
+    id="registerPhone"
+    placeholder="Enter your phone number"
+    autocomplete="tel"
+>
+
+</div>
+
+
+<!-- EMAIL -->
+
+<div class="input-group">
+
+<label>
+    Email Address
+</label>
+
+<input
+    type="email"
+    id="registerEmail"
+    placeholder="Enter your email"
+    autocomplete="email"
+>
+
+</div>
+
+
+<!-- PASSWORD -->
+
+<div class="input-group">
+
+<label>
+    Password
+</label>
+
+<input
+    type="password"
+    id="registerPassword"
+    placeholder="Create a password"
+    autocomplete="new-password"
+>
+
+</div>
+
+
+<!-- CONFIRM PASSWORD -->
+
+<div class="input-group">
+
+<label>
+    Confirm Password
+</label>
+
+<input
+    type="password"
+    id="registerConfirmPassword"
+    placeholder="Confirm your password"
+    autocomplete="new-password"
+>
+
+</div>
+
+
+<button
+    class="register-button"
+    id="registerButton"
+    onclick="registerUser()">
+
+    Create Account
+
+</button>
+
+
+<div
+    class="back-login"
+    onclick="closeRegister()">
+
+    ← Back to Login
+
+</div>
+
+
+<div
+    id="registerMessage">
+</div>
+
+
+</div>
+
+</div>
+
+
 
 <script>
 
@@ -292,15 +719,22 @@ body{
 ========================================= */
 
 const SUPABASE_URL =
-"https://jhihjnsxazmftdqlitgk.supabase.co";
+    "https://jhihjnsxazmftdqlitgk.supabase.co";
+
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-const sb = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+
+const ADMIN_EMAIL =
+    "itnedumangad@gmail.com";
+
+
+const sb =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
 /* =========================================
@@ -310,36 +744,49 @@ const sb = supabase.createClient(
 async function loginUser(){
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document
+        .getElementById("loginEmail")
+        .value
+        .trim();
+
 
     const password =
-        document.getElementById("loginPassword").value;
+        document
+        .getElementById("loginPassword")
+        .value;
+
 
     const message =
-        document.getElementById("loginMessage");
+        document
+        .getElementById("loginMessage");
+
 
     const button =
-        document.getElementById("loginButton");
+        document
+        .getElementById("loginButton");
 
 
-    message.style.display = "none";
+    message.style.display =
+        "none";
 
-
-    /* CHECK */
 
     if(!email || !password){
 
-        showMessage(
-            "Emailum passwordum enter cheyyuka.",
+        showLoginMessage(
+            "Email and password enter cheyyuka.",
             "error"
         );
 
         return;
+
     }
 
 
-    button.disabled = true;
-    button.textContent = "Logging in...";
+    button.disabled =
+        true;
+
+    button.textContent =
+        "Logging in...";
 
 
     try{
@@ -347,15 +794,15 @@ async function loginUser(){
         const {
             data,
             error
-        } = await sb.auth.signInWithPassword({
+        } =
+        await sb.auth.signInWithPassword({
 
-            email: email,
-            password: password
+            email:email,
+
+            password:password
 
         });
 
-
-        /* ERROR */
 
         if(error){
 
@@ -364,31 +811,42 @@ async function loginUser(){
                 error
             );
 
-            showMessage(
+
+            showLoginMessage(
                 error.message,
                 "error"
             );
 
-            button.disabled = false;
-            button.textContent = "Login";
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Login";
+
 
             return;
+
         }
 
 
-        /* SESSION CHECK */
-
         if(!data.session){
 
-            showMessage(
+            showLoginMessage(
                 "Login session create cheyyan kazhinjilla.",
                 "error"
             );
 
-            button.disabled = false;
-            button.textContent = "Login";
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Login";
+
 
             return;
+
         }
 
 
@@ -398,39 +856,45 @@ async function loginUser(){
         );
 
 
-        /* SUCCESS */
+        if(
+            data.user.email &&
+            data.user.email.toLowerCase()
+            ===
+            ADMIN_EMAIL.toLowerCase()
+        ){
 
-       if (
-    data.user.email &&
-    data.user.email.toLowerCase() ===
-    "itnedumangad@gmail.com"
-) {
+            window.location.href =
+                "./admin-dashboard.html";
 
-    window.location.href =
-        "./admin-dashboard.html";
+        }
+        else{
 
-} else {
+            window.location.href =
+                "../index.html";
 
-    window.location.href =
-        "../index.html";
+        }
 
-}
+    }
 
-
-    }catch(error){
+    catch(error){
 
         console.error(
             "Login Exception:",
             error
         );
 
-        showMessage(
+
+        showLoginMessage(
             "Something went wrong. Veendum try cheyyuka.",
             "error"
         );
 
-        button.disabled = false;
-        button.textContent = "Login";
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "Login";
 
     }
 
@@ -438,42 +902,547 @@ async function loginUser(){
 
 
 /* =========================================
-   MESSAGE
+   LOGIN MESSAGE
 ========================================= */
 
-function showMessage(text,type){
+function showLoginMessage(
+    text,
+    type
+){
 
     const message =
-        document.getElementById("loginMessage");
+        document.getElementById(
+            "loginMessage"
+        );
 
-    message.textContent = text;
 
-    message.style.display = "block";
+    message.textContent =
+        text;
+
+
+    message.style.display =
+        "block";
 
 
     if(type === "error"){
 
-        message.style.background = "#fff0f0";
+        message.style.background =
+            "#fff0f0";
 
-        message.style.color = "#d32f2f";
+        message.style.color =
+            "#d32f2f";
 
         message.style.border =
             "1px solid #ffd0d0";
 
     }
+    else{
+
+        message.style.background =
+            "#ecfdf5";
+
+        message.style.color =
+            "#15803d";
+
+        message.style.border =
+            "1px solid #bbf7d0";
+
+    }
 
 }
 
 
 /* =========================================
-   CREATE ACCOUNT
+   OPEN REGISTER
 ========================================= */
 
-function createAccount(){
+function openRegister(){
 
-    alert(
-        "Create Account page next aayi add cheyyam."
-    );
+    document
+        .getElementById(
+            "registerModal"
+        )
+        .classList.add("show");
+
+
+    document
+        .getElementById(
+            "registerName"
+        )
+        .focus();
+
+}
+
+
+/* =========================================
+   CLOSE REGISTER
+========================================= */
+
+function closeRegister(){
+
+    document
+        .getElementById(
+            "registerModal"
+        )
+        .classList.remove("show");
+
+}
+
+
+function closeRegisterOutside(
+    event
+){
+
+    if(
+        event.target ===
+        document.getElementById(
+            "registerModal"
+        )
+    ){
+
+        closeRegister();
+
+    }
+
+}
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
+async function registerUser(){
+
+    const name =
+        document
+        .getElementById(
+            "registerName"
+        )
+        .value
+        .trim();
+
+
+    const phone =
+        document
+        .getElementById(
+            "registerPhone"
+        )
+        .value
+        .trim();
+
+
+    const email =
+        document
+        .getElementById(
+            "registerEmail"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const password =
+        document
+        .getElementById(
+            "registerPassword"
+        )
+        .value;
+
+
+    const confirmPassword =
+        document
+        .getElementById(
+            "registerConfirmPassword"
+        )
+        .value;
+
+
+    const message =
+        document.getElementById(
+            "registerMessage"
+        );
+
+
+    const button =
+        document.getElementById(
+            "registerButton"
+        );
+
+
+    message.style.display =
+        "none";
+
+
+    /* =========================
+       VALIDATION
+    ========================= */
+
+
+    if(
+        !name ||
+        !phone ||
+        !email ||
+        !password ||
+        !confirmPassword
+    ){
+
+        showRegisterMessage(
+            "Ella fields-um fill cheyyuka.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(name.length < 2){
+
+        showRegisterMessage(
+            "Valid full name enter cheyyuka.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const phoneDigits =
+        phone.replace(
+            /\D/g,
+            ""
+        );
+
+
+    if(
+        phoneDigits.length < 10
+    ){
+
+        showRegisterMessage(
+            "Valid phone number enter cheyyuka.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(password.length < 6){
+
+        showRegisterMessage(
+            "Password minimum 6 characters venam.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        password !==
+        confirmPassword
+    ){
+
+        showRegisterMessage(
+            "Passwords match cheyyunnilla.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "Creating Account...";
+
+
+    try{
+
+
+        /* =========================
+           CREATE AUTH ACCOUNT
+        ========================= */
+
+        const {
+            data,
+            error
+        } =
+        await sb.auth.signUp({
+
+            email:email,
+
+            password:password,
+
+            options:{
+
+                data:{
+
+                    full_name:name,
+
+                    phone:phone
+
+                }
+
+            }
+
+        });
+
+
+        if(error){
+
+            console.error(
+                "Signup error:",
+                error
+            );
+
+
+            showRegisterMessage(
+                error.message,
+                "error"
+            );
+
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Create Account";
+
+
+            return;
+
+        }
+
+
+        if(!data.user){
+
+            showRegisterMessage(
+                "Account create cheyyan kazhinjilla.",
+                "error"
+            );
+
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Create Account";
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           SAVE PROFILE
+        ========================= */
+
+        const {
+            error:profileError
+        } =
+        await sb
+        .from("profiles")
+        .upsert({
+
+            id:data.user.id,
+
+            full_name:name,
+
+            phone:phone,
+
+            role:"customer"
+
+        });
+
+
+        if(profileError){
+
+            console.error(
+                "Profile error:",
+                profileError
+            );
+
+
+            /*
+              Auth account created.
+              Profile save failed.
+            */
+
+            showRegisterMessage(
+                "Account create aayi, pakse profile save cheyyan kazhinjilla. Admin policy check cheyyanam.",
+                "error"
+            );
+
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Create Account";
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
+
+        showRegisterMessage(
+            "Account successfully created!",
+            "success"
+        );
+
+
+        button.textContent =
+            "Account Created";
+
+
+        /*
+          If email confirmation is enabled,
+          user must confirm email first.
+        */
+
+        if(
+            !data.session
+        ){
+
+            setTimeout(
+                function(){
+
+                    alert(
+                        "Account created. Email confirmation required aanenkil email verify cheythathinu shesham login cheyyuka."
+                    );
+
+
+                    closeRegister();
+
+                    document.getElementById(
+                        "loginEmail"
+                    ).value =
+                        email;
+
+                },
+                1200
+            );
+
+        }
+        else{
+
+            /*
+              Auto-login if confirmation
+              is disabled.
+            */
+
+            setTimeout(
+                function(){
+
+                    if(
+                        email ===
+                        ADMIN_EMAIL
+                    ){
+
+                        window.location.href =
+                            "./admin-dashboard.html";
+
+                    }
+                    else{
+
+                        window.location.href =
+                            "../index.html";
+
+                    }
+
+                },
+                800
+            );
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Registration exception:",
+            error
+        );
+
+
+        showRegisterMessage(
+            "Something went wrong. Veendum try cheyyuka.",
+            "error"
+        );
+
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "Create Account";
+
+    }
+
+}
+
+
+/* =========================================
+   REGISTER MESSAGE
+========================================= */
+
+function showRegisterMessage(
+    text,
+    type
+){
+
+    const message =
+        document.getElementById(
+            "registerMessage"
+        );
+
+
+    message.textContent =
+        text;
+
+
+    message.style.display =
+        "block";
+
+
+    if(type === "error"){
+
+        message.style.background =
+            "#fff0f0";
+
+        message.style.color =
+            "#d32f2f";
+
+        message.style.border =
+            "1px solid #ffd0d0";
+
+    }
+    else{
+
+        message.style.background =
+            "#ecfdf5";
+
+        message.style.color =
+            "#15803d";
+
+        message.style.border =
+            "1px solid #bbf7d0";
+
+    }
 
 }
 
@@ -490,11 +1459,13 @@ function goBack(){
 
 
 /* =========================================
-   ENTER KEY
+   ENTER KEY - LOGIN
 ========================================= */
 
 document
-.getElementById("loginPassword")
+.getElementById(
+    "loginPassword"
+)
 .addEventListener(
     "keydown",
     function(event){
@@ -502,6 +1473,28 @@ document
         if(event.key === "Enter"){
 
             loginUser();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   ENTER KEY - REGISTER
+========================================= */
+
+document
+.getElementById(
+    "registerConfirmPassword"
+)
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            registerUser();
 
         }
 
