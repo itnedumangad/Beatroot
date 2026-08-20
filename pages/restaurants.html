@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,23 +9,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
-}
-
-:root{
-    --red:#ef3f3f;
-    --red-dark:#d92f2f;
-    --dark:#111827;
-    --dark2:#1f2937;
-    --text:#171717;
-    --muted:#6b7280;
-    --bg:#f6f7f9;
-    --white:#ffffff;
-    --border:#e8e8e8;
 }
 
 html{
@@ -35,10 +21,23 @@ html{
 
 body{
     font-family:Inter,Arial,Helvetica,sans-serif;
-    background:var(--bg);
-    color:var(--text);
+    background:#f7f8fc;
+    color:#171717;
 }
 
+/* REMOVE ALL UNDERLINES */
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus,
+button,
+button *,
+.restaurant-card,
+.restaurant-card *{
+    text-decoration:none !important;
+}
 
 /* =========================
    HEADER
@@ -48,599 +47,339 @@ body{
     position:sticky;
     top:0;
     z-index:1000;
-
+    height:72px;
     background:rgba(255,255,255,.94);
-    backdrop-filter:blur(18px);
-
-    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid #eeeeee;
 }
 
-.navbar{
-    width:min(1240px,92%);
-    height:76px;
+.header-inner{
+    max-width:1200px;
+    height:100%;
     margin:auto;
+    padding:0 22px;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:25px;
 }
 
 .logo{
-    font-size:30px;
+    font-size:29px;
     font-weight:900;
-    letter-spacing:-1.8px;
-    color:var(--red);
+    letter-spacing:-1.5px;
+    color:#ef3e3e;
 }
 
 .logo span{
-    color:var(--dark);
+    color:#171717;
 }
 
-.nav-links{
+.header-right{
     display:flex;
     align-items:center;
-    gap:30px;
+    gap:10px;
 }
 
-.nav-links a{
-    color:#555;
+.back-btn,
+.login-btn{
+    border:0;
+    border-radius:10px;
+    padding:10px 16px;
     font-size:14px;
-    font-weight:600;
-    transition:.2s;
-}
-
-.nav-links a:hover,
-.nav-links a.active{
-    color:var(--red);
-}
-
-.nav-actions{
-    display:flex;
-    align-items:center;
-    gap:9px;
-}
-
-.icon-btn{
-    width:43px;
-    height:43px;
-
-    display:grid;
-    place-items:center;
-
-    background:white;
-    border:1px solid var(--border);
-    border-radius:13px;
-
-    font-size:18px;
+    font-weight:700;
     cursor:pointer;
-
-    transition:.2s;
 }
 
-.icon-btn:hover{
-    border-color:#ddd;
-    transform:translateY(-1px);
+.back-btn{
+    background:#f1f2f5;
+    color:#222;
 }
 
 .login-btn{
-    border:0;
-    background:var(--dark);
+    background:#ef3e3e;
     color:white;
-
-    padding:12px 19px;
-    border-radius:12px;
-
-    font-size:13px;
-    font-weight:700;
 }
 
-.profile-btn{
-    border:0;
-    background:var(--red);
-    color:white;
-
-    padding:12px 18px;
-    border-radius:12px;
-
-    font-size:13px;
-    font-weight:700;
-
-    display:none;
+.back-btn:hover{
+    background:#e5e7eb;
 }
 
+.login-btn:hover{
+    background:#d93232;
+}
 
 /* =========================
    HERO
 ========================= */
 
 .hero{
-    position:relative;
-    overflow:hidden;
-
-    background:
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(239,63,63,.28),
-            transparent 32%
-        ),
-        linear-gradient(
-            135deg,
-            #111827,
-            #1b2230
-        );
-
-    color:white;
-}
-
-.hero-inner{
-    width:min(1240px,92%);
-    margin:auto;
-
-    min-height:350px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:40px;
-
-    padding:55px 0;
+    max-width:1200px;
+    margin:0 auto;
+    padding:45px 22px 25px;
 }
 
 .hero-content{
-    max-width:650px;
-}
+    background:
+        radial-gradient(circle at 90% 20%,rgba(239,62,62,.15),transparent 35%),
+        linear-gradient(135deg,#ffffff,#fafafa);
 
-.hero-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-
-    background:rgba(255,255,255,.10);
-    border:1px solid rgba(255,255,255,.12);
-
-    padding:8px 13px;
-    border-radius:30px;
-
-    font-size:12px;
-    color:#f5f5f5;
-
-    margin-bottom:18px;
+    border:1px solid #eeeeee;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 10px 40px rgba(0,0,0,.05);
 }
 
 .hero h1{
-    font-size:48px;
-    line-height:1.05;
-    letter-spacing:-2.5px;
-
-    margin-bottom:15px;
+    font-size:42px;
+    line-height:1.1;
+    letter-spacing:-1.5px;
+    margin-bottom:10px;
 }
 
 .hero h1 span{
-    color:#ff5a5a;
+    color:#ef3e3e;
 }
 
 .hero p{
-    color:#cbd5e1;
-    font-size:15px;
-    line-height:1.7;
-
-    max-width:560px;
+    color:#6b7280;
+    font-size:16px;
+    line-height:1.6;
+    max-width:600px;
 }
-
-.hero-food{
-    width:260px;
-    height:260px;
-
-    border-radius:50%;
-
-    display:grid;
-    place-items:center;
-
-    font-size:130px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.12),
-            rgba(255,255,255,.02)
-        );
-
-    border:1px solid rgba(255,255,255,.1);
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.25);
-
-    animation:float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-8px);
-    }
-
-}
-
-
-/* =========================
-   MAIN
-========================= */
-
-.page{
-    width:min(1240px,92%);
-    margin:auto;
-}
-
-.section-head{
-    padding:42px 0 22px;
-
-    display:flex;
-    align-items:end;
-    justify-content:space-between;
-
-    gap:20px;
-}
-
-.section-head h2{
-    font-size:28px;
-    letter-spacing:-1px;
-}
-
-.section-head p{
-    margin-top:6px;
-    color:var(--muted);
-    font-size:14px;
-}
-
 
 /* =========================
    SEARCH
 ========================= */
 
-.search-wrap{
-    margin-bottom:28px;
+.search-area{
+    max-width:1200px;
+    margin:auto;
+    padding:0 22px 20px;
 }
 
 .search-box{
-    width:100%;
-
     background:white;
-
-    border:1px solid var(--border);
-    border-radius:18px;
-
-    padding:8px;
+    border:1px solid #e5e7eb;
+    border-radius:15px;
+    height:52px;
 
     display:flex;
     align-items:center;
+    padding:0 16px;
 
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.05);
+    box-shadow:0 5px 20px rgba(0,0,0,.03);
 }
 
 .search-icon{
-    width:48px;
-    text-align:center;
     font-size:20px;
+    margin-right:10px;
 }
 
 .search-box input{
-    flex:1;
-
+    width:100%;
+    height:100%;
     border:0;
-    outline:0;
-
-    height:48px;
-
-    font-size:14px;
-
-    color:var(--text);
+    outline:none;
+    background:transparent;
+    font-size:15px;
 }
-
-.search-box button{
-    border:0;
-
-    background:var(--red);
-    color:white;
-
-    height:48px;
-
-    padding:0 23px;
-
-    border-radius:13px;
-
-    font-weight:700;
-    font-size:13px;
-
-    transition:.2s;
-}
-
-.search-box button:hover{
-    background:var(--red-dark);
-}
-
 
 /* =========================
-   CATEGORY
+   CATEGORIES
 ========================= */
+
+.category-area{
+    max-width:1200px;
+    margin:auto;
+    padding:0 22px 25px;
+}
 
 .categories{
     display:flex;
     gap:10px;
-
     overflow-x:auto;
-
-    padding-bottom:5px;
-    margin-bottom:30px;
+    padding:4px 0 8px;
 }
 
 .categories::-webkit-scrollbar{
-    display:none;
+    height:4px;
 }
 
-.category{
-    flex:none;
-
-    border:1px solid var(--border);
-
+.category-btn{
+    flex-shrink:0;
+    border:1px solid #e5e7eb;
     background:white;
-
-    padding:11px 17px;
-
-    border-radius:30px;
-
-    font-size:13px;
-    font-weight:600;
-
     color:#555;
-
+    border-radius:25px;
+    padding:10px 18px;
     cursor:pointer;
-
+    font-size:13px;
+    font-weight:700;
     transition:.2s;
 }
 
-.category:hover,
-.category.active{
-    background:var(--red);
-    border-color:var(--red);
-    color:white;
+.category-btn:hover{
+    border-color:#ef3e3e;
+    color:#ef3e3e;
 }
 
+.category-btn.active{
+    background:#ef3e3e;
+    color:white;
+    border-color:#ef3e3e;
+}
 
 /* =========================
-   GRID
+   RESTAURANTS
 ========================= */
+
+.restaurants-section{
+    max-width:1200px;
+    margin:auto;
+    padding:0 22px 60px;
+}
+
+.section-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.section-head h2{
+    font-size:23px;
+    letter-spacing:-.5px;
+}
+
+.restaurant-count{
+    color:#777;
+    font-size:13px;
+}
 
 .restaurant-grid{
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:22px;
-
-    padding-bottom:70px;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
 }
-
 
 /* =========================
    CARD
 ========================= */
 
 .restaurant-card{
+    display:block;
     background:white;
-
-    border:1px solid var(--border);
-
-    border-radius:22px;
-
+    border:1px solid #e7e7e7;
+    border-radius:20px;
     overflow:hidden;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.045);
-
-    transition:
-        transform .25s,
-        box-shadow .25s;
-
-    animation:cardIn .4s ease both;
+    cursor:pointer;
+    transition:.25s;
+    color:#171717;
 }
 
 .restaurant-card:hover{
-    transform:translateY(-7px);
-
-    box-shadow:
-        0 22px 50px rgba(0,0,0,.10);
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(0,0,0,.09);
+    border-color:#eeeeee;
 }
-
-@keyframes cardIn{
-
-    from{
-        opacity:0;
-        transform:translateY(12px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-
-}
-
-
-/* IMAGE */
 
 .restaurant-image{
-    height:210px;
-
+    height:190px;
     position:relative;
     overflow:hidden;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffe3e3,
-            #fff7f7
-        );
+    background:#f0f0f0;
 }
 
 .restaurant-image img{
     width:100%;
     height:100%;
-
     object-fit:cover;
-
-    transition:
-        transform .5s;
+    display:block;
+    transition:.35s;
 }
 
-.restaurant-card:hover
-.restaurant-image img{
-    transform:scale(1.06);
+.restaurant-card:hover .restaurant-image img{
+    transform:scale(1.04);
 }
 
 .image-placeholder{
     width:100%;
     height:100%;
 
-    display:grid;
-    place-items:center;
-
-    font-size:85px;
-}
-
-
-/* BADGE */
-
-.open-badge{
-    position:absolute;
-
-    top:14px;
-    left:14px;
-
-    background:rgba(255,255,255,.94);
-
-    color:#16803c;
-
-    padding:7px 11px;
-
-    border-radius:30px;
-
-    font-size:11px;
-    font-weight:800;
-
-    box-shadow:
-        0 4px 15px rgba(0,0,0,.08);
-}
-
-
-/* INFO */
-
-.restaurant-info{
-    padding:20px;
-}
-
-.restaurant-top{
-    display:flex;
-
-    justify-content:space-between;
-    align-items:start;
-
-    gap:12px;
-}
-
-.restaurant-name{
-    font-size:19px;
-    font-weight:800;
-
-    letter-spacing:-.3px;
-}
-
-.rating{
-    background:#fff5d8;
-    color:#a86600;
-
-    padding:6px 8px;
-
-    border-radius:8px;
-
-    font-size:11px;
-    font-weight:800;
-
-    white-space:nowrap;
-}
-
-.description{
-    color:var(--muted);
-
-    font-size:13px;
-
-    line-height:1.55;
-
-    margin-top:8px;
-
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-
-    overflow:hidden;
-
-    min-height:40px;
-}
-
-.meta{
-    display:flex;
-    align-items:center;
-    flex-wrap:wrap;
-
-    gap:8px;
-
-    margin:14px 0 17px;
-}
-
-.meta span{
-    background:#f5f6f8;
-
-    color:#555;
-
-    padding:7px 10px;
-
-    border-radius:8px;
-
-    font-size:11px;
-    font-weight:600;
-}
-
-.view-btn{
-    width:100%;
-
-    height:44px;
-
     display:flex;
     align-items:center;
     justify-content:center;
 
-    background:var(--dark);
-    color:white;
+    background:
+        linear-gradient(135deg,#fff0f0,#f8f8f8);
 
-    border-radius:11px;
+    font-size:55px;
+}
 
+.open-badge{
+    position:absolute;
+    top:12px;
+    left:12px;
+
+    background:white;
+    color:#16803c;
+
+    padding:6px 10px;
+    border-radius:20px;
+
+    font-size:11px;
+    font-weight:800;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.restaurant-info{
+    padding:18px;
+}
+
+.restaurant-name{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:7px;
+    color:#171717;
+}
+
+.restaurant-description{
+    color:#777;
     font-size:13px;
-    font-weight:700;
+    line-height:1.5;
 
-    transition:.2s;
+    min-height:39px;
+    margin-bottom:12px;
 }
 
-.view-btn:hover{
-    background:var(--red);
+.restaurant-meta{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
 }
 
+.meta{
+    color:#666;
+    font-size:12px;
+}
+
+.rating{
+    color:#f59e0b;
+    font-weight:800;
+}
+
+.view-btn{
+    margin-left:auto;
+    background:#fff0f0;
+    color:#e53935;
+    border-radius:9px;
+    padding:8px 12px;
+    font-size:12px;
+    font-weight:800;
+}
 
 /* =========================
    LOADING
@@ -649,22 +388,23 @@ body{
 .loading{
     grid-column:1/-1;
 
+    background:white;
+    border:1px solid #eee;
+    border-radius:18px;
+
+    padding:55px 20px;
     text-align:center;
-
-    padding:80px 20px;
-
-    color:var(--muted);
+    color:#777;
 }
 
 .spinner{
-    width:42px;
-    height:42px;
+    width:35px;
+    height:35px;
 
-    margin:0 auto 16px;
+    margin:0 auto 15px;
 
-    border:4px solid #e9e9e9;
-    border-top-color:var(--red);
-
+    border:4px solid #eee;
+    border-top-color:#ef3e3e;
     border-radius:50%;
 
     animation:spin .8s linear infinite;
@@ -676,248 +416,157 @@ body{
     }
 }
 
-
 /* =========================
-   EMPTY
+   EMPTY / ERROR
 ========================= */
 
 .empty{
     grid-column:1/-1;
 
     background:white;
+    border:1px solid #eee;
+    border-radius:18px;
 
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    padding:70px 20px;
-
+    padding:55px 20px;
     text-align:center;
 }
 
 .empty-icon{
-    font-size:65px;
-    margin-bottom:15px;
+    font-size:50px;
+    margin-bottom:12px;
 }
 
 .empty h3{
-    font-size:21px;
     margin-bottom:7px;
 }
 
 .empty p{
-    color:var(--muted);
-    font-size:13px;
-}
-
-
-/* =========================
-   ERROR
-========================= */
-
-.error{
-    grid-column:1/-1;
-
-    background:#fff1f1;
-
-    border:1px solid #ffd0d0;
-
-    color:#c62828;
-
-    border-radius:15px;
-
-    padding:22px;
-
-    text-align:center;
-
+    color:#777;
     font-size:14px;
 }
 
+.error-box{
+    display:none;
 
-/* =========================
-   FLOATING CART
-========================= */
+    background:#fff0f0;
+    color:#c62828;
 
-.floating-cart{
-    position:fixed;
+    border:1px solid #ffd0d0;
+    border-radius:12px;
 
-    right:25px;
-    bottom:25px;
+    padding:14px;
+    margin-bottom:20px;
 
-    z-index:900;
-
-    width:58px;
-    height:58px;
-
-    border-radius:50%;
-
-    background:var(--red);
-    color:white;
-
-    display:grid;
-    place-items:center;
-
-    font-size:23px;
-
-    box-shadow:
-        0 12px 30px rgba(239,63,63,.35);
-
-    transition:.2s;
+    font-size:14px;
 }
-
-.floating-cart:hover{
-    transform:scale(1.07);
-}
-
 
 /* =========================
    FOOTER
 ========================= */
 
 .footer{
-    background:var(--dark);
-
-    color:white;
+    background:#111827;
+    color:#fff;
+    padding:35px 22px;
 }
 
 .footer-inner{
-    width:min(1240px,92%);
+    max-width:1200px;
     margin:auto;
-
-    padding:45px 0;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:30px;
+    text-align:center;
 }
 
 .footer-logo{
     font-size:25px;
     font-weight:900;
-
-    color:#ff5050;
-
     margin-bottom:8px;
 }
 
 .footer-logo span{
-    color:white;
+    color:#ef3e3e;
 }
 
 .footer p{
     color:#9ca3af;
     font-size:13px;
-    line-height:1.6;
 }
-
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:1000px){
+@media(max-width:900px){
 
     .restaurant-grid{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .hero-food{
-        width:210px;
-        height:210px;
-        font-size:100px;
-    }
-
-}
-
-@media(max-width:750px){
-
-    .nav-links{
-        display:none;
-    }
-
-    .hero-inner{
-        min-height:390px;
-        padding:45px 0;
-
-        text-align:center;
-        justify-content:center;
-    }
-
-    .hero-content{
-        display:flex;
-        flex-direction:column;
-        align-items:center;
+        grid-template-columns:repeat(2,1fr);
     }
 
     .hero h1{
-        font-size:39px;
+        font-size:35px;
     }
-
-    .hero-food{
-        display:none;
-    }
-
-    .section-head{
-        display:block;
-    }
-
 }
 
 @media(max-width:600px){
 
-    .navbar{
-        height:68px;
+    .header{
+        height:64px;
+    }
+
+    .header-inner{
+        padding:0 15px;
     }
 
     .logo{
         font-size:25px;
     }
 
+    .back-btn,
     .login-btn{
-        padding:10px 14px;
+        padding:9px 11px;
+        font-size:12px;
     }
 
-    .page{
-        width:94%;
+    .hero{
+        padding:22px 15px 18px;
+    }
+
+    .hero-content{
+        padding:27px 22px;
+        border-radius:20px;
     }
 
     .hero h1{
-        font-size:34px;
+        font-size:30px;
     }
 
     .hero p{
         font-size:14px;
     }
 
-    .search-box button{
-        padding:0 16px;
+    .search-area,
+    .category-area,
+    .restaurants-section{
+        padding-left:15px;
+        padding-right:15px;
     }
 
     .restaurant-grid{
         grid-template-columns:1fr;
+        gap:15px;
     }
 
     .restaurant-image{
-        height:220px;
+        height:200px;
     }
 
-    .floating-cart{
-        right:18px;
-        bottom:18px;
+    .section-head h2{
+        font-size:20px;
     }
-
 }
-
 </style>
-
 </head>
 
-
 <body>
-
 
 <!-- =========================
      HEADER
@@ -925,80 +574,32 @@ body{
 
 <header class="header">
 
-<div class="navbar">
+    <div class="header-inner">
 
+        <a href="../index.html" class="logo">
+            Beat<span>root</span>
+        </a>
 
-<a
-href="../index.html"
-class="logo">
+        <div class="header-right">
 
-Beat<span>root</span>
+            <button
+                class="back-btn"
+                onclick="goBack()">
+                ← Back
+            </button>
 
-</a>
+            <button
+                class="login-btn"
+                id="loginBtn"
+                onclick="openLogin()">
+                Login
+            </button>
 
+        </div>
 
-<nav class="nav-links">
-
-<a href="../index.html">
-Home
-</a>
-
-<a
-href="restaurants.html"
-class="active">
-
-Restaurants
-
-</a>
-
-<a href="my-orders.html">
-My Orders
-</a>
-
-<a href="favorites.html">
-Favorites
-</a>
-
-</nav>
-
-
-<div class="nav-actions">
-
-<a
-href="cart.html"
-class="icon-btn"
-title="Cart">
-
-🛒
-
-</a>
-
-
-<a
-href="login.html"
-class="login-btn"
-id="loginButton">
-
-Login
-
-</a>
-
-
-<a
-href="profile.html"
-class="profile-btn"
-id="profileButton">
-
-Profile
-
-</a>
-
-</div>
-
-</div>
+    </div>
 
 </header>
-
 
 
 <!-- =========================
@@ -1007,238 +608,135 @@ Profile
 
 <section class="hero">
 
-<div class="hero-inner">
+    <div class="hero-content">
 
+        <h1>
+            Discover
+            <span>Restaurants</span>
+        </h1>
 
-<div class="hero-content">
+        <p>
+            Find your favourite restaurants and order
+            delicious food from Beatroot.
+        </p>
 
-<div class="hero-badge">
-
-🍴
-Fresh food • Fast delivery
-
-</div>
-
-
-<h1>
-
-Find your
-<span>favourite</span>
-restaurant.
-
-</h1>
-
-
-<p>
-
-Explore local restaurants, discover delicious
-food and order your favourites from Beatroot.
-
-</p>
-
-</div>
-
-
-<div class="hero-food">
-
-🍔
-
-</div>
-
-
-</div>
+    </div>
 
 </section>
 
 
-
 <!-- =========================
-     MAIN
+     SEARCH
 ========================= -->
 
-<main class="page">
+<section class="search-area">
 
+    <div class="search-box">
 
-<div class="section-head">
+        <span class="search-icon">
+            🔍
+        </span>
 
-<div>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search restaurants..."
+            autocomplete="off">
 
-<h2>
-Explore Restaurants
-</h2>
+    </div>
 
-<p>
-Choose a restaurant and start your order.
-</p>
+</section>
 
-</div>
 
-</div>
+<!-- =========================
+     CATEGORIES
+========================= -->
 
+<section class="category-area">
 
+    <div
+        class="categories"
+        id="categories">
 
-<!-- SEARCH -->
+        <button
+            class="category-btn active"
+            data-category="all">
+            All
+        </button>
 
-<div class="search-wrap">
+    </div>
 
-<div class="search-box">
+</section>
 
-<div class="search-icon">
-🔍
-</div>
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search restaurants, cuisine..."
-autocomplete="off"
->
+<!-- =========================
+     RESTAURANTS
+========================= -->
 
-<button
-onclick="searchRestaurants()">
+<section class="restaurants-section">
 
-Search
+    <div class="section-head">
 
-</button>
+        <h2>
+            Popular Restaurants
+        </h2>
 
-</div>
+        <span
+            class="restaurant-count"
+            id="restaurantCount">
+            Loading...
+        </span>
 
-</div>
+    </div>
 
+    <div
+        class="error-box"
+        id="errorBox">
+    </div>
 
+    <div
+        class="restaurant-grid"
+        id="restaurantGrid">
 
-<!-- CATEGORIES -->
+        <div class="loading">
 
-<div class="categories">
+            <div class="spinner"></div>
 
-<button
-class="category active"
-onclick="filterCategory('all',this)">
+            Loading restaurants...
 
-All
+        </div>
 
-</button>
+    </div>
 
-<button
-class="category"
-onclick="filterCategory('restaurant',this)">
+</section>
 
-🍽️ Restaurants
 
-</button>
-
-<button
-class="category"
-onclick="filterCategory('pizza',this)">
-
-🍕
-
-Pizza
-
-</button>
-
-<button
-class="category"
-onclick="filterCategory('burger',this)">
-
-🍔
-
-Burgers
-
-</button>
-
-<button
-class="category"
-onclick="filterCategory('biryani',this)">
-
-🍛
-
-Biryani
-
-</button>
-
-<button
-class="category"
-onclick="filterCategory('cafe',this)">
-
-☕
-
-Cafe
-
-</button>
-
-</div>
-
-
-
-<!-- GRID -->
-
-<div
-class="restaurant-grid"
-id="restaurantGrid">
-
-<div class="loading">
-
-<div class="spinner"></div>
-
-Loading restaurants...
-
-</div>
-
-</div>
-
-
-</main>
-
-
-
-<!-- FLOATING CART -->
-
-<a
-href="cart.html"
-class="floating-cart"
-title="Cart">
-
-🛒
-
-</a>
-
-
-
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer class="footer">
 
-<div class="footer-inner">
+    <div class="footer-inner">
 
-<div>
+        <div class="footer-logo">
+            Beat<span>root</span>
+        </div>
 
-<div class="footer-logo">
+        <p>
+            Delicious food. Easy ordering.
+        </p>
 
-Beat<span>root</span>
-
-</div>
-
-<p>
-
-Your favourite food,
-delivered with love.
-
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </footer>
 
 
-
 <script>
 
-/* =========================
+/* =========================================
    SUPABASE
-========================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://jhihjnsxazmftdqlitgk.supabase.co";
@@ -1253,594 +751,654 @@ supabase.createClient(
 );
 
 
-/* =========================
-   ELEMENTS
-========================= */
-
-const grid =
-document.getElementById(
-    "restaurantGrid"
-);
-
-const searchInput =
-document.getElementById(
-    "searchInput"
-);
+/* =========================================
+   VARIABLES
+========================================= */
 
 let restaurants = [];
 
-let currentCategory =
-"all";
+let selectedCategory = "all";
 
 
-/* =========================
-   ESCAPE
-========================= */
+/* =========================================
+   HELPERS
+========================================= */
 
 function escapeHTML(value){
 
-return String(value ?? "")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
-/* =========================
-   VALUE
-========================= */
+function firstValue(obj,keys,defaultValue=""){
 
-function getValue(
-    obj,
-    keys,
-    fallback=""
-){
+    for(const key of keys){
 
-for(
-const key of keys
-){
+        if(
+            obj &&
+            obj[key] !== undefined &&
+            obj[key] !== null &&
+            obj[key] !== ""
+        ){
 
-if(
-obj[key] !== undefined &&
-obj[key] !== null &&
-obj[key] !== ""
-){
+            return obj[key];
 
-return obj[key];
+        }
 
-}
+    }
 
-}
-
-return fallback;
-
+    return defaultValue;
 }
 
 
-/* =========================
-   LOAD
-========================= */
+/* =========================================
+   LOAD RESTAURANTS
+========================================= */
 
 async function loadRestaurants(){
 
-grid.innerHTML = `
+    const grid =
+        document.getElementById("restaurantGrid");
 
-<div class="loading">
+    const errorBox =
+        document.getElementById("errorBox");
 
-<div class="spinner"></div>
+    errorBox.style.display = "none";
 
-Loading restaurants...
+    grid.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            Loading restaurants...
+        </div>
+    `;
 
-</div>
+    try{
 
-`;
-
-
-const {
-data,
-error
-} =
-await sb
-.from("restaurants")
-.select("*");
+        const { data,error } =
+            await sb
+            .from("restaurants")
+            .select("*")
+            .order("id",{ascending:false});
 
 
-if(error){
+        if(error){
 
-console.error(error);
+            console.error(error);
 
-grid.innerHTML = `
+            errorBox.textContent =
+                "Restaurants load cheyyan kazhinjilla: "
+                + error.message;
 
-<div class="error">
+            errorBox.style.display = "block";
 
-Unable to load restaurants.<br>
-${escapeHTML(error.message)}
+            grid.innerHTML = `
+                <div class="empty">
+                    <div class="empty-icon">⚠️</div>
+                    <h3>Something went wrong</h3>
+                    <p>Please refresh and try again.</p>
+                </div>
+            `;
 
-</div>
+            document.getElementById("restaurantCount")
+                .textContent = "0 restaurants";
 
-`;
+            return;
+        }
 
-return;
+
+        restaurants = data || [];
+
+
+        createCategories();
+
+        renderRestaurants();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        errorBox.textContent =
+            "Something went wrong. Please try again.";
+
+        errorBox.style.display = "block";
+
+        grid.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">⚠️</div>
+                <h3>Unable to load restaurants</h3>
+                <p>Please try again later.</p>
+            </div>
+        `;
+
+    }
 
 }
 
 
-restaurants =
-data || [];
+/* =========================================
+   CATEGORIES
+========================================= */
 
-renderRestaurants(
-restaurants
-);
+function createCategories(){
+
+    const container =
+        document.getElementById("categories");
+
+    const categories = [];
+
+    restaurants.forEach(r => {
+
+        const category =
+            firstValue(
+                r,
+                [
+                    "category",
+                    "cuisine",
+                    "type",
+                    "restaurant_type"
+                ],
+                ""
+            );
+
+        if(category){
+
+            const value =
+                String(category).trim();
+
+            if(
+                value &&
+                !categories.includes(value)
+            ){
+
+                categories.push(value);
+
+            }
+
+        }
+
+    });
+
+
+    container.innerHTML = `
+        <button
+            class="category-btn active"
+            data-category="all">
+            All
+        </button>
+    `;
+
+
+    categories.forEach(category => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "category-btn";
+
+        button.dataset.category =
+            category;
+
+        button.textContent =
+            category;
+
+        container.appendChild(button);
+
+    });
+
+
+    document
+        .querySelectorAll(".category-btn")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function(){
+
+                    document
+                        .querySelectorAll(".category-btn")
+                        .forEach(btn =>
+                            btn.classList.remove("active")
+                        );
+
+                    this.classList.add("active");
+
+                    selectedCategory =
+                        this.dataset.category;
+
+                    renderRestaurants();
+
+                }
+            );
+
+        });
 
 }
 
 
-/* =========================
+/* =========================================
    RENDER
-========================= */
+========================================= */
 
-function renderRestaurants(
-list
-){
+function renderRestaurants(){
 
-if(!list.length){
+    const grid =
+        document.getElementById("restaurantGrid");
 
-grid.innerHTML = `
+    const count =
+        document.getElementById("restaurantCount");
 
-<div class="empty">
-
-<div class="empty-icon">
-🍽️
-</div>
-
-<h3>
-No restaurants found
-</h3>
-
-<p>
-Try another search or category.
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
 
 
-grid.innerHTML = "";
+    const filtered =
+        restaurants.filter(r => {
+
+            const name =
+                String(
+                    firstValue(
+                        r,
+                        [
+                            "name",
+                            "restaurant_name",
+                            "title"
+                        ],
+                        "Restaurant"
+                    )
+                ).toLowerCase();
 
 
-list.forEach(
-restaurant => {
+            const description =
+                String(
+                    firstValue(
+                        r,
+                        [
+                            "description",
+                            "about",
+                            "details"
+                        ],
+                        ""
+                    )
+                ).toLowerCase();
 
 
-const id =
-getValue(
-restaurant,
-["id"],
-""
-);
+            const category =
+                String(
+                    firstValue(
+                        r,
+                        [
+                            "category",
+                            "cuisine",
+                            "type",
+                            "restaurant_type"
+                        ],
+                        ""
+                    )
+                );
 
 
-const name =
-getValue(
-restaurant,
-[
-"name",
-"restaurant_name",
-"title"
-],
-"Restaurant"
-);
+            const matchesSearch =
+                !search ||
+                name.includes(search) ||
+                description.includes(search) ||
+                category.toLowerCase().includes(search);
 
 
-const description =
-getValue(
-restaurant,
-[
-"description",
-"about",
-"details"
-],
-"Delicious food and great service."
-);
+            const matchesCategory =
+                selectedCategory === "all" ||
+                category === selectedCategory;
 
 
-const cuisine =
-getValue(
-restaurant,
-[
-"cuisine",
-"category",
-"type"
-],
-"Food"
-);
+            return (
+                matchesSearch &&
+                matchesCategory
+            );
+
+        });
 
 
-const rating =
-getValue(
-restaurant,
-[
-"rating",
-"average_rating"
-],
-"4.5"
-);
+    count.textContent =
+        filtered.length +
+        (
+            filtered.length === 1
+                ? " restaurant"
+                : " restaurants"
+        );
 
 
-const delivery =
-getValue(
-restaurant,
-[
-"delivery_time",
-"delivery_minutes",
-"estimated_time"
-],
-"25-35 min"
-);
+    if(!filtered.length){
+
+        grid.innerHTML = `
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🍽️
+                </div>
+
+                <h3>
+                    No restaurants found
+                </h3>
+
+                <p>
+                    Try another search or category.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
 
 
-const image =
-getValue(
-restaurant,
-[
-"image_url",
-"image",
-"photo_url",
-"logo_url"
-],
-""
-);
-
-
-let imageHTML;
-
-
-if(image){
-
-imageHTML = `
-
-<img
-src="${escapeHTML(image)}"
-alt="${escapeHTML(name)}"
-onerror="
-this.style.display='none';
-this.nextElementSibling.style.display='grid';
-"
->
-
-<div
-class="image-placeholder"
-style="display:none">
-
-🍽️
-
-</div>
-
-`;
-
-}else{
-
-imageHTML = `
-
-<div class="image-placeholder">
-
-🍽️
-
-</div>
-
-`;
+    grid.innerHTML =
+        filtered
+        .map(createRestaurantCard)
+        .join("");
 
 }
 
 
-const card =
-document.createElement(
-"article"
-);
+/* =========================================
+   RESTAURANT CARD
+========================================= */
 
-card.className =
-"restaurant-card";
+function createRestaurantCard(r){
 
-
-card.innerHTML = `
-
-<div class="restaurant-image">
-
-${imageHTML}
-
-<div class="open-badge">
-
-● Open
-
-</div>
-
-</div>
+    const id =
+        firstValue(
+            r,
+            ["id"],
+            ""
+        );
 
 
-<div class="restaurant-info">
+    const name =
+        firstValue(
+            r,
+            [
+                "name",
+                "restaurant_name",
+                "title"
+            ],
+            "Restaurant"
+        );
 
 
-<div class="restaurant-top">
-
-<h3 class="restaurant-name">
-
-${escapeHTML(name)}
-
-</h3>
-
-
-<div class="rating">
-
-★ ${escapeHTML(rating)}
-
-</div>
-
-</div>
+    const description =
+        firstValue(
+            r,
+            [
+                "description",
+                "about",
+                "details"
+            ],
+            "Delicious food and great service."
+        );
 
 
-<p class="description">
-
-${escapeHTML(description)}
-
-</p>
-
-
-<div class="meta">
-
-<span>
-
-🍴 ${escapeHTML(cuisine)}
-
-</span>
-
-<span>
-
-🕐 ${escapeHTML(delivery)}
-
-</span>
-
-</div>
+    const category =
+        firstValue(
+            r,
+            [
+                "category",
+                "cuisine",
+                "type",
+                "restaurant_type"
+            ],
+            "Restaurant"
+        );
 
 
-<a
-href="restaurant.html?id=${encodeURIComponent(id)}"
-class="view-btn">
+    const image =
+        firstValue(
+            r,
+            [
+                "image_url",
+                "image",
+                "logo_url",
+                "photo_url",
+                "cover_image"
+            ],
+            ""
+        );
 
-View Restaurant
-&nbsp; →
 
-</a>
+    const rating =
+        firstValue(
+            r,
+            [
+                "rating",
+                "avg_rating"
+            ],
+            ""
+        );
 
 
-</div>
+    const deliveryTime =
+        firstValue(
+            r,
+            [
+                "delivery_time",
+                "delivery_minutes",
+                "estimated_time"
+            ],
+            ""
+        );
 
-`;
+
+    let imageHTML;
 
 
-grid.appendChild(
-card
-);
+    if(image){
 
-});
+        imageHTML = `
+            <img
+                src="${escapeHTML(image)}"
+                alt="${escapeHTML(name)}"
+                loading="lazy"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+            <div
+                class="image-placeholder"
+                style="display:none;">
+                🍽️
+            </div>
+        `;
+
+    }
+    else{
+
+        imageHTML = `
+            <div class="image-placeholder">
+                🍽️
+            </div>
+        `;
+
+    }
+
+
+    const ratingHTML =
+        rating !== ""
+        ? `
+            <span class="meta rating">
+                ★ ${escapeHTML(rating)}
+            </span>
+          `
+        : "";
+
+
+    const timeHTML =
+        deliveryTime !== ""
+        ? `
+            <span class="meta">
+                🕒 ${escapeHTML(deliveryTime)}
+            </span>
+          `
+        : "";
+
+
+    return `
+        <a
+            href="restaurant.html?id=${encodeURIComponent(id)}"
+            class="restaurant-card">
+
+            <div class="restaurant-image">
+
+                ${imageHTML}
+
+                <div class="open-badge">
+                    ● Open
+                </div>
+
+            </div>
+
+            <div class="restaurant-info">
+
+                <div class="restaurant-name">
+                    ${escapeHTML(name)}
+                </div>
+
+                <div class="restaurant-description">
+                    ${escapeHTML(description)}
+                </div>
+
+                <div class="restaurant-meta">
+
+                    <span class="meta">
+                        🍴 ${escapeHTML(category)}
+                    </span>
+
+                    ${ratingHTML}
+
+                    ${timeHTML}
+
+                    <span class="view-btn">
+                        View →
+                    </span>
+
+                </div>
+
+            </div>
+
+        </a>
+    `;
 
 }
 
 
-/* =========================
+/* =========================================
    SEARCH
-========================= */
-
-function searchRestaurants(){
-
-const query =
-searchInput.value
-.trim()
-.toLowerCase();
-
-
-applyFilters(
-query,
-currentCategory
-);
-
-}
-
-
-function applyFilters(
-query="",
-category="all"
-){
-
-let result =
-restaurants.filter(
-restaurant => {
-
-
-const name =
-String(
-getValue(
-restaurant,
-[
-"name",
-"restaurant_name",
-"title"
-],
-""
-)
-).toLowerCase();
-
-
-const description =
-String(
-getValue(
-restaurant,
-[
-"description",
-"about",
-"details"
-],
-""
-)
-).toLowerCase();
-
-
-const cuisine =
-String(
-getValue(
-restaurant,
-[
-"cuisine",
-"category",
-"type"
-],
-""
-)
-).toLowerCase();
-
-
-const matchesSearch =
-!query ||
-name.includes(query) ||
-description.includes(query) ||
-cuisine.includes(query);
-
-
-const matchesCategory =
-category === "all" ||
-cuisine.includes(category);
-
-
-return (
-matchesSearch &&
-matchesCategory
-);
-
-});
-
-
-renderRestaurants(
-result
-);
-
-}
-
-
-/* =========================
-   CATEGORY
-========================= */
-
-function filterCategory(
-category,
-button
-){
-
-currentCategory =
-category;
-
+========================================= */
 
 document
-.querySelectorAll(
-".category"
-)
-.forEach(
-btn =>
-btn.classList.remove(
-"active"
-)
+.getElementById("searchInput")
+.addEventListener(
+    "input",
+    renderRestaurants
 );
 
 
-button.classList.add(
-"active"
-);
-
-
-searchRestaurants();
-
-}
-
-
-/* =========================
-   ENTER
-========================= */
-
-searchInput.addEventListener(
-"keydown",
-event => {
-
-if(
-event.key === "Enter"
-){
-
-searchRestaurants();
-
-}
-
-});
-
-
-/* =========================
+/* =========================================
    LOGIN
-========================= */
+========================================= */
 
-async function checkUser(){
+async function checkLogin(){
 
-const {
-data
-} =
-await sb.auth.getUser();
+    try{
 
-
-const login =
-document.getElementById(
-"loginButton"
-);
-
-const profile =
-document.getElementById(
-"profileButton"
-);
+        const {
+            data
+        } =
+        await sb.auth.getUser();
 
 
-if(data.user){
+        const button =
+            document.getElementById("loginBtn");
 
-login.style.display =
-"none";
 
-profile.style.display =
-"block";
+        if(
+            data &&
+            data.user
+        ){
 
-}else{
+            button.textContent =
+                "My Account";
 
-login.style.display =
-"block";
+            button.onclick =
+                function(){
 
-profile.style.display =
-"none";
+                    window.location.href =
+                        "profile.html";
+
+                };
+
+        }
+
+    }
+    catch(error){
+
+        console.log(error);
+
+    }
 
 }
 
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function openLogin(){
+
+    window.location.href =
+        "login.html";
+
 }
 
 
-/* =========================
+function goBack(){
+
+    if(
+        document.referrer &&
+        document.referrer.includes(
+            window.location.hostname
+        )
+    ){
+
+        window.history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "../index.html";
+
+    }
+
+}
+
+
+/* =========================================
    START
-========================= */
+========================================= */
 
 loadRestaurants();
 
-checkUser();
+checkLogin();
 
 </script>
 
 </body>
-
 </html>
