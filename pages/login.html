@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Beatroot - Login</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/desktop.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="loginPage">
+
+        <div class="loginLogo">
+            Beat<span>root</span>
+        </div>
+
+        <p class="loginWelcome">Welcome to Beatroot</p>
+
+        <div class="loginCard">
+
+            <h1>Login to Beatroot</h1>
+
+            <p class="loginSub">
+                Login using your email and password.
+            </p>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Email address"
+            >
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password"
+            >
+
+            <button onclick="loginUser()">
+                Login
+            </button>
+
+            <div class="createAccount">
+                Create New Account
+            </div>
+
+            <div class="closeLogin" onclick="history.back()">
+                Close
+            </div>
+
+            <p id="loginMessage"></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+const sb = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+async function loginUser(){
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+    if(!email || !password){
+        message.textContent = "Please enter email and password.";
+        return;
+    }
+
+    const { error } = await sb.auth.signInWithPassword({
+        email,
+        password
+    });
+
+    if(error){
+        message.textContent = error.message;
+        return;
+    }
+
+    window.location.href = "home.html";
+}
+</script>
+
+</body>
+</html>
