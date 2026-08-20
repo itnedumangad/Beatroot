@@ -1,126 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Checkout - Beatroot</title>
-
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/desktop.css">
 
 <style>
 
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f5f6f7;
-    color:#171717;
+    background:#f7f7f7;
+    color:#222;
 }
-
-.page{
-    max-width:1000px;
-    min-height:100vh;
-    margin:auto;
-    background:#fff;
-}
-
 
 /* HEADER */
 
 .header{
-    padding:18px 20px;
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
     display:flex;
     align-items:center;
-    gap:15px;
-    border-bottom:1px solid #eee;
-}
-
-.back{
-    font-size:30px;
-    cursor:pointer;
-    width:35px;
+    justify-content:space-between;
+    padding:0 6%;
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
 .logo{
-    font-size:28px;
+    font-size:26px;
     font-weight:800;
-    color:#e53935;
+    color:#ff4d00;
+    text-decoration:none;
 }
 
+.nav{
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
 
-/* CONTENT */
+.nav a{
+    text-decoration:none;
+    color:#333;
+    font-size:14px;
+    font-weight:600;
+}
+
+.cart-btn{
+    background:#ff4d00;
+    color:#fff !important;
+    padding:10px 16px;
+    border-radius:8px;
+}
+
+/* CONTAINER */
 
 .container{
-    padding:25px 20px 40px;
+    max-width:1100px;
+    margin:40px auto;
+    padding:0 20px;
 }
 
-.title{
-    font-size:28px;
-    margin:0 0 25px;
+.page-title{
+    font-size:32px;
+    font-weight:800;
+    margin-bottom:25px;
 }
 
-
-/* LAYOUT */
-
-.checkout-grid{
+.checkout-layout{
     display:grid;
-    grid-template-columns:1.3fr .8fr;
+    grid-template-columns:1fr 380px;
     gap:25px;
 }
 
+/* BOX */
 
-/* CARD */
-
-.card{
+.box{
     background:#fff;
-    border:1px solid #e5e5e5;
     border-radius:16px;
-    padding:22px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
     margin-bottom:20px;
 }
 
-.card h2{
-    margin:0 0 20px;
-    font-size:20px;
+.box h2{
+    font-size:21px;
+    margin-bottom:20px;
 }
-
 
 /* FORM */
 
 .form-group{
-    margin-bottom:16px;
+    margin-bottom:17px;
 }
 
 .form-group label{
     display:block;
-    margin-bottom:7px;
     font-size:14px;
-    font-weight:bold;
+    font-weight:700;
+    margin-bottom:7px;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select{
-
     width:100%;
     padding:13px;
-
     border:1px solid #ddd;
-    border-radius:10px;
-
-    font-size:15px;
+    border-radius:9px;
     outline:none;
-
+    font-size:14px;
     background:#fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:#ff4d00;
 }
 
 .form-group textarea{
@@ -128,608 +133,628 @@ body{
     resize:vertical;
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
-    border-color:#e53935;
-}
+/* TWO COLUMN */
 
+.two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
 
 /* PAYMENT */
 
 .payment-option{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:10px;
+    cursor:pointer;
     display:flex;
     align-items:center;
     gap:12px;
-
-    padding:14px;
-
-    border:1px solid #ddd;
-    border-radius:10px;
-
-    margin-bottom:10px;
-
-    cursor:pointer;
 }
 
 .payment-option:hover{
-    border-color:#e53935;
+    border-color:#ff4d00;
 }
 
 .payment-option input{
-    accent-color:#e53935;
+    accent-color:#ff4d00;
 }
 
+/* ORDER SUMMARY */
 
-/* ORDER */
-
-.order-item{
+.summary-item{
     display:flex;
     justify-content:space-between;
-    gap:10px;
-
+    gap:15px;
     padding:12px 0;
-
     border-bottom:1px solid #eee;
+    font-size:14px;
 }
 
-.order-item:last-child{
-    border-bottom:0;
+.summary-item:last-child{
+    border-bottom:none;
 }
 
-.order-name{
+.summary-name{
     flex:1;
 }
 
-.order-qty{
-    color:#777;
+.summary-price{
+    font-weight:700;
+    white-space:nowrap;
 }
 
-.order-price{
-    font-weight:bold;
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    color:#555;
 }
-
-
-/* TOTAL */
 
 .total-row{
-    display:flex;
-    justify-content:space-between;
-    margin:12px 0;
-    color:#666;
-}
-
-.grand-total{
-    display:flex;
-    justify-content:space-between;
-
     border-top:1px solid #eee;
-
-    padding-top:15px;
-    margin-top:15px;
-
-    font-size:20px;
-    font-weight:bold;
+    margin-top:10px;
+    padding-top:18px;
+    display:flex;
+    justify-content:space-between;
+    font-size:21px;
+    font-weight:800;
 }
-
-
-/* BUTTON */
 
 .place-order{
     width:100%;
-
-    border:0;
-    border-radius:11px;
-
     padding:15px;
-
-    background:#e53935;
+    border:none;
+    border-radius:10px;
+    background:#ff4d00;
     color:#fff;
-
     font-size:16px;
-    font-weight:bold;
-
+    font-weight:700;
     cursor:pointer;
-
-    margin-top:18px;
+    margin-top:20px;
 }
 
 .place-order:hover{
-    background:#c62828;
+    background:#e64400;
 }
 
+.back-cart{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    color:#ff4d00;
+    text-decoration:none;
+    font-weight:600;
+}
 
 /* EMPTY */
 
 .empty{
-    text-align:center;
+    background:#fff;
     padding:70px 20px;
-    color:#777;
+    text-align:center;
+    border-radius:16px;
 }
 
 .empty-icon{
-    font-size:55px;
-}
-
-.back-cart{
-    margin-top:15px;
-
-    border:0;
-    border-radius:10px;
-
-    padding:11px 18px;
-
-    background:#e53935;
-    color:#fff;
-
-    font-weight:bold;
-
-    cursor:pointer;
-}
-
-
-/* SUCCESS */
-
-.success{
-    text-align:center;
-    padding:60px 20px;
-}
-
-.success-icon{
-    font-size:65px;
+    font-size:60px;
     margin-bottom:15px;
 }
 
-.success h1{
-    color:#2e7d32;
+.shop-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:13px 22px;
+    background:#ff4d00;
+    color:white;
+    text-decoration:none;
+    border-radius:9px;
+    font-weight:700;
 }
-
-.order-number{
-    margin:20px 0;
-    padding:15px;
-
-    background:#f5f5f5;
-    border-radius:10px;
-
-    font-weight:bold;
-}
-
 
 /* MOBILE */
 
-@media(max-width:700px){
+@media(max-width:800px){
 
-    .checkout-grid{
+    .header{
+        padding:0 20px;
+    }
+
+    .nav a:not(.cart-btn){
+        display:none;
+    }
+
+    .checkout-layout{
         grid-template-columns:1fr;
     }
 
-    .container{
-        padding:22px 15px 35px;
+    .page-title{
+        font-size:27px;
     }
 
-    .title{
-        font-size:25px;
+    .two-col{
+        grid-template-columns:1fr;
+        gap:0;
     }
 
 }
 
 </style>
-
 </head>
 
 
 <body>
 
-<div class="page">
+<!-- HEADER -->
 
+<header class="header">
 
-    <!-- HEADER -->
+    <a href="home.html" class="logo">
+        Beatroot
+    </a>
 
-    <div class="header">
+    <nav class="nav">
 
-        <div class="back"
-             onclick="goBack()">
-            ‹
-        </div>
+        <a href="home.html">
+            Home
+        </a>
 
-        <div class="logo">
-            Beat<span style="color:#333">root</span>
-        </div>
+        <a href="restaurants.html">
+            Restaurants
+        </a>
 
-    </div>
+        <a href="my-orders.html">
+            My Orders
+        </a>
 
+        <a href="profile.html">
+            Profile
+        </a>
 
+        <a href="cart.html" class="cart-btn">
+            🛒 Cart (<span id="cartCount">0</span>)
+        </a>
 
-    <!-- CHECKOUT -->
+    </nav>
 
-    <div id="checkoutPage">
+</header>
 
-        <div class="container">
 
-            <h1 class="title">
-                Checkout
-            </h1>
+<main class="container">
 
+    <h1 class="page-title">
+        Checkout
+    </h1>
 
-            <div class="checkout-grid">
+    <div id="checkoutArea"></div>
 
-
-                <!-- LEFT -->
-
-                <div>
-
-
-                    <!-- DELIVERY DETAILS -->
-
-                    <div class="card">
-
-                        <h2>
-                            Delivery Details
-                        </h2>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Full Name
-                            </label>
-
-                            <input
-                                type="text"
-                                id="name"
-                                placeholder="Enter your name">
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Mobile Number
-                            </label>
-
-                            <input
-                                type="tel"
-                                id="mobile"
-                                placeholder="Enter mobile number">
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Delivery Address
-                            </label>
-
-                            <textarea
-                                id="address"
-                                placeholder="House name, place, landmark..."></textarea>
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Delivery Instructions
-                            </label>
-
-                            <textarea
-                                id="instructions"
-                                placeholder="Any special instructions?"></textarea>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- PAYMENT -->
-
-                    <div class="card">
-
-                        <h2>
-                            Payment Method
-                        </h2>
-
-
-                        <label class="payment-option">
-
-                            <input
-                                type="radio"
-                                name="payment"
-                                value="COD"
-                                checked>
-
-                            <span>
-                                💵 Cash on Delivery
-                            </span>
-
-                        </label>
-
-
-                        <label class="payment-option">
-
-                            <input
-                                type="radio"
-                                name="payment"
-                                value="ONLINE">
-
-                            <span>
-                                💳 Online Payment
-                            </span>
-
-                        </label>
-
-
-                        <label class="payment-option">
-
-                            <input
-                                type="radio"
-                                name="payment"
-                                value="UPI">
-
-                            <span>
-                                📱 UPI Payment
-                            </span>
-
-                        </label>
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- RIGHT -->
-
-                <div>
-
-                    <div class="card">
-
-                        <h2>
-                            Your Order
-                        </h2>
-
-
-                        <div id="orderItems"></div>
-
-
-                        <div class="total-row">
-
-                            <span>
-                                Subtotal
-                            </span>
-
-                            <span id="subtotal">
-                                ₹0
-                            </span>
-
-                        </div>
-
-
-                        <div class="total-row">
-
-                            <span>
-                                Delivery
-                            </span>
-
-                            <span>
-                                ₹40
-                            </span>
-
-                        </div>
-
-
-                        <div class="grand-total">
-
-                            <span>
-                                Total
-                            </span>
-
-                            <span id="grandTotal">
-                                ₹0
-                            </span>
-
-                        </div>
-
-
-                        <button
-                            class="place-order"
-                            onclick="placeOrder()">
-
-                            Place Order
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- EMPTY CART -->
-
-    <div id="emptyPage"
-         class="empty"
-         style="display:none;">
-
-        <div class="empty-icon">
-            🛒
-        </div>
-
-        <h2>
-            Your cart is empty
-        </h2>
-
-        <p>
-            Please add some food before checkout.
-        </p>
-
-        <button
-            class="back-cart"
-            onclick="goCart()">
-
-            Go to Cart
-
-        </button>
-
-    </div>
-
-
-
-    <!-- SUCCESS -->
-
-    <div id="successPage"
-         class="success"
-         style="display:none;">
-
-        <div class="success-icon">
-            ✅
-        </div>
-
-        <h1>
-            Order Placed!
-        </h1>
-
-        <p>
-            Thank you for ordering from Beatroot.
-        </p>
-
-        <div class="order-number">
-
-            Order ID:
-            <span id="orderId"></span>
-
-        </div>
-
-        <button
-            class="back-cart"
-            onclick="goHome()">
-
-            Back to Home
-
-        </button>
-
-    </div>
-
-</div>
-
+</main>
 
 
 <script>
 
-
-/* CART */
-
 let cart =
-    JSON.parse(
-        localStorage.getItem("beatrootCart")
-    ) || [];
+JSON.parse(localStorage.getItem("beatrootCart")) || [];
 
 
-const DELIVERY_CHARGE = 40;
+/* CART COUNT */
+
+function updateCartCount(){
+
+    let count = cart.reduce(
+        (sum,item)=>sum + Number(item.quantity || 1),
+        0
+    );
+
+    document.getElementById("cartCount").innerText = count;
+}
 
 
+/* LOAD CHECKOUT */
 
-/* LOAD ORDER */
+function loadCheckout(){
 
-function loadOrder(){
+    updateCartCount();
 
-    const orderItems =
-        document.getElementById(
-            "orderItems"
-        );
+    const area =
+    document.getElementById("checkoutArea");
 
+
+    /* EMPTY CART */
 
     if(cart.length === 0){
 
-        document.getElementById(
-            "checkoutPage"
-        ).style.display =
-            "none";
+        area.innerHTML = `
 
-        document.getElementById(
-            "emptyPage"
-        ).style.display =
-            "block";
+            <div class="empty">
 
-        return;
+                <div class="empty-icon">
+                    🛒
+                </div>
 
-    }
+                <h2>
+                    Your cart is empty
+                </h2>
 
+                <p>
+                    Please add some food before checkout.
+                </p>
 
-    let subtotal = 0;
+                <a
+                    href="restaurants.html"
+                    class="shop-btn"
+                >
+                    Browse Restaurants
+                </a>
 
-
-    orderItems.innerHTML = "";
-
-
-    cart.forEach(item => {
-
-        const total =
-            item.price *
-            item.quantity;
-
-
-        subtotal += total;
-
-
-        const div =
-            document.createElement(
-                "div"
-            );
-
-
-        div.className =
-            "order-item";
-
-
-        div.innerHTML = `
-
-            <div class="order-name">
-                ${escapeHtml(item.name)}
-            </div>
-
-            <div class="order-qty">
-                × ${item.quantity}
-            </div>
-
-            <div class="order-price">
-                ₹${total}
             </div>
 
         `;
 
+        return;
+    }
 
-        orderItems.appendChild(div);
+
+    /* CALCULATE TOTAL */
+
+    let subtotal = 0;
+
+    let itemsHTML = "";
+
+
+    cart.forEach(item=>{
+
+        let price =
+        Number(item.price || 0);
+
+        let quantity =
+        Number(item.quantity || 1);
+
+        let total =
+        price * quantity;
+
+        subtotal += total;
+
+
+        itemsHTML += `
+
+            <div class="summary-item">
+
+                <div class="summary-name">
+
+                    <strong>
+                        ${item.name || "Food Item"}
+                    </strong>
+
+                    <br>
+
+                    <small>
+                        Qty: ${quantity}
+                    </small>
+
+                </div>
+
+                <div class="summary-price">
+                    ₹${total.toFixed(2)}
+                </div>
+
+            </div>
+
+        `;
 
     });
 
 
-    document.getElementById(
-        "subtotal"
-    ).textContent =
-        "₹" + subtotal;
+    let delivery =
+    subtotal >= 500 ? 0 : 40;
+
+    let grandTotal =
+    subtotal + delivery;
 
 
-    document.getElementById(
-        "grandTotal"
-    ).textContent =
-        "₹" +
-        (subtotal + DELIVERY_CHARGE);
+    /* CHECKOUT UI */
 
+    area.innerHTML = `
+
+        <div class="checkout-layout">
+
+
+            <!-- CUSTOMER DETAILS -->
+
+            <div>
+
+
+                <div class="box">
+
+                    <h2>
+                        👤 Customer Details
+                    </h2>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Full Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customerName"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="two-col">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Mobile Number *
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="customerPhone"
+                                placeholder="10 digit mobile number"
+                                maxlength="10"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="customerEmail"
+                                placeholder="example@email.com"
+                            >
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="box">
+
+                    <h2>
+                        📍 Delivery Address
+                    </h2>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            House / Building *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="house"
+                            placeholder="House / Building name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Street / Area *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="street"
+                            placeholder="Street / Area"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="two-col">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                City *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                placeholder="City"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                PIN Code *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pincode"
+                                placeholder="PIN Code"
+                                maxlength="6"
+                                required
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Delivery Instructions
+                        </label>
+
+                        <textarea
+                            id="instructions"
+                            placeholder="Any instructions for delivery?"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="box">
+
+                    <h2>
+                        💳 Payment Method
+                    </h2>
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="COD"
+                            checked
+                        >
+
+                        <span>
+                            💵 Cash on Delivery
+                        </span>
+
+                    </label>
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="ONLINE"
+                        >
+
+                        <span>
+                            📱 Online Payment
+                        </span>
+
+                    </label>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div>
+
+
+                <div class="box">
+
+                    <h2>
+                        🧾 Order Summary
+                    </h2>
+
+
+                    ${itemsHTML}
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong>
+                            ₹${subtotal.toFixed(2)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Delivery Fee
+                        </span>
+
+                        <strong>
+
+                            ${
+                                delivery === 0
+                                ? "FREE"
+                                : "₹" + delivery.toFixed(2)
+                            }
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="total-row">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <span>
+                            ₹${grandTotal.toFixed(2)}
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="place-order"
+                        onclick="placeOrder()"
+                    >
+                        Place Order
+                    </button>
+
+
+                    <a
+                        href="cart.html"
+                        class="back-cart"
+                    >
+                        ← Back to Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    `;
 }
-
 
 
 /* PLACE ORDER */
@@ -737,131 +762,187 @@ function loadOrder(){
 function placeOrder(){
 
     const name =
-        document.getElementById(
-            "name"
-        ).value.trim();
+    document.getElementById("customerName").value.trim();
+
+    const phone =
+    document.getElementById("customerPhone").value.trim();
+
+    const email =
+    document.getElementById("customerEmail").value.trim();
+
+    const house =
+    document.getElementById("house").value.trim();
+
+    const street =
+    document.getElementById("street").value.trim();
+
+    const city =
+    document.getElementById("city").value.trim();
+
+    const pincode =
+    document.getElementById("pincode").value.trim();
+
+    const instructions =
+    document.getElementById("instructions").value.trim();
 
 
-    const mobile =
-        document.getElementById(
-            "mobile"
-        ).value.trim();
+    const payment =
+    document.querySelector(
+        'input[name="payment"]:checked'
+    ).value;
 
 
-    const address =
-        document.getElementById(
-            "address"
-        ).value.trim();
-
+    /* VALIDATION */
 
     if(!name){
-
-        alert(
-            "Please enter your name."
-        );
-
+        alert("Please enter your name.");
         return;
-
     }
 
 
-    if(!mobile){
-
-        alert(
-            "Please enter your mobile number."
-        );
-
-        return;
-
-    }
-
-
-    if(!/^[0-9]{10}$/.test(mobile)){
+    if(!/^[0-9]{10}$/.test(phone)){
 
         alert(
             "Please enter a valid 10 digit mobile number."
         );
 
         return;
-
     }
 
 
-    if(!address){
+    if(!house){
 
         alert(
-            "Please enter your delivery address."
+            "Please enter your house / building."
         );
 
         return;
-
     }
 
 
-    const payment =
-        document.querySelector(
-            'input[name="payment"]:checked'
-        ).value;
+    if(!street){
 
-
-    const subtotal =
-        cart.reduce(
-            (sum,item) =>
-                sum +
-                item.price *
-                item.quantity,
-            0
+        alert(
+            "Please enter your street / area."
         );
 
+        return;
+    }
 
-    const order = {
 
-        id:
-            "BR" +
-            Date.now()
-            .toString()
-            .slice(-8),
+    if(!city){
 
-        name:name,
+        alert(
+            "Please enter your city."
+        );
 
-        mobile:mobile,
+        return;
+    }
 
-        address:address,
 
-        instructions:
-            document.getElementById(
-                "instructions"
-            ).value.trim(),
+    if(!/^[0-9]{6}$/.test(pincode)){
 
-        payment:payment,
+        alert(
+            "Please enter a valid 6 digit PIN code."
+        );
 
-        items:cart,
+        return;
+    }
 
-        subtotal:subtotal,
 
-        delivery:DELIVERY_CHARGE,
+    /* TOTAL */
 
-        total:
-            subtotal +
-            DELIVERY_CHARGE,
+    let subtotal = 0;
 
-        date:
-            new Date().toISOString()
+
+    cart.forEach(item=>{
+
+        subtotal +=
+        Number(item.price || 0) *
+        Number(item.quantity || 1);
+
+    });
+
+
+    let delivery =
+    subtotal >= 500 ? 0 : 40;
+
+
+    let grandTotal =
+    subtotal + delivery;
+
+
+    /* ORDER ID */
+
+    let orderId =
+    "BR" +
+    Date.now().toString().slice(-8);
+
+
+    /* ORDER OBJECT */
+
+    let order = {
+
+        orderId: orderId,
+
+        date: new Date().toLocaleString(),
+
+        customer: {
+
+            name: name,
+
+            phone: phone,
+
+            email: email
+
+        },
+
+        address: {
+
+            house: house,
+
+            street: street,
+
+            city: city,
+
+            pincode: pincode,
+
+            instructions: instructions
+
+        },
+
+        paymentMethod: payment,
+
+        items: cart,
+
+        subtotal: subtotal,
+
+        deliveryFee: delivery,
+
+        total: grandTotal,
+
+        status: "Order Placed"
 
     };
 
 
-    /* SAVE ORDER */
+    /* SAVE CURRENT ORDER */
+
+    localStorage.setItem(
+        "beatrootCurrentOrder",
+        JSON.stringify(order)
+    );
+
+
+    /* SAVE ORDER HISTORY */
 
     let orders =
-        JSON.parse(
-            localStorage.getItem(
-                "beatrootOrders"
-            )
-        ) || [];
+    JSON.parse(
+        localStorage.getItem("beatrootOrders")
+    ) || [];
 
 
-    orders.push(order);
+    orders.unshift(order);
 
 
     localStorage.setItem(
@@ -870,84 +951,20 @@ function placeOrder(){
     );
 
 
-    /* SHOW SUCCESS */
-
-    document.getElementById(
-        "checkoutPage"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "orderId"
-    ).textContent =
-        order.id;
-
-
-    document.getElementById(
-        "successPage"
-    ).style.display =
-        "block";
-
-
     /* CLEAR CART */
 
-    localStorage.removeItem(
-        "beatrootCart"
-    );
-
-}
+    localStorage.removeItem("beatrootCart");
 
 
-
-/* BACK */
-
-function goBack(){
+    /* GO TO CONFIRMATION */
 
     window.location.href =
-        "cart.html";
+    "order-confirmation.html";
 
 }
 
 
-function goCart(){
-
-    window.location.href =
-        "cart.html";
-
-}
-
-
-function goHome(){
-
-    window.location.href =
-        "home.html";
-
-}
-
-
-
-/* SECURITY */
-
-function escapeHtml(text){
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent =
-        text;
-
-    return div.innerHTML;
-
-}
-
-
-
-/* START */
-
-loadOrder();
+loadCheckout();
 
 </script>
 
