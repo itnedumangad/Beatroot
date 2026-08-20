@@ -2,11 +2,8 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Beatroot - Restaurants</title>
 
@@ -21,29 +18,25 @@ content="width=device-width, initial-scale=1.0">
 }
 
 :root{
-    --red:#ef3b3b;
+    --red:#ef3f3f;
+    --red-dark:#d92f2f;
     --dark:#111827;
+    --dark2:#1f2937;
     --text:#171717;
     --muted:#6b7280;
-    --bg:#f7f8fa;
+    --bg:#f6f7f9;
     --white:#ffffff;
-    --line:#e8e8e8;
+    --border:#e8e8e8;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:Inter,Arial,Helvetica,sans-serif;
     background:var(--bg);
     color:var(--text);
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-button{
-    font-family:inherit;
-    cursor:pointer;
 }
 
 
@@ -55,26 +48,28 @@ button{
     position:sticky;
     top:0;
     z-index:1000;
-    background:rgba(255,255,255,.96);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid var(--line);
+
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
 }
 
 .navbar{
-    width:min(1200px,92%);
-    margin:auto;
+    width:min(1240px,92%);
     height:76px;
+    margin:auto;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
+    gap:25px;
 }
 
 .logo{
-    font-size:29px;
+    font-size:30px;
     font-weight:900;
-    letter-spacing:-1.5px;
+    letter-spacing:-1.8px;
     color:var(--red);
 }
 
@@ -84,17 +79,19 @@ button{
 
 .nav-links{
     display:flex;
-    gap:28px;
     align-items:center;
+    gap:30px;
 }
 
 .nav-links a{
+    color:#555;
     font-size:14px;
     font-weight:600;
-    color:#444;
+    transition:.2s;
 }
 
-.nav-links a:hover{
+.nav-links a:hover,
+.nav-links a.active{
     color:var(--red);
 }
 
@@ -105,24 +102,33 @@ button{
 }
 
 .icon-btn{
-    width:42px;
-    height:42px;
-    border:1px solid var(--line);
-    background:white;
-    border-radius:12px;
+    width:43px;
+    height:43px;
 
     display:grid;
     place-items:center;
 
+    background:white;
+    border:1px solid var(--border);
+    border-radius:13px;
+
     font-size:18px;
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.icon-btn:hover{
+    border-color:#ddd;
+    transform:translateY(-1px);
 }
 
 .login-btn{
+    border:0;
     background:var(--dark);
     color:white;
-    border:0;
 
-    padding:12px 18px;
+    padding:12px 19px;
     border-radius:12px;
 
     font-size:13px;
@@ -130,44 +136,166 @@ button{
 }
 
 .profile-btn{
+    border:0;
     background:var(--red);
     color:white;
-    border:0;
 
-    padding:12px 17px;
+    padding:12px 18px;
     border-radius:12px;
 
     font-size:13px;
     font-weight:700;
-}
 
-.menu-btn{
     display:none;
 }
 
 
 /* =========================
-   PAGE
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(239,63,63,.28),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #111827,
+            #1b2230
+        );
+
+    color:white;
+}
+
+.hero-inner{
+    width:min(1240px,92%);
+    margin:auto;
+
+    min-height:350px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:40px;
+
+    padding:55px 0;
+}
+
+.hero-content{
+    max-width:650px;
+}
+
+.hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.12);
+
+    padding:8px 13px;
+    border-radius:30px;
+
+    font-size:12px;
+    color:#f5f5f5;
+
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:48px;
+    line-height:1.05;
+    letter-spacing:-2.5px;
+
+    margin-bottom:15px;
+}
+
+.hero h1 span{
+    color:#ff5a5a;
+}
+
+.hero p{
+    color:#cbd5e1;
+    font-size:15px;
+    line-height:1.7;
+
+    max-width:560px;
+}
+
+.hero-food{
+    width:260px;
+    height:260px;
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    font-size:130px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.02)
+        );
+
+    border:1px solid rgba(255,255,255,.1);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.25);
+
+    animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+}
+
+
+/* =========================
+   MAIN
 ========================= */
 
 .page{
-    width:min(1200px,92%);
+    width:min(1240px,92%);
     margin:auto;
 }
 
-.page-head{
-    padding:45px 0 25px;
+.section-head{
+    padding:42px 0 22px;
+
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+
+    gap:20px;
 }
 
-.page-head h1{
-    font-size:38px;
-    letter-spacing:-1.5px;
-    margin-bottom:8px;
+.section-head h2{
+    font-size:28px;
+    letter-spacing:-1px;
 }
 
-.page-head p{
+.section-head p{
+    margin-top:6px;
     color:var(--muted);
-    font-size:15px;
+    font-size:14px;
 }
 
 
@@ -175,62 +303,129 @@ button{
    SEARCH
 ========================= */
 
-.search-area{
-    margin-bottom:30px;
+.search-wrap{
+    margin-bottom:28px;
 }
 
 .search-box{
-    background:white;
-    border:1px solid var(--line);
-    border-radius:17px;
+    width:100%;
 
-    padding:9px;
+    background:white;
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    padding:8px;
 
     display:flex;
     align-items:center;
-    gap:10px;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.05);
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.05);
 }
 
 .search-icon{
+    width:48px;
+    text-align:center;
     font-size:20px;
-    padding-left:10px;
 }
 
 .search-box input{
     flex:1;
+
     border:0;
     outline:0;
 
-    font-size:15px;
-    padding:13px 5px;
+    height:48px;
+
+    font-size:14px;
+
+    color:var(--text);
 }
 
 .search-box button{
     border:0;
+
     background:var(--red);
     color:white;
 
-    padding:13px 22px;
-    border-radius:11px;
+    height:48px;
+
+    padding:0 23px;
+
+    border-radius:13px;
 
     font-weight:700;
+    font-size:13px;
+
+    transition:.2s;
+}
+
+.search-box button:hover{
+    background:var(--red-dark);
 }
 
 
 /* =========================
-   RESTAURANT GRID
+   CATEGORY
+========================= */
+
+.categories{
+    display:flex;
+    gap:10px;
+
+    overflow-x:auto;
+
+    padding-bottom:5px;
+    margin-bottom:30px;
+}
+
+.categories::-webkit-scrollbar{
+    display:none;
+}
+
+.category{
+    flex:none;
+
+    border:1px solid var(--border);
+
+    background:white;
+
+    padding:11px 17px;
+
+    border-radius:30px;
+
+    font-size:13px;
+    font-weight:600;
+
+    color:#555;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.category:hover,
+.category.active{
+    background:var(--red);
+    border-color:var(--red);
+    color:white;
+}
+
+
+/* =========================
+   GRID
 ========================= */
 
 .restaurant-grid{
     display:grid;
+
     grid-template-columns:
         repeat(3,1fr);
 
-    gap:20px;
+    gap:22px;
 
-    padding-bottom:60px;
+    padding-bottom:70px;
 }
 
 
@@ -241,39 +436,58 @@ button{
 .restaurant-card{
     background:white;
 
-    border:1px solid var(--line);
-    border-radius:20px;
+    border:1px solid var(--border);
+
+    border-radius:22px;
 
     overflow:hidden;
 
-    transition:.25s;
-
     box-shadow:
-        0 8px 25px rgba(0,0,0,.04);
+        0 8px 30px rgba(0,0,0,.045);
+
+    transition:
+        transform .25s,
+        box-shadow .25s;
+
+    animation:cardIn .4s ease both;
 }
 
 .restaurant-card:hover{
-    transform:translateY(-5px);
+    transform:translateY(-7px);
 
     box-shadow:
-        0 18px 40px rgba(0,0,0,.09);
+        0 22px 50px rgba(0,0,0,.10);
 }
 
+@keyframes cardIn{
+
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+/* IMAGE */
+
 .restaurant-image{
-    height:190px;
+    height:210px;
+
+    position:relative;
+    overflow:hidden;
 
     background:
         linear-gradient(
             135deg,
-            #ffe2e2,
+            #ffe3e3,
             #fff7f7
         );
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    overflow:hidden;
 }
 
 .restaurant-image img{
@@ -281,73 +495,150 @@ button{
     height:100%;
 
     object-fit:cover;
+
+    transition:
+        transform .5s;
 }
 
-.restaurant-placeholder{
-    font-size:80px;
+.restaurant-card:hover
+.restaurant-image img{
+    transform:scale(1.06);
 }
+
+.image-placeholder{
+    width:100%;
+    height:100%;
+
+    display:grid;
+    place-items:center;
+
+    font-size:85px;
+}
+
+
+/* BADGE */
+
+.open-badge{
+    position:absolute;
+
+    top:14px;
+    left:14px;
+
+    background:rgba(255,255,255,.94);
+
+    color:#16803c;
+
+    padding:7px 11px;
+
+    border-radius:30px;
+
+    font-size:11px;
+    font-weight:800;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.08);
+}
+
+
+/* INFO */
 
 .restaurant-info{
     padding:20px;
 }
 
-.restaurant-info h2{
-    font-size:20px;
-    margin-bottom:8px;
-}
-
-.restaurant-description{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.5;
-
-    min-height:40px;
-
-    margin-bottom:12px;
-}
-
-.restaurant-meta{
+.restaurant-top{
     display:flex;
-    flex-wrap:wrap;
-    gap:8px;
 
-    color:var(--muted);
+    justify-content:space-between;
+    align-items:start;
 
-    font-size:12px;
+    gap:12px;
+}
 
-    margin-bottom:16px;
+.restaurant-name{
+    font-size:19px;
+    font-weight:800;
+
+    letter-spacing:-.3px;
 }
 
 .rating{
-    color:#e58a00;
-    font-weight:700;
+    background:#fff5d8;
+    color:#a86600;
+
+    padding:6px 8px;
+
+    border-radius:8px;
+
+    font-size:11px;
+    font-weight:800;
+
+    white-space:nowrap;
 }
 
-.view-button{
-    display:block;
+.description{
+    color:var(--muted);
 
+    font-size:13px;
+
+    line-height:1.55;
+
+    margin-top:8px;
+
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+
+    overflow:hidden;
+
+    min-height:40px;
+}
+
+.meta{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin:14px 0 17px;
+}
+
+.meta span{
+    background:#f5f6f8;
+
+    color:#555;
+
+    padding:7px 10px;
+
+    border-radius:8px;
+
+    font-size:11px;
+    font-weight:600;
+}
+
+.view-btn{
     width:100%;
 
-    background:#f4f4f4;
+    height:44px;
 
-    border:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    padding:12px;
+    background:var(--dark);
+    color:white;
 
     border-radius:11px;
 
-    text-align:center;
-
-    font-weight:700;
-
     font-size:13px;
+    font-weight:700;
 
     transition:.2s;
 }
 
-.view-button:hover{
+.view-btn:hover{
     background:var(--red);
-    color:white;
 }
 
 
@@ -360,20 +651,18 @@ button{
 
     text-align:center;
 
-    padding:70px 20px;
+    padding:80px 20px;
 
     color:var(--muted);
-
-    font-size:15px;
 }
 
 .spinner{
-    width:40px;
-    height:40px;
+    width:42px;
+    height:42px;
 
-    margin:0 auto 15px;
+    margin:0 auto 16px;
 
-    border:4px solid #eee;
+    border:4px solid #e9e9e9;
     border-top-color:var(--red);
 
     border-radius:50%;
@@ -382,11 +671,9 @@ button{
 }
 
 @keyframes spin{
-
     to{
         transform:rotate(360deg);
     }
-
 }
 
 
@@ -399,26 +686,28 @@ button{
 
     background:white;
 
-    border:1px solid var(--line);
+    border:1px solid var(--border);
 
     border-radius:20px;
 
-    padding:60px 20px;
+    padding:70px 20px;
 
     text-align:center;
 }
 
 .empty-icon{
-    font-size:55px;
+    font-size:65px;
     margin-bottom:15px;
 }
 
-.empty h2{
-    margin-bottom:8px;
+.empty h3{
+    font-size:21px;
+    margin-bottom:7px;
 }
 
 .empty p{
     color:var(--muted);
+    font-size:13px;
 }
 
 
@@ -426,20 +715,58 @@ button{
    ERROR
 ========================= */
 
-.error-box{
+.error{
     grid-column:1/-1;
 
     background:#fff1f1;
 
     border:1px solid #ffd0d0;
 
-    color:#d32f2f;
+    color:#c62828;
 
     border-radius:15px;
 
-    padding:20px;
+    padding:22px;
 
     text-align:center;
+
+    font-size:14px;
+}
+
+
+/* =========================
+   FLOATING CART
+========================= */
+
+.floating-cart{
+    position:fixed;
+
+    right:25px;
+    bottom:25px;
+
+    z-index:900;
+
+    width:58px;
+    height:58px;
+
+    border-radius:50%;
+
+    background:var(--red);
+    color:white;
+
+    display:grid;
+    place-items:center;
+
+    font-size:23px;
+
+    box-shadow:
+        0 12px 30px rgba(239,63,63,.35);
+
+    transition:.2s;
+}
+
+.floating-cart:hover{
+    transform:scale(1.07);
 }
 
 
@@ -449,28 +776,28 @@ button{
 
 .footer{
     background:var(--dark);
-    color:white;
 
-    margin-top:30px;
+    color:white;
 }
 
 .footer-inner{
-    width:min(1200px,92%);
+    width:min(1240px,92%);
     margin:auto;
 
-    padding:40px 0;
+    padding:45px 0;
 
     display:flex;
+
     justify-content:space-between;
 
     gap:30px;
 }
 
 .footer-logo{
-    font-size:24px;
+    font-size:25px;
     font-weight:900;
 
-    color:#ff4545;
+    color:#ff5050;
 
     margin-bottom:8px;
 }
@@ -482,6 +809,7 @@ button{
 .footer p{
     color:#9ca3af;
     font-size:13px;
+    line-height:1.6;
 }
 
 
@@ -489,19 +817,51 @@ button{
    MOBILE
 ========================= */
 
-@media(max-width:900px){
+@media(max-width:1000px){
+
+    .restaurant-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .hero-food{
+        width:210px;
+        height:210px;
+        font-size:100px;
+    }
+
+}
+
+@media(max-width:750px){
 
     .nav-links{
         display:none;
     }
 
-    .menu-btn{
-        display:grid;
+    .hero-inner{
+        min-height:390px;
+        padding:45px 0;
+
+        text-align:center;
+        justify-content:center;
     }
 
-    .restaurant-grid{
-        grid-template-columns:
-            repeat(2,1fr);
+    .hero-content{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .hero h1{
+        font-size:39px;
+    }
+
+    .hero-food{
+        display:none;
+    }
+
+    .section-head{
+        display:block;
     }
 
 }
@@ -513,24 +873,27 @@ button{
     }
 
     .logo{
-        font-size:24px;
+        font-size:25px;
     }
 
-    .login-btn,
-    .profile-btn{
-        padding:10px 13px;
+    .login-btn{
+        padding:10px 14px;
     }
 
-    .page-head{
-        padding:30px 0 20px;
+    .page{
+        width:94%;
     }
 
-    .page-head h1{
-        font-size:30px;
+    .hero h1{
+        font-size:34px;
+    }
+
+    .hero p{
+        font-size:14px;
     }
 
     .search-box button{
-        padding:12px 15px;
+        padding:0 16px;
     }
 
     .restaurant-grid{
@@ -538,11 +901,12 @@ button{
     }
 
     .restaurant-image{
-        height:200px;
+        height:220px;
     }
 
-    .footer-inner{
-        flex-direction:column;
+    .floating-cart{
+        right:18px;
+        bottom:18px;
     }
 
 }
@@ -564,10 +928,11 @@ button{
 <div class="navbar">
 
 
-<a href="../index.html"
-   class="logo">
+<a
+href="../index.html"
+class="logo">
 
-    Beat<span>root</span>
+Beat<span>root</span>
 
 </a>
 
@@ -575,19 +940,23 @@ button{
 <nav class="nav-links">
 
 <a href="../index.html">
-    Home
+Home
 </a>
 
-<a href="restaurants.html">
-    Restaurants
+<a
+href="restaurants.html"
+class="active">
+
+Restaurants
+
 </a>
 
 <a href="my-orders.html">
-    My Orders
+My Orders
 </a>
 
 <a href="favorites.html">
-    Favorites
+Favorites
 </a>
 
 </nav>
@@ -595,41 +964,34 @@ button{
 
 <div class="nav-actions">
 
+<a
+href="cart.html"
+class="icon-btn"
+title="Cart">
 
-<a href="cart.html"
-   class="icon-btn">
-
-    🛒
-
-</a>
-
-
-<a href="login.html"
-   class="login-btn"
-   id="loginButton">
-
-    Login
+🛒
 
 </a>
 
 
-<a href="profile.html"
-   class="profile-btn"
-   id="profileButton"
-   style="display:none;">
+<a
+href="login.html"
+class="login-btn"
+id="loginButton">
 
-    Profile
+Login
 
 </a>
 
 
-<button
-    class="icon-btn menu-btn">
+<a
+href="profile.html"
+class="profile-btn"
+id="profileButton">
 
-    ☰
+Profile
 
-</button>
-
+</a>
 
 </div>
 
@@ -640,83 +1002,210 @@ button{
 
 
 <!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+<div class="hero-inner">
+
+
+<div class="hero-content">
+
+<div class="hero-badge">
+
+🍴
+Fresh food • Fast delivery
+
+</div>
+
+
+<h1>
+
+Find your
+<span>favourite</span>
+restaurant.
+
+</h1>
+
+
+<p>
+
+Explore local restaurants, discover delicious
+food and order your favourites from Beatroot.
+
+</p>
+
+</div>
+
+
+<div class="hero-food">
+
+🍔
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
      MAIN
 ========================= -->
 
 <main class="page">
 
 
-<section class="page-head">
+<div class="section-head">
 
-<h1>
-    Restaurants
-</h1>
+<div>
+
+<h2>
+Explore Restaurants
+</h2>
 
 <p>
-    Discover restaurants and order your favourite food.
+Choose a restaurant and start your order.
 </p>
 
-</section>
+</div>
+
+</div>
 
 
 
 <!-- SEARCH -->
 
-<section class="search-area">
+<div class="search-wrap">
 
 <div class="search-box">
 
-<span class="search-icon">
-    🔍
-</span>
+<div class="search-icon">
+🔍
+</div>
 
 <input
-    type="text"
-    id="searchInput"
-    placeholder="Search restaurants..."
+type="text"
+id="searchInput"
+placeholder="Search restaurants, cuisine..."
+autocomplete="off"
 >
 
 <button
-    onclick="searchRestaurants()">
+onclick="searchRestaurants()">
 
-    Search
+Search
 
 </button>
 
 </div>
 
-</section>
+</div>
 
 
 
-<!-- RESTAURANTS -->
+<!-- CATEGORIES -->
 
-<section>
+<div class="categories">
 
-<div
-    class="restaurant-grid"
-    id="restaurantGrid">
+<button
+class="category active"
+onclick="filterCategory('all',this)">
 
-    <div class="loading">
+All
 
-        <div class="spinner"></div>
+</button>
 
-        Loading restaurants...
+<button
+class="category"
+onclick="filterCategory('restaurant',this)">
 
-    </div>
+🍽️ Restaurants
+
+</button>
+
+<button
+class="category"
+onclick="filterCategory('pizza',this)">
+
+🍕
+
+Pizza
+
+</button>
+
+<button
+class="category"
+onclick="filterCategory('burger',this)">
+
+🍔
+
+Burgers
+
+</button>
+
+<button
+class="category"
+onclick="filterCategory('biryani',this)">
+
+🍛
+
+Biryani
+
+</button>
+
+<button
+class="category"
+onclick="filterCategory('cafe',this)">
+
+☕
+
+Cafe
+
+</button>
 
 </div>
 
-</section>
+
+
+<!-- GRID -->
+
+<div
+class="restaurant-grid"
+id="restaurantGrid">
+
+<div class="loading">
+
+<div class="spinner"></div>
+
+Loading restaurants...
+
+</div>
+
+</div>
 
 
 </main>
 
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- FLOATING CART -->
+
+<a
+href="cart.html"
+class="floating-cart"
+title="Cart">
+
+🛒
+
+</a>
+
+
+
+<!-- FOOTER -->
 
 <footer class="footer">
 
@@ -725,12 +1214,16 @@ button{
 <div>
 
 <div class="footer-logo">
-    Beat<span>root</span>
+
+Beat<span>root</span>
+
 </div>
 
 <p>
-    Delicious food from your favourite restaurants,
-    delivered right to your doorstep.
+
+Your favourite food,
+delivered with love.
+
 </p>
 
 </div>
@@ -743,28 +1236,28 @@ button{
 
 <script>
 
-/* =================================
+/* =========================
    SUPABASE
-================================= */
+========================= */
 
 const SUPABASE_URL =
 "https://jhihjnsxazmftdqlitgk.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_KEY =
 "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-const supabaseClient =
+const sb =
 supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_KEY
 );
 
 
-/* =================================
+/* =========================
    ELEMENTS
-================================= */
+========================= */
 
-const restaurantGrid =
+const grid =
 document.getElementById(
     "restaurantGrid"
 );
@@ -774,523 +1267,579 @@ document.getElementById(
     "searchInput"
 );
 
+let restaurants = [];
 
-/* =================================
-   HELPERS
-================================= */
+let currentCategory =
+"all";
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHTML(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   VALUE
+========================= */
 
 function getValue(
-    restaurant,
+    obj,
     keys,
     fallback=""
 ){
 
-    for(
-        const key of keys
-    ){
+for(
+const key of keys
+){
 
-        if(
-            restaurant[key] !== undefined &&
-            restaurant[key] !== null &&
-            restaurant[key] !== ""
-        ){
+if(
+obj[key] !== undefined &&
+obj[key] !== null &&
+obj[key] !== ""
+){
 
-            return restaurant[key];
+return obj[key];
 
-        }
+}
 
-    }
+}
 
-    return fallback;
+return fallback;
 
 }
 
 
-/* =================================
-   LOAD RESTAURANTS
-================================= */
+/* =========================
+   LOAD
+========================= */
 
 async function loadRestaurants(){
 
-    restaurantGrid.innerHTML = `
+grid.innerHTML = `
 
-        <div class="loading">
+<div class="loading">
 
-            <div class="spinner"></div>
+<div class="spinner"></div>
 
-            Loading restaurants...
+Loading restaurants...
 
-        </div>
+</div>
 
-    `;
-
-
-    try{
-
-        const {
-            data,
-            error
-        } = await supabaseClient
-            .from("restaurants")
-            .select("*");
+`;
 
 
-        if(error){
-
-            console.error(
-                "Restaurant error:",
-                error
-            );
-
-            restaurantGrid.innerHTML = `
-
-                <div class="error-box">
-
-                    Unable to load restaurants.
-                    Please refresh the page.
-
-                </div>
-
-            `;
-
-            return;
-
-        }
+const {
+data,
+error
+} =
+await sb
+.from("restaurants")
+.select("*");
 
 
-        console.log(
-            "Restaurants:",
-            data
-        );
+if(error){
 
+console.error(error);
 
-        if(
-            !data ||
-            data.length === 0
-        ){
+grid.innerHTML = `
 
-            restaurantGrid.innerHTML = `
+<div class="error">
 
-                <div class="empty">
+Unable to load restaurants.<br>
+${escapeHTML(error.message)}
 
-                    <div class="empty-icon">
-                        🍽️
-                    </div>
+</div>
 
-                    <h2>
-                        No restaurants available
-                    </h2>
+`;
 
-                    <p>
-                        Restaurants will appear here
-                        when they are added.
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        renderRestaurants(data);
-
-
-    }catch(error){
-
-        console.error(error);
-
-        restaurantGrid.innerHTML = `
-
-            <div class="error-box">
-
-                Something went wrong.
-                Please try again.
-
-            </div>
-
-        `;
-
-    }
+return;
 
 }
 
 
-/* =================================
+restaurants =
+data || [];
+
+renderRestaurants(
+restaurants
+);
+
+}
+
+
+/* =========================
    RENDER
-================================= */
+========================= */
 
 function renderRestaurants(
-    restaurants
+list
 ){
 
-    restaurantGrid.innerHTML = "";
+if(!list.length){
 
+grid.innerHTML = `
 
-    restaurants.forEach(
-        restaurant => {
+<div class="empty">
 
-            const id =
-                getValue(
-                    restaurant,
-                    ["id"],
-                    ""
-                );
+<div class="empty-icon">
+🍽️
+</div>
 
+<h3>
+No restaurants found
+</h3>
 
-            const name =
-                getValue(
-                    restaurant,
-                    [
-                        "name",
-                        "restaurant_name",
-                        "title"
-                    ],
-                    "Restaurant"
-                );
+<p>
+Try another search or category.
+</p>
 
+</div>
 
-            const description =
-                getValue(
-                    restaurant,
-                    [
-                        "description",
-                        "about",
-                        "details"
-                    ],
-                    "Delicious food and great service."
-                );
+`;
 
-
-            const cuisine =
-                getValue(
-                    restaurant,
-                    [
-                        "cuisine",
-                        "category",
-                        "type"
-                    ],
-                    "Food"
-                );
-
-
-            const rating =
-                getValue(
-                    restaurant,
-                    [
-                        "rating",
-                        "average_rating"
-                    ],
-                    "4.5"
-                );
-
-
-            const deliveryTime =
-                getValue(
-                    restaurant,
-                    [
-                        "delivery_time",
-                        "delivery_minutes",
-                        "estimated_time"
-                    ],
-                    "25-35 min"
-                );
-
-
-            const image =
-                getValue(
-                    restaurant,
-                    [
-                        "image_url",
-                        "image",
-                        "photo_url",
-                        "logo_url"
-                    ],
-                    ""
-                );
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-            card.className =
-                "restaurant-card";
-
-
-            let imageHTML = "";
-
-
-            if(image){
-
-                imageHTML = `
-
-                    <img
-                        src="${escapeHTML(image)}"
-                        alt="${escapeHTML(name)}"
-                        onerror="this.style.display='none';
-                        this.nextElementSibling.style.display='block';"
-                    >
-
-                    <div
-                        class="restaurant-placeholder"
-                        style="display:none;">
-
-                        🍽️
-
-                    </div>
-
-                `;
-
-            }else{
-
-                imageHTML = `
-
-                    <div class="restaurant-placeholder">
-
-                        🍽️
-
-                    </div>
-
-                `;
-
-            }
-
-
-            card.innerHTML = `
-
-                <div class="restaurant-image">
-
-                    ${imageHTML}
-
-                </div>
-
-
-                <div class="restaurant-info">
-
-                    <h2>
-                        ${escapeHTML(name)}
-                    </h2>
-
-
-                    <div class="restaurant-description">
-
-                        ${escapeHTML(description)}
-
-                    </div>
-
-
-                    <div class="restaurant-meta">
-
-                        <span class="rating">
-
-                            ★ ${escapeHTML(String(rating))}
-
-                        </span>
-
-                        <span>
-                            • ${escapeHTML(String(cuisine))}
-                        </span>
-
-                        <span>
-                            • ${escapeHTML(String(deliveryTime))}
-                        </span>
-
-                    </div>
-
-
-                    <a
-                        href="restaurant.html?id=${encodeURIComponent(id)}"
-                        class="view-button">
-
-                        View Restaurant →
-
-                    </a>
-
-                </div>
-
-            `;
-
-
-            restaurantGrid.appendChild(
-                card
-            );
-
-        }
-    );
+return;
 
 }
 
 
-/* =================================
-   ESCAPE HTML
-================================= */
-
-function escapeHTML(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
+grid.innerHTML = "";
 
 
-/* =================================
-   SEARCH
-================================= */
-
-function searchRestaurants(){
-
-    const value =
-        searchInput.value
-        .trim()
-        .toLowerCase();
+list.forEach(
+restaurant => {
 
 
-    if(!value){
-
-        loadRestaurants();
-
-        return;
-
-    }
-
-
-    const cards =
-        document.querySelectorAll(
-            ".restaurant-card"
-        );
-
-
-    cards.forEach(card => {
-
-        const text =
-            card.innerText
-            .toLowerCase();
-
-
-        if(
-            text.includes(value)
-        ){
-
-            card.style.display =
-                "block";
-
-        }else{
-
-            card.style.display =
-                "none";
-
-        }
-
-    });
-
-}
-
-
-/* =================================
-   ENTER SEARCH
-================================= */
-
-searchInput.addEventListener(
-    "keydown",
-    function(event){
-
-        if(
-            event.key === "Enter"
-        ){
-
-            searchRestaurants();
-
-        }
-
-    }
+const id =
+getValue(
+restaurant,
+["id"],
+""
 );
 
 
-/* =================================
-   CHECK LOGIN
-================================= */
-
-async function checkUser(){
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-            .auth
-            .getUser();
+const name =
+getValue(
+restaurant,
+[
+"name",
+"restaurant_name",
+"title"
+],
+"Restaurant"
+);
 
 
-        if(error){
-
-            console.log(
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        const loginButton =
-            document.getElementById(
-                "loginButton"
-            );
-
-        const profileButton =
-            document.getElementById(
-                "profileButton"
-            );
+const description =
+getValue(
+restaurant,
+[
+"description",
+"about",
+"details"
+],
+"Delicious food and great service."
+);
 
 
-        if(data.user){
-
-            loginButton.style.display =
-                "none";
-
-            profileButton.style.display =
-                "block";
-
-        }else{
-
-            loginButton.style.display =
-                "block";
-
-            profileButton.style.display =
-                "none";
-
-        }
+const cuisine =
+getValue(
+restaurant,
+[
+"cuisine",
+"category",
+"type"
+],
+"Food"
+);
 
 
-    }catch(error){
+const rating =
+getValue(
+restaurant,
+[
+"rating",
+"average_rating"
+],
+"4.5"
+);
 
-        console.log(error);
 
-    }
+const delivery =
+getValue(
+restaurant,
+[
+"delivery_time",
+"delivery_minutes",
+"estimated_time"
+],
+"25-35 min"
+);
+
+
+const image =
+getValue(
+restaurant,
+[
+"image_url",
+"image",
+"photo_url",
+"logo_url"
+],
+""
+);
+
+
+let imageHTML;
+
+
+if(image){
+
+imageHTML = `
+
+<img
+src="${escapeHTML(image)}"
+alt="${escapeHTML(name)}"
+onerror="
+this.style.display='none';
+this.nextElementSibling.style.display='grid';
+"
+>
+
+<div
+class="image-placeholder"
+style="display:none">
+
+🍽️
+
+</div>
+
+`;
+
+}else{
+
+imageHTML = `
+
+<div class="image-placeholder">
+
+🍽️
+
+</div>
+
+`;
 
 }
 
 
-/* =================================
+const card =
+document.createElement(
+"article"
+);
+
+card.className =
+"restaurant-card";
+
+
+card.innerHTML = `
+
+<div class="restaurant-image">
+
+${imageHTML}
+
+<div class="open-badge">
+
+● Open
+
+</div>
+
+</div>
+
+
+<div class="restaurant-info">
+
+
+<div class="restaurant-top">
+
+<h3 class="restaurant-name">
+
+${escapeHTML(name)}
+
+</h3>
+
+
+<div class="rating">
+
+★ ${escapeHTML(rating)}
+
+</div>
+
+</div>
+
+
+<p class="description">
+
+${escapeHTML(description)}
+
+</p>
+
+
+<div class="meta">
+
+<span>
+
+🍴 ${escapeHTML(cuisine)}
+
+</span>
+
+<span>
+
+🕐 ${escapeHTML(delivery)}
+
+</span>
+
+</div>
+
+
+<a
+href="restaurant.html?id=${encodeURIComponent(id)}"
+class="view-btn">
+
+View Restaurant
+&nbsp; →
+
+</a>
+
+
+</div>
+
+`;
+
+
+grid.appendChild(
+card
+);
+
+});
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchRestaurants(){
+
+const query =
+searchInput.value
+.trim()
+.toLowerCase();
+
+
+applyFilters(
+query,
+currentCategory
+);
+
+}
+
+
+function applyFilters(
+query="",
+category="all"
+){
+
+let result =
+restaurants.filter(
+restaurant => {
+
+
+const name =
+String(
+getValue(
+restaurant,
+[
+"name",
+"restaurant_name",
+"title"
+],
+""
+)
+).toLowerCase();
+
+
+const description =
+String(
+getValue(
+restaurant,
+[
+"description",
+"about",
+"details"
+],
+""
+)
+).toLowerCase();
+
+
+const cuisine =
+String(
+getValue(
+restaurant,
+[
+"cuisine",
+"category",
+"type"
+],
+""
+)
+).toLowerCase();
+
+
+const matchesSearch =
+!query ||
+name.includes(query) ||
+description.includes(query) ||
+cuisine.includes(query);
+
+
+const matchesCategory =
+category === "all" ||
+cuisine.includes(category);
+
+
+return (
+matchesSearch &&
+matchesCategory
+);
+
+});
+
+
+renderRestaurants(
+result
+);
+
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+function filterCategory(
+category,
+button
+){
+
+currentCategory =
+category;
+
+
+document
+.querySelectorAll(
+".category"
+)
+.forEach(
+btn =>
+btn.classList.remove(
+"active"
+)
+);
+
+
+button.classList.add(
+"active"
+);
+
+
+searchRestaurants();
+
+}
+
+
+/* =========================
+   ENTER
+========================= */
+
+searchInput.addEventListener(
+"keydown",
+event => {
+
+if(
+event.key === "Enter"
+){
+
+searchRestaurants();
+
+}
+
+});
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function checkUser(){
+
+const {
+data
+} =
+await sb.auth.getUser();
+
+
+const login =
+document.getElementById(
+"loginButton"
+);
+
+const profile =
+document.getElementById(
+"profileButton"
+);
+
+
+if(data.user){
+
+login.style.display =
+"none";
+
+profile.style.display =
+"block";
+
+}else{
+
+login.style.display =
+"block";
+
+profile.style.display =
+"none";
+
+}
+
+}
+
+
+/* =========================
    START
-================================= */
+========================= */
 
 loadRestaurants();
 
 checkUser();
 
 </script>
-
 
 </body>
 
