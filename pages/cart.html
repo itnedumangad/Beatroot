@@ -1,94 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cart - Beatroot</title>
 
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/desktop.css">
-
 <style>
-
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f6f7f8;
-    color:#171717;
+    background:#f7f7f7;
+    color:#222;
 }
-
-.page{
-    max-width:1000px;
-    min-height:100vh;
-    margin:auto;
-    background:#fff;
-}
-
-
-/* HEADER */
 
 .header{
-    padding:18px 20px;
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #eee;
     display:flex;
     align-items:center;
-    gap:15px;
-    border-bottom:1px solid #eee;
-    background:#fff;
-}
-
-.back{
-    font-size:30px;
-    cursor:pointer;
-    width:35px;
+    justify-content:space-between;
+    padding:0 6%;
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
 .logo{
-    font-size:28px;
+    font-size:26px;
     font-weight:800;
-    color:#e53935;
+    color:#ff4d00;
+    text-decoration:none;
 }
 
+.nav{
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
 
-/* CONTENT */
+.nav a{
+    text-decoration:none;
+    color:#333;
+    font-size:14px;
+    font-weight:600;
+}
+
+.cart-btn{
+    background:#ff4d00;
+    color:white !important;
+    padding:10px 16px;
+    border-radius:8px;
+}
 
 .container{
-    padding:25px 20px 40px;
+    max-width:1100px;
+    margin:40px auto;
+    padding:0 20px;
 }
 
-.title{
-    font-size:28px;
-    margin:0 0 20px;
+.page-title{
+    font-size:32px;
+    font-weight:800;
+    margin-bottom:25px;
 }
 
+.cart-layout{
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:25px;
+}
 
-/* CART ITEM */
+.cart-box,
+.summary{
+    background:#fff;
+    border-radius:16px;
+    padding:22px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
 
 .cart-item{
     display:flex;
     align-items:center;
-    gap:15px;
-    padding:16px 0;
+    gap:18px;
+    padding:18px 0;
     border-bottom:1px solid #eee;
 }
 
-.food-icon{
-    width:65px;
-    height:65px;
+.cart-item:last-child{
+    border-bottom:none;
+}
+
+.food-img{
+    width:90px;
+    height:90px;
     border-radius:12px;
-    background:#fff1ed;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
-    flex-shrink:0;
+    object-fit:cover;
+    background:#eee;
 }
 
 .item-info{
@@ -96,117 +109,109 @@ body{
 }
 
 .item-info h3{
-    margin:0 0 6px;
-    font-size:17px;
+    font-size:18px;
+    margin-bottom:6px;
 }
 
-.item-price{
+.item-info p{
     color:#777;
     font-size:14px;
 }
 
-
-/* QUANTITY */
-
-.quantity{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-.qty-btn{
-    width:32px;
-    height:32px;
-    border:0;
-    border-radius:8px;
-    background:#f0f0f0;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
+.price{
+    font-weight:700;
+    margin-top:7px;
 }
 
 .qty{
-    min-width:22px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+}
+
+.qty button{
+    width:30px;
+    height:30px;
+    border:none;
+    border-radius:7px;
+    background:#f0f0f0;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.qty span{
+    min-width:20px;
     text-align:center;
     font-weight:bold;
 }
 
-.item-total{
-    min-width:75px;
-    text-align:right;
-    font-weight:bold;
-}
-
-
-/* REMOVE */
-
 .remove{
-    border:0;
+    border:none;
     background:none;
     color:#e53935;
     cursor:pointer;
     font-size:13px;
+    margin-top:10px;
 }
 
-
-/* SUMMARY */
-
-.summary{
-    margin-top:25px;
-    padding:20px;
-    border:1px solid #eee;
-    border-radius:15px;
-    background:#fff;
+.item-total{
+    font-size:17px;
+    font-weight:800;
+    white-space:nowrap;
 }
 
 .summary h2{
-    margin:0 0 18px;
-    font-size:20px;
+    font-size:22px;
+    margin-bottom:20px;
 }
 
 .summary-row{
     display:flex;
     justify-content:space-between;
-    margin:11px 0;
-    color:#666;
+    padding:10px 0;
+    color:#555;
 }
 
 .summary-row.total{
-    color:#171717;
-    font-size:20px;
-    font-weight:bold;
     border-top:1px solid #eee;
-    padding-top:15px;
-    margin-top:15px;
+    margin-top:10px;
+    padding-top:18px;
+    font-size:20px;
+    color:#111;
+    font-weight:800;
 }
 
-
-/* CHECKOUT */
-
-.checkout{
+.checkout-btn{
     width:100%;
-    border:0;
-    padding:14px;
-    margin-top:18px;
-    border-radius:11px;
-    background:#e53935;
-    color:#fff;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#ff4d00;
+    color:white;
     font-size:16px;
-    font-weight:bold;
+    font-weight:700;
     cursor:pointer;
 }
 
-.checkout:hover{
-    background:#c62828;
+.checkout-btn:hover{
+    background:#e64400;
 }
 
-
-/* EMPTY */
+.continue{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    text-decoration:none;
+    color:#ff4d00;
+    font-weight:600;
+}
 
 .empty{
     text-align:center;
-    padding:80px 20px;
-    color:#777;
+    padding:70px 20px;
 }
 
 .empty-icon{
@@ -215,496 +220,294 @@ body{
 }
 
 .empty h2{
-    color:#333;
+    margin-bottom:10px;
 }
 
-.back-menu{
-    border:0;
-    padding:11px 18px;
-    border-radius:10px;
-    background:#e53935;
-    color:#fff;
-    font-weight:bold;
-    cursor:pointer;
+.empty p{
+    color:#777;
+    margin-bottom:25px;
 }
 
+.shop-btn{
+    display:inline-block;
+    padding:13px 22px;
+    background:#ff4d00;
+    color:white;
+    text-decoration:none;
+    border-radius:9px;
+    font-weight:700;
+}
 
-/* DESKTOP */
+@media(max-width:800px){
 
-@media(min-width:768px){
+    .header{
+        padding:0 20px;
+    }
 
-    .container{
-        padding:35px 45px;
+    .nav a:not(.cart-btn){
+        display:none;
+    }
+
+    .cart-layout{
+        grid-template-columns:1fr;
+    }
+
+    .page-title{
+        font-size:27px;
     }
 
     .cart-item{
-        padding:20px 10px;
+        align-items:flex-start;
     }
 
-    .summary{
-        max-width:500px;
-        margin-left:auto;
-    }
-
-}
-
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-    .cart-item{
-        flex-wrap:wrap;
-    }
-
-    .item-info{
-        min-width:calc(100% - 85px);
-    }
-
-    .quantity{
-        margin-left:80px;
+    .food-img{
+        width:75px;
+        height:75px;
     }
 
     .item-total{
-        margin-left:auto;
+        font-size:15px;
     }
-
-    .remove{
-        margin-left:80px;
-    }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-<div class="page">
+<header class="header">
+
+<a href="home.html" class="logo">Beatroot</a>
+
+<nav class="nav">
+<a href="home.html">Home</a>
+<a href="restaurants.html">Restaurants</a>
+<a href="my-orders.html">My Orders</a>
+<a href="profile.html">Profile</a>
+<a href="cart.html" class="cart-btn">
+🛒 Cart (<span id="cartCount">0</span>)
+</a>
+</nav>
+
+</header>
 
 
-    <!-- HEADER -->
+<main class="container">
 
-    <div class="header">
+<h1 class="page-title">Your Cart</h1>
 
-        <div class="back"
-             onclick="goBack()">
-            ‹
-        </div>
+<div id="cartArea"></div>
 
-        <div class="logo">
-            Beat<span style="color:#333">root</span>
-        </div>
-
-    </div>
-
-
-
-    <!-- CONTENT -->
-
-    <div class="container">
-
-        <h1 class="title">
-            Your Cart
-        </h1>
-
-
-        <!-- CART -->
-
-        <div id="cartList"></div>
-
-
-        <!-- EMPTY -->
-
-        <div id="emptyCart"
-             class="empty"
-             style="display:none;">
-
-            <div class="empty-icon">
-                🛒
-            </div>
-
-            <h2>
-                Your cart is empty
-            </h2>
-
-            <p>
-                Add some delicious food to continue.
-            </p>
-
-            <button
-                class="back-menu"
-                onclick="goToRestaurants()">
-
-                Browse Restaurants
-
-            </button>
-
-        </div>
-
-
-
-        <!-- SUMMARY -->
-
-        <div id="summary"
-             class="summary"
-             style="display:none;">
-
-            <h2>
-                Order Summary
-            </h2>
-
-
-            <div class="summary-row">
-
-                <span>
-                    Subtotal
-                </span>
-
-                <span id="subtotal">
-                    ₹0
-                </span>
-
-            </div>
-
-
-            <div class="summary-row">
-
-                <span>
-                    Delivery Charge
-                </span>
-
-                <span id="delivery">
-                    ₹40
-                </span>
-
-            </div>
-
-
-            <div class="summary-row total">
-
-                <span>
-                    Grand Total
-                </span>
-
-                <span id="grandTotal">
-                    ₹0
-                </span>
-
-            </div>
-
-
-            <button
-                class="checkout"
-                onclick="checkout()">
-
-                Proceed to Checkout →
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
+</main>
 
 
 <script>
 
+let cart = JSON.parse(localStorage.getItem("beatrootCart")) || [];
 
-/* LOAD CART */
-
-let cart =
-    JSON.parse(
-        localStorage.getItem("beatrootCart")
-    ) || [];
-
-
-const DELIVERY_CHARGE = 40;
-
-
-
-/* SAVE */
 
 function saveCart(){
-
-    localStorage.setItem(
-        "beatrootCart",
-        JSON.stringify(cart)
-    );
-
+    localStorage.setItem("beatrootCart", JSON.stringify(cart));
 }
 
 
+function updateCartCount(){
 
-/* RENDER */
+    let count = cart.reduce((sum,item)=>sum + Number(item.quantity || 1),0);
 
-function renderCart(){
-
-    const cartList =
-        document.getElementById(
-            "cartList"
-        );
-
-    const empty =
-        document.getElementById(
-            "emptyCart"
-        );
-
-    const summary =
-        document.getElementById(
-            "summary"
-        );
-
-
-    cartList.innerHTML = "";
-
-
-    if(cart.length === 0){
-
-        empty.style.display =
-            "block";
-
-        summary.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    empty.style.display =
-        "none";
-
-    summary.style.display =
-        "block";
-
-
-    let subtotal = 0;
-
-
-    cart.forEach(
-        (item,index)=>{
-
-            const total =
-                item.price *
-                item.quantity;
-
-
-            subtotal += total;
-
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "cart-item";
-
-
-            div.innerHTML = `
-
-                <div class="food-icon">
-                    🍽️
-                </div>
-
-                <div class="item-info">
-
-                    <h3>
-                        ${escapeHtml(item.name)}
-                    </h3>
-
-                    <div class="item-price">
-                        ₹${item.price} each
-                    </div>
-
-                </div>
-
-                <div class="quantity">
-
-                    <button
-                        class="qty-btn"
-                        onclick="decrease(${index})">
-                        −
-                    </button>
-
-                    <span class="qty">
-                        ${item.quantity}
-                    </span>
-
-                    <button
-                        class="qty-btn"
-                        onclick="increase(${index})">
-                        +
-                    </button>
-
-                </div>
-
-                <div class="item-total">
-                    ₹${total}
-                </div>
-
-                <button
-                    class="remove"
-                    onclick="removeItem(${index})">
-
-                    Remove
-
-                </button>
-
-            `;
-
-
-            cartList.appendChild(div);
-
-        }
-    );
-
-
-    document.getElementById(
-        "subtotal"
-    ).textContent =
-        "₹" + subtotal;
-
-
-    const grandTotal =
-        subtotal +
-        DELIVERY_CHARGE;
-
-
-    document.getElementById(
-        "delivery"
-    ).textContent =
-        "₹" + DELIVERY_CHARGE;
-
-
-    document.getElementById(
-        "grandTotal"
-    ).textContent =
-        "₹" + grandTotal;
-
+    document.getElementById("cartCount").innerText = count;
 }
 
 
+function changeQuantity(index, change){
 
-/* INCREASE */
+    cart[index].quantity = Number(cart[index].quantity || 1) + change;
 
-function increase(index){
-
-    cart[index].quantity++;
-
-    saveCart();
-
-    renderCart();
-
-}
-
-
-
-/* DECREASE */
-
-function decrease(index){
-
-    if(cart[index].quantity > 1){
-
-        cart[index].quantity--;
-
-    }else{
-
+    if(cart[index].quantity <= 0){
         cart.splice(index,1);
-
     }
 
     saveCart();
-
     renderCart();
-
 }
 
-
-
-/* REMOVE */
 
 function removeItem(index){
 
     cart.splice(index,1);
 
     saveCart();
-
     renderCart();
-
 }
 
 
+function renderCart(){
 
-/* CHECKOUT */
+    updateCartCount();
 
-function checkout(){
+    const area = document.getElementById("cartArea");
 
     if(cart.length === 0){
 
-        alert(
-            "Your cart is empty."
-        );
+        area.innerHTML = `
+            <div class="cart-box empty">
+
+                <div class="empty-icon">🛒</div>
+
+                <h2>Your cart is empty</h2>
+
+                <p>
+                    Looks like you haven't added anything to your cart yet.
+                </p>
+
+                <a href="restaurants.html" class="shop-btn">
+                    Browse Restaurants
+                </a>
+
+            </div>
+        `;
 
         return;
-
     }
 
 
-    window.location.href =
-        "checkout.html";
+    let subtotal = 0;
 
+    let itemsHTML = "";
+
+
+    cart.forEach((item,index)=>{
+
+        let price = Number(item.price || 0);
+        let quantity = Number(item.quantity || 1);
+
+        let total = price * quantity;
+
+        subtotal += total;
+
+
+        itemsHTML += `
+
+        <div class="cart-item">
+
+            <img
+                class="food-img"
+                src="${item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80'}"
+                alt="${item.name || 'Food'}"
+            >
+
+            <div class="item-info">
+
+                <h3>${item.name || 'Food Item'}</h3>
+
+                <p>${item.restaurant || 'Restaurant'}</p>
+
+                <div class="price">
+                    ₹${price.toFixed(2)}
+                </div>
+
+                <div class="qty">
+
+                    <button onclick="changeQuantity(${index},-1)">
+                        −
+                    </button>
+
+                    <span>${quantity}</span>
+
+                    <button onclick="changeQuantity(${index},1)">
+                        +
+                    </button>
+
+                </div>
+
+                <button
+                    class="remove"
+                    onclick="removeItem(${index})"
+                >
+                    Remove
+                </button>
+
+            </div>
+
+            <div class="item-total">
+                ₹${total.toFixed(2)}
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+
+    let delivery = subtotal >= 500 ? 0 : 40;
+
+    let grandTotal = subtotal + delivery;
+
+
+    area.innerHTML = `
+
+        <div class="cart-layout">
+
+            <div class="cart-box">
+
+                ${itemsHTML}
+
+            </div>
+
+
+            <div class="summary">
+
+                <h2>Order Summary</h2>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>₹${subtotal.toFixed(2)}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span>
+                        ${delivery === 0 ? "FREE" : "₹" + delivery.toFixed(2)}
+                    </span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>₹${grandTotal.toFixed(2)}</span>
+                </div>
+
+                <button
+                    class="checkout-btn"
+                    onclick="goCheckout()"
+                >
+                    Proceed to Checkout
+                </button>
+
+                <a
+                    href="restaurants.html"
+                    class="continue"
+                >
+                    ← Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+    `;
 }
 
 
+function goCheckout(){
 
-/* BACK */
+    if(cart.length === 0){
+        alert("Your cart is empty.");
+        return;
+    }
 
-function goBack(){
-
-    window.location.href =
-        "restaurant.html";
-
+    window.location.href = "checkout.html";
 }
 
-
-
-/* RESTAURANTS */
-
-function goToRestaurants(){
-
-    window.location.href =
-        "restaurants.html";
-
-}
-
-
-
-/* SECURITY */
-
-function escapeHtml(text){
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent =
-        text;
-
-    return div.innerHTML;
-
-}
-
-
-
-/* START */
 
 renderCart();
 
