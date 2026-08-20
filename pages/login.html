@@ -582,22 +582,19 @@ async function loginUser(){
 
 
 
-        /* SESSION CHECK */
+      /* SESSION CHECK */
 
-        if(!data.session){
+if(!data.session){
+    showMessage(
+        "Login session create cheyyan kazhinjilla.",
+        "error"
+    );
 
-            showMessage(
-                "Login session create cheyyan kazhinjilla.",
-                "error"
-            );
+    button.disabled = false;
+    button.textContent = "Login";
 
-            button.disabled = false;
-
-            button.textContent =
-                "Login";
-
-            return;
-
+    return;
+}
         }
 
 
