@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Orders - Beatroot</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f6f6f6;
+    color:#171717;
+}
+
+.page{
+    max-width:900px;
+    margin:auto;
+    min-height:100vh;
+    background:#fff;
+}
+
+/* Header */
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 20px;
+    border-bottom:1px solid #eee;
+    position:sticky;
+    top:0;
+    background:#fff;
+    z-index:10;
+}
+
+.logo{
+    font-size:27px;
+    font-weight:800;
+    color:#e53935;
+}
+
+.logo span{
+    color:#171717;
+}
+
+.back{
+    border:0;
+    background:#f5f5f5;
+    padding:10px 15px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+/* Content */
+.content{
+    padding:25px 20px 40px;
+}
+
+.title{
+    font-size:28px;
+    margin:0 0 6px;
+}
+
+.subtitle{
+    color:#777;
+    margin:0 0 25px;
+}
+
+/* Order Card */
+.order-card{
+    border:1px solid #e5e5e5;
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.order-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.order-id{
+    font-weight:700;
+    font-size:16px;
+}
+
+.status{
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.delivered{
+    background:#e8f7ed;
+    color:#18864b;
+}
+
+.preparing{
+    background:#fff4df;
+    color:#b76b00;
+}
+
+.cancelled{
+    background:#ffe8e8;
+    color:#d52d2d;
+}
+
+/* Restaurant */
+.restaurant{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.date{
+    font-size:13px;
+    color:#777;
+    margin-bottom:15px;
+}
+
+/* Items */
+.items{
+    border-top:1px solid #eee;
+    border-bottom:1px solid #eee;
+    padding:12px 0;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    margin:8px 0;
+    font-size:14px;
+}
+
+.item-name{
+    color:#444;
+}
+
+.item-price{
+    font-weight:600;
+}
+
+/* Bottom */
+.order-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:15px;
+    gap:10px;
+}
+
+.total{
+    font-size:18px;
+    font-weight:800;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+}
+
+.btn{
+    border:0;
+    padding:9px 13px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:13px;
+}
+
+.view-btn{
+    background:#f1f1f1;
+    color:#222;
+}
+
+.reorder-btn{
+    background:#e53935;
+    color:white;
+}
+
+.track-btn{
+    background:#171717;
+    color:white;
+}
+
+/* Empty */
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    display:none;
+}
+
+.empty-icon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+.empty h2{
+    margin:10px 0;
+}
+
+.empty p{
+    color:#777;
+}
+
+.home-btn{
+    margin-top:15px;
+    border:0;
+    background:#e53935;
+    color:#fff;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* Mobile */
+@media(max-width:600px){
+
+    .content{
+        padding:20px 15px 35px;
+    }
+
+    .title{
+        font-size:24px;
+    }
+
+    .order-card{
+        padding:15px;
+    }
+
+    .order-top{
+        align-items:flex-start;
+    }
+
+    .order-bottom{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .actions{
+        width:100%;
+    }
+
+    .btn{
+        flex:1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <button class="back" onclick="goHome()">
+            ← Back
+        </button>
+
+        <div class="logo">
+            Beat<span>root</span>
+        </div>
+
+        <div style="width:65px;"></div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <h1 class="title">My Orders</h1>
+
+        <p class="subtitle">
+            View and manage your previous orders
+        </p>
+
+
+        <!-- ORDER 1 -->
+        <div class="order-card">
+
+            <div class="order-top">
+
+                <div class="order-id">
+                    Order #BR10245
+                </div>
+
+                <div class="status delivered">
+                    Delivered
+                </div>
+
+            </div>
+
+
+            <div class="restaurant">
+                🍔 Burger House
+            </div>
+
+            <div class="date">
+                20 Aug 2026 • 12:45 PM
+            </div>
+
+
+            <div class="items">
+
+                <div class="item">
+                    <span class="item-name">
+                        2 × Chicken Burger
+                    </span>
+
+                    <span class="item-price">
+                        ₹240
+                    </span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">
+                        1 × French Fries
+                    </span>
+
+                    <span class="item-price">
+                        ₹90
+                    </span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">
+                        2 × Soft Drink
+                    </span>
+
+                    <span class="item-price">
+                        ₹80
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="order-bottom">
+
+                <div class="total">
+                    Total: ₹410
+                </div>
+
+                <div class="actions">
+
+                    <button class="btn view-btn"
+                            onclick="viewOrder('BR10245')">
+                        View
+                    </button>
+
+                    <button class="btn reorder-btn"
+                            onclick="reorder('BR10245')">
+                        Reorder
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER 2 -->
+        <div class="order-card">
+
+            <div class="order-top">
+
+                <div class="order-id">
+                    Order #BR10231
+                </div>
+
+                <div class="status preparing">
+                    Preparing
+                </div>
+
+            </div>
+
+
+            <div class="restaurant">
+                🍕 Pizza Corner
+            </div>
+
+            <div class="date">
+                20 Aug 2026 • 10:20 AM
+            </div>
+
+
+            <div class="items">
+
+                <div class="item">
+                    <span class="item-name">
+                        1 × Chicken Pizza
+                    </span>
+
+                    <span class="item-price">
+                        ₹320
+                    </span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">
+                        1 × Garlic Bread
+                    </span>
+
+                    <span class="item-price">
+                        ₹120
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="order-bottom">
+
+                <div class="total">
+                    Total: ₹440
+                </div>
+
+                <div class="actions">
+
+                    <button class="btn track-btn"
+                            onclick="trackOrder('BR10231')">
+                        Track
+                    </button>
+
+                    <button class="btn view-btn"
+                            onclick="viewOrder('BR10231')">
+                        View
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER 3 -->
+        <div class="order-card">
+
+            <div class="order-top">
+
+                <div class="order-id">
+                    Order #BR10198
+                </div>
+
+                <div class="status cancelled">
+                    Cancelled
+                </div>
+
+            </div>
+
+
+            <div class="restaurant">
+                🍗 Fresh Chicken
+            </div>
+
+            <div class="date">
+                18 Aug 2026 • 8:15 PM
+            </div>
+
+
+            <div class="items">
+
+                <div class="item">
+                    <span class="item-name">
+                        1 × Chicken Biriyani
+                    </span>
+
+                    <span class="item-price">
+                        ₹180
+                    </span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">
+                        1 × Fresh Juice
+                    </span>
+
+                    <span class="item-price">
+                        ₹70
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="order-bottom">
+
+                <div class="total">
+                    Total: ₹250
+                </div>
+
+                <div class="actions">
+
+                    <button class="btn view-btn"
+                            onclick="viewOrder('BR10198')">
+                        View
+                    </button>
+
+                    <button class="btn reorder-btn"
+                            onclick="reorder('BR10198')">
+                        Reorder
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- EMPTY ORDERS -->
+        <div class="empty" id="emptyOrders">
+
+            <div class="empty-icon">
+                📦
+            </div>
+
+            <h2>No Orders Yet</h2>
+
+            <p>
+                Your orders will appear here after you place an order.
+            </p>
+
+            <button class="home-btn" onclick="goHome()">
+                Start Ordering
+            </button>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+function goHome(){
+
+    window.location.href = "home.html";
+
+}
+
+
+function viewOrder(orderId){
+
+    window.location.href =
+        "order-confirmation.html?order=" +
+        encodeURIComponent(orderId);
+
+}
+
+
+function trackOrder(orderId){
+
+    alert(
+        "Tracking Order: " +
+        orderId +
+        "\n\nYour order is currently being prepared."
+    );
+
+}
+
+
+function reorder(orderId){
+
+    const confirmReorder =
+        confirm(
+            "Would you like to add the items from " +
+            orderId +
+            " to your cart?"
+        );
+
+    if(confirmReorder){
+
+        window.location.href = "cart.html";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
