@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Restaurants - Beatroot</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/desktop.css">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f6f7f8;
+    color:#171717;
+}
+
+.page{
+    max-width:1100px;
+    margin:auto;
+    min-height:100vh;
+    background:#fff;
+}
+
+.header{
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #eee;
+}
+
+.back{
+    font-size:24px;
+    cursor:pointer;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:800;
+    color:#e53935;
+}
+
+.container{
+    padding:25px 20px;
+}
+
+.title{
+    font-size:28px;
+    margin-bottom:18px;
+}
+
+.search{
+    width:100%;
+    box-sizing:border-box;
+    padding:14px 16px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    font-size:16px;
+    outline:none;
+}
+
+.search:focus{
+    border-color:#e53935;
+}
+
+.filters{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:18px 0;
+}
+
+.filter{
+    border:0;
+    padding:10px 18px;
+    border-radius:20px;
+    background:#f1f1f1;
+    cursor:pointer;
+    white-space:nowrap;
+    font-weight:600;
+}
+
+.filter.active{
+    background:#e53935;
+    color:#fff;
+}
+
+.restaurant-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.restaurant{
+    border:1px solid #eee;
+    border-radius:16px;
+    padding:18px;
+    background:#fff;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.restaurant-icon{
+    width:60px;
+    height:60px;
+    border-radius:14px;
+    background:#fff0ed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.restaurant h3{
+    margin:0 0 7px;
+    font-size:19px;
+}
+
+.restaurant p{
+    margin:5px 0;
+    color:#777;
+    font-size:14px;
+}
+
+.status{
+    display:inline-block;
+    margin-top:10px;
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.open{
+    background:#e8f8ee;
+    color:#16833b;
+}
+
+.closed{
+    background:#ffe8e8;
+    color:#d32f2f;
+}
+
+.view-btn{
+    width:100%;
+    border:0;
+    padding:11px;
+    margin-top:14px;
+    border-radius:10px;
+    background:#e53935;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+@media(max-width:767px){
+
+    .container{
+        padding:20px 16px;
+    }
+
+    .restaurant-grid{
+        grid-template-columns:1fr;
+    }
+
+    .title{
+        font-size:24px;
+    }
+}
+
+@media(min-width:768px){
+
+    .restaurant-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="header">
+
+        <div class="back" onclick="goBack()">‹</div>
+
+        <div class="logo">
+            Beat<span style="color:#333">root</span>
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="title">
+            Restaurants
+        </div>
+
+        <input
+            type="text"
+            id="search"
+            class="search"
+            placeholder="🔍 Search restaurants..."
+            oninput="searchRestaurants()"
+        >
+
+        <div class="filters">
+
+            <button class="filter active" onclick="filterRestaurants('all',this)">
+                All
+            </button>
+
+            <button class="filter" onclick="filterRestaurants('pizza',this)">
+                🍕 Pizza
+            </button>
+
+            <button class="filter" onclick="filterRestaurants('burger',this)">
+                🍔 Burgers
+            </button>
+
+            <button class="filter" onclick="filterRestaurants('chicken',this)">
+                🍗 Chicken
+            </button>
+
+            <button class="filter" onclick="filterRestaurants('meals',this)">
+                🍛 Meals
+            </button>
+
+        </div>
+
+        <div id="restaurantList" class="restaurant-grid">
+
+            <div class="restaurant"
+                 data-name="Food Corner"
+                 data-category="meals">
+
+                <div class="restaurant-icon">🍛</div>
+
+                <h3>Food Corner</h3>
+
+                <p>📍 Nedumangad</p>
+
+                <p>Indian • Meals • Snacks</p>
+
+                <span class="status open">
+                    OPEN
+                </span>
+
+                <button class="view-btn"
+                        onclick="openRestaurant('Food Corner')">
+                    View Menu →
+                </button>
+
+            </div>
+
+
+            <div class="restaurant"
+                 data-name="Pizza House"
+                 data-category="pizza">
+
+                <div class="restaurant-icon">🍕</div>
+
+                <h3>Pizza House</h3>
+
+                <p>📍 Nedumangad</p>
+
+                <p>Pizza • Fast Food</p>
+
+                <span class="status open">
+                    OPEN
+                </span>
+
+                <button class="view-btn"
+                        onclick="openRestaurant('Pizza House')">
+                    View Menu →
+                </button>
+
+            </div>
+
+
+            <div class="restaurant"
+                 data-name="Burger Hub"
+                 data-category="burger">
+
+                <div class="restaurant-icon">🍔</div>
+
+                <h3>Burger Hub</h3>
+
+                <p>📍 Nedumangad</p>
+
+                <p>Burgers • Fast Food</p>
+
+                <span class="status closed">
+                    CLOSED
+                </span>
+
+                <button class="view-btn"
+                        onclick="openRestaurant('Burger Hub')">
+                    View Menu →
+                </button>
+
+            </div>
+
+
+            <div class="restaurant"
+                 data-name="Chicken Point"
+                 data-category="chicken">
+
+                <div class="restaurant-icon">🍗</div>
+
+                <h3>Chicken Point</h3>
+
+                <p>📍 Nedumangad</p>
+
+                <p>Chicken • Fried Items</p>
+
+                <span class="status open">
+                    OPEN
+                </span>
+
+                <button class="view-btn"
+                        onclick="openRestaurant('Chicken Point')">
+                    View Menu →
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="empty" style="display:none" class="empty">
+            No restaurants found.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let currentCategory = "all";
+
+
+function filterRestaurants(category,button){
+
+    currentCategory = category;
+
+    document.querySelectorAll(".filter").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    searchRestaurants();
+}
+
+
+function searchRestaurants(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const restaurants =
+        document.querySelectorAll(".restaurant");
+
+    let visible = 0;
+
+    restaurants.forEach(card=>{
+
+        const name =
+            card.dataset.name.toLowerCase();
+
+        const category =
+            card.dataset.category;
+
+        const matchSearch =
+            name.includes(search);
+
+        const matchCategory =
+            currentCategory === "all" ||
+            category === currentCategory;
+
+        if(matchSearch && matchCategory){
+
+            card.style.display="block";
+            visible++;
+
+        }else{
+
+            card.style.display="none";
+
+        }
+
+    });
+
+
+    document.getElementById("empty").style.display =
+        visible === 0 ? "block" : "none";
+}
+
+
+function openRestaurant(name){
+
+    alert(
+        name +
+        " menu page will open here."
+    );
+
+}
+
+
+function goBack(){
+
+    window.location.href="home.html";
+
+}
+
+</script>
+
+</body>
+</html>
