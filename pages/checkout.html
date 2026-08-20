@@ -1,256 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Checkout - Beatroot</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f7f7f7;
-    color:#222;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f6f7f9;
+    color:#171717;
 }
 
 /* HEADER */
 
 .header{
-    height:70px;
+    height:72px;
     background:#fff;
-    border-bottom:1px solid #eee;
+    border-bottom:1px solid #e8e8e8;
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:0 6%;
-    position:sticky;
-    top:0;
-    z-index:100;
 }
 
 .logo{
-    font-size:26px;
-    font-weight:800;
-    color:#ff4d00;
     text-decoration:none;
+    font-size:28px;
+    font-weight:900;
+    color:#ef3f3f;
 }
 
-.nav{
-    display:flex;
-    gap:20px;
-    align-items:center;
+.logo span{
+    color:#171717;
 }
 
-.nav a{
+.back{
     text-decoration:none;
     color:#333;
     font-size:14px;
     font-weight:600;
 }
 
-.cart-btn{
-    background:#ff4d00;
-    color:#fff !important;
-    padding:10px 16px;
-    border-radius:8px;
-}
-
 /* CONTAINER */
 
 .container{
     max-width:1100px;
-    margin:40px auto;
-    padding:0 20px;
+    margin:auto;
+    padding:40px 20px 70px;
 }
 
-.page-title{
-    font-size:32px;
+.title{
+    font-size:34px;
     font-weight:800;
-    margin-bottom:25px;
+    margin-bottom:8px;
 }
+
+.subtitle{
+    color:#777;
+    margin-bottom:30px;
+}
+
+/* LAYOUT */
 
 .checkout-layout{
     display:grid;
-    grid-template-columns:1fr 380px;
-    gap:25px;
+    grid-template-columns:1fr 360px;
+    gap:24px;
 }
 
-/* BOX */
-
-.box{
+.card{
     background:#fff;
-    border-radius:16px;
-    padding:25px;
-    box-shadow:0 5px 20px rgba(0,0,0,.06);
-    margin-bottom:20px;
+    border:1px solid #e8e8e8;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 8px 30px rgba(0,0,0,.05);
 }
 
-.box h2{
+.card h2{
     font-size:21px;
-    margin-bottom:20px;
+    margin-bottom:22px;
 }
 
 /* FORM */
 
 .form-group{
-    margin-bottom:17px;
+    margin-bottom:18px;
 }
 
 .form-group label{
     display:block;
-    font-size:14px;
+    font-size:13px;
     font-weight:700;
     margin-bottom:7px;
 }
 
 .form-group input,
-.form-group textarea,
-.form-group select{
+.form-group textarea{
     width:100%;
-    padding:13px;
     border:1px solid #ddd;
-    border-radius:9px;
-    outline:none;
+    border-radius:11px;
+    background:#fafafa;
+    padding:13px 14px;
     font-size:14px;
-    background:#fff;
+    outline:none;
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
-    border-color:#ff4d00;
+.form-group input{
+    height:48px;
 }
 
 .form-group textarea{
-    min-height:100px;
+    min-height:110px;
     resize:vertical;
 }
 
-/* TWO COLUMN */
-
-.two-col{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
+.form-group input:focus,
+.form-group textarea:focus{
+    background:#fff;
+    border-color:#ef3f3f;
+    box-shadow:0 0 0 3px rgba(239,63,63,.08);
 }
 
-/* PAYMENT */
+/* ORDER ITEMS */
 
-.payment-option{
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:14px;
-    margin-bottom:10px;
-    cursor:pointer;
+.order-item{
     display:flex;
     align-items:center;
     gap:12px;
-}
-
-.payment-option:hover{
-    border-color:#ff4d00;
-}
-
-.payment-option input{
-    accent-color:#ff4d00;
-}
-
-/* ORDER SUMMARY */
-
-.summary-item{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    padding:12px 0;
+    padding:14px 0;
     border-bottom:1px solid #eee;
-    font-size:14px;
 }
 
-.summary-item:last-child{
+.order-item:last-child{
     border-bottom:none;
 }
 
-.summary-name{
+.order-item img{
+    width:58px;
+    height:58px;
+    border-radius:10px;
+    object-fit:cover;
+}
+
+.order-info{
     flex:1;
 }
 
-.summary-price{
+.order-name{
+    font-size:14px;
     font-weight:700;
-    white-space:nowrap;
 }
+
+.order-meta{
+    color:#777;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.order-price{
+    font-size:14px;
+    font-weight:700;
+}
+
+/* SUMMARY */
 
 .summary-row{
     display:flex;
     justify-content:space-between;
     padding:10px 0;
     color:#555;
+    font-size:14px;
 }
 
-.total-row{
-    border-top:1px solid #eee;
+.total{
+    border-top:1px solid #e5e5e5;
     margin-top:10px;
     padding-top:18px;
-    display:flex;
-    justify-content:space-between;
     font-size:21px;
     font-weight:800;
+    color:#111;
 }
 
 .place-order{
     width:100%;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    background:#ff4d00;
+    height:53px;
+    margin-top:22px;
+    border:0;
+    border-radius:11px;
+    background:#ef3f3f;
     color:#fff;
-    font-size:16px;
-    font-weight:700;
+    font-size:15px;
+    font-weight:800;
     cursor:pointer;
-    margin-top:20px;
 }
 
 .place-order:hover{
-    background:#e64400;
+    background:#d93434;
 }
 
-.back-cart{
+.place-order:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* MESSAGE */
+
+.message{
+    display:none;
+    padding:13px 15px;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+.error{
     display:block;
-    text-align:center;
-    margin-top:15px;
-    color:#ff4d00;
-    text-decoration:none;
-    font-weight:600;
+    background:#fff0f0;
+    color:#d32f2f;
+    border:1px solid #ffd0d0;
 }
 
-/* EMPTY */
+/* SUCCESS */
 
-.empty{
-    background:#fff;
-    padding:70px 20px;
+.success{
     text-align:center;
-    border-radius:16px;
+    padding:55px 20px;
 }
 
-.empty-icon{
+.success-icon{
     font-size:60px;
     margin-bottom:15px;
 }
 
-.shop-btn{
+.success h2{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.success p{
+    color:#777;
+    line-height:1.6;
+}
+
+.success-btn{
     display:inline-block;
-    margin-top:20px;
+    margin-top:22px;
     padding:13px 22px;
-    background:#ff4d00;
-    color:white;
+    background:#ef3f3f;
+    color:#fff;
     text-decoration:none;
-    border-radius:9px;
+    border-radius:10px;
     font-weight:700;
 }
 
@@ -259,184 +273,474 @@ body{
 @media(max-width:800px){
 
     .header{
-        padding:0 20px;
+        padding:0 18px;
     }
 
-    .nav a:not(.cart-btn){
-        display:none;
+    .container{
+        padding:28px 15px 50px;
+    }
+
+    .title{
+        font-size:28px;
     }
 
     .checkout-layout{
         grid-template-columns:1fr;
     }
 
-    .page-title{
-        font-size:27px;
-    }
-
-    .two-col{
-        grid-template-columns:1fr;
-        gap:0;
-    }
-
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
-<!-- HEADER -->
-
 <header class="header">
 
-    <a href="home.html" class="logo">
-        Beatroot
+    <a href="../index.html" class="logo">
+        Beat<span>root</span>
     </a>
 
-    <nav class="nav">
-
-        <a href="home.html">
-            Home
-        </a>
-
-        <a href="restaurants.html">
-            Restaurants
-        </a>
-
-        <a href="my-orders.html">
-            My Orders
-        </a>
-
-        <a href="profile.html">
-            Profile
-        </a>
-
-        <a href="cart.html" class="cart-btn">
-            🛒 Cart (<span id="cartCount">0</span>)
-        </a>
-
-    </nav>
+    <a href="cart.html" class="back">
+        ← Back to Cart
+    </a>
 
 </header>
 
 
 <main class="container">
 
-    <h1 class="page-title">
+    <h1 class="title">
         Checkout
     </h1>
 
-    <div id="checkoutArea"></div>
+    <p class="subtitle">
+        Enter your delivery details and place your order.
+    </p>
+
+
+    <div id="message" class="message"></div>
+
+
+    <div id="checkoutArea">
+
+        <div class="checkout-layout">
+
+            <!-- CUSTOMER DETAILS -->
+
+            <div class="card">
+
+                <h2>
+                    Delivery Details
+                </h2>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customerName"
+                        placeholder="Enter your full name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="customerPhone"
+                        placeholder="Enter your phone number"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Delivery Address
+                    </label>
+
+                    <textarea
+                        id="deliveryAddress"
+                        placeholder="House name, place, landmark..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="card">
+
+                <h2>
+                    Your Order
+                </h2>
+
+                <div id="orderItems"></div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="subtotal">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery Fee
+                    </span>
+
+                    <strong id="deliveryFee">
+                        ₹40.00
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span id="grandTotal">
+                        ₹0.00
+                    </span>
+
+                </div>
+
+
+                <button
+                    id="placeOrderBtn"
+                    class="place-order"
+                    onclick="placeOrder()"
+                >
+                    Place Order
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </main>
 
 
 <script>
 
-let cart =
-JSON.parse(localStorage.getItem("beatrootCart")) || [];
+/* ==========================================
+   SUPABASE
+========================================== */
+
+const SUPABASE_URL =
+"https://jhihjnsxazmftdqlitgk.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
+const sb = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-/* CART COUNT */
+/* ==========================================
+   GLOBAL
+========================================== */
 
-function updateCartCount(){
+let currentUser = null;
 
-    let count = cart.reduce(
-        (sum,item)=>sum + Number(item.quantity || 1),
-        0
-    );
+let cart = [];
 
-    document.getElementById("cartCount").innerText = count;
+let subtotal = 0;
+
+let deliveryFee = 0;
+
+let grandTotal = 0;
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showError(text){
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = text;
+
+    box.className =
+        "message error";
+
+}
+
+function clearMessage(){
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = "";
+
+    box.className =
+        "message";
+
 }
 
 
-/* LOAD CHECKOUT */
+/* ==========================================
+   LOAD USER
+========================================== */
 
-function loadCheckout(){
+async function loadUser(){
 
-    updateCartCount();
+    const result =
+        await sb.auth.getUser();
 
-    const area =
-    document.getElementById("checkoutArea");
+    if(
+        result.error ||
+        !result.data.user
+    ){
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+    currentUser =
+        result.data.user;
+
+    return true;
+
+}
 
 
-    /* EMPTY CART */
+/* ==========================================
+   LOAD CART
+========================================== */
 
-    if(cart.length === 0){
+async function loadCart(){
 
-        area.innerHTML = `
+    const result =
+        await sb
+        .from("cart_items")
+        .select(`
+            id,
+            quantity,
+            menu_item_id,
+            menu_items (
+                id,
+                restaurant_id,
+                name,
+                description,
+                price,
+                image_url,
+                restaurants (
+                    id,
+                    name
+                )
+            )
+        `)
+        .eq(
+            "customer_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {ascending:true}
+        );
 
-            <div class="empty">
 
-                <div class="empty-icon">
-                    🛒
-                </div>
+    if(result.error){
 
-                <h2>
-                    Your cart is empty
-                </h2>
+        console.error(result.error);
 
-                <p>
-                    Please add some food before checkout.
-                </p>
+        showError(
+            "Cart load cheyyan kazhinjilla."
+        );
 
-                <a
-                    href="restaurants.html"
-                    class="shop-btn"
-                >
-                    Browse Restaurants
-                </a>
+        return false;
 
-            </div>
-
-        `;
-
-        return;
     }
 
 
-    /* CALCULATE TOTAL */
+    cart =
+        result.data || [];
 
-    let subtotal = 0;
 
-    let itemsHTML = "";
+    if(cart.length === 0){
+
+        showError(
+            "Your cart is empty."
+        );
+
+        setTimeout(()=>{
+
+            window.location.href =
+                "restaurants.html";
+
+        },1500);
+
+        return false;
+
+    }
+
+
+    calculateTotal();
+
+    renderItems();
+
+    return true;
+
+}
+
+
+/* ==========================================
+   CALCULATE
+========================================== */
+
+function calculateTotal(){
+
+    subtotal = 0;
 
 
     cart.forEach(item=>{
 
-        let price =
-        Number(item.price || 0);
+        const price =
+            Number(
+                item.menu_items?.price || 0
+            );
 
-        let quantity =
-        Number(item.quantity || 1);
+        const quantity =
+            Number(
+                item.quantity || 1
+            );
 
-        let total =
-        price * quantity;
+        subtotal +=
+            price * quantity;
 
-        subtotal += total;
+    });
 
 
-        itemsHTML += `
+    deliveryFee =
+        subtotal >= 500
+        ? 0
+        : 40;
 
-            <div class="summary-item">
 
-                <div class="summary-name">
+    grandTotal =
+        subtotal + deliveryFee;
 
-                    <strong>
-                        ${item.name || "Food Item"}
-                    </strong>
 
-                    <br>
+    document.getElementById(
+        "subtotal"
+    ).textContent =
+        "₹" + subtotal.toFixed(2);
 
-                    <small>
+
+    document.getElementById(
+        "deliveryFee"
+    ).textContent =
+        deliveryFee === 0
+        ? "FREE"
+        : "₹" + deliveryFee.toFixed(2);
+
+
+    document.getElementById(
+        "grandTotal"
+    ).textContent =
+        "₹" + grandTotal.toFixed(2);
+
+}
+
+
+/* ==========================================
+   RENDER ITEMS
+========================================== */
+
+function renderItems(){
+
+    const area =
+        document.getElementById(
+            "orderItems"
+        );
+
+
+    let html = "";
+
+
+    cart.forEach(item=>{
+
+        const food =
+            item.menu_items;
+
+        if(!food){
+            return;
+        }
+
+
+        const price =
+            Number(food.price || 0);
+
+        const quantity =
+            Number(item.quantity || 1);
+
+        const total =
+            price * quantity;
+
+
+        const image =
+            food.image_url ||
+            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80";
+
+
+        html += `
+
+            <div class="order-item">
+
+                <img
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(food.name)}"
+                >
+
+                <div class="order-info">
+
+                    <div class="order-name">
+                        ${escapeHTML(food.name)}
+                    </div>
+
+                    <div class="order-meta">
                         Qty: ${quantity}
-                    </small>
+                    </div>
 
                 </div>
 
-                <div class="summary-price">
+                <div class="order-price">
                     ₹${total.toFixed(2)}
                 </div>
 
@@ -447,526 +751,373 @@ function loadCheckout(){
     });
 
 
-    let delivery =
-    subtotal >= 500 ? 0 : 40;
+    area.innerHTML = html;
 
-    let grandTotal =
-    subtotal + delivery;
-
-
-    /* CHECKOUT UI */
-
-    area.innerHTML = `
-
-        <div class="checkout-layout">
-
-
-            <!-- CUSTOMER DETAILS -->
-
-            <div>
-
-
-                <div class="box">
-
-                    <h2>
-                        👤 Customer Details
-                    </h2>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Full Name *
-                        </label>
-
-                        <input
-                            type="text"
-                            id="customerName"
-                            placeholder="Enter your name"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="two-col">
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Mobile Number *
-                            </label>
-
-                            <input
-                                type="tel"
-                                id="customerPhone"
-                                placeholder="10 digit mobile number"
-                                maxlength="10"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Email
-                            </label>
-
-                            <input
-                                type="email"
-                                id="customerEmail"
-                                placeholder="example@email.com"
-                            >
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-                <!-- ADDRESS -->
-
-                <div class="box">
-
-                    <h2>
-                        📍 Delivery Address
-                    </h2>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            House / Building *
-                        </label>
-
-                        <input
-                            type="text"
-                            id="house"
-                            placeholder="House / Building name"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Street / Area *
-                        </label>
-
-                        <input
-                            type="text"
-                            id="street"
-                            placeholder="Street / Area"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="two-col">
-
-
-                        <div class="form-group">
-
-                            <label>
-                                City *
-                            </label>
-
-                            <input
-                                type="text"
-                                id="city"
-                                placeholder="City"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                PIN Code *
-                            </label>
-
-                            <input
-                                type="text"
-                                id="pincode"
-                                placeholder="PIN Code"
-                                maxlength="6"
-                                required
-                            >
-
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Delivery Instructions
-                        </label>
-
-                        <textarea
-                            id="instructions"
-                            placeholder="Any instructions for delivery?"
-                        ></textarea>
-
-                    </div>
-
-                </div>
-
-
-                <!-- PAYMENT -->
-
-                <div class="box">
-
-                    <h2>
-                        💳 Payment Method
-                    </h2>
-
-
-                    <label class="payment-option">
-
-                        <input
-                            type="radio"
-                            name="payment"
-                            value="COD"
-                            checked
-                        >
-
-                        <span>
-                            💵 Cash on Delivery
-                        </span>
-
-                    </label>
-
-
-                    <label class="payment-option">
-
-                        <input
-                            type="radio"
-                            name="payment"
-                            value="ONLINE"
-                        >
-
-                        <span>
-                            📱 Online Payment
-                        </span>
-
-                    </label>
-
-
-                </div>
-
-
-            </div>
-
-
-            <!-- ORDER SUMMARY -->
-
-            <div>
-
-
-                <div class="box">
-
-                    <h2>
-                        🧾 Order Summary
-                    </h2>
-
-
-                    ${itemsHTML}
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            Subtotal
-                        </span>
-
-                        <strong>
-                            ₹${subtotal.toFixed(2)}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            Delivery Fee
-                        </span>
-
-                        <strong>
-
-                            ${
-                                delivery === 0
-                                ? "FREE"
-                                : "₹" + delivery.toFixed(2)
-                            }
-
-                        </strong>
-
-                    </div>
-
-
-                    <div class="total-row">
-
-                        <span>
-                            Total
-                        </span>
-
-                        <span>
-                            ₹${grandTotal.toFixed(2)}
-                        </span>
-
-                    </div>
-
-
-                    <button
-                        class="place-order"
-                        onclick="placeOrder()"
-                    >
-                        Place Order
-                    </button>
-
-
-                    <a
-                        href="cart.html"
-                        class="back-cart"
-                    >
-                        ← Back to Cart
-                    </a>
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-    `;
 }
 
 
-/* PLACE ORDER */
+/* ==========================================
+   PLACE ORDER
+========================================== */
 
-function placeOrder(){
+async function placeOrder(){
+
+    clearMessage();
+
 
     const name =
-    document.getElementById("customerName").value.trim();
+        document
+        .getElementById("customerName")
+        .value
+        .trim();
+
 
     const phone =
-    document.getElementById("customerPhone").value.trim();
-
-    const email =
-    document.getElementById("customerEmail").value.trim();
-
-    const house =
-    document.getElementById("house").value.trim();
-
-    const street =
-    document.getElementById("street").value.trim();
-
-    const city =
-    document.getElementById("city").value.trim();
-
-    const pincode =
-    document.getElementById("pincode").value.trim();
-
-    const instructions =
-    document.getElementById("instructions").value.trim();
+        document
+        .getElementById("customerPhone")
+        .value
+        .trim();
 
 
-    const payment =
-    document.querySelector(
-        'input[name="payment"]:checked'
-    ).value;
+    const address =
+        document
+        .getElementById("deliveryAddress")
+        .value
+        .trim();
 
-
-    /* VALIDATION */
 
     if(!name){
-        alert("Please enter your name.");
-        return;
-    }
 
-
-    if(!/^[0-9]{10}$/.test(phone)){
-
-        alert(
-            "Please enter a valid 10 digit mobile number."
+        showError(
+            "Full name enter cheyyuka."
         );
 
         return;
+
     }
 
 
-    if(!house){
+    if(!phone){
 
-        alert(
-            "Please enter your house / building."
+        showError(
+            "Phone number enter cheyyuka."
         );
 
         return;
+
     }
 
 
-    if(!street){
+    if(!address){
 
-        alert(
-            "Please enter your street / area."
+        showError(
+            "Delivery address enter cheyyuka."
         );
 
         return;
+
     }
 
 
-    if(!city){
-
-        alert(
-            "Please enter your city."
+    const button =
+        document.getElementById(
+            "placeOrderBtn"
         );
 
-        return;
-    }
+
+    button.disabled = true;
+
+    button.textContent =
+        "Placing Order...";
 
 
-    if(!/^[0-9]{6}$/.test(pincode)){
+    try{
 
-        alert(
-            "Please enter a valid 6 digit PIN code."
+        /*
+        ======================================
+        STEP 1
+        CREATE ORDER
+        ======================================
+        */
+
+        /*
+        All cart items should belong
+        to the same restaurant.
+        */
+
+        const restaurantIds =
+            cart.map(
+                item =>
+                item.menu_items?.restaurant_id
+            );
+
+
+        const uniqueRestaurants =
+            [...new Set(restaurantIds)];
+
+
+        if(uniqueRestaurants.length !== 1){
+
+            throw new Error(
+                "Cart contains items from different restaurants. Please order from one restaurant at a time."
+            );
+
+        }
+
+
+        const restaurantId =
+            uniqueRestaurants[0];
+
+
+        const orderInsert =
+            await sb
+            .from("orders")
+            .insert({
+
+                customer_id:
+                    currentUser.id,
+
+                restaurant_id:
+                    restaurantId,
+
+                status:
+                    "confirmed",
+
+                customer_name:
+                    name,
+
+                customer_phone:
+                    phone,
+
+                delivery_address:
+                    address,
+
+                subtotal:
+                    subtotal,
+
+                delivery_fee:
+                    deliveryFee,
+
+                total:
+                    grandTotal
+
+            })
+            .select()
+            .single();
+
+
+        if(orderInsert.error){
+
+            throw orderInsert.error;
+
+        }
+
+
+        const order =
+            orderInsert.data;
+
+
+        /*
+        ======================================
+        STEP 2
+        CREATE ORDER ITEMS
+        ======================================
+        */
+
+
+        const orderItems =
+            cart.map(item=>{
+
+                const food =
+                    item.menu_items;
+
+                return {
+
+                    order_id:
+                        order.id,
+
+                    menu_item_id:
+                        food.id,
+
+                    item_name:
+                        food.name,
+
+                    quantity:
+                        Number(
+                            item.quantity || 1
+                        ),
+
+                    unit_price:
+                        Number(
+                            food.price || 0
+                        )
+
+                };
+
+            });
+
+
+        const itemInsert =
+            await sb
+            .from("order_items")
+            .insert(
+                orderItems
+            );
+
+
+        if(itemInsert.error){
+
+            /*
+            If order items fail,
+            remove the order.
+            */
+
+            await sb
+            .from("orders")
+            .delete()
+            .eq(
+                "id",
+                order.id
+            );
+
+            throw itemInsert.error;
+
+        }
+
+
+        /*
+        ======================================
+        STEP 3
+        CLEAR CART
+        ======================================
+        */
+
+
+        const clearCart =
+            await sb
+            .from("cart_items")
+            .delete()
+            .eq(
+                "customer_id",
+                currentUser.id
+            );
+
+
+        if(clearCart.error){
+
+            console.error(
+                "Cart clear error:",
+                clearCart.error
+            );
+
+        }
+
+
+        /*
+        ======================================
+        SUCCESS
+        ======================================
+        */
+
+        document.getElementById(
+            "checkoutArea"
+        ).innerHTML = `
+
+            <div class="card success">
+
+                <div class="success-icon">
+                    ✅
+                </div>
+
+                <h2>
+                    Order Placed Successfully!
+                </h2>
+
+                <p>
+                    Your order has been received
+                    successfully.
+                </p>
+
+                <p>
+                    Order ID:
+                    <strong>#${order.id}</strong>
+                </p>
+
+                <a
+                    href="my-orders.html"
+                    class="success-btn"
+                >
+                    View My Orders
+                </a>
+
+            </div>
+
+        `;
+
+
+    }catch(error){
+
+        console.error(
+            "Order Error:",
+            error
         );
 
-        return;
+
+        showError(
+            error.message ||
+            "Order place cheyyan kazhinjilla."
+        );
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "Place Order";
+
     }
-
-
-    /* TOTAL */
-
-    let subtotal = 0;
-
-
-    cart.forEach(item=>{
-
-        subtotal +=
-        Number(item.price || 0) *
-        Number(item.quantity || 1);
-
-    });
-
-
-    let delivery =
-    subtotal >= 500 ? 0 : 40;
-
-
-    let grandTotal =
-    subtotal + delivery;
-
-
-    /* ORDER ID */
-
-    let orderId =
-    "BR" +
-    Date.now().toString().slice(-8);
-
-
-    /* ORDER OBJECT */
-
-    let order = {
-
-        orderId: orderId,
-
-        date: new Date().toLocaleString(),
-
-        customer: {
-
-            name: name,
-
-            phone: phone,
-
-            email: email
-
-        },
-
-        address: {
-
-            house: house,
-
-            street: street,
-
-            city: city,
-
-            pincode: pincode,
-
-            instructions: instructions
-
-        },
-
-        paymentMethod: payment,
-
-        items: cart,
-
-        subtotal: subtotal,
-
-        deliveryFee: delivery,
-
-        total: grandTotal,
-
-        status: "Order Placed"
-
-    };
-
-
-    /* SAVE CURRENT ORDER */
-
-    localStorage.setItem(
-        "beatrootCurrentOrder",
-        JSON.stringify(order)
-    );
-
-
-    /* SAVE ORDER HISTORY */
-
-    let orders =
-    JSON.parse(
-        localStorage.getItem("beatrootOrders")
-    ) || [];
-
-
-    orders.unshift(order);
-
-
-    localStorage.setItem(
-        "beatrootOrders",
-        JSON.stringify(orders)
-    );
-
-
-    /* CLEAR CART */
-
-    localStorage.removeItem("beatrootCart");
-
-
-    /* GO TO CONFIRMATION */
-
-    window.location.href =
-    "order-confirmation.html";
 
 }
 
 
-loadCheckout();
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+async function start(){
+
+    const loggedIn =
+        await loadUser();
+
+    if(!loggedIn){
+        return;
+    }
+
+
+    await loadCart();
+
+}
+
+
+start();
 
 </script>
 
 </body>
+
 </html>
