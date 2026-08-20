@@ -7,340 +7,678 @@
 <title>Beatroot - Restaurants</title>
 
 <style>
+:root{
+    --red:#e63946;
+    --red-dark:#c92f3b;
+    --dark:#111827;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --bg:#f6f7fb;
+    --white:#ffffff;
+    --border:#e5e7eb;
+    --green:#16a34a;
+}
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    background:#f7f7f7;
-    color:#222;
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
 }
 
-/* HEADER */
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= HEADER ================= */
+
 .header{
-    height:70px;
-    background:#fff;
-    border-bottom:1px solid #eee;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    height:76px;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(0,0,0,.06);
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     padding:0 6%;
-    position:sticky;
-    top:0;
-    z-index:100;
 }
 
 .logo{
-    font-size:27px;
-    font-weight:800;
-    color:#e63946;
     text-decoration:none;
+    font-size:29px;
+    font-weight:900;
+    letter-spacing:-1.5px;
+    color:var(--red);
+}
+
+.logo span{
+    color:var(--dark);
 }
 
 .nav{
     display:flex;
     align-items:center;
-    gap:24px;
+    gap:10px;
 }
 
 .nav a{
     text-decoration:none;
-    color:#333;
-    font-size:15px;
-    font-weight:600;
+    color:#4b5563;
+    font-size:14px;
+    font-weight:700;
+    padding:11px 15px;
+    border-radius:12px;
+    transition:.2s;
 }
 
 .nav a:hover{
-    color:#e63946;
+    background:#fff1f2;
+    color:var(--red);
 }
 
 .cart-btn{
-    background:#e63946;
-    color:white !important;
-    padding:10px 17px;
-    border-radius:10px;
+    background:var(--red) !important;
+    color:#fff !important;
+    box-shadow:0 7px 18px rgba(230,57,70,.22);
 }
 
-/* HERO */
+.cart-btn:hover{
+    background:var(--red-dark) !important;
+    color:#fff !important;
+}
+
+/* ================= HERO ================= */
+
 .hero{
-    background:linear-gradient(135deg,#fff1f2,#fff);
-    padding:45px 6% 35px;
+    position:relative;
+    overflow:hidden;
+
+    padding:70px 6% 65px;
+
+    background:
+        radial-gradient(circle at 85% 20%,rgba(230,57,70,.13),transparent 30%),
+        radial-gradient(circle at 10% 80%,rgba(251,191,36,.10),transparent 28%),
+        linear-gradient(135deg,#fff 0%,#fff7f7 100%);
+}
+
+.hero-content{
+    max-width:1240px;
+    margin:auto;
+}
+
+.hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    background:#fff;
+    border:1px solid #ffd4d8;
+    color:var(--red);
+
+    padding:8px 13px;
+    border-radius:30px;
+
+    font-size:13px;
+    font-weight:800;
+
+    box-shadow:0 6px 20px rgba(0,0,0,.04);
 }
 
 .hero h1{
-    font-size:38px;
-    margin-bottom:10px;
+    margin-top:18px;
+
+    max-width:700px;
+
+    font-size:clamp(38px,5vw,62px);
+    line-height:1.02;
+    letter-spacing:-2.5px;
+    color:var(--dark);
+}
+
+.hero h1 span{
+    color:var(--red);
 }
 
 .hero p{
-    color:#666;
-    font-size:16px;
-    margin-bottom:25px;
+    max-width:650px;
+
+    margin-top:18px;
+
+    color:var(--muted);
+    font-size:17px;
+    line-height:1.7;
 }
 
-.search-box{
-    max-width:650px;
+/* SEARCH */
+
+.search-wrapper{
+    max-width:720px;
+    margin-top:30px;
+
     background:#fff;
-    border:1px solid #ddd;
-    border-radius:14px;
+    border:1px solid #e6e7eb;
+
+    border-radius:18px;
+
     display:flex;
     align-items:center;
-    padding:0 18px;
-    box-shadow:0 4px 15px rgba(0,0,0,.05);
+
+    padding:7px;
+
+    box-shadow:
+        0 14px 40px rgba(17,24,39,.08);
 }
 
-.search-box span{
-    font-size:20px;
-    margin-right:10px;
+.search-icon{
+    width:50px;
+    height:50px;
+
+    display:grid;
+    place-items:center;
+
+    font-size:21px;
 }
 
-.search-box input{
-    width:100%;
+.search-wrapper input{
+    flex:1;
+
     border:0;
     outline:0;
-    padding:16px 5px;
+
     font-size:15px;
+    color:var(--dark);
+
+    padding:0 10px;
 }
 
-/* CATEGORY */
+.search-wrapper input::placeholder{
+    color:#9ca3af;
+}
+
+.search-button{
+    border:0;
+
+    background:var(--dark);
+    color:#fff;
+
+    padding:14px 21px;
+
+    border-radius:13px;
+
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.search-button:hover{
+    background:var(--red);
+}
+
+/* ================= CATEGORY ================= */
+
 .category-section{
-    padding:25px 6% 5px;
+    padding:24px 6% 5px;
+
+    background:var(--bg);
+}
+
+.category-inner{
+    max-width:1240px;
+    margin:auto;
+}
+
+.category-title{
+    font-size:13px;
+    color:#6b7280;
+    font-weight:800;
+    margin-bottom:12px;
 }
 
 .categories{
     display:flex;
-    gap:12px;
+    gap:10px;
+
     overflow-x:auto;
+
     padding-bottom:10px;
+
+    scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{
+    display:none;
 }
 
 .category{
-    border:1px solid #ddd;
-    background:white;
-    padding:10px 18px;
-    border-radius:25px;
-    cursor:pointer;
+    border:1px solid var(--border);
+    background:#fff;
+
+    color:#4b5563;
+
+    padding:11px 17px;
+
+    border-radius:30px;
+
     white-space:nowrap;
-    font-weight:600;
+
+    font-size:13px;
+    font-weight:800;
+
+    transition:.2s;
 }
 
-.category:hover,
+.category:hover{
+    border-color:#ffb8be;
+    color:var(--red);
+}
+
 .category.active{
-    background:#e63946;
+    background:var(--red);
     color:#fff;
-    border-color:#e63946;
+    border-color:var(--red);
+
+    box-shadow:0 6px 16px rgba(230,57,70,.2);
 }
 
-/* RESTAURANTS */
+/* ================= MAIN ================= */
+
 .container{
-    padding:25px 6% 60px;
+    max-width:1240px;
+    margin:auto;
+
+    padding:38px 6% 70px;
 }
 
 .section-top{
     display:flex;
+    align-items:end;
     justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+
+    margin-bottom:24px;
 }
 
 .section-top h2{
-    font-size:25px;
+    font-size:28px;
+    letter-spacing:-.8px;
+}
+
+.section-top p{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:5px;
 }
 
 .result-count{
-    color:#777;
-    font-size:14px;
+    color:#6b7280;
+    font-size:13px;
+    font-weight:700;
 }
+
+/* ================= GRID ================= */
 
 .restaurant-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,minmax(0,1fr));
+
     gap:22px;
 }
 
-/* CARD */
+/* ================= CARD ================= */
+
 .card{
     background:#fff;
-    border-radius:18px;
+
+    border:1px solid rgba(0,0,0,.05);
+
+    border-radius:20px;
+
     overflow:hidden;
-    box-shadow:0 3px 15px rgba(0,0,0,.07);
-    transition:.25s;
+
+    box-shadow:
+        0 8px 25px rgba(17,24,39,.055);
+
+    transition:
+        transform .25s,
+        box-shadow .25s;
 }
 
 .card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 8px 25px rgba(0,0,0,.12);
+    transform:translateY(-6px);
+
+    box-shadow:
+        0 18px 45px rgba(17,24,39,.11);
 }
 
 .image-box{
-    height:190px;
+    height:220px;
+
     position:relative;
+
     overflow:hidden;
+
+    background:#eee;
 }
 
 .image-box img{
     width:100%;
     height:100%;
+
     object-fit:cover;
-    transition:.3s;
+
+    transition:.45s;
 }
 
 .card:hover .image-box img{
-    transform:scale(1.05);
+    transform:scale(1.07);
 }
+
+.image-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.18),
+            transparent 45%,
+            rgba(0,0,0,.28)
+        );
+}
+
+/* OFFER */
 
 .offer{
     position:absolute;
-    left:12px;
-    top:12px;
-    background:#e63946;
+
+    left:13px;
+    top:13px;
+
+    background:var(--red);
     color:#fff;
+
     padding:7px 10px;
-    border-radius:8px;
-    font-size:12px;
-    font-weight:bold;
+
+    border-radius:9px;
+
+    font-size:11px;
+    font-weight:900;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.14);
 }
+
+/* FAVORITE */
 
 .favorite{
     position:absolute;
-    right:12px;
-    top:12px;
-    width:36px;
-    height:36px;
-    border-radius:50%;
+
+    right:13px;
+    top:13px;
+
+    width:39px;
+    height:39px;
+
     border:0;
-    background:#fff;
-    cursor:pointer;
-    font-size:19px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.95);
+
+    display:grid;
+    place-items:center;
+
+    font-size:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+
+    transition:.2s;
+}
+
+.favorite:hover{
+    transform:scale(1.08);
 }
 
 .favorite.active{
-    color:#e63946;
+    color:var(--red);
 }
 
+/* CARD CONTENT */
+
 .card-content{
-    padding:17px;
+    padding:18px;
 }
 
 .card-title{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+
     gap:10px;
 }
 
 .card-title h3{
     font-size:19px;
+    letter-spacing:-.3px;
 }
 
 .rating{
-    background:#198754;
-    color:#fff;
-    padding:5px 7px;
-    border-radius:6px;
-    font-size:12px;
-    font-weight:bold;
+    background:#ecfdf3;
+    color:#15803d;
+
+    padding:6px 8px;
+
+    border-radius:8px;
+
+    font-size:11px;
+    font-weight:900;
+
+    white-space:nowrap;
 }
 
 .cuisine{
     color:#777;
-    font-size:14px;
-    margin:9px 0;
+    font-size:13px;
+
+    margin:8px 0 14px;
 }
 
 .details{
     display:flex;
-    gap:15px;
-    color:#666;
+    gap:16px;
+
+    color:#6b7280;
+
+    font-size:12px;
+    font-weight:700;
+
+    padding-bottom:15px;
+
+    border-bottom:1px solid #f0f0f0;
+}
+
+.card-bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    padding-top:15px;
+}
+
+.price{
+    color:#374151;
     font-size:13px;
-    margin-bottom:15px;
+    font-weight:800;
 }
 
 .view-btn{
-    width:100%;
     border:0;
-    background:#111;
+
+    background:var(--dark);
     color:#fff;
-    padding:12px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:bold;
-    font-size:14px;
+
+    padding:11px 16px;
+
+    border-radius:11px;
+
+    font-size:12px;
+    font-weight:800;
+
+    transition:.2s;
 }
 
 .view-btn:hover{
-    background:#e63946;
+    background:var(--red);
 }
 
-/* EMPTY */
+/* ================= EMPTY ================= */
+
 .empty{
     display:none;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
     text-align:center;
-    padding:60px 20px;
+
+    padding:70px 20px;
+
     color:#777;
 }
 
-.empty h3{
-    margin-bottom:8px;
-    color:#333;
+.empty-icon{
+    font-size:45px;
+    margin-bottom:15px;
 }
 
-/* FOOTER */
+.empty h3{
+    color:#222;
+    margin-bottom:8px;
+}
+
+/* ================= FOOTER ================= */
+
 .footer{
-    background:#111;
+    background:#101318;
+
     color:#fff;
-    padding:35px 6%;
+
+    padding:45px 6%;
+
     text-align:center;
 }
 
 .footer-logo{
-    font-size:24px;
-    font-weight:bold;
-    color:#e63946;
-    margin-bottom:10px;
+    font-size:27px;
+    font-weight:900;
+
+    color:var(--red);
+
+    margin-bottom:8px;
 }
 
 .footer p{
-    color:#aaa;
-    font-size:14px;
+    color:#9ca3af;
+    font-size:13px;
 }
 
-/* MOBILE */
-@media(max-width:900px){
+/* ================= MOBILE ================= */
+
+@media(max-width:1000px){
+
     .restaurant-grid{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
     }
+
 }
 
-@media(max-width:650px){
+@media(max-width:700px){
 
     .header{
+        height:68px;
         padding:0 4%;
     }
 
+    .logo{
+        font-size:25px;
+    }
+
     .nav{
-        gap:10px;
+        gap:4px;
     }
 
     .nav a:not(.cart-btn){
         display:none;
     }
 
+    .cart-btn{
+        padding:10px 13px !important;
+    }
+
     .hero{
-        padding:35px 4% 25px;
+        padding:48px 4% 45px;
     }
 
     .hero h1{
-        font-size:30px;
+        letter-spacing:-1.7px;
     }
 
-    .category-section,
+    .hero p{
+        font-size:15px;
+    }
+
+    .search-wrapper{
+        border-radius:15px;
+    }
+
+    .search-button{
+        display:none;
+    }
+
+    .category-section{
+        padding-left:4%;
+        padding-right:4%;
+    }
+
     .container{
         padding-left:4%;
         padding-right:4%;
+        padding-top:30px;
+    }
+
+    .section-top{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:7px;
+    }
+
+    .section-top h2{
+        font-size:24px;
     }
 
     .restaurant-grid{
@@ -348,139 +686,245 @@ body{
     }
 
     .image-box{
-        height:210px;
+        height:220px;
     }
+
+}
+
+@media(max-width:420px){
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .card-title h3{
+        font-size:17px;
+    }
+
+    .image-box{
+        height:205px;
+    }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
+
 <header class="header">
 
-    <a href="home.html" class="logo">
-        Beatroot
+    <a href="../index.html" class="logo">
+        Beat<span>root</span>
     </a>
 
     <nav class="nav">
-        <a href="home.html">Home</a>
-        <a href="my-orders.html">My Orders</a>
-        <a href="profile.html">Profile</a>
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
 
         <a href="cart.html" class="cart-btn">
-            🛒 Cart <span id="cartCount">0</span>
+            🛒 Cart
+            <span id="cartCount">0</span>
         </a>
+
     </nav>
 
 </header>
 
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
+
 <section class="hero">
 
-    <h1>Discover Restaurants 🍔</h1>
+    <div class="hero-content">
 
-    <p>
-        Order delicious food from your favourite restaurants.
-    </p>
+        <span class="hero-badge">
+            🍽️ Fresh food • Fast delivery
+        </span>
 
-    <div class="search-box">
-        <span>🔍</span>
+        <h1>
+            Discover your
+            <span>next favourite</span>
+            restaurant.
+        </h1>
 
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search restaurants or food..."
-            onkeyup="filterRestaurants()"
-        >
+        <p>
+            Explore delicious food from the best restaurants
+            and order your favourites with just a few clicks.
+        </p>
+
+        <div class="search-wrapper">
+
+            <div class="search-icon">
+                🔍
+            </div>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search restaurants or food..."
+                onkeyup="filterRestaurants()"
+            >
+
+            <button
+                class="search-button"
+                onclick="filterRestaurants()"
+            >
+                Search
+            </button>
+
+        </div>
+
     </div>
 
 </section>
 
 
-<!-- CATEGORIES -->
+<!-- ================= CATEGORY ================= -->
+
 <section class="category-section">
 
-    <div class="categories">
+    <div class="category-inner">
 
-        <button class="category active"
-                onclick="selectCategory('All',this)">
-            All
-        </button>
+        <div class="category-title">
+            EXPLORE BY CATEGORY
+        </div>
 
-        <button class="category"
-                onclick="selectCategory('Biryani',this)">
-            🍛 Biryani
-        </button>
+        <div class="categories">
 
-        <button class="category"
-                onclick="selectCategory('Pizza',this)">
-            🍕 Pizza
-        </button>
+            <button
+                class="category active"
+                onclick="selectCategory('All',this)"
+            >
+                🍽️ All
+            </button>
 
-        <button class="category"
-                onclick="selectCategory('Burger',this)">
-            🍔 Burger
-        </button>
+            <button
+                class="category"
+                onclick="selectCategory('Biryani',this)"
+            >
+                🍛 Biryani
+            </button>
 
-        <button class="category"
-                onclick="selectCategory('Chinese',this)">
-            🥡 Chinese
-        </button>
+            <button
+                class="category"
+                onclick="selectCategory('Pizza',this)"
+            >
+                🍕 Pizza
+            </button>
 
-        <button class="category"
-                onclick="selectCategory('Indian',this)">
-            🍽️ Indian
-        </button>
+            <button
+                class="category"
+                onclick="selectCategory('Burger',this)"
+            >
+                🍔 Burger
+            </button>
 
-        <button class="category"
-                onclick="selectCategory('Desserts',this)">
-            🍰 Desserts
-        </button>
+            <button
+                class="category"
+                onclick="selectCategory('Chinese',this)"
+            >
+                🥡 Chinese
+            </button>
 
-        <button class="category"
-                onclick="selectCategory('Cafe',this)">
-            ☕ Cafe
-        </button>
+            <button
+                class="category"
+                onclick="selectCategory('Indian',this)"
+            >
+                🍽️ Indian
+            </button>
+
+            <button
+                class="category"
+                onclick="selectCategory('Desserts',this)"
+            >
+                🍰 Desserts
+            </button>
+
+            <button
+                class="category"
+                onclick="selectCategory('Cafe',this)"
+            >
+                ☕ Cafe
+            </button>
+
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- RESTAURANTS -->
+<!-- ================= RESTAURANTS ================= -->
+
 <main class="container">
 
     <div class="section-top">
 
-        <h2>Popular Restaurants</h2>
+        <div>
 
-        <span class="result-count" id="resultCount">
+            <h2>
+                Popular Restaurants
+            </h2>
+
+            <p>
+                Handpicked places for your next meal
+            </p>
+
+        </div>
+
+        <span
+            class="result-count"
+            id="resultCount"
+        >
             6 restaurants
         </span>
 
     </div>
 
 
-    <div class="restaurant-grid" id="restaurantGrid">
+    <div
+        class="restaurant-grid"
+        id="restaurantGrid"
+    >
 
 
         <!-- RESTAURANT 1 -->
-        <div class="card restaurant-card"
-             data-category="Biryani"
-             data-search="Malabar Kitchen biryani indian">
+
+        <div
+            class="card restaurant-card"
+            data-category="Biryani"
+            data-search="Malabar Kitchen biryani indian kerala"
+        >
 
             <div class="image-box">
 
-                <img src="https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=800&q=80">
+                <img
+                    src="https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=900&q=85"
+                    alt="Malabar Kitchen"
+                >
+
+                <div class="image-overlay"></div>
 
                 <span class="offer">
                     20% OFF
                 </span>
 
-                <button class="favorite"
-                        onclick="toggleFavorite(this)">
+                <button
+                    class="favorite"
+                    onclick="toggleFavorite(this)"
+                >
                     ♡
                 </button>
 
@@ -490,7 +934,9 @@ body{
 
                 <div class="card-title">
 
-                    <h3>Malabar Kitchen</h3>
+                    <h3>
+                        Malabar Kitchen
+                    </h3>
 
                     <span class="rating">
                         ★ 4.7
@@ -504,13 +950,26 @@ body{
 
                 <div class="details">
                     <span>🕐 25-35 min</span>
-                    <span>₹₹</span>
+                    <span>🚚 Delivery</span>
                 </div>
 
-                <button class="view-btn"
-                        onclick="openRestaurant('Malabar Kitchen','Biryani • Indian')">
-                    View Menu
-                </button>
+                <div class="card-bottom">
+
+                    <span class="price">
+                        ₹₹ • Popular
+                    </span>
+
+                    <button
+                        class="view-btn"
+                        onclick="openRestaurant(
+                            'Malabar Kitchen',
+                            'Biryani • Indian'
+                        )"
+                    >
+                        View Menu →
+                    </button>
+
+                </div>
 
             </div>
 
@@ -518,20 +977,30 @@ body{
 
 
         <!-- RESTAURANT 2 -->
-        <div class="card restaurant-card"
-             data-category="Pizza"
-             data-search="Pizza Palace pizza italian">
+
+        <div
+            class="card restaurant-card"
+            data-category="Pizza"
+            data-search="Pizza Palace pizza italian fast food"
+        >
 
             <div class="image-box">
 
-                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80">
+                <img
+                    src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85"
+                    alt="Pizza Palace"
+                >
+
+                <div class="image-overlay"></div>
 
                 <span class="offer">
                     BUY 1 GET 1
                 </span>
 
-                <button class="favorite"
-                        onclick="toggleFavorite(this)">
+                <button
+                    class="favorite"
+                    onclick="toggleFavorite(this)"
+                >
                     ♡
                 </button>
 
@@ -541,7 +1010,9 @@ body{
 
                 <div class="card-title">
 
-                    <h3>Pizza Palace</h3>
+                    <h3>
+                        Pizza Palace
+                    </h3>
 
                     <span class="rating">
                         ★ 4.5
@@ -555,13 +1026,26 @@ body{
 
                 <div class="details">
                     <span>🕐 20-30 min</span>
-                    <span>₹₹</span>
+                    <span>🚚 Delivery</span>
                 </div>
 
-                <button class="view-btn"
-                        onclick="openRestaurant('Pizza Palace','Pizza • Italian')">
-                    View Menu
-                </button>
+                <div class="card-bottom">
+
+                    <span class="price">
+                        ₹₹ • Trending
+                    </span>
+
+                    <button
+                        class="view-btn"
+                        onclick="openRestaurant(
+                            'Pizza Palace',
+                            'Pizza • Italian'
+                        )"
+                    >
+                        View Menu →
+                    </button>
+
+                </div>
 
             </div>
 
@@ -569,20 +1053,30 @@ body{
 
 
         <!-- RESTAURANT 3 -->
-        <div class="card restaurant-card"
-             data-category="Burger"
-             data-search="Burger Hub burger fast food">
+
+        <div
+            class="card restaurant-card"
+            data-category="Burger"
+            data-search="Burger Hub burger fast food snacks"
+        >
 
             <div class="image-box">
 
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80">
+                <img
+                    src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85"
+                    alt="Burger Hub"
+                >
+
+                <div class="image-overlay"></div>
 
                 <span class="offer">
                     15% OFF
                 </span>
 
-                <button class="favorite"
-                        onclick="toggleFavorite(this)">
+                <button
+                    class="favorite"
+                    onclick="toggleFavorite(this)"
+                >
                     ♡
                 </button>
 
@@ -592,7 +1086,9 @@ body{
 
                 <div class="card-title">
 
-                    <h3>Burger Hub</h3>
+                    <h3>
+                        Burger Hub
+                    </h3>
 
                     <span class="rating">
                         ★ 4.6
@@ -606,13 +1102,26 @@ body{
 
                 <div class="details">
                     <span>🕐 15-25 min</span>
-                    <span>₹</span>
+                    <span>🚚 Delivery</span>
                 </div>
 
-                <button class="view-btn"
-                        onclick="openRestaurant('Burger Hub','Burger • Fast Food')">
-                    View Menu
-                </button>
+                <div class="card-bottom">
+
+                    <span class="price">
+                        ₹ • Budget
+                    </span>
+
+                    <button
+                        class="view-btn"
+                        onclick="openRestaurant(
+                            'Burger Hub',
+                            'Burger • Fast Food'
+                        )"
+                    >
+                        View Menu →
+                    </button>
+
+                </div>
 
             </div>
 
@@ -620,20 +1129,30 @@ body{
 
 
         <!-- RESTAURANT 4 -->
-        <div class="card restaurant-card"
-             data-category="Chinese"
-             data-search="Dragon Wok chinese noodles">
+
+        <div
+            class="card restaurant-card"
+            data-category="Chinese"
+            data-search="Dragon Wok chinese noodles asian"
+        >
 
             <div class="image-box">
 
-                <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80">
+                <img
+                    src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=900&q=85"
+                    alt="Dragon Wok"
+                >
+
+                <div class="image-overlay"></div>
 
                 <span class="offer">
                     10% OFF
                 </span>
 
-                <button class="favorite"
-                        onclick="toggleFavorite(this)">
+                <button
+                    class="favorite"
+                    onclick="toggleFavorite(this)"
+                >
                     ♡
                 </button>
 
@@ -643,7 +1162,9 @@ body{
 
                 <div class="card-title">
 
-                    <h3>Dragon Wok</h3>
+                    <h3>
+                        Dragon Wok
+                    </h3>
 
                     <span class="rating">
                         ★ 4.4
@@ -657,13 +1178,26 @@ body{
 
                 <div class="details">
                     <span>🕐 25-35 min</span>
-                    <span>₹₹</span>
+                    <span>🚚 Delivery</span>
                 </div>
 
-                <button class="view-btn"
-                        onclick="openRestaurant('Dragon Wok','Chinese • Asian')">
-                    View Menu
-                </button>
+                <div class="card-bottom">
+
+                    <span class="price">
+                        ₹₹ • Popular
+                    </span>
+
+                    <button
+                        class="view-btn"
+                        onclick="openRestaurant(
+                            'Dragon Wok',
+                            'Chinese • Asian'
+                        )"
+                    >
+                        View Menu →
+                    </button>
+
+                </div>
 
             </div>
 
@@ -671,20 +1205,30 @@ body{
 
 
         <!-- RESTAURANT 5 -->
-        <div class="card restaurant-card"
-             data-category="Indian"
-             data-search="Spice Garden indian meals">
+
+        <div
+            class="card restaurant-card"
+            data-category="Indian"
+            data-search="Spice Garden indian meals kerala"
+        >
 
             <div class="image-box">
 
-                <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80">
+                <img
+                    src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=85"
+                    alt="Spice Garden"
+                >
+
+                <div class="image-overlay"></div>
 
                 <span class="offer">
                     25% OFF
                 </span>
 
-                <button class="favorite"
-                        onclick="toggleFavorite(this)">
+                <button
+                    class="favorite"
+                    onclick="toggleFavorite(this)"
+                >
                     ♡
                 </button>
 
@@ -694,7 +1238,9 @@ body{
 
                 <div class="card-title">
 
-                    <h3>Spice Garden</h3>
+                    <h3>
+                        Spice Garden
+                    </h3>
 
                     <span class="rating">
                         ★ 4.8
@@ -708,13 +1254,26 @@ body{
 
                 <div class="details">
                     <span>🕐 30-40 min</span>
-                    <span>₹₹</span>
+                    <span>🚚 Delivery</span>
                 </div>
 
-                <button class="view-btn"
-                        onclick="openRestaurant('Spice Garden','Indian • Kerala')">
-                    View Menu
-                </button>
+                <div class="card-bottom">
+
+                    <span class="price">
+                        ₹₹ • Top Rated
+                    </span>
+
+                    <button
+                        class="view-btn"
+                        onclick="openRestaurant(
+                            'Spice Garden',
+                            'Indian • Kerala'
+                        )"
+                    >
+                        View Menu →
+                    </button>
+
+                </div>
 
             </div>
 
@@ -722,20 +1281,30 @@ body{
 
 
         <!-- RESTAURANT 6 -->
-        <div class="card restaurant-card"
-             data-category="Desserts"
-             data-search="Sweet Treats desserts cake">
+
+        <div
+            class="card restaurant-card"
+            data-category="Desserts"
+            data-search="Sweet Treats desserts cake ice cream"
+        >
 
             <div class="image-box">
 
-                <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80">
+                <img
+                    src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=85"
+                    alt="Sweet Treats"
+                >
+
+                <div class="image-overlay"></div>
 
                 <span class="offer">
                     10% OFF
                 </span>
 
-                <button class="favorite"
-                        onclick="toggleFavorite(this)">
+                <button
+                    class="favorite"
+                    onclick="toggleFavorite(this)"
+                >
                     ♡
                 </button>
 
@@ -745,7 +1314,9 @@ body{
 
                 <div class="card-title">
 
-                    <h3>Sweet Treats</h3>
+                    <h3>
+                        Sweet Treats
+                    </h3>
 
                     <span class="rating">
                         ★ 4.7
@@ -759,13 +1330,26 @@ body{
 
                 <div class="details">
                     <span>🕐 15-25 min</span>
-                    <span>₹</span>
+                    <span>🚚 Delivery</span>
                 </div>
 
-                <button class="view-btn"
-                        onclick="openRestaurant('Sweet Treats','Desserts • Cakes')">
-                    View Menu
-                </button>
+                <div class="card-bottom">
+
+                    <span class="price">
+                        ₹ • Sweet
+                    </span>
+
+                    <button
+                        class="view-btn"
+                        onclick="openRestaurant(
+                            'Sweet Treats',
+                            'Desserts • Cakes'
+                        )"
+                    >
+                        View Menu →
+                    </button>
+
+                </div>
 
             </div>
 
@@ -776,12 +1360,22 @@ body{
 
 
     <!-- EMPTY -->
-    <div class="empty" id="emptyMessage">
 
-        <h3>No restaurants found</h3>
+    <div
+        class="empty"
+        id="emptyMessage"
+    >
+
+        <div class="empty-icon">
+            🔍
+        </div>
+
+        <h3>
+            No restaurants found
+        </h3>
 
         <p>
-            Try searching for another restaurant or category.
+            Try another restaurant, food or category.
         </p>
 
     </div>
@@ -789,7 +1383,8 @@ body{
 </main>
 
 
-<!-- FOOTER -->
+<!-- ================= FOOTER ================= -->
+
 <footer class="footer">
 
     <div class="footer-logo">
@@ -809,46 +1404,93 @@ body{
 
 <script>
 
-/* CART COUNT */
+/* =================================================
+   CART COUNT
+================================================= */
+
 function updateCartCount(){
 
-    let cart = JSON.parse(
-        localStorage.getItem("beatrootCart")
-    ) || [];
+    let cart =
+        JSON.parse(
+            localStorage.getItem("beatrootCart")
+        ) || [];
 
     let count = 0;
 
     cart.forEach(item => {
-        count += Number(item.quantity || 1);
+
+        count += Number(
+            item.quantity || 1
+        );
+
     });
 
-    document.getElementById("cartCount").innerText = count;
+    const cartCount =
+        document.getElementById("cartCount");
+
+    if(cartCount){
+
+        cartCount.innerText = count;
+
+    }
+
 }
 
 updateCartCount();
 
 
-/* SEARCH */
-function filterRestaurants(){
+/* =================================================
+   SEARCH + CATEGORY
+================================================= */
 
-    let search =
-        document.getElementById("searchInput")
-        .value
+let selectedCategory = "All";
+
+
+function applyFilters(){
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const search =
+        searchInput.value
+        .trim()
         .toLowerCase();
 
-    let cards =
-        document.querySelectorAll(".restaurant-card");
+    const cards =
+        document.querySelectorAll(
+            ".restaurant-card"
+        );
 
     let visible = 0;
 
+
     cards.forEach(card => {
 
-        let text =
-            card.dataset.search.toLowerCase();
+        const category =
+            card.dataset.category;
 
-        if(text.includes(search)){
+        const text =
+            card.dataset.search
+            .toLowerCase();
 
-            card.style.display = "block";
+
+        const categoryMatch =
+            selectedCategory === "All" ||
+            category === selectedCategory;
+
+
+        const searchMatch =
+            !search ||
+            text.includes(search);
+
+
+        if(
+            categoryMatch &&
+            searchMatch
+        ){
+
+            card.style.display = "";
+
             visible++;
 
         }else{
@@ -859,61 +1501,80 @@ function filterRestaurants(){
 
     });
 
-    document.getElementById("resultCount").innerText =
-        visible + " restaurants";
 
-    document.getElementById("emptyMessage").style.display =
-        visible === 0 ? "block" : "none";
+    document.getElementById(
+        "resultCount"
+    ).innerText =
+        visible +
+        (visible === 1
+            ? " restaurant"
+            : " restaurants");
+
+
+    document.getElementById(
+        "emptyMessage"
+    ).style.display =
+        visible === 0
+            ? "block"
+            : "none";
+
 }
 
 
-/* CATEGORY */
-function selectCategory(category, button){
+function filterRestaurants(){
+
+    applyFilters();
+
+}
+
+
+/* =================================================
+   CATEGORY
+================================================= */
+
+function selectCategory(
+    category,
+    button
+){
+
+    selectedCategory = category;
+
 
     document
         .querySelectorAll(".category")
-        .forEach(btn => btn.classList.remove("active"));
+        .forEach(btn => {
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
 
     button.classList.add("active");
 
-    let cards =
-        document.querySelectorAll(".restaurant-card");
 
-    let visible = 0;
-
-    cards.forEach(card => {
-
-        if(
-            category === "All" ||
-            card.dataset.category === category
-        ){
-
-            card.style.display = "block";
-            visible++;
-
-        }else{
-
-            card.style.display = "none";
-
-        }
-
-    });
-
-    document.getElementById("resultCount").innerText =
-        visible + " restaurants";
-
-    document.getElementById("emptyMessage").style.display =
-        visible === 0 ? "block" : "none";
+    applyFilters();
 
 }
 
 
-/* FAVORITE */
+/* =================================================
+   FAVORITE
+================================================= */
+
 function toggleFavorite(button){
 
-    button.classList.toggle("active");
+    button.classList.toggle(
+        "active"
+    );
 
-    if(button.classList.contains("active")){
+
+    if(
+        button.classList.contains(
+            "active"
+        )
+    ){
 
         button.innerText = "♥";
 
@@ -926,18 +1587,30 @@ function toggleFavorite(button){
 }
 
 
-/* OPEN RESTAURANT */
-function openRestaurant(name, category){
+/* =================================================
+   OPEN RESTAURANT
+================================================= */
+
+function openRestaurant(
+    name,
+    category
+){
 
     localStorage.setItem(
         "selectedRestaurant",
         JSON.stringify({
+
             name:name,
+
             category:category
+
         })
     );
 
-    window.location.href = "restaurant.html";
+
+    window.location.href =
+        "restaurant.html";
+
 }
 
 </script>
