@@ -33,307 +33,162 @@ body{
         #f6f7f9;
 }
 
-
-/* MAIN */
-
 .login-page{
-
     min-height:100vh;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     padding:25px;
-
 }
-
-
-/* CONTAINER */
 
 .login-container{
-
     width:100%;
-
     max-width:430px;
-
 }
 
-
-/* LOGO */
-
 .logo{
-
     text-align:center;
-
     font-size:42px;
-
     font-weight:900;
-
     letter-spacing:-2px;
-
     color:#e53935;
-
     margin-bottom:8px;
-
 }
 
 .logo span{
-
     color:#171717;
-
 }
 
 .welcome{
-
     text-align:center;
-
     color:#777;
-
     font-size:15px;
-
     margin:0 0 28px;
-
 }
-
-
-/* CARD */
 
 .login-card{
-
     background:#ffffff;
-
     border-radius:24px;
-
     padding:32px;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.10);
-
+    box-shadow:0 20px 60px rgba(0,0,0,.10);
     border:1px solid #eeeeee;
-
 }
 
-
-/* TITLE */
-
 .login-card h1{
-
     margin:0;
-
     font-size:27px;
-
     color:#171717;
-
 }
 
 .subtitle{
-
     color:#777;
-
     font-size:14px;
-
     margin:9px 0 25px;
-
 }
 
-
-/* INPUT */
-
 .input-group{
-
     margin-bottom:16px;
-
 }
 
 .input-group label{
-
     display:block;
-
     font-size:13px;
-
     font-weight:700;
-
     margin-bottom:7px;
-
     color:#333;
-
 }
 
 .input-group input{
-
     width:100%;
-
     height:50px;
-
     border:1px solid #dddddd;
-
     border-radius:12px;
-
     padding:0 15px;
-
     font-size:15px;
-
     outline:none;
-
     transition:.2s;
-
     background:#fafafa;
-
 }
 
 .input-group input:focus{
-
     border-color:#e53935;
-
     background:#fff;
-
-    box-shadow:
-        0 0 0 3px rgba(229,57,53,.10);
-
+    box-shadow:0 0 0 3px rgba(229,57,53,.10);
 }
 
-
-/* LOGIN BUTTON */
-
 .login-button{
-
     width:100%;
-
     height:52px;
-
     border:0;
-
     border-radius:12px;
-
     background:#e53935;
-
     color:#fff;
-
     font-size:15px;
-
     font-weight:800;
-
     cursor:pointer;
-
     transition:.2s;
-
     margin-top:5px;
-
 }
 
 .login-button:hover{
-
     background:#d92f2b;
-
     transform:translateY(-1px);
-
 }
 
 .login-button:disabled{
-
     opacity:.65;
-
     cursor:not-allowed;
-
     transform:none;
-
 }
-
-
-/* CREATE ACCOUNT */
 
 .create-account{
-
     text-align:center;
-
     margin-top:22px;
-
     font-size:14px;
-
     color:#e53935;
-
     font-weight:700;
-
     cursor:pointer;
-
 }
 
-
-/* CLOSE */
-
 .close-login{
-
     text-align:center;
-
     margin-top:16px;
-
     color:#777;
-
     font-size:14px;
-
     cursor:pointer;
-
 }
 
 .close-login:hover{
-
     color:#222;
-
 }
-
-
-/* MESSAGE */
 
 #loginMessage{
-
     display:none;
-
     margin-top:18px;
-
     padding:12px;
-
     border-radius:10px;
-
     font-size:13px;
-
     line-height:1.5;
-
     text-align:center;
-
 }
-
-
-/* MOBILE */
 
 @media(max-width:500px){
 
     .login-page{
-
         padding:18px;
-
     }
 
     .login-card{
-
         padding:25px 20px;
-
         border-radius:20px;
-
     }
 
     .logo{
-
         font-size:36px;
-
     }
 
     .login-card h1{
-
         font-size:24px;
-
     }
 
 }
@@ -342,51 +197,29 @@ body{
 
 </head>
 
-
 <body>
-
 
 <div class="login-page">
 
     <div class="login-container">
 
-
-        <!-- LOGO -->
-
         <div class="logo">
-
             Beat<span>root</span>
-
         </div>
 
-
         <p class="welcome">
-
             Welcome to Beatroot
-
         </p>
-
-
-        <!-- LOGIN CARD -->
 
         <div class="login-card">
 
-
             <h1>
-
                 Login to Beatroot
-
             </h1>
 
-
             <p class="subtitle">
-
                 Login using your email and password.
-
             </p>
-
-
-            <!-- EMAIL -->
 
             <div class="input-group">
 
@@ -403,9 +236,6 @@ body{
 
             </div>
 
-
-            <!-- PASSWORD -->
-
             <div class="input-group">
 
                 <label>
@@ -421,20 +251,15 @@ body{
 
             </div>
 
-
-            <!-- LOGIN -->
-
             <button
                 class="login-button"
                 id="loginButton"
+                type="button"
                 onclick="loginUser()">
 
                 Login
 
             </button>
-
-
-            <!-- CREATE -->
 
             <div
                 class="create-account"
@@ -444,9 +269,6 @@ body{
 
             </div>
 
-
-            <!-- CLOSE -->
-
             <div
                 class="close-login"
                 onclick="goBack()">
@@ -455,19 +277,13 @@ body{
 
             </div>
 
-
-            <!-- MESSAGE -->
-
             <div id="loginMessage"></div>
-
 
         </div>
 
     </div>
 
 </div>
-
-
 
 <script>
 
@@ -481,13 +297,10 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-
-const sb =
-supabase.createClient(
+const sb = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
 );
-
 
 
 /* =========================================
@@ -497,27 +310,19 @@ supabase.createClient(
 async function loginUser(){
 
     const email =
-        document
-        .getElementById("loginEmail")
-        .value
-        .trim();
+        document.getElementById("loginEmail").value.trim();
 
     const password =
-        document
-        .getElementById("loginPassword")
-        .value;
+        document.getElementById("loginPassword").value;
 
     const message =
-        document
-        .getElementById("loginMessage");
+        document.getElementById("loginMessage");
 
     const button =
-        document
-        .getElementById("loginButton");
+        document.getElementById("loginButton");
 
 
     message.style.display = "none";
-
 
 
     /* CHECK */
@@ -530,31 +335,24 @@ async function loginUser(){
         );
 
         return;
-
     }
 
 
-
     button.disabled = true;
-
-    button.textContent =
-        "Logging in...";
+    button.textContent = "Logging in...";
 
 
     try{
-
 
         const {
             data,
             error
         } = await sb.auth.signInWithPassword({
 
-            email:email,
-
-            password:password
+            email: email,
+            password: password
 
         });
-
 
 
         /* ERROR */
@@ -572,40 +370,45 @@ async function loginUser(){
             );
 
             button.disabled = false;
-
-            button.textContent =
-                "Login";
+            button.textContent = "Login";
 
             return;
-
         }
 
 
+        /* SESSION CHECK */
 
-      /* SESSION CHECK */
+        if(!data.session){
 
-if(!data.session){
-    showMessage(
-        "Login session create cheyyan kazhinjilla.",
-        "error"
-    );
+            showMessage(
+                "Login session create cheyyan kazhinjilla.",
+                "error"
+            );
 
-    button.disabled = false;
-    button.textContent = "Login";
+            button.disabled = false;
+            button.textContent = "Login";
 
-    return;
-}
-        
+            return;
+        }
+
+
         console.log(
             "Login successful:",
             data.user
         );
-        
-window.location.href = "../index.html";
 
-    catch(error){
 
-        console.error(error);
+        /* SUCCESS */
+
+        window.location.href = "../index.html";
+
+
+    }catch(error){
+
+        console.error(
+            "Login Exception:",
+            error
+        );
 
         showMessage(
             "Something went wrong. Veendum try cheyyuka.",
@@ -613,14 +416,11 @@ window.location.href = "../index.html";
         );
 
         button.disabled = false;
-
-        button.textContent =
-            "Login";
+        button.textContent = "Login";
 
     }
 
 }
-
 
 
 /* =========================================
@@ -630,23 +430,18 @@ window.location.href = "../index.html";
 function showMessage(text,type){
 
     const message =
-        document.getElementById(
-            "loginMessage"
-        );
+        document.getElementById("loginMessage");
 
     message.textContent = text;
 
-    message.style.display =
-        "block";
+    message.style.display = "block";
 
 
     if(type === "error"){
 
-        message.style.background =
-            "#fff0f0";
+        message.style.background = "#fff0f0";
 
-        message.style.color =
-            "#d32f2f";
+        message.style.color = "#d32f2f";
 
         message.style.border =
             "1px solid #ffd0d0";
@@ -654,7 +449,6 @@ function showMessage(text,type){
     }
 
 }
-
 
 
 /* =========================================
@@ -670,7 +464,6 @@ function createAccount(){
 }
 
 
-
 /* =========================================
    CLOSE
 ========================================= */
@@ -680,7 +473,6 @@ function goBack(){
     window.history.back();
 
 }
-
 
 
 /* =========================================
@@ -701,18 +493,8 @@ document
 
     }
 );
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("loginForm");
 
-    if (form) {
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            loginUser();
-        });
-    }
-});
 </script>
-
 
 </body>
 
