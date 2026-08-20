@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Checkout - Beatroot</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/desktop.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f6f7;
+    color:#171717;
+}
+
+.page{
+    max-width:1000px;
+    min-height:100vh;
+    margin:auto;
+    background:#fff;
+}
+
+
+/* HEADER */
+
+.header{
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #eee;
+}
+
+.back{
+    font-size:30px;
+    cursor:pointer;
+    width:35px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:800;
+    color:#e53935;
+}
+
+
+/* CONTENT */
+
+.container{
+    padding:25px 20px 40px;
+}
+
+.title{
+    font-size:28px;
+    margin:0 0 25px;
+}
+
+
+/* LAYOUT */
+
+.checkout-grid{
+    display:grid;
+    grid-template-columns:1.3fr .8fr;
+    gap:25px;
+}
+
+
+/* CARD */
+
+.card{
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.card h2{
+    margin:0 0 20px;
+    font-size:20px;
+}
+
+
+/* FORM */
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+
+    width:100%;
+    padding:13px;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+
+    font-size:15px;
+    outline:none;
+
+    background:#fff;
+}
+
+.form-group textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:#e53935;
+}
+
+
+/* PAYMENT */
+
+.payment-option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+
+    margin-bottom:10px;
+
+    cursor:pointer;
+}
+
+.payment-option:hover{
+    border-color:#e53935;
+}
+
+.payment-option input{
+    accent-color:#e53935;
+}
+
+
+/* ORDER */
+
+.order-item{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.order-item:last-child{
+    border-bottom:0;
+}
+
+.order-name{
+    flex:1;
+}
+
+.order-qty{
+    color:#777;
+}
+
+.order-price{
+    font-weight:bold;
+}
+
+
+/* TOTAL */
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    margin:12px 0;
+    color:#666;
+}
+
+.grand-total{
+    display:flex;
+    justify-content:space-between;
+
+    border-top:1px solid #eee;
+
+    padding-top:15px;
+    margin-top:15px;
+
+    font-size:20px;
+    font-weight:bold;
+}
+
+
+/* BUTTON */
+
+.place-order{
+    width:100%;
+
+    border:0;
+    border-radius:11px;
+
+    padding:15px;
+
+    background:#e53935;
+    color:#fff;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin-top:18px;
+}
+
+.place-order:hover{
+    background:#c62828;
+}
+
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:70px 20px;
+    color:#777;
+}
+
+.empty-icon{
+    font-size:55px;
+}
+
+.back-cart{
+    margin-top:15px;
+
+    border:0;
+    border-radius:10px;
+
+    padding:11px 18px;
+
+    background:#e53935;
+    color:#fff;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+
+/* SUCCESS */
+
+.success{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.success-icon{
+    font-size:65px;
+    margin-bottom:15px;
+}
+
+.success h1{
+    color:#2e7d32;
+}
+
+.order-number{
+    margin:20px 0;
+    padding:15px;
+
+    background:#f5f5f5;
+    border-radius:10px;
+
+    font-weight:bold;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .checkout-grid{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:22px 15px 35px;
+    }
+
+    .title{
+        font-size:25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="back"
+             onclick="goBack()">
+            ‹
+        </div>
+
+        <div class="logo">
+            Beat<span style="color:#333">root</span>
+        </div>
+
+    </div>
+
+
+
+    <!-- CHECKOUT -->
+
+    <div id="checkoutPage">
+
+        <div class="container">
+
+            <h1 class="title">
+                Checkout
+            </h1>
+
+
+            <div class="checkout-grid">
+
+
+                <!-- LEFT -->
+
+                <div>
+
+
+                    <!-- DELIVERY DETAILS -->
+
+                    <div class="card">
+
+                        <h2>
+                            Delivery Details
+                        </h2>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="Enter your name">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Mobile Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="mobile"
+                                placeholder="Enter mobile number">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Delivery Address
+                            </label>
+
+                            <textarea
+                                id="address"
+                                placeholder="House name, place, landmark..."></textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Delivery Instructions
+                            </label>
+
+                            <textarea
+                                id="instructions"
+                                placeholder="Any special instructions?"></textarea>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PAYMENT -->
+
+                    <div class="card">
+
+                        <h2>
+                            Payment Method
+                        </h2>
+
+
+                        <label class="payment-option">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="COD"
+                                checked>
+
+                            <span>
+                                💵 Cash on Delivery
+                            </span>
+
+                        </label>
+
+
+                        <label class="payment-option">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="ONLINE">
+
+                            <span>
+                                💳 Online Payment
+                            </span>
+
+                        </label>
+
+
+                        <label class="payment-option">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="UPI">
+
+                            <span>
+                                📱 UPI Payment
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- RIGHT -->
+
+                <div>
+
+                    <div class="card">
+
+                        <h2>
+                            Your Order
+                        </h2>
+
+
+                        <div id="orderItems"></div>
+
+
+                        <div class="total-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <span id="subtotal">
+                                ₹0
+                            </span>
+
+                        </div>
+
+
+                        <div class="total-row">
+
+                            <span>
+                                Delivery
+                            </span>
+
+                            <span>
+                                ₹40
+                            </span>
+
+                        </div>
+
+
+                        <div class="grand-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <span id="grandTotal">
+                                ₹0
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            class="place-order"
+                            onclick="placeOrder()">
+
+                            Place Order
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- EMPTY CART -->
+
+    <div id="emptyPage"
+         class="empty"
+         style="display:none;">
+
+        <div class="empty-icon">
+            🛒
+        </div>
+
+        <h2>
+            Your cart is empty
+        </h2>
+
+        <p>
+            Please add some food before checkout.
+        </p>
+
+        <button
+            class="back-cart"
+            onclick="goCart()">
+
+            Go to Cart
+
+        </button>
+
+    </div>
+
+
+
+    <!-- SUCCESS -->
+
+    <div id="successPage"
+         class="success"
+         style="display:none;">
+
+        <div class="success-icon">
+            ✅
+        </div>
+
+        <h1>
+            Order Placed!
+        </h1>
+
+        <p>
+            Thank you for ordering from Beatroot.
+        </p>
+
+        <div class="order-number">
+
+            Order ID:
+            <span id="orderId"></span>
+
+        </div>
+
+        <button
+            class="back-cart"
+            onclick="goHome()">
+
+            Back to Home
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* CART */
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("beatrootCart")
+    ) || [];
+
+
+const DELIVERY_CHARGE = 40;
+
+
+
+/* LOAD ORDER */
+
+function loadOrder(){
+
+    const orderItems =
+        document.getElementById(
+            "orderItems"
+        );
+
+
+    if(cart.length === 0){
+
+        document.getElementById(
+            "checkoutPage"
+        ).style.display =
+            "none";
+
+        document.getElementById(
+            "emptyPage"
+        ).style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    let subtotal = 0;
+
+
+    orderItems.innerHTML = "";
+
+
+    cart.forEach(item => {
+
+        const total =
+            item.price *
+            item.quantity;
+
+
+        subtotal += total;
+
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "order-item";
+
+
+        div.innerHTML = `
+
+            <div class="order-name">
+                ${escapeHtml(item.name)}
+            </div>
+
+            <div class="order-qty">
+                × ${item.quantity}
+            </div>
+
+            <div class="order-price">
+                ₹${total}
+            </div>
+
+        `;
+
+
+        orderItems.appendChild(div);
+
+    });
+
+
+    document.getElementById(
+        "subtotal"
+    ).textContent =
+        "₹" + subtotal;
+
+
+    document.getElementById(
+        "grandTotal"
+    ).textContent =
+        "₹" +
+        (subtotal + DELIVERY_CHARGE);
+
+}
+
+
+
+/* PLACE ORDER */
+
+function placeOrder(){
+
+    const name =
+        document.getElementById(
+            "name"
+        ).value.trim();
+
+
+    const mobile =
+        document.getElementById(
+            "mobile"
+        ).value.trim();
+
+
+    const address =
+        document.getElementById(
+            "address"
+        ).value.trim();
+
+
+    if(!name){
+
+        alert(
+            "Please enter your name."
+        );
+
+        return;
+
+    }
+
+
+    if(!mobile){
+
+        alert(
+            "Please enter your mobile number."
+        );
+
+        return;
+
+    }
+
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+
+        alert(
+            "Please enter a valid 10 digit mobile number."
+        );
+
+        return;
+
+    }
+
+
+    if(!address){
+
+        alert(
+            "Please enter your delivery address."
+        );
+
+        return;
+
+    }
+
+
+    const payment =
+        document.querySelector(
+            'input[name="payment"]:checked'
+        ).value;
+
+
+    const subtotal =
+        cart.reduce(
+            (sum,item) =>
+                sum +
+                item.price *
+                item.quantity,
+            0
+        );
+
+
+    const order = {
+
+        id:
+            "BR" +
+            Date.now()
+            .toString()
+            .slice(-8),
+
+        name:name,
+
+        mobile:mobile,
+
+        address:address,
+
+        instructions:
+            document.getElementById(
+                "instructions"
+            ).value.trim(),
+
+        payment:payment,
+
+        items:cart,
+
+        subtotal:subtotal,
+
+        delivery:DELIVERY_CHARGE,
+
+        total:
+            subtotal +
+            DELIVERY_CHARGE,
+
+        date:
+            new Date().toISOString()
+
+    };
+
+
+    /* SAVE ORDER */
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem(
+                "beatrootOrders"
+            )
+        ) || [];
+
+
+    orders.push(order);
+
+
+    localStorage.setItem(
+        "beatrootOrders",
+        JSON.stringify(orders)
+    );
+
+
+    /* SHOW SUCCESS */
+
+    document.getElementById(
+        "checkoutPage"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "orderId"
+    ).textContent =
+        order.id;
+
+
+    document.getElementById(
+        "successPage"
+    ).style.display =
+        "block";
+
+
+    /* CLEAR CART */
+
+    localStorage.removeItem(
+        "beatrootCart"
+    );
+
+}
+
+
+
+/* BACK */
+
+function goBack(){
+
+    window.location.href =
+        "cart.html";
+
+}
+
+
+function goCart(){
+
+    window.location.href =
+        "cart.html";
+
+}
+
+
+function goHome(){
+
+    window.location.href =
+        "home.html";
+
+}
+
+
+
+/* SECURITY */
+
+function escapeHtml(text){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+
+/* START */
+
+loadOrder();
+
+</script>
+
+</body>
+</html>
