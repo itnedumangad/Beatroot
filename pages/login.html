@@ -600,26 +600,8 @@ if(!data.session){
             "Login successful:",
             data.user
         );
-
-
-
-/* ==============================
-   ADMIN / USER REDIRECT
-============================== */
-
-if (data.user.email === "itnedumangad@gmail.com") {
-
-    // Admin account
-    window.location.href =
-        "./admin-dashboard.html";
-
-} else {
-
-    // Normal customer account
-    window.location.href =
-        "../index.html";
-
-}
+        
+window.location.href = "../index.html";
 
     catch(error){
 
