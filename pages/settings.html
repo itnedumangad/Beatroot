@@ -1,449 +1,1562 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Settings - Beatroot</title>
+
+<title>Beatroot - Settings</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-    background: #f6f7f9;
-    color: #222;
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#171717;
 }
 
-.header {
-    background: #ffffff;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 7%;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    width:250px;
+    background:#111827;
+    color:white;
+    padding:25px 15px;
+    z-index:1000;
 }
 
-.logo {
-    font-size: 26px;
-    font-weight: 800;
-    color: #e53935;
+.brand{
+    font-size:28px;
+    font-weight:800;
+    padding:0 15px 30px;
 }
 
-.back {
-    text-decoration: none;
-    color: #555;
-    font-size: 15px;
+.brand span{
+    color:#ef4444;
 }
 
-.container {
-    max-width: 900px;
-    margin: 35px auto;
-    padding: 0 20px;
+.label{
+    font-size:12px;
+    color:#9ca3af;
+    padding:0 15px 10px;
+    text-transform:uppercase;
 }
 
-.title {
-    margin-bottom: 25px;
+.menu button{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#d1d5db;
+    padding:13px 15px;
+    text-align:left;
+    border-radius:10px;
+    cursor:pointer;
+    margin:3px 0;
+    font-size:14px;
 }
 
-.title h1 {
-    font-size: 30px;
-    margin-bottom: 7px;
+.menu button:hover,
+.menu button.active{
+    background:#ef4444;
+    color:white;
 }
 
-.title p {
-    color: #777;
+.bottom{
+    position:absolute;
+    left:15px;
+    right:15px;
+    bottom:20px;
 }
 
-.settings-card {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    margin-bottom: 20px;
+.logout{
+    width:100%;
+    border:1px solid #374151;
+    background:transparent;
+    color:#d1d5db;
+    padding:12px 15px;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:left;
+    font-size:14px;
 }
 
-.section-title {
-    padding: 20px 24px 12px;
-    font-size: 17px;
-    font-weight: 700;
-    color: #333;
+.logout:hover{
+    background:#1f2937;
 }
 
-.setting-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 19px 24px;
-    border-top: 1px solid #f0f0f0;
-    cursor: pointer;
-    transition: 0.2s;
+/* MAIN */
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
 }
 
-.setting-item:hover {
-    background: #fafafa;
+.topbar{
+    height:75px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:500;
 }
 
-.item-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.title{
+    font-size:22px;
+    font-weight:700;
 }
 
-.icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: #fff1f1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.item-text h3 {
-    font-size: 15px;
-    margin-bottom: 4px;
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#ef4444;
+    color:white;
+    display:grid;
+    place-items:center;
+    font-weight:bold;
 }
 
-.item-text p {
-    font-size: 13px;
-    color: #888;
+/* CONTENT */
+
+.content{
+    padding:30px;
+    max-width:1100px;
 }
 
-.arrow {
-    color: #aaa;
-    font-size: 22px;
+.page-head{
+    margin-bottom:25px;
 }
 
-.toggle {
-    width: 46px;
-    height: 25px;
-    background: #ddd;
-    border-radius: 20px;
-    position: relative;
+.page-head h1{
+    font-size:28px;
+    margin-bottom:6px;
 }
 
-.toggle::after {
-    content: "";
-    position: absolute;
-    width: 21px;
-    height: 21px;
-    background: white;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-    transition: 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+.page-head p{
+    color:#6b7280;
+    font-size:14px;
 }
 
-.toggle.active {
-    background: #e53935;
+/* ERROR */
+
+.error{
+    display:none;
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:20px;
 }
 
-.toggle.active::after {
-    left: 23px;
+/* SUCCESS */
+
+.success{
+    display:none;
+    background:#dcfce7;
+    color:#166534;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:20px;
 }
 
-.logout {
-    width: 100%;
-    border: none;
-    background: #fff;
-    color: #e53935;
-    padding: 18px;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+/* CARD */
+
+.card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:20px;
 }
 
-.logout:hover {
-    background: #fff4f4;
+.card-head{
+    margin-bottom:20px;
 }
 
-.footer {
-    text-align: center;
-    color: #999;
-    font-size: 13px;
-    padding: 25px 0 40px;
+.card-head h2{
+    font-size:18px;
+    margin-bottom:5px;
 }
 
-@media(max-width:600px) {
+.card-head p{
+    color:#6b7280;
+    font-size:13px;
+}
 
-    .header {
-        padding: 0 20px;
-        height: 62px;
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    font-size:12px;
+    font-weight:700;
+    color:#4b5563;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    border:1px solid #d1d5db;
+    border-radius:9px;
+    padding:11px 12px;
+    outline:none;
+    font-size:14px;
+    background:white;
+}
+
+.form-group textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:#ef4444;
+}
+
+/* READ ONLY */
+
+.readonly{
+    background:#f9fafb !important;
+    color:#6b7280;
+}
+
+/* BUTTON */
+
+.save-row{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
+}
+
+.save-btn{
+    border:0;
+    background:#ef4444;
+    color:white;
+    padding:12px 20px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.save-btn:hover{
+    background:#dc2626;
+}
+
+.save-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.reset-btn{
+    border:1px solid #d1d5db;
+    background:white;
+    color:#374151;
+    padding:12px 18px;
+    border-radius:9px;
+    cursor:pointer;
+}
+
+/* TOGGLE */
+
+.setting-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding:16px 0;
+    border-bottom:1px solid #eee;
+}
+
+.setting-row:last-child{
+    border-bottom:0;
+}
+
+.setting-info strong{
+    display:block;
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.setting-info span{
+    color:#6b7280;
+    font-size:12px;
+}
+
+.switch{
+    position:relative;
+    width:48px;
+    height:26px;
+    flex-shrink:0;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#d1d5db;
+    border-radius:30px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:20px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.2s;
+    box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+
+.switch input:checked + .slider{
+    background:#ef4444;
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(22px);
+}
+
+/* ADMIN */
+
+.admin-box{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:16px;
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+}
+
+.admin-avatar{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#ef4444;
+    color:white;
+    display:grid;
+    place-items:center;
+    font-size:21px;
+    font-weight:800;
+}
+
+.admin-details strong{
+    display:block;
+    font-size:15px;
+    margin-bottom:4px;
+}
+
+.admin-details span{
+    color:#6b7280;
+    font-size:13px;
+}
+
+/* DANGER */
+
+.danger{
+    border-color:#fecaca;
+}
+
+.danger h2{
+    color:#b91c1c;
+}
+
+.logout-large{
+    border:0;
+    background:#fee2e2;
+    color:#dc2626;
+    padding:11px 18px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.logout-large:hover{
+    background:#fecaca;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .sidebar{
+        width:70px;
+        padding:20px 8px;
     }
 
-    .logo {
-        font-size: 23px;
+    .brand{
+        font-size:20px;
+        text-align:center;
+        padding:0 0 30px;
     }
 
-    .container {
-        margin: 25px auto;
-        padding: 0 14px;
+    .label{
+        display:none;
     }
 
-    .title h1 {
-        font-size: 25px;
+    .menu button{
+        text-align:center;
+        padding:13px 5px;
     }
 
-    .setting-item {
-        padding: 17px 16px;
+    .nav-text{
+        display:none;
     }
 
-    .section-title {
-        padding: 18px 16px 10px;
+    .main{
+        margin-left:70px;
     }
 
-    .icon {
-        width: 39px;
-        height: 39px;
+    .content{
+        padding:20px 15px;
     }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .profile strong{
+        display:none;
+    }
+
 }
+
+@media(max-width:600px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .save-row{
+        flex-direction:column;
+    }
+
+    .save-btn,
+    .reset-btn{
+        width:100%;
+    }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<header class="header">
-    <a href="home.html" class="back">← Back</a>
-    <div class="logo">Beatroot</div>
-    <div style="width:45px;"></div>
-</header>
 
-<main class="container">
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        Beat<span>root</span>
+    </div>
+
+    <div class="label">
+        Admin Panel
+    </div>
+
+    <div class="menu">
+
+        <button onclick="go('admin-dashboard.html')">
+            📊 <span class="nav-text">Dashboard</span>
+        </button>
+
+        <button onclick="go('admin-orders.html')">
+            🛒 <span class="nav-text">Orders</span>
+        </button>
+
+        <button onclick="go('admin-customers.html')">
+            👥 <span class="nav-text">Customers</span>
+        </button>
+
+        <button onclick="go('admin-restaurants.html')">
+            🍔 <span class="nav-text">Restaurants</span>
+        </button>
+
+        <button onclick="go('admin-reports.html')">
+            📈 <span class="nav-text">Reports</span>
+        </button>
+
+        <button class="active">
+            ⚙️ <span class="nav-text">Settings</span>
+        </button>
+
+    </div>
+
+    <div class="bottom">
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            🚪 <span class="nav-text">Logout</span>
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+
+<header class="topbar">
 
     <div class="title">
-        <h1>Settings</h1>
-        <p>Manage your account and app preferences</p>
+        Settings
     </div>
 
-    <!-- Account -->
-    <div class="settings-card">
+    <div class="profile">
 
-        <div class="section-title">
-            Account
+        <div
+            class="avatar"
+            id="avatar">
+            A
         </div>
 
-        <div class="setting-item"
-             onclick="location.href='profile.html'">
-
-            <div class="item-left">
-                <div class="icon">👤</div>
-
-                <div class="item-text">
-                    <h3>Profile</h3>
-                    <p>Manage your personal information</p>
-                </div>
-            </div>
-
-            <div class="arrow">›</div>
-        </div>
-
-        <div class="setting-item"
-             onclick="location.href='addresses.html'">
-
-            <div class="item-left">
-                <div class="icon">📍</div>
-
-                <div class="item-text">
-                    <h3>Addresses</h3>
-                    <p>Manage your delivery addresses</p>
-                </div>
-            </div>
-
-            <div class="arrow">›</div>
-        </div>
-
-        <div class="setting-item"
-             onclick="changePassword()">
-
-            <div class="item-left">
-                <div class="icon">🔒</div>
-
-                <div class="item-text">
-                    <h3>Change Password</h3>
-                    <p>Update your account password</p>
-                </div>
-            </div>
-
-            <div class="arrow">›</div>
-        </div>
+        <strong id="topAdminName">
+            Admin
+        </strong>
 
     </div>
 
+</header>
 
-    <!-- Preferences -->
-    <div class="settings-card">
 
-        <div class="section-title">
-            Preferences
-        </div>
+<main class="content">
 
-        <div class="setting-item"
-             onclick="toggleNotification()">
 
-            <div class="item-left">
-                <div class="icon">🔔</div>
+<div class="page-head">
 
-                <div class="item-text">
-                    <h3>Notifications</h3>
-                    <p>Receive order and promotional updates</p>
-                </div>
-            </div>
+    <h1>
+        Settings
+    </h1>
 
-            <div class="toggle active" id="notificationToggle"></div>
+    <p>
+        Manage Beatroot administrator and application settings.
+    </p>
 
-        </div>
+</div>
 
-        <div class="setting-item"
-             onclick="location.href='notifications.html'">
 
-            <div class="item-left">
-                <div class="icon">📢</div>
+<div
+    class="error"
+    id="errorBox">
+</div>
 
-                <div class="item-text">
-                    <h3>Notification Center</h3>
-                    <p>View all your notifications</p>
-                </div>
-            </div>
 
-            <div class="arrow">›</div>
-        </div>
+<div
+    class="success"
+    id="successBox">
+</div>
+
+
+<!-- ADMIN ACCOUNT -->
+
+<section class="card">
+
+    <div class="card-head">
+
+        <h2>
+            👤 Administrator Account
+        </h2>
+
+        <p>
+            Current administrator account information.
+        </p>
 
     </div>
 
 
-    <!-- Support -->
-    <div class="settings-card">
+    <div class="admin-box">
 
-        <div class="section-title">
-            Support
+        <div
+            class="admin-avatar"
+            id="adminAvatar">
+            A
         </div>
 
-        <div class="setting-item"
-             onclick="helpSupport()">
+        <div class="admin-details">
 
-            <div class="item-left">
-                <div class="icon">❓</div>
+            <strong id="adminEmail">
+                Loading...
+            </strong>
 
-                <div class="item-text">
-                    <h3>Help & Support</h3>
-                    <p>Get help with your orders and account</p>
-                </div>
-            </div>
+            <span>
+                Administrator
+            </span>
 
-            <div class="arrow">›</div>
-        </div>
-
-        <div class="setting-item"
-             onclick="showPrivacy()">
-
-            <div class="item-left">
-                <div class="icon">🛡️</div>
-
-                <div class="item-text">
-                    <h3>Privacy Policy</h3>
-                    <p>Learn how we protect your information</p>
-                </div>
-            </div>
-
-            <div class="arrow">›</div>
-        </div>
-
-        <div class="setting-item"
-             onclick="showTerms()">
-
-            <div class="item-left">
-                <div class="icon">📄</div>
-
-                <div class="item-text">
-                    <h3>Terms & Conditions</h3>
-                    <p>Read our terms of service</p>
-                </div>
-            </div>
-
-            <div class="arrow">›</div>
         </div>
 
     </div>
 
+</section>
 
-    <button class="logout" onclick="logout()">
-        🚪 Logout
+
+<!-- BUSINESS SETTINGS -->
+
+<section class="card">
+
+    <div class="card-head">
+
+        <h2>
+            🏪 Business Information
+        </h2>
+
+        <p>
+            Update the information displayed across Beatroot.
+        </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group">
+
+            <label>
+                BUSINESS NAME
+            </label>
+
+            <input
+                type="text"
+                id="businessName"
+                value="Beatroot">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                PHONE
+            </label>
+
+            <input
+                type="text"
+                id="businessPhone"
+                placeholder="Enter phone number">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                EMAIL
+            </label>
+
+            <input
+                type="email"
+                id="businessEmail"
+                placeholder="Enter business email">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                WEBSITE
+            </label>
+
+            <input
+                type="text"
+                id="businessWebsite"
+                placeholder="Enter website">
+
+        </div>
+
+
+        <div class="form-group full">
+
+            <label>
+                BUSINESS ADDRESS
+            </label>
+
+            <textarea
+                id="businessAddress"
+                placeholder="Enter business address"></textarea>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="save-row">
+
+        <button
+            class="reset-btn"
+            onclick="loadSettings()">
+
+            Reset
+
+        </button>
+
+        <button
+            class="save-btn"
+            id="saveBusinessBtn"
+            onclick="saveBusinessSettings()">
+
+            Save Business Settings
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- APPLICATION SETTINGS -->
+
+<section class="card">
+
+    <div class="card-head">
+
+        <h2>
+            ⚙️ Application Settings
+        </h2>
+
+        <p>
+            Control basic Beatroot application behaviour.
+        </p>
+
+    </div>
+
+
+    <div class="setting-row">
+
+        <div class="setting-info">
+
+            <strong>
+                Order Notifications
+            </strong>
+
+            <span>
+                Enable notifications for new customer orders.
+            </span>
+
+        </div>
+
+
+        <label class="switch">
+
+            <input
+                type="checkbox"
+                id="orderNotifications"
+                checked>
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <div class="setting-row">
+
+        <div class="setting-info">
+
+            <strong>
+                Restaurant Ordering
+            </strong>
+
+            <span>
+                Allow customers to place restaurant orders.
+            </span>
+
+        </div>
+
+
+        <label class="switch">
+
+            <input
+                type="checkbox"
+                id="restaurantOrdering"
+                checked>
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <div class="setting-row">
+
+        <div class="setting-info">
+
+            <strong>
+                Customer Registration
+            </strong>
+
+            <span>
+                Allow new customers to create accounts.
+            </span>
+
+        </div>
+
+
+        <label class="switch">
+
+            <input
+                type="checkbox"
+                id="customerRegistration"
+                checked>
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <div class="setting-row">
+
+        <div class="setting-info">
+
+            <strong>
+                Maintenance Mode
+            </strong>
+
+            <span>
+                Temporarily disable customer ordering.
+            </span>
+
+        </div>
+
+
+        <label class="switch">
+
+            <input
+                type="checkbox"
+                id="maintenanceMode">
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <div class="save-row">
+
+        <button
+            class="save-btn"
+            onclick="saveApplicationSettings()">
+
+            Save Application Settings
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- SYSTEM INFORMATION -->
+
+<section class="card">
+
+    <div class="card-head">
+
+        <h2>
+            🖥️ System Information
+        </h2>
+
+        <p>
+            Current Beatroot application information.
+        </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group">
+
+            <label>
+                APPLICATION
+            </label>
+
+            <input
+                class="readonly"
+                value="Beatroot"
+                readonly>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                VERSION
+            </label>
+
+            <input
+                class="readonly"
+                value="1.0.0"
+                readonly>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                DATABASE
+            </label>
+
+            <input
+                class="readonly"
+                id="databaseStatus"
+                value="Checking..."
+                readonly>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                ADMIN ACCESS
+            </label>
+
+            <input
+                class="readonly"
+                value="Enabled"
+                readonly>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- DANGER ZONE -->
+
+<section class="card danger">
+
+    <div class="card-head">
+
+        <h2>
+            ⚠️ Account Actions
+        </h2>
+
+        <p>
+            Logout from the current administrator account.
+        </p>
+
+    </div>
+
+
+    <button
+        class="logout-large"
+        onclick="logout()">
+
+        🚪 Logout Admin
+
     </button>
 
-    <div class="footer">
-        Beatroot © 2026
-    </div>
+</section>
+
 
 </main>
+
+</div>
 
 
 <script>
 
-function toggleNotification() {
+/* =========================
+   SUPABASE
+========================= */
 
-    const toggle =
-        document.getElementById("notificationToggle");
+const SUPABASE_URL =
+    "https://jhihjnsxazmftdqlitgk.supabase.co";
 
-    toggle.classList.toggle("active");
+const SUPABASE_KEY =
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-    if (toggle.classList.contains("active")) {
-        alert("Notifications enabled");
-    } else {
-        alert("Notifications disabled");
+const ADMIN_EMAIL =
+    "itnedumangad@gmail.com";
+
+
+const sb =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function go(page){
+
+    window.location.href =
+        page;
+
+}
+
+
+/* =========================
+   AUTH
+========================= */
+
+async function checkAuth(){
+
+    try{
+
+        const result =
+            await sb.auth.getUser();
+
+
+        if(
+            result.error ||
+            !result.data ||
+            !result.data.user
+        ){
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
+
+
+        const user =
+            result.data.user;
+
+
+        if(
+            user.email !==
+            ADMIN_EMAIL
+        ){
+
+            alert(
+                "Access denied. Admin only."
+            );
+
+            window.location.href =
+                "../index.html";
+
+            return false;
+
+        }
+
+
+        const email =
+            user.email || "Admin";
+
+
+        document.getElementById(
+            "adminEmail"
+        ).textContent =
+            email;
+
+
+        document.getElementById(
+            "topAdminName"
+        ).textContent =
+            email.split("@")[0];
+
+
+        document.getElementById(
+            "avatar"
+        ).textContent =
+            email.charAt(0).toUpperCase();
+
+
+        document.getElementById(
+            "adminAvatar"
+        ).textContent =
+            email.charAt(0).toUpperCase();
+
+
+        return true;
+
     }
-}
 
+    catch(error){
 
-function changePassword() {
+        console.error(error);
 
-    alert("Change Password page will be connected here.");
-}
+        window.location.href =
+            "login.html";
 
+        return false;
 
-function helpSupport() {
-
-    alert("Help & Support will be connected here.");
-}
-
-
-function showPrivacy() {
-
-    alert("Privacy Policy page will be connected here.");
-}
-
-
-function showTerms() {
-
-    alert("Terms & Conditions page will be connected here.");
-}
-
-
-function logout() {
-
-    const confirmLogout =
-        confirm("Are you sure you want to logout?");
-
-    if (confirmLogout) {
-
-        localStorage.clear();
-
-        window.location.href = "login.html";
     }
+
 }
+
+
+/* =========================
+   LOAD SETTINGS
+========================= */
+
+async function loadSettings(){
+
+    if(!await checkAuth()){
+
+        return;
+
+    }
+
+
+    /* Default business information */
+
+    document.getElementById(
+        "businessName"
+    ).value =
+        localStorage.getItem(
+            "beatroot_business_name"
+        ) || "Beatroot";
+
+
+    document.getElementById(
+        "businessPhone"
+    ).value =
+        localStorage.getItem(
+            "beatroot_business_phone"
+        ) || "";
+
+
+    document.getElementById(
+        "businessEmail"
+    ).value =
+        localStorage.getItem(
+            "beatroot_business_email"
+        ) || "";
+
+
+    document.getElementById(
+        "businessWebsite"
+    ).value =
+        localStorage.getItem(
+            "beatroot_business_website"
+        ) || "";
+
+
+    document.getElementById(
+        "businessAddress"
+    ).value =
+        localStorage.getItem(
+            "beatroot_business_address"
+        ) || "";
+
+
+    /* Application settings */
+
+    document.getElementById(
+        "orderNotifications"
+    ).checked =
+        getSetting(
+            "order_notifications",
+            true
+        );
+
+
+    document.getElementById(
+        "restaurantOrdering"
+    ).checked =
+        getSetting(
+            "restaurant_ordering",
+            true
+        );
+
+
+    document.getElementById(
+        "customerRegistration"
+    ).checked =
+        getSetting(
+            "customer_registration",
+            true
+        );
+
+
+    document.getElementById(
+        "maintenanceMode"
+    ).checked =
+        getSetting(
+            "maintenance_mode",
+            false
+        );
+
+
+    await checkDatabase();
+
+}
+
+
+/* =========================
+   LOCAL SETTING
+========================= */
+
+function getSetting(
+    key,
+    defaultValue
+){
+
+    const value =
+        localStorage.getItem(
+            "beatroot_" + key
+        );
+
+
+    if(value === null){
+
+        return defaultValue;
+
+    }
+
+
+    return value === "true";
+
+}
+
+
+/* =========================
+   SAVE BUSINESS
+========================= */
+
+function saveBusinessSettings(){
+
+    const button =
+        document.getElementById(
+            "saveBusinessBtn"
+        );
+
+
+    button.disabled = true;
+
+
+    localStorage.setItem(
+        "beatroot_business_name",
+        document.getElementById(
+            "businessName"
+        ).value.trim()
+    );
+
+
+    localStorage.setItem(
+        "beatroot_business_phone",
+        document.getElementById(
+            "businessPhone"
+        ).value.trim()
+    );
+
+
+    localStorage.setItem(
+        "beatroot_business_email",
+        document.getElementById(
+            "businessEmail"
+        ).value.trim()
+    );
+
+
+    localStorage.setItem(
+        "beatroot_business_website",
+        document.getElementById(
+            "businessWebsite"
+        ).value.trim()
+    );
+
+
+    localStorage.setItem(
+        "beatroot_business_address",
+        document.getElementById(
+            "businessAddress"
+        ).value.trim()
+    );
+
+
+    showSuccess(
+        "Business settings saved successfully."
+    );
+
+
+    button.disabled = false;
+
+}
+
+
+/* =========================
+   SAVE APPLICATION
+========================= */
+
+function saveApplicationSettings(){
+
+    localStorage.setItem(
+        "beatroot_order_notifications",
+        document.getElementById(
+            "orderNotifications"
+        ).checked
+    );
+
+
+    localStorage.setItem(
+        "beatroot_restaurant_ordering",
+        document.getElementById(
+            "restaurantOrdering"
+        ).checked
+    );
+
+
+    localStorage.setItem(
+        "beatroot_customer_registration",
+        document.getElementById(
+            "customerRegistration"
+        ).checked
+    );
+
+
+    localStorage.setItem(
+        "beatroot_maintenance_mode",
+        document.getElementById(
+            "maintenanceMode"
+        ).checked
+    );
+
+
+    showSuccess(
+        "Application settings saved successfully."
+    );
+
+}
+
+
+/* =========================
+   DATABASE CHECK
+========================= */
+
+async function checkDatabase(){
+
+    const status =
+        document.getElementById(
+            "databaseStatus"
+        );
+
+
+    status.value =
+        "Checking...";
+
+
+    try{
+
+        const result =
+            await sb
+                .from("restaurants")
+                .select(
+                    "id",
+                    {
+                        count:"exact",
+                        head:true
+                    }
+                );
+
+
+        if(result.error){
+
+            status.value =
+                "Connection Error";
+
+            return;
+
+        }
+
+
+        status.value =
+            "Connected";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        status.value =
+            "Offline";
+
+    }
+
+}
+
+
+/* =========================
+   SUCCESS
+========================= */
+
+function showSuccess(message){
+
+    const box =
+        document.getElementById(
+            "successBox"
+        );
+
+
+    const error =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    error.style.display =
+        "none";
+
+
+    box.textContent =
+        message;
+
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        function(){
+
+            box.style.display =
+                "none";
+
+        },
+        3000
+    );
+
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+function showError(message){
+
+    const box =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    box.textContent =
+        message;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout(){
+
+    if(
+        !confirm(
+            "Are you sure you want to logout?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    await sb.auth.signOut();
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadSettings();
 
 </script>
 
 </body>
+
 </html>
