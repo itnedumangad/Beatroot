@@ -4,7 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Beatroot - Restaurant Registration</title>
 
@@ -24,8 +26,16 @@ body{
     font-family:Arial,Helvetica,sans-serif;
 
     background:
-        radial-gradient(circle at top left,#ffe8e6,transparent 35%),
-        radial-gradient(circle at bottom right,#ffeef0,transparent 35%),
+        radial-gradient(
+            circle at top left,
+            #ffe8e6,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #ffeef0,
+            transparent 35%
+        ),
         #f7f8fc;
 
     display:flex;
@@ -319,6 +329,17 @@ a{
     border:1px solid #bbf7d0;
 }
 
+.message.warning{
+
+    display:block;
+
+    background:#fff7ed;
+
+    color:#9a3412;
+
+    border:1px solid #fed7aa;
+}
+
 
 /* =========================================================
    FORM
@@ -475,7 +496,7 @@ a{
 
 
 /* =========================================================
-   APPROVAL
+   APPROVAL INFO
 ========================================================= */
 
 .approval-info{
@@ -647,7 +668,6 @@ a{
 
 <section class="left">
 
-
     <div class="brand">
         Beat<span>root</span>
     </div>
@@ -671,7 +691,6 @@ a{
 
 
     <div class="features">
-
 
         <div class="feature">
 
@@ -710,7 +729,6 @@ a{
             </span>
 
         </div>
-
 
     </div>
 
@@ -1016,6 +1034,7 @@ a{
 const SUPABASE_URL =
     "https://jhihjnsxazmftdqlitgk.supabase.co";
 
+
 const SUPABASE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
@@ -1055,7 +1074,7 @@ const messageBox =
 
 function showMessage(
     message,
-    type="error"
+    type = "error"
 ){
 
     messageBox.textContent =
@@ -1079,7 +1098,7 @@ function hideMessage(){
 
 
 /* =========================================================
-   PASSWORD
+   PASSWORD TOGGLE
 ========================================================= */
 
 function togglePassword(
@@ -1099,8 +1118,7 @@ function togglePassword(
 
 
     if(
-        input.type ===
-        "password"
+        input.type === "password"
     ){
 
         input.type =
@@ -1158,6 +1176,10 @@ registerForm.addEventListener(
 
         hideMessage();
 
+
+        /* ================================================
+           GET FORM VALUES
+        ================================================ */
 
         const restaurantName =
             document
@@ -1230,9 +1252,9 @@ registerForm.addEventListener(
                 .value;
 
 
-        /* =================================================
+        /* ================================================
            VALIDATION
-        ================================================= */
+        ================================================ */
 
         if(
             restaurantName.length < 2
@@ -1272,9 +1294,7 @@ registerForm.addEventListener(
 
 
         if(
-            !validatePhone(
-                phone
-            )
+            !validatePhone(phone)
         ){
 
             showMessage(
@@ -1313,8 +1333,7 @@ registerForm.addEventListener(
 
 
         if(
-            password !==
-            confirmPassword
+            password !== confirmPassword
         ){
 
             showMessage(
@@ -1326,6 +1345,10 @@ registerForm.addEventListener(
         }
 
 
+        /* ================================================
+           LOADING
+        ================================================ */
+
         registerBtn.disabled =
             true;
 
@@ -1333,18 +1356,25 @@ registerForm.addEventListener(
         registerBtn.innerHTML = `
             <span class="loading">
                 <span class="spinner"></span>
-                Creating application...
+                Creating account...
             </span>
         `;
 
 
         try{
 
+            /* ============================================
+               SUPABASE AUTH SIGN UP
 
-            /* =================================================
-               STEP 1
-               CREATE AUTH USER
-            ================================================= */
+               IMPORTANT:
+
+               Database trigger will automatically create:
+
+               1. restaurants
+               2. profiles
+               3. user_roles
+               4. partner_applications
+            ============================================ */
 
             const {
                 data,
@@ -1376,7 +1406,13 @@ registerForm.addEventListener(
                             ownerName,
 
                         phone:
-                            phone
+                            phone,
+
+                        address:
+                            address,
+
+                        description:
+                            description
 
                     }
 
@@ -1385,12 +1421,20 @@ registerForm.addEventListener(
             });
 
 
+            /* ============================================
+               AUTH ERROR
+            ============================================ */
+
             if(error){
 
                 throw error;
 
             }
 
+
+            /* ============================================
+               USER CHECK
+            ============================================ */
 
             if(
                 !data ||
@@ -1404,204 +1448,23 @@ registerForm.addEventListener(
             }
 
 
-            const user =
-                data.user;
-
-
-            /* =================================================
-               STEP 2
-               CREATE RESTAURANT
-            ================================================= */
-
-            const {
-                data:restaurantData,
-                error:restaurantError
-            } =
-            await supabaseClient
-                .from("restaurants")
-                .insert({
-
-                    name:
-                        restaurantName,
-
-                    description:
-                        description,
-
-                    phone:
-                        phone,
-
-                    address:
-                        address
-
-                })
-                .select(
-                    "id"
-                )
-                .single();
-
-
-            if(restaurantError){
-
-                throw new Error(
-                    "Restaurant details could not be saved: " +
-                    restaurantError.message
-                );
-
-            }
-
-
-            const restaurantId =
-                restaurantData.id;
-
-
-            /* =================================================
-               STEP 3
-               PROFILE
-            ================================================= */
-
-            const {
-                error:profileError
-            } =
-            await supabaseClient
-                .from("profiles")
-                .upsert({
-
-                    id:
-                        user.id,
-
-                    full_name:
-                        ownerName,
-
-                    phone:
-                        phone,
-
-                    role:
-                        "restaurant"
-
-                });
-
-
-            if(profileError){
-
-                console.warn(
-                    "Profile warning:",
-                    profileError
-                );
-
-            }
-
-
-            /* =================================================
-               STEP 4
-               USER ROLE
-            ================================================= */
-
-            const {
-                error:roleError
-            } =
-            await supabaseClient
-                .from("user_roles")
-                .upsert({
-
-                    user_id:
-                        user.id,
-
-                    role:
-                        "restaurant",
-
-                    restaurant_id:
-                        restaurantId,
-
-                    approval_status:
-                        "pending"
-
-                });
-
-
-            if(roleError){
-
-                throw new Error(
-                    "User role could not be created: " +
-                    roleError.message
-                );
-
-            }
-
-
-            /* =================================================
-               STEP 5
-               PARTNER APPLICATION
-               
-               THIS IS THE IMPORTANT NEW PART
-            ================================================= */
-
-            const {
-                error:applicationError
-            } =
-            await supabaseClient
-                .from("partner_applications")
-                .insert({
-
-                    user_id:
-                        user.id,
-
-                    type:
-                        "restaurant",
-
-                    full_name:
-                        ownerName,
-
-                    owner_name:
-                        ownerName,
-
-                    email:
-                        email,
-
-                    phone:
-                        phone,
-
-                    business_name:
-                        restaurantName,
-
-                    address:
-                        address,
-
-                    description:
-                        description,
-
-                    status:
-                        "pending"
-
-                });
-
-
-            if(applicationError){
-
-                throw new Error(
-                    "Partner application could not be created: " +
-                    applicationError.message
-                );
-
-            }
-
-
-            /* =================================================
-               STEP 6
-               SIGN OUT
-            ================================================= */
-
-            await supabaseClient.auth.signOut();
-
-
-            /* =================================================
+            /* ============================================
                SUCCESS
-            ================================================= */
+
+               DO NOT INSERT INTO DATABASE HERE.
+
+               TRIGGER HAS ALREADY DONE IT.
+            ============================================ */
 
             showMessage(
-                "Restaurant application submitted successfully. Please verify your email. Your application is now waiting for admin approval.",
+                "Restaurant application submitted successfully. Please check your email and verify your email address. Your application is now waiting for admin approval.",
                 "success"
             );
 
+
+            /* ============================================
+               RESET FORM
+            ============================================ */
 
             registerForm.reset();
 
@@ -1632,6 +1495,10 @@ registerForm.addEventListener(
                 message.toLowerCase();
 
 
+            /* ============================================
+               FRIENDLY ERROR MESSAGES
+            ============================================ */
+
             if(
                 lower.includes(
                     "already registered"
@@ -1643,6 +1510,36 @@ registerForm.addEventListener(
 
                 message =
                     "This email is already registered. Please sign in instead.";
+
+            }
+
+
+            else if(
+                lower.includes(
+                    "password"
+                ) &&
+                lower.includes(
+                    "6"
+                )
+            ){
+
+                message =
+                    "Password must contain at least 6 characters.";
+
+            }
+
+
+            else if(
+                lower.includes(
+                    "email"
+                ) &&
+                lower.includes(
+                    "invalid"
+                )
+            ){
+
+                message =
+                    "Please enter a valid email address.";
 
             }
 
