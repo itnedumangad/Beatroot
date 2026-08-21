@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -18,29 +20,32 @@
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f5f7fb;
-    color:#171717;
+    color:#111827;
 }
 
 button{
     font-family:inherit;
+    cursor:pointer;
 }
 
 .dashboard{
     min-height:100vh;
 }
 
-/* ================= SIDEBAR ================= */
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
     width:250px;
     position:fixed;
     top:0;
-    left:0;
     bottom:0;
+    left:0;
     background:#111827;
-    color:#fff;
+    color:white;
     padding:25px 15px;
-    z-index:1000;
+    z-index:100;
 }
 
 .brand{
@@ -56,8 +61,18 @@ button{
 .admin-label{
     color:#9ca3af;
     font-size:11px;
+    letter-spacing:1px;
     text-transform:uppercase;
-    padding:0 15px 10px;
+    padding:0 15px;
+    margin-bottom:10px;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin:5px 0;
 }
 
 .menu button{
@@ -68,39 +83,41 @@ button{
     padding:13px 15px;
     border-radius:10px;
     text-align:left;
-    cursor:pointer;
-    margin:3px 0;
     font-size:14px;
 }
 
 .menu button:hover,
 .menu button.active{
     background:#ef4444;
-    color:#fff;
+    color:white;
 }
 
-.logout-area{
-    position:absolute;
-    left:15px;
-    right:15px;
-    bottom:20px;
+.menu-icon{
+    display:inline-block;
+    width:25px;
 }
 
 .logout{
-    width:100%;
+    position:absolute;
+    bottom:20px;
+    left:15px;
+    right:15px;
+    width:calc(100% - 30px);
     padding:12px;
     border:1px solid #374151;
+    border-radius:10px;
     background:transparent;
     color:#d1d5db;
-    border-radius:10px;
-    cursor:pointer;
 }
 
 .logout:hover{
     background:#1f2937;
+    color:white;
 }
 
-/* ================= MAIN ================= */
+/* =========================
+   MAIN
+========================= */
 
 .main{
     margin-left:250px;
@@ -109,18 +126,18 @@ button{
 
 .topbar{
     height:75px;
-    background:#fff;
+    background:white;
     border-bottom:1px solid #e5e7eb;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     padding:0 30px;
     position:sticky;
     top:0;
-    z-index:100;
+    z-index:50;
 }
 
-.title{
+.top-title{
     font-size:22px;
     font-weight:700;
 }
@@ -136,72 +153,131 @@ button{
     height:40px;
     border-radius:50%;
     background:#ef4444;
-    color:#fff;
-    display:grid;
-    place-items:center;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     font-weight:bold;
 }
+
+.profile-text strong{
+    display:block;
+    font-size:13px;
+}
+
+.profile-text small{
+    color:#888;
+}
+
+/* =========================
+   CONTENT
+========================= */
 
 .content{
     padding:30px;
 }
 
-.page-head{
+.page-header{
     margin-bottom:25px;
 }
 
-.page-head h1{
-    font-size:28px;
-    margin-bottom:6px;
+.page-header h1{
+    font-size:27px;
+    margin-bottom:7px;
 }
 
-.page-head p{
+.page-header p{
     color:#6b7280;
+    font-size:14px;
 }
 
-/* ================= STATS ================= */
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    display:none;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-size:13px;
+}
+
+.message.error{
+    display:block;
+    background:#fee2e2;
+    color:#b91c1c;
+    border:1px solid #fecaca;
+}
+
+.message.success{
+    display:block;
+    background:#dcfce7;
+    color:#15803d;
+    border:1px solid #bbf7d0;
+}
+
+/* =========================
+   STATS
+========================= */
 
 .stats{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:18px;
     margin-bottom:25px;
 }
 
 .stat{
-    background:#fff;
+    background:white;
     border:1px solid #e5e7eb;
     border-radius:16px;
     padding:20px;
 }
 
-.stat-title{
+.stat-icon{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    margin-bottom:14px;
+}
+
+.pending-icon{
+    background:#fef3c7;
+}
+
+.approved-icon{
+    background:#dcfce7;
+}
+
+.rejected-icon{
+    background:#fee2e2;
+}
+
+.total-icon{
+    background:#dbeafe;
+}
+
+.stat h2{
+    font-size:27px;
+}
+
+.stat p{
+    margin-top:5px;
     color:#6b7280;
-    font-size:13px;
+    font-size:12px;
 }
 
-.stat-number{
-    font-size:28px;
-    font-weight:800;
-    margin-top:10px;
-}
-
-.pending{
-    color:#d97706;
-}
-
-.rest{
-    color:#2563eb;
-}
-
-.delivery{
-    color:#7c3aed;
-}
-
-/* ================= CARD ================= */
+/* =========================
+   FILTER
+========================= */
 
 .card{
-    background:#fff;
+    background:white;
     border:1px solid #e5e7eb;
     border-radius:16px;
     padding:22px;
@@ -209,88 +285,88 @@ button{
 
 .toolbar{
     display:flex;
-    gap:12px;
-    margin-bottom:18px;
-    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
 }
 
-.search{
-    flex:1;
-    min-width:220px;
-    height:44px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:0 13px;
-    outline:none;
+.toolbar h2{
+    font-size:18px;
 }
 
-.search:focus{
+.filters{
+    display:flex;
+    gap:8px;
+}
+
+.filter-btn{
+    border:1px solid #e5e7eb;
+    background:white;
+    padding:8px 13px;
+    border-radius:8px;
+    font-size:12px;
+}
+
+.filter-btn.active{
+    background:#ef4444;
+    color:white;
     border-color:#ef4444;
 }
 
-.filter{
-    height:44px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:0 12px;
-    background:#fff;
+/* =========================
+   APPLICATION CARD
+========================= */
+
+.application{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:15px;
 }
 
-.refresh{
-    height:44px;
-    padding:0 16px;
-    border:0;
-    border-radius:10px;
-    background:#111827;
-    color:#fff;
-    cursor:pointer;
+.application:last-child{
+    margin-bottom:0;
 }
 
-/* ================= TABLE ================= */
-
-.table{
-    overflow:auto;
+.application-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:18px;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:900px;
+.partner-info{
+    display:flex;
+    gap:13px;
+    align-items:center;
 }
 
-th,
-td{
-    padding:14px 10px;
-    border-bottom:1px solid #eee;
-    text-align:left;
-    font-size:13px;
+.partner-icon{
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    background:#fff1f2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
 }
 
-th{
+.partner-name{
+    font-size:17px;
+    font-weight:800;
+}
+
+.partner-type{
+    margin-top:4px;
     color:#6b7280;
-    font-size:11px;
+    font-size:12px;
 }
 
-.type-badge{
-    display:inline-block;
-    padding:6px 10px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:700;
-}
-
-.type-restaurant{
-    background:#dbeafe;
-    color:#2563eb;
-}
-
-.type-delivery{
-    background:#ede9fe;
-    color:#7c3aed;
-}
-
-.status-badge{
-    padding:6px 10px;
+.status{
+    padding:7px 11px;
     border-radius:20px;
     font-size:11px;
     font-weight:700;
@@ -308,54 +384,110 @@ th{
 
 .status-rejected{
     background:#fee2e2;
-    color:#dc2626;
+    color:#b91c1c;
+}
+
+.details{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.detail{
+    background:#f9fafb;
+    border-radius:10px;
+    padding:12px;
+}
+
+.detail-label{
+    display:block;
+    color:#9ca3af;
+    font-size:10px;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+.detail-value{
+    color:#374151;
+    font-size:13px;
+    font-weight:600;
+    word-break:break-word;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    border-top:1px solid #f1f1f1;
+    padding-top:15px;
 }
 
 .action-btn{
     border:0;
-    padding:8px 11px;
-    border-radius:8px;
-    cursor:pointer;
+    padding:10px 16px;
+    border-radius:9px;
     font-size:12px;
     font-weight:700;
-    margin-right:4px;
-}
-
-.view{
-    background:#f3f4f6;
-    color:#111827;
 }
 
 .approve{
-    background:#dcfce7;
-    color:#15803d;
+    background:#16a34a;
+    color:white;
+}
+
+.approve:hover{
+    background:#15803d;
 }
 
 .reject{
     background:#fee2e2;
-    color:#dc2626;
+    color:#b91c1c;
 }
 
-.action-btn:hover{
-    opacity:.8;
+.reject:hover{
+    background:#fecaca;
 }
 
-/* ================= EMPTY ================= */
+.view{
+    background:#f3f4f6;
+    color:#374151;
+}
 
-.message{
+.view:hover{
+    background:#e5e7eb;
+}
+
+/* =========================
+   EMPTY / LOADING
+========================= */
+
+.loading,
+.empty{
     text-align:center;
-    padding:45px;
-    color:#777;
+    padding:50px 20px;
+    color:#6b7280;
 }
 
-/* ================= MODAL ================= */
+.empty-icon{
+    font-size:45px;
+    margin-bottom:12px;
+}
+
+.empty h3{
+    color:#374151;
+    margin-bottom:5px;
+}
+
+/* =========================
+   MODAL
+========================= */
 
 .modal{
     display:none;
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.55);
-    z-index:5000;
+    background:rgba(0,0,0,.45);
+    z-index:500;
     align-items:center;
     justify-content:center;
     padding:20px;
@@ -367,135 +499,169 @@ th{
 
 .modal-box{
     width:100%;
-    max-width:650px;
+    max-width:550px;
+    background:white;
+    border-radius:18px;
+    padding:25px;
     max-height:90vh;
     overflow:auto;
-    background:#fff;
-    border-radius:20px;
 }
 
-.modal-head{
+.modal-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:20px;
-    border-bottom:1px solid #eee;
-    position:sticky;
-    top:0;
-    background:#fff;
+    margin-bottom:20px;
 }
 
-.modal-head h2{
+.modal-header h2{
     font-size:20px;
 }
 
 .close{
-    width:36px;
-    height:36px;
     border:0;
-    border-radius:50%;
     background:#f3f4f6;
-    font-size:20px;
-    cursor:pointer;
+    width:35px;
+    height:35px;
+    border-radius:8px;
+    font-size:18px;
 }
 
-.modal-body{
-    padding:22px;
+.modal-detail{
+    padding:12px 0;
+    border-bottom:1px solid #eee;
 }
 
-.detail-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+.modal-detail:last-child{
+    border-bottom:0;
 }
 
-.detail{
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    padding:13px;
-}
-
-.detail.full{
-    grid-column:1/-1;
-}
-
-.label{
-    color:#6b7280;
+.modal-detail label{
+    display:block;
+    color:#9ca3af;
     font-size:11px;
     margin-bottom:5px;
 }
 
-.value{
+.modal-detail div{
     font-size:14px;
-    font-weight:600;
-    word-break:break-word;
+    color:#374151;
 }
 
-.modal-actions{
-    display:flex;
-    gap:10px;
-    margin-top:22px;
-}
+/* =========================
+   MOBILE
+========================= */
 
-.modal-actions button{
-    flex:1;
-    height:45px;
+.mobile-menu{
+    display:none;
     border:0;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:700;
+    background:#f3f4f6;
+    padding:9px;
+    border-radius:8px;
 }
 
-.modal-approve{
-    background:#16a34a;
-    color:#fff;
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .details{
+        grid-template-columns:1fr 1fr;
+    }
+
 }
 
-.modal-reject{
-    background:#dc2626;
-    color:#fff;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:800px){
+@media(max-width:700px){
 
     .sidebar{
         transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
     }
 
     .main{
         margin-left:0;
     }
 
-    .content{
-        padding:20px 15px;
+    .mobile-menu{
+        display:block;
     }
 
     .topbar{
         padding:0 15px;
     }
 
-    .stats{
-        grid-template-columns:1fr;
+    .top-title{
+        font-size:17px;
     }
 
-    .detail-grid{
-        grid-template-columns:1fr;
+    .profile-text{
+        display:none;
     }
 
-    .detail.full{
-        grid-column:auto;
+    .content{
+        padding:20px 15px;
+    }
+
+    .toolbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .filters{
+        width:100%;
+        overflow-x:auto;
+    }
+
+    .application-top{
+        flex-direction:column;
     }
 
 }
+
+@media(max-width:500px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat h2{
+        font-size:22px;
+    }
+
+    .details{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .action-btn{
+        width:100%;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<aside class="sidebar">
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
 
     <div class="brand">
         Beat<span>root</span>
@@ -505,55 +671,84 @@ th{
         Admin Panel
     </div>
 
-    <div class="menu">
+    <ul class="menu">
 
-        <button onclick="go('admin-dashboard.html')">
-            📊 Dashboard
-        </button>
+        <li>
+            <button onclick="go('admin-dashboard.html')">
+                <span class="menu-icon">📊</span>
+                Dashboard
+            </button>
+        </li>
 
-        <button onclick="go('admin-orders.html')">
-            🛒 Orders
-        </button>
+        <li>
+            <button onclick="go('admin-orders.html')">
+                <span class="menu-icon">🛒</span>
+                Orders
+            </button>
+        </li>
 
-        <button onclick="go('admin-customers.html')">
-            👥 Customers
-        </button>
+        <li>
+            <button onclick="go('admin-customers.html')">
+                <span class="menu-icon">👥</span>
+                Customers
+            </button>
+        </li>
 
-        <button onclick="go('admin-restaurants.html')">
-            🍔 Restaurants
-        </button>
+        <li>
+            <button class="active">
+                <span class="menu-icon">🤝</span>
+                Partner Approvals
+            </button>
+        </li>
 
-        <button class="active">
-            🤝 Partner Approvals
-        </button>
+        <li>
+            <button onclick="go('admin-restaurants.html')">
+                <span class="menu-icon">🍔</span>
+                Restaurants
+            </button>
+        </li>
 
-        <button onclick="go('admin-reports.html')">
-            📈 Reports
-        </button>
+        <li>
+            <button onclick="go('admin-reports.html')">
+                <span class="menu-icon">📈</span>
+                Reports
+            </button>
+        </li>
 
-        <button onclick="go('settings.html')">
-            ⚙️ Settings
-        </button>
+        <li>
+            <button onclick="go('settings.html')">
+                <span class="menu-icon">⚙️</span>
+                Settings
+            </button>
+        </li>
 
-    </div>
+    </ul>
 
-    <div class="logout-area">
-
-        <button class="logout" onclick="logout()">
-            🚪 Logout
-        </button>
-
-    </div>
+    <button class="logout" onclick="logout()">
+        🚪 Logout
+    </button>
 
 </aside>
 
+
+<!-- MAIN -->
 
 <div class="main">
 
 <header class="topbar">
 
-    <div class="title">
-        Partner Approvals
+    <div style="display:flex;align-items:center;gap:12px;">
+
+        <button
+            class="mobile-menu"
+            onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <div class="top-title">
+            Partner Approvals
+        </div>
+
     </div>
 
     <div class="profile">
@@ -562,9 +757,17 @@ th{
             A
         </div>
 
-        <strong id="adminName">
-            Admin
-        </strong>
+        <div class="profile-text">
+
+            <strong id="adminName">
+                Admin
+            </strong>
+
+            <small>
+                Administrator
+            </small>
+
+        </div>
 
     </div>
 
@@ -573,176 +776,149 @@ th{
 
 <main class="content">
 
-    <div class="page-head">
+    <div class="page-header">
 
         <h1>
-            Partner Approvals
+            Partner Applications
         </h1>
 
         <p>
-            Review and approve Restaurant and Delivery Boy registrations.
+            Review and approve restaurant and delivery partner applications.
         </p>
 
     </div>
 
 
-    <div class="stats">
-
-        <div class="stat">
-
-            <div class="stat-title">
-                Pending Applications
-            </div>
-
-            <div
-                class="stat-number pending"
-                id="pendingCount">
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-title">
-                Restaurant Applications
-            </div>
-
-            <div
-                class="stat-number rest"
-                id="restaurantCount">
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-title">
-                Delivery Boy Applications
-            </div>
-
-            <div
-                class="stat-number delivery"
-                id="deliveryCount">
-                0
-            </div>
-
-        </div>
-
+    <div
+        id="messageBox"
+        class="message">
     </div>
 
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-icon pending-icon">
+                ⏳
+            </div>
+
+            <h2 id="pendingCount">
+                0
+            </h2>
+
+            <p>
+                Pending Applications
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon approved-icon">
+                ✅
+            </div>
+
+            <h2 id="approvedCount">
+                0
+            </h2>
+
+            <p>
+                Approved
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon rejected-icon">
+                ❌
+            </div>
+
+            <h2 id="rejectedCount">
+                0
+            </h2>
+
+            <p>
+                Rejected
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon total-icon">
+                🤝
+            </div>
+
+            <h2 id="totalCount">
+                0
+            </h2>
+
+            <p>
+                Total Applications
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- APPLICATIONS -->
 
     <section class="card">
 
         <div class="toolbar">
 
-            <input
-                type="text"
-                id="search"
-                class="search"
-                placeholder="Search name, email or phone...">
+            <h2>
+                Applications
+            </h2>
 
-            <select
-                id="filter"
-                class="filter">
+            <div class="filters">
 
-                <option value="">
-                    All Applications
-                </option>
-
-                <option value="restaurant">
-                    Restaurants
-                </option>
-
-                <option value="delivery_boy">
-                    Delivery Boys
-                </option>
-
-                <option value="pending">
+                <button
+                    class="filter-btn active"
+                    id="filterPending"
+                    onclick="setFilter('pending')">
                     Pending
-                </option>
+                </button>
 
-                <option value="approved">
+                <button
+                    class="filter-btn"
+                    id="filterApproved"
+                    onclick="setFilter('approved')">
                     Approved
-                </option>
+                </button>
 
-                <option value="rejected">
+                <button
+                    class="filter-btn"
+                    id="filterRejected"
+                    onclick="setFilter('rejected')">
                     Rejected
-                </option>
+                </button>
 
-            </select>
+                <button
+                    class="filter-btn"
+                    id="filterAll"
+                    onclick="setFilter('all')">
+                    All
+                </button>
 
-            <button
-                class="refresh"
-                onclick="loadApplications()">
-
-                ↻ Refresh
-
-            </button>
+            </div>
 
         </div>
 
 
-        <div class="table">
+        <div id="applications">
 
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            NAME
-                        </th>
-
-                        <th>
-                            TYPE
-                        </th>
-
-                        <th>
-                            EMAIL
-                        </th>
-
-                        <th>
-                            PHONE
-                        </th>
-
-                        <th>
-                            STATUS
-                        </th>
-
-                        <th>
-                            DATE
-                        </th>
-
-                        <th>
-                            ACTION
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="rows">
-
-                    <tr>
-
-                        <td
-                            colspan="7"
-                            class="message">
-
-                            Loading applications...
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
+            <div class="loading">
+                Loading applications...
+            </div>
 
         </div>
 
@@ -752,17 +928,18 @@ th{
 
 </div>
 
+</div>
 
-<!-- ================= MODAL ================= -->
+
+<!-- DETAILS MODAL -->
 
 <div
     class="modal"
-    id="modal"
-    onclick="closeOutside(event)">
+    id="detailsModal">
 
     <div class="modal-box">
 
-        <div class="modal-head">
+        <div class="modal-header">
 
             <h2>
                 Application Details
@@ -771,20 +948,12 @@ th{
             <button
                 class="close"
                 onclick="closeModal()">
-
                 ×
-
             </button>
 
         </div>
 
-        <div
-            class="modal-body"
-            id="modalBody">
-
-            Loading...
-
-        </div>
+        <div id="modalContent"></div>
 
     </div>
 
@@ -803,70 +972,24 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-const ADMIN_EMAIL =
-    "itnedumangad@gmail.com";
-
-
-const sb =
+const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
     );
 
 
+/* =========================================================
+   STATE
+========================================================= */
+
 let applications = [];
-let selectedApplication = null;
+
+let currentFilter = "pending";
 
 
 /* =========================================================
-   ELEMENTS
-========================================================= */
-
-const rows =
-    document.getElementById("rows");
-
-const search =
-    document.getElementById("search");
-
-const filter =
-    document.getElementById("filter");
-
-const modal =
-    document.getElementById("modal");
-
-const modalBody =
-    document.getElementById("modalBody");
-
-
-/* =========================================================
-   ESCAPE
-========================================================= */
-
-function esc(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function go(page){
-
-    window.location.href = page;
-
-}
-
-
-/* =========================================================
-   AUTH
+   ADMIN CHECK
 ========================================================= */
 
 async function checkAdmin(){
@@ -875,54 +998,77 @@ async function checkAdmin(){
         data,
         error
     } =
-    await sb.auth.getUser();
+    await supabaseClient.auth.getUser();
 
-    if(
-        error ||
-        !data ||
-        !data.user
-    ){
+    if(error){
 
-        window.location.href =
-            "login.html";
-
-        return false;
+        throw error;
 
     }
 
-    const user =
-        data.user;
+    const user = data.user;
 
-    if(
-        !user.email ||
-        user.email.toLowerCase() !==
-        ADMIN_EMAIL.toLowerCase()
-    ){
-
-        alert(
-            "Access denied. Admin only."
-        );
-
-        await sb.auth.signOut();
+    if(!user){
 
         window.location.href =
             "login.html";
 
-        return false;
+        return null;
+
+    }
+
+    const {
+        data:roleData,
+        error:roleError
+    } =
+    await supabaseClient
+        .from("user_roles")
+        .select("role")
+        .eq(
+            "user_id",
+            user.id
+        )
+        .maybeSingle();
+
+    if(roleError){
+
+        throw roleError;
+
+    }
+
+    if(
+        !roleData ||
+        String(roleData.role).toLowerCase() !== "admin"
+    ){
+
+        await supabaseClient.auth.signOut();
+
+        alert(
+            "Admin access required."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return null;
 
     }
 
     document.getElementById(
         "adminName"
     ).textContent =
-        user.email.split("@")[0];
+        user.email
+            ? user.email.split("@")[0]
+            : "Admin";
 
     document.getElementById(
         "avatar"
     ).textContent =
-        user.email.charAt(0).toUpperCase();
+        user.email
+            ? user.email.charAt(0).toUpperCase()
+            : "A";
 
-    return true;
+    return user;
 
 }
 
@@ -933,48 +1079,15 @@ async function checkAdmin(){
 
 async function loadApplications(){
 
-    if(!await checkAdmin()){
-        return;
-    }
-
-    rows.innerHTML = `
-        <tr>
-            <td colspan="7" class="message">
-                Loading applications...
-            </td>
-        </tr>
-    `;
-
-
     try{
 
-        /*
-         IMPORTANT:
-
-         This page expects a table named
-         partner_applications.
-
-         Expected columns:
-
-         id
-         user_id
-         full_name
-         email
-         phone
-         type
-         status
-         created_at
-         business_name
-         address
-         vehicle_number
-         license_number
-         */
+        await checkAdmin();
 
         const {
             data,
             error
         } =
-        await sb
+        await supabaseClient
             .from("partner_applications")
             .select("*")
             .order(
@@ -984,32 +1097,40 @@ async function loadApplications(){
                 }
             );
 
-
         if(error){
-            throw error;
-        }
 
+            throw error;
+
+        }
 
         applications =
             data || [];
 
-
         updateStats();
 
-        render();
+        renderApplications();
 
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Applications error:",
+            error
+        );
 
-        rows.innerHTML = `
-            <tr>
-                <td colspan="7" class="message">
-                    Unable to load applications.<br><br>
-                    ${esc(error.message)}
-                </td>
-            </tr>
+        showMessage(
+            "Unable to load partner applications: " +
+            error.message
+        );
+
+        document.getElementById(
+            "applications"
+        ).innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">⚠️</div>
+                <h3>Unable to load applications</h3>
+                <p>${escapeHTML(error.message)}</p>
+            </div>
         `;
 
     }
@@ -1025,107 +1146,78 @@ function updateStats(){
 
     const pending =
         applications.filter(
-            x =>
-                normalizeStatus(x.status)
-                === "pending"
+            x => normalizeStatus(x.status) === "pending"
         ).length;
 
-
-    const restaurants =
+    const approved =
         applications.filter(
-            x =>
-                normalizeType(x.type)
-                === "restaurant"
+            x => normalizeStatus(x.status) === "approved"
         ).length;
 
-
-    const delivery =
+    const rejected =
         applications.filter(
-            x =>
-                normalizeType(x.type)
-                === "delivery_boy"
+            x => normalizeStatus(x.status) === "rejected"
         ).length;
-
 
     document.getElementById(
         "pendingCount"
-    ).textContent =
-        pending;
-
+    ).textContent = pending;
 
     document.getElementById(
-        "restaurantCount"
-    ).textContent =
-        restaurants;
-
+        "approvedCount"
+    ).textContent = approved;
 
     document.getElementById(
-        "deliveryCount"
+        "rejectedCount"
+    ).textContent = rejected;
+
+    document.getElementById(
+        "totalCount"
     ).textContent =
-        delivery;
+        applications.length;
 
 }
 
 
 /* =========================================================
-   NORMALIZE TYPE
+   FILTER
 ========================================================= */
 
-function normalizeType(type){
+function setFilter(filter){
 
-    const value =
-        String(type || "")
-        .toLowerCase()
-        .trim();
+    currentFilter = filter;
 
-    if(
-        value === "restaurant" ||
-        value === "restaurant_owner"
-    ){
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
 
-        return "restaurant";
-
+    if(filter === "pending"){
+        document
+            .getElementById("filterPending")
+            .classList.add("active");
     }
 
-    if(
-        value === "delivery" ||
-        value === "delivery_boy"
-    ){
-
-        return "delivery_boy";
-
+    if(filter === "approved"){
+        document
+            .getElementById("filterApproved")
+            .classList.add("active");
     }
 
-    return value;
-
-}
-
-
-/* =========================================================
-   NORMALIZE STATUS
-========================================================= */
-
-function normalizeStatus(status){
-
-    const value =
-        String(status || "pending")
-        .toLowerCase()
-        .trim();
-
-    if(value === "approved"){
-        return "approved";
+    if(filter === "rejected"){
+        document
+            .getElementById("filterRejected")
+            .classList.add("active");
     }
 
-    if(
-        value === "rejected" ||
-        value === "declined"
-    ){
-
-        return "rejected";
-
+    if(filter === "all"){
+        document
+            .getElementById("filterAll")
+            .classList.add("active");
     }
 
-    return "pending";
+    renderApplications();
 
 }
 
@@ -1134,477 +1226,416 @@ function normalizeStatus(status){
    RENDER
 ========================================================= */
 
-function render(){
+function renderApplications(){
 
-    const query =
-        search.value
-        .toLowerCase()
-        .trim();
-
-    const selected =
-        filter.value;
-
-
-    const list =
-        applications.filter(
-            app => {
-
-                const name =
-                    String(
-                        app.full_name ||
-                        app.business_name ||
-                        ""
-                    ).toLowerCase();
-
-                const email =
-                    String(
-                        app.email || ""
-                    ).toLowerCase();
-
-                const phone =
-                    String(
-                        app.phone || ""
-                    ).toLowerCase();
-
-                const type =
-                    normalizeType(
-                        app.type
-                    );
-
-                const status =
-                    normalizeStatus(
-                        app.status
-                    );
-
-
-                const searchMatch =
-                    !query ||
-                    name.includes(query) ||
-                    email.includes(query) ||
-                    phone.includes(query);
-
-
-                const filterMatch =
-                    !selected ||
-                    selected === type ||
-                    selected === status;
-
-
-                return (
-                    searchMatch &&
-                    filterMatch
-                );
-
-            }
+    const container =
+        document.getElementById(
+            "applications"
         );
 
+    let filtered =
+        applications;
 
-    if(!list.length){
+    if(currentFilter !== "all"){
 
-        rows.innerHTML = `
-            <tr>
-                <td
-                    colspan="7"
-                    class="message">
+        filtered =
+            applications.filter(
+                application =>
+                    normalizeStatus(
+                        application.status
+                    ) === currentFilter
+            );
 
-                    No applications found.
+    }
 
-                </td>
-            </tr>
+    if(!filtered.length){
+
+        container.innerHTML = `
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ${
+                        currentFilter === "pending"
+                        ? "🎉"
+                        : "📭"
+                    }
+                </div>
+
+                <h3>
+                    ${
+                        currentFilter === "pending"
+                        ? "No pending applications"
+                        : "No applications found"
+                    }
+                </h3>
+
+                <p>
+                    There are no ${
+                        currentFilter === "all"
+                        ? ""
+                        : currentFilter
+                    } partner applications.
+                </p>
+
+            </div>
         `;
 
         return;
 
     }
 
-
-    rows.innerHTML =
-        list.map(
-            app => {
-
-                const type =
-                    normalizeType(
-                        app.type
-                    );
-
-                const status =
-                    normalizeStatus(
-                        app.status
-                    );
-
-                const name =
-                    app.business_name ||
-                    app.full_name ||
-                    "Applicant";
-
-
-                const date =
-                    app.created_at
-                    ? new Date(
-                        app.created_at
-                      ).toLocaleDateString(
-                        "en-IN"
-                      )
-                    : "-";
-
-
-                return `
-
-<tr>
-
-<td>
-    <strong>
-        ${esc(name)}
-    </strong>
-</td>
-
-
-<td>
-
-    <span
-        class="type-badge
-        ${
-            type === "restaurant"
-            ? "type-restaurant"
-            : "type-delivery"
-        }">
-
-        ${
-            type === "restaurant"
-            ? "🏪 Restaurant"
-            : "🚴 Delivery Boy"
-        }
-
-    </span>
-
-</td>
-
-
-<td>
-    ${esc(app.email || "-")}
-</td>
-
-
-<td>
-    ${esc(app.phone || "-")}
-</td>
-
-
-<td>
-
-    <span
-        class="status-badge status-${status}">
-
-        ${
-            status.charAt(0).toUpperCase()
-            + status.slice(1)
-        }
-
-    </span>
-
-</td>
-
-
-<td>
-    ${esc(date)}
-</td>
-
-
-<td>
-
-    <button
-        class="action-btn view"
-        onclick="viewApplication('${esc(app.id)}')">
-
-        View
-
-    </button>
-
-
-    ${
-        status === "pending"
-        ? `
-
-        <button
-            class="action-btn approve"
-            onclick="approveApplication('${esc(app.id)}')">
-
-            Approve
-
-        </button>
-
-        <button
-            class="action-btn reject"
-            onclick="rejectApplication('${esc(app.id)}')">
-
-            Reject
-
-        </button>
-
-        `
-        : ""
-    }
-
-</td>
-
-</tr>
-
-`;
-
-            }
-        ).join("");
+    container.innerHTML =
+        filtered
+            .map(
+                application =>
+                    createApplicationHTML(
+                        application
+                    )
+            )
+            .join("");
 
 }
 
 
 /* =========================================================
-   VIEW APPLICATION
+   APPLICATION CARD
+========================================================= */
+
+function createApplicationHTML(application){
+
+    const status =
+        normalizeStatus(
+            application.status
+        );
+
+    const type =
+        String(
+            application.type ||
+            "restaurant"
+        ).toLowerCase();
+
+    const isRestaurant =
+        type === "restaurant" ||
+        type === "restaurant_owner";
+
+    const name =
+        application.business_name ||
+        application.full_name ||
+        "Partner Application";
+
+    const icon =
+        isRestaurant
+        ? "🍔"
+        : "🚴";
+
+    const typeText =
+        isRestaurant
+        ? "Restaurant Partner"
+        : "Delivery Partner";
+
+    const date =
+        formatDate(
+            application.created_at
+        );
+
+    return `
+
+        <div class="application">
+
+            <div class="application-top">
+
+                <div class="partner-info">
+
+                    <div class="partner-icon">
+                        ${icon}
+                    </div>
+
+                    <div>
+
+                        <div class="partner-name">
+                            ${escapeHTML(name)}
+                        </div>
+
+                        <div class="partner-type">
+                            ${typeText}
+                            • Applied ${date}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <span class="status status-${status}">
+                    ${capitalize(status)}
+                </span>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Applicant
+                    </span>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.full_name ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.email ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Phone
+                    </span>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.phone ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Address
+                    </span>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.address ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                ${
+                    !isRestaurant
+                    ? `
+                        <div class="detail">
+
+                            <span class="detail-label">
+                                Vehicle Number
+                            </span>
+
+                            <div class="detail-value">
+                                ${escapeHTML(
+                                    application.vehicle_number ||
+                                    "-"
+                                )}
+                            </div>
+
+                        </div>
+
+                        <div class="detail">
+
+                            <span class="detail-label">
+                                License Number
+                            </span>
+
+                            <div class="detail-value">
+                                ${escapeHTML(
+                                    application.license_number ||
+                                    "-"
+                                )}
+                            </div>
+
+                        </div>
+                    `
+                    : ""
+                }
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="action-btn view"
+                    onclick="viewApplication(${application.id})">
+
+                    👁 View Details
+
+                </button>
+
+
+                ${
+                    status === "pending"
+                    ? `
+
+                        <button
+                            class="action-btn approve"
+                            onclick="approveApplication(${application.id})">
+
+                            ✓ Approve
+
+                        </button>
+
+                        <button
+                            class="action-btn reject"
+                            onclick="rejectApplication(${application.id})">
+
+                            ✕ Reject
+
+                        </button>
+
+                    `
+                    : ""
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   VIEW DETAILS
 ========================================================= */
 
 function viewApplication(id){
 
-    const app =
+    const application =
         applications.find(
-            x =>
-                String(x.id) ===
-                String(id)
+            x => Number(x.id) === Number(id)
         );
 
+    if(!application){
 
-    if(!app){
         return;
+
     }
 
-
-    selectedApplication =
-        app;
-
-
-    const type =
-        normalizeType(
-            app.type
+    const modalContent =
+        document.getElementById(
+            "modalContent"
         );
 
-    const status =
-        normalizeStatus(
-            app.status
-        );
+    modalContent.innerHTML = `
+
+        ${modalRow(
+            "Application ID",
+            application.id
+        )}
+
+        ${modalRow(
+            "Partner Type",
+            application.type || "-"
+        )}
+
+        ${modalRow(
+            "Full Name",
+            application.full_name || "-"
+        )}
+
+        ${modalRow(
+            "Business / Restaurant Name",
+            application.business_name || "-"
+        )}
+
+        ${modalRow(
+            "Email",
+            application.email || "-"
+        )}
+
+        ${modalRow(
+            "Phone",
+            application.phone || "-"
+        )}
+
+        ${modalRow(
+            "Address",
+            application.address || "-"
+        )}
+
+        ${modalRow(
+            "Vehicle Number",
+            application.vehicle_number || "-"
+        )}
+
+        ${modalRow(
+            "License Number",
+            application.license_number || "-"
+        )}
+
+        ${modalRow(
+            "Status",
+            application.status || "-"
+        )}
+
+        ${modalRow(
+            "Created At",
+            formatDateTime(application.created_at)
+        )}
+
+    `;
+
+    document
+        .getElementById("detailsModal")
+        .classList.add("show");
 
-
-    modalBody.innerHTML = `
-
-<div class="detail-grid">
-
-    <div class="detail">
-
-        <div class="label">
-            Applicant Name
-        </div>
-
-        <div class="value">
-            ${esc(app.full_name || "-")}
-        </div>
-
-    </div>
-
-
-    <div class="detail">
-
-        <div class="label">
-            Account Type
-        </div>
-
-        <div class="value">
-
-            ${
-                type === "restaurant"
-                ? "🏪 Restaurant"
-                : "🚴 Delivery Boy"
-            }
-
-        </div>
-
-    </div>
-
-
-    ${
-        type === "restaurant"
-        ? `
-
-        <div class="detail full">
-
-            <div class="label">
-                Restaurant / Business Name
-            </div>
-
-            <div class="value">
-                ${esc(app.business_name || "-")}
-            </div>
-
-        </div>
-
-        `
-        : ""
-    }
-
-
-    <div class="detail">
-
-        <div class="label">
-            Email
-        </div>
-
-        <div class="value">
-            ${esc(app.email || "-")}
-        </div>
-
-    </div>
-
-
-    <div class="detail">
-
-        <div class="label">
-            Phone
-        </div>
-
-        <div class="value">
-            ${esc(app.phone || "-")}
-        </div>
-
-    </div>
-
-
-    <div class="detail full">
-
-        <div class="label">
-            Address
-        </div>
-
-        <div class="value">
-            ${esc(app.address || "-")}
-        </div>
-
-    </div>
-
-
-    ${
-        type === "delivery_boy"
-        ? `
-
-        <div class="detail">
-
-            <div class="label">
-                Vehicle Number
-            </div>
-
-            <div class="value">
-                ${esc(app.vehicle_number || "-")}
-            </div>
-
-        </div>
-
-
-        <div class="detail">
-
-            <div class="label">
-                License Number
-            </div>
-
-            <div class="value">
-                ${esc(app.license_number || "-")}
-            </div>
-
-        </div>
-
-        `
-        : ""
-    }
-
-
-    <div class="detail">
-
-        <div class="label">
-            Status
-        </div>
-
-        <div class="value">
-            ${status.toUpperCase()}
-        </div>
-
-    </div>
-
-
-    <div class="detail">
-
-        <div class="label">
-            Application Date
-        </div>
-
-        <div class="value">
-
-            ${
-                app.created_at
-                ? new Date(
-                    app.created_at
-                  ).toLocaleString(
-                    "en-IN"
-                  )
-                : "-"
-            }
-
-        </div>
-
-    </div>
-
-
-    <div class="detail full">
-
-        <div class="label">
-            User ID
-        </div>
-
-        <div class="value">
-            ${esc(app.user_id || "-")}
-        </div>
-
-    </div>
-
-</div>
-
-
-${
-    status === "pending"
-    ? `
-
-<div class="modal-actions">
-
-    <button
-        class="modal-approve"
-        onclick="approveApplication('${esc(app.id)}')">
-
-        ✓ Approve Application
-
-    </button>
-
-
-    <button
-        class="modal-reject"
-        onclick="rejectApplication('${esc(app.id)}')">
-
-        ✕ Reject Application
-
-    </button>
-
-</div>
-
-`
-: ""
 }
 
-`;
+
+function modalRow(label,value){
+
+    return `
+
+        <div class="modal-detail">
+
+            <label>
+                ${escapeHTML(label)}
+            </label>
+
+            <div>
+                ${escapeHTML(value)}
+            </div>
+
+        </div>
+
+    `;
+
+}
 
 
-    modal.classList.add("show");
+function closeModal(){
+
+    document
+        .getElementById("detailsModal")
+        .classList.remove("show");
 
 }
 
@@ -1615,128 +1646,130 @@ ${
 
 async function approveApplication(id){
 
-    const app =
+    const application =
         applications.find(
-            x =>
-                String(x.id) ===
-                String(id)
+            x => Number(x.id) === Number(id)
         );
 
-
-    if(!app){
-        return;
-    }
-
-
-    if(
-        !confirm(
-            "Approve this application?"
-        )
-    ){
+    if(!application){
 
         return;
 
     }
 
+    const confirmApprove =
+        confirm(
+            `Approve ${application.business_name || application.full_name || "this partner"}?`
+        );
+
+    if(!confirmApprove){
+
+        return;
+
+    }
 
     try{
 
-        /*
-         STEP 1
-         Update application status
-        */
+        const {
+            data: { user },
+            error:authError
+        } =
+        await supabaseClient.auth.getUser();
+
+        if(authError){
+
+            throw authError;
+
+        }
+
+        if(!user){
+
+            throw new Error(
+                "Admin session expired."
+            );
+
+        }
+
+
+        /* UPDATE APPLICATION */
 
         const {
-            error
+            error:applicationError
         } =
-        await sb
+        await supabaseClient
             .from("partner_applications")
             .update({
+
                 status:"approved",
-                approved_at:new Date().toISOString(),
+
+                approved_at:
+                    new Date().toISOString(),
+
                 approved_by:
-                    (
-                        await sb.auth.getUser()
-                    ).data.user?.id || null
+                    user.id
+
             })
             .eq(
                 "id",
                 id
             );
 
+        if(applicationError){
 
-        if(error){
-            throw error;
+            throw applicationError;
+
         }
 
 
-        /*
-         STEP 2
-         Assign role
+        /* UPDATE USER ROLE */
 
-         Restaurant -> restaurant
-         Delivery -> delivery_boy
-        */
-
-        const type =
-            normalizeType(
-                app.type
-            );
-
-
-        if(app.user_id){
-
-            const role =
-                type === "restaurant"
-                ? "restaurant"
-                : "delivery_boy";
-
+        if(application.user_id){
 
             const {
                 error:roleError
             } =
-            await sb
+            await supabaseClient
                 .from("user_roles")
-                .upsert({
+                .update({
 
-                    user_id:
-                        app.user_id,
+                    approval_status:
+                        "approved"
 
-                    role:role
-
-                },{
-                    onConflict:
-                        "user_id"
-                });
-
+                })
+                .eq(
+                    "user_id",
+                    application.user_id
+                );
 
             if(roleError){
-                throw roleError;
+
+                console.error(
+                    "Role update error:",
+                    roleError
+                );
+
             }
 
         }
 
 
-        /*
-         STEP 3
-         Reload
-        */
-
-        closeModal();
+        showMessage(
+            "Partner application approved successfully.",
+            "success"
+        );
 
         await loadApplications();
-
-        alert(
-            "Application approved successfully."
-        );
 
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Approve error:",
+            error
+        );
 
-        alert(
-            "Approval failed:\n" +
+        showMessage(
+            "Approval failed: " +
             error.message
         );
 
@@ -1751,55 +1784,123 @@ async function approveApplication(id){
 
 async function rejectApplication(id){
 
-    if(
-        !confirm(
-            "Reject this application?"
-        )
-    ){
+    const application =
+        applications.find(
+            x => Number(x.id) === Number(id)
+        );
+
+    if(!application){
 
         return;
 
     }
 
+    const confirmReject =
+        confirm(
+            `Reject ${application.business_name || application.full_name || "this partner"}?`
+        );
+
+    if(!confirmReject){
+
+        return;
+
+    }
 
     try{
 
         const {
-            error
+            data: { user },
+            error:authError
         } =
-        await sb
+        await supabaseClient.auth.getUser();
+
+        if(authError){
+
+            throw authError;
+
+        }
+
+        if(!user){
+
+            throw new Error(
+                "Admin session expired."
+            );
+
+        }
+
+
+        const {
+            error:applicationError
+        } =
+        await supabaseClient
             .from("partner_applications")
             .update({
+
                 status:"rejected",
+
                 rejected_at:
                     new Date().toISOString()
+
             })
             .eq(
                 "id",
                 id
             );
 
+        if(applicationError){
 
-        if(error){
-            throw error;
+            throw applicationError;
+
         }
 
 
-        closeModal();
+        if(application.user_id){
+
+            const {
+                error:roleError
+            } =
+            await supabaseClient
+                .from("user_roles")
+                .update({
+
+                    approval_status:
+                        "rejected"
+
+                })
+                .eq(
+                    "user_id",
+                    application.user_id
+                );
+
+            if(roleError){
+
+                console.error(
+                    "Role rejection error:",
+                    roleError
+                );
+
+            }
+
+        }
+
+
+        showMessage(
+            "Partner application rejected.",
+            "success"
+        );
 
         await loadApplications();
-
-        alert(
-            "Application rejected."
-        );
 
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Reject error:",
+            error
+        );
 
-        alert(
-            "Rejection failed:\n" +
+        showMessage(
+            "Rejection failed: " +
             error.message
         );
 
@@ -1809,59 +1910,156 @@ async function rejectApplication(id){
 
 
 /* =========================================================
-   CLOSE MODAL
+   STATUS
 ========================================================= */
 
-function closeModal(){
+function normalizeStatus(status){
 
-    modal.classList.remove("show");
-
-    selectedApplication =
-        null;
-
-}
-
-
-function closeOutside(event){
+    const value =
+        String(
+            status || "pending"
+        )
+        .toLowerCase()
+        .trim();
 
     if(
-        event.target === modal
+        value === "approved" ||
+        value === "approve"
     ){
 
-        closeModal();
+        return "approved";
 
     }
+
+    if(
+        value === "rejected" ||
+        value === "reject"
+    ){
+
+        return "rejected";
+
+    }
+
+    return "pending";
 
 }
-
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if(event.key === "Escape"){
-
-            closeModal();
-
-        }
-
-    }
-);
 
 
 /* =========================================================
-   SEARCH / FILTER
+   MESSAGE
 ========================================================= */
 
-search.addEventListener(
-    "input",
-    render
-);
+function showMessage(
+    message,
+    type="error"
+){
 
-filter.addEventListener(
-    "change",
-    render
-);
+    const box =
+        document.getElementById(
+            "messageBox"
+        );
+
+    box.textContent =
+        message;
+
+    box.className =
+        "message " + type;
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function capitalize(value){
+
+    value =
+        String(value || "");
+
+    return value
+        .charAt(0)
+        .toUpperCase() +
+        value.slice(1);
+
+}
+
+
+function formatDate(value){
+
+    if(!value){
+
+        return "-";
+
+    }
+
+    return new Date(value)
+        .toLocaleDateString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+}
+
+
+function formatDateTime(value){
+
+    if(!value){
+
+        return "-";
+
+    }
+
+    return new Date(value)
+        .toLocaleString(
+            "en-IN"
+        );
+
+}
+
+
+function escapeHTML(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function go(page){
+
+    window.location.href =
+        page;
+
+}
+
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
 
 
 /* =========================================================
@@ -1880,13 +2078,34 @@ async function logout(){
 
     }
 
-
-    await sb.auth.signOut();
+    await supabaseClient.auth.signOut();
 
     window.location.href =
         "login.html";
 
 }
+
+
+/* =========================================================
+   MODAL OUTSIDE CLICK
+========================================================= */
+
+document
+    .getElementById("detailsModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target === this
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
 
 
 /* =========================================================
