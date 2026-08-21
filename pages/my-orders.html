@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0">
 
 <title>My Orders - Beatroot</title>
 
@@ -14,12 +14,14 @@
 
 <style>
 
-/* =========================================================
+/* =========================
    RESET
-========================================================= */
+========================= */
 
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html{
@@ -27,400 +29,140 @@ html{
 }
 
 body{
-    margin:0;
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    background:
-        radial-gradient(
-            circle at 0% 0%,
-            rgba(239,68,68,.08),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 100% 100%,
-            rgba(239,68,68,.06),
-            transparent 30%
-        ),
-        #f6f7fb;
-
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    background:#f7f8fc;
     color:#171717;
 }
 
-
-/* =========================================================
-   PAGE
-========================================================= */
-
-.page{
-    width:100%;
-    max-width:1100px;
-    min-height:100vh;
-    margin:auto;
-    background:#f6f7fb;
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus{
+    text-decoration:none !important;
 }
 
 
-/* =========================================================
+/* =========================
    HEADER
-========================================================= */
+========================= */
 
 .header{
+    position:sticky;
+    top:0;
+    z-index:1000;
 
-    height:76px;
+    height:72px;
+
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(14px);
+
+    border-bottom:1px solid #eeeeee;
+}
+
+.header-inner{
+    max-width:1200px;
+    height:100%;
+    margin:auto;
+    padding:0 22px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
-    padding:0 28px;
-
-    background:
-        rgba(255,255,255,.94);
-
-    backdrop-filter:blur(15px);
-
-    border-bottom:
-        1px solid #e8e8e8;
-
-    position:sticky;
-
-    top:0;
-
-    z-index:50;
 }
 
 .logo{
-
-    font-size:28px;
-
+    font-size:29px;
     font-weight:900;
-
     letter-spacing:-1.5px;
-
-    color:#ef3f3f;
+    color:#ef3e3e;
 }
 
 .logo span{
     color:#171717;
 }
 
-
-/* =========================================================
-   HEADER USER
-========================================================= */
-
-.user-box{
-
+.header-right{
     display:flex;
-
     align-items:center;
-
     gap:10px;
 }
 
-.user-avatar{
-
-    width:38px;
-    height:38px;
-
-    border-radius:50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ef4444,
-            #d92f2f
-        );
-
-    color:white;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-weight:800;
-
-    font-size:14px;
-}
-
-.user-info{
-
-    display:flex;
-
-    flex-direction:column;
-
-    line-height:1.2;
-}
-
-.user-name{
-
-    font-size:13px;
-
-    font-weight:800;
-}
-
-.user-email{
-
-    font-size:11px;
-
-    color:#777;
-
-    max-width:180px;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    white-space:nowrap;
-}
-
-
-/* =========================================================
-   BACK BUTTON
-========================================================= */
-
-.back-btn{
-
+.header-btn{
     border:0;
-
-    background:#f1f2f4;
-
-    color:#222;
+    border-radius:10px;
 
     padding:10px 15px;
 
-    border-radius:11px;
-
-    font-size:13px;
-
+    font-size:14px;
     font-weight:700;
 
     cursor:pointer;
-
-    transition:.2s;
 }
 
-.back-btn:hover{
-
-    background:#e8e9eb;
-
-    transform:translateX(-2px);
+.back-btn{
+    background:#f1f2f5;
+    color:#222;
 }
 
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.content{
-
-    padding:32px 28px 60px;
+.cart-btn{
+    background:#ef3e3e;
+    color:#fff;
 }
 
 
-/* =========================================================
-   HERO
-========================================================= */
+/* =========================
+   PAGE
+========================= */
 
-.hero{
+.container{
+    max-width:1200px;
+    margin:auto;
 
+    padding:40px 22px 70px;
+}
+
+.page-top{
     display:flex;
-
-    align-items:flex-end;
-
     justify-content:space-between;
+    align-items:flex-end;
 
     gap:20px;
 
-    margin-bottom:25px;
+    margin-bottom:28px;
 }
 
-.hero h1{
-
-    margin:0;
-
-    font-size:34px;
-
+.page-title{
+    font-size:38px;
+    font-weight:900;
     letter-spacing:-1px;
+
+    margin-bottom:7px;
 }
 
-.hero p{
-
-    margin:8px 0 0;
-
-    color:#737373;
-
+.page-subtitle{
+    color:#777;
     font-size:14px;
 }
 
 
-/* =========================================================
-   STATS
-========================================================= */
+/* =========================
+   REFRESH
+========================= */
 
-.stats{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:14px;
-
-    margin-bottom:22px;
-}
-
-.stat{
-
-    background:white;
-
-    border:1px solid #e7e7e7;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.04);
-}
-
-.stat-label{
-
-    color:#777;
-
-    font-size:12px;
-
-    margin-bottom:8px;
-}
-
-.stat-value{
-
-    font-size:23px;
-
-    font-weight:900;
-}
-
-
-/* =========================================================
-   TOOLBAR
-========================================================= */
-
-.toolbar{
-
-    background:white;
-
-    border:1px solid #e6e6e6;
-
-    border-radius:18px;
-
-    padding:15px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    margin-bottom:20px;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.035);
-}
-
-.search-box{
-
-    flex:1;
-
-    position:relative;
-}
-
-.search-box input{
-
-    width:100%;
-
-    height:45px;
-
-    border:1px solid #dedede;
-
-    border-radius:11px;
-
-    padding:0 14px 0 40px;
-
-    outline:none;
-
-    font-size:13px;
-
-    background:#fafafa;
-
-    transition:.2s;
-}
-
-.search-box input:focus{
-
-    border-color:#ef4444;
-
-    background:white;
-
-    box-shadow:
-        0 0 0 3px rgba(239,68,68,.08);
-}
-
-.search-icon{
-
-    position:absolute;
-
-    left:14px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    color:#888;
-
-    font-size:15px;
-}
-
-.filter{
-
-    height:45px;
-
-    border:1px solid #dedede;
-
-    border-radius:11px;
-
-    padding:0 13px;
+.refresh-btn{
+    border:1px solid #e3e3e3;
 
     background:#fff;
 
-    outline:none;
+    color:#333;
 
-    cursor:pointer;
+    border-radius:10px;
+
+    padding:10px 15px;
 
     font-size:13px;
-}
-
-.refresh-btn{
-
-    height:45px;
-
-    padding:0 16px;
-
-    border:0;
-
-    border-radius:11px;
-
-    background:#171717;
-
-    color:white;
-
     font-weight:700;
 
     cursor:pointer;
@@ -429,130 +171,71 @@ body{
 }
 
 .refresh-btn:hover{
-
-    background:#2c2c2c;
+    border-color:#ef3e3e;
+    color:#ef3e3e;
 }
 
 
-/* =========================================================
-   ERROR
-========================================================= */
+/* =========================
+   MESSAGE
+========================= */
 
-.error-box{
-
+.message{
     display:none;
 
-    background:#fff0f0;
+    padding:14px 16px;
 
-    border:1px solid #ffcaca;
-
-    color:#c62828;
-
-    padding:16px;
-
-    border-radius:14px;
+    border-radius:11px;
 
     margin-bottom:20px;
 
-    font-size:13px;
+    font-size:14px;
 
     line-height:1.5;
 }
 
+.message.error{
+    display:block;
 
-/* =========================================================
-   LOADING
-========================================================= */
+    background:#fff0f0;
 
-.loading{
+    color:#c62828;
 
-    display:none;
-
-    gap:15px;
-
-    flex-direction:column;
-}
-
-.skeleton{
-
-    height:185px;
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #eeeeee 25%,
-            #f8f8f8 50%,
-            #eeeeee 75%
-        );
-
-    background-size:400% 100%;
-
-    animation:
-        loading 1.4s infinite;
-}
-
-@keyframes loading{
-
-    0%{
-        background-position:100% 0;
-    }
-
-    100%{
-        background-position:-100% 0;
-    }
+    border:1px solid #ffd0d0;
 }
 
 
-/* =========================================================
-   ORDERS GRID
-========================================================= */
+/* =========================
+   ORDERS
+========================= */
 
 .orders-list{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:16px;
+    display:grid;
+    gap:18px;
 }
-
-
-/* =========================================================
-   ORDER CARD
-========================================================= */
 
 .order-card{
 
-    background:white;
+    background:#fff;
 
-    border:1px solid #e6e6e6;
+    border:1px solid #e7e7e7;
 
     border-radius:20px;
 
-    padding:20px;
+    overflow:hidden;
 
     box-shadow:
-        0 10px 35px rgba(0,0,0,.045);
-
-    transition:.25s;
-}
-
-.order-card:hover{
-
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 15px 40px rgba(0,0,0,.07);
+        0 8px 30px rgba(0,0,0,.05);
 }
 
 
-/* =========================================================
-   ORDER HEADER
-========================================================= */
+/* =========================
+   ORDER TOP
+========================= */
 
-.order-header{
+.order-top{
+
+    padding:20px 22px;
 
     display:flex;
 
@@ -562,16 +245,16 @@ body{
 
     gap:15px;
 
-    padding-bottom:16px;
-
     border-bottom:1px solid #eeeeee;
 }
 
-.order-number{
+.order-id{
 
-    font-size:16px;
+    font-size:15px;
 
-    font-weight:900;
+    font-weight:850;
+
+    margin-bottom:5px;
 }
 
 .order-date{
@@ -579,14 +262,7 @@ body{
     color:#888;
 
     font-size:12px;
-
-    margin-top:5px;
 }
-
-
-/* =========================================================
-   STATUS
-========================================================= */
 
 .status{
 
@@ -598,80 +274,106 @@ body{
 
     padding:7px 11px;
 
-    border-radius:30px;
+    border-radius:20px;
 
     font-size:11px;
 
-    font-weight:800;
+    font-weight:850;
 
     text-transform:capitalize;
-
-    white-space:nowrap;
 }
 
-.status-dot{
 
-    width:6px;
+/* STATUS COLORS */
 
-    height:6px;
-
-    border-radius:50%;
-
-    background:currentColor;
-}
-
+.status.confirmed,
 .status.pending{
-
-    background:#fff4d8;
-
-    color:#a96b00;
-}
-
-.status.confirmed{
-
-    background:#e7f0ff;
-
-    color:#2563eb;
+    background:#fff7df;
+    color:#9a6700;
 }
 
 .status.preparing{
-
-    background:#fff0df;
-
-    color:#d05b00;
+    background:#fff0e0;
+    color:#c45b00;
 }
 
-.status.out_for_delivery{
+.status.ready{
+    background:#eaf4ff;
+    color:#1265a5;
+}
 
-    background:#e9edff;
-
-    color:#4f46e5;
+.status.out-for-delivery{
+    background:#f0eaff;
+    color:#7048b8;
 }
 
 .status.delivered{
-
-    background:#e6f8ed;
-
-    color:#168044;
+    background:#eaf8ef;
+    color:#16803c;
 }
 
 .status.cancelled{
-
-    background:#ffe8e8;
-
-    color:#d32f2f;
+    background:#fff0f0;
+    color:#c62828;
 }
 
 
-/* =========================================================
+/* =========================
+   RESTAURANT
+========================= */
+
+.restaurant-row{
+
+    padding:18px 22px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+.restaurant-name{
+
+    font-size:18px;
+
+    font-weight:850;
+}
+
+.restaurant-label{
+
+    color:#888;
+
+    font-size:12px;
+
+    margin-bottom:4px;
+}
+
+.payment-badge{
+
+    color:#666;
+
+    background:#f5f5f5;
+
+    border-radius:8px;
+
+    padding:7px 10px;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+
+/* =========================
    ITEMS
-========================================================= */
+========================= */
 
-.items{
+.items-section{
 
-    padding:16px 0;
-
-    border-bottom:1px solid #eeeeee;
+    padding:0 22px 10px;
 }
 
 .item{
@@ -680,81 +382,108 @@ body{
 
     align-items:center;
 
-    justify-content:space-between;
+    gap:13px;
 
-    gap:15px;
+    padding:13px 0;
 
-    padding:7px 0;
-
-    font-size:13px;
+    border-top:1px solid #eeeeee;
 }
 
-.item-left{
+.item-image{
 
-    display:flex;
+    width:58px;
+    height:58px;
 
-    align-items:center;
+    border-radius:10px;
 
-    gap:10px;
+    object-fit:cover;
+
+    background:#f1f1f1;
+
+    flex-shrink:0;
+}
+
+.item-info{
+
+    flex:1;
 
     min-width:0;
 }
 
-.item-quantity{
-
-    min-width:27px;
-
-    height:27px;
-
-    border-radius:8px;
-
-    background:#f3f3f3;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:11px;
-
-    font-weight:800;
-}
-
 .item-name{
 
-    overflow:hidden;
+    font-size:14px;
 
-    text-overflow:ellipsis;
+    font-weight:800;
 
-    white-space:nowrap;
+    margin-bottom:4px;
+}
 
-    color:#444;
+.item-quantity{
+
+    color:#777;
+
+    font-size:12px;
 }
 
 .item-price{
 
+    font-size:14px;
+
     font-weight:800;
 
     white-space:nowrap;
 }
 
 
-/* =========================================================
-   ORDER FOOTER
-========================================================= */
+/* =========================
+   ORDER BOTTOM
+========================= */
 
-.order-footer{
+.order-bottom{
+
+    background:#fafafa;
+
+    border-top:1px solid #eeeeee;
+
+    padding:18px 22px;
 
     display:flex;
 
-    align-items:center;
+    align-items:flex-end;
 
     justify-content:space-between;
 
-    gap:15px;
+    gap:20px;
+}
 
-    padding-top:16px;
+.delivery-address{
+
+    max-width:600px;
+
+    color:#777;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+.delivery-address strong{
+
+    display:block;
+
+    color:#333;
+
+    font-size:12px;
+
+    margin-bottom:4px;
+}
+
+.total-box{
+
+    text-align:right;
+
+    white-space:nowrap;
 }
 
 .total-label{
@@ -762,330 +491,250 @@ body{
     color:#777;
 
     font-size:12px;
+
+    margin-bottom:4px;
 }
 
-.total-value{
+.total-amount{
 
-    font-size:21px;
+    font-size:20px;
 
     font-weight:900;
-
-    margin-top:3px;
-}
-
-.actions{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-}
-
-.btn{
-
-    border:0;
-
-    padding:10px 14px;
-
-    border-radius:10px;
-
-    font-size:12px;
-
-    font-weight:800;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.view-btn{
-
-    background:#f1f2f4;
-
-    color:#222;
-}
-
-.view-btn:hover{
-
-    background:#e4e5e7;
-}
-
-.track-btn{
-
-    background:#171717;
-
-    color:white;
-}
-
-.track-btn:hover{
-
-    background:#303030;
-}
-
-.reorder-btn{
-
-    background:#ef3f3f;
-
-    color:white;
-}
-
-.reorder-btn:hover{
-
-    background:#d93232;
 }
 
 
-/* =========================================================
+/* =========================
    EMPTY
-========================================================= */
+========================= */
 
 .empty{
 
-    display:none;
-
-    background:white;
+    background:#fff;
 
     border:1px solid #e7e7e7;
 
     border-radius:20px;
 
-    padding:65px 25px;
-
     text-align:center;
+
+    padding:80px 20px;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.04);
 }
 
 .empty-icon{
 
-    width:70px;
+    font-size:58px;
 
-    height:70px;
-
-    margin:auto;
-
-    border-radius:50%;
-
-    background:#fff0f0;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:30px;
+    margin-bottom:15px;
 }
 
 .empty h2{
 
-    margin:18px 0 8px;
+    font-size:25px;
 
-    font-size:22px;
+    margin-bottom:8px;
 }
 
 .empty p{
 
-    margin:0;
-
     color:#777;
 
-    font-size:13px;
+    font-size:14px;
+
+    margin-bottom:24px;
 }
 
-.home-btn{
+.browse-btn{
 
-    margin-top:20px;
+    display:inline-block;
 
-    border:0;
+    background:#ef3e3e;
 
-    background:#ef3f3f;
+    color:#fff;
 
-    color:white;
+    padding:13px 22px;
 
-    padding:12px 20px;
+    border-radius:10px;
 
-    border-radius:11px;
+    font-size:14px;
 
     font-weight:800;
-
-    cursor:pointer;
 }
 
 
-/* =========================================================
-   LOGIN REQUIRED
-========================================================= */
+/* =========================
+   LOADING
+========================= */
 
-.login-required{
+.loading{
 
-    display:none;
-
-    background:white;
+    background:#fff;
 
     border:1px solid #e7e7e7;
 
     border-radius:20px;
 
-    padding:60px 25px;
+    padding:70px 20px;
+
+    text-align:center;
+
+    color:#777;
+}
+
+.spinner{
+
+    width:36px;
+    height:36px;
+
+    border:4px solid #eee;
+
+    border-top-color:#ef3e3e;
+
+    border-radius:50%;
+
+    margin:0 auto 15px;
+
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+
+    background:#111827;
+
+    color:#fff;
+
+    padding:35px 22px;
+}
+
+.footer-inner{
+
+    max-width:1200px;
+
+    margin:auto;
 
     text-align:center;
 }
 
-.login-required .icon{
+.footer-logo{
 
-    font-size:45px;
+    font-size:25px;
 
-    margin-bottom:15px;
+    font-weight:900;
+
+    margin-bottom:8px;
 }
 
-.login-required h2{
+.footer-logo span{
 
-    margin:0 0 8px;
+    color:#ef3e3e;
 }
 
-.login-required p{
+.footer p{
 
-    margin:0;
-
-    color:#777;
+    color:#9ca3af;
 
     font-size:13px;
 }
 
-.login-btn{
 
-    margin-top:20px;
-
-    border:0;
-
-    background:#ef3f3f;
-
-    color:white;
-
-    padding:12px 22px;
-
-    border-radius:11px;
-
-    font-weight:800;
-
-    cursor:pointer;
-}
-
-
-/* =========================================================
+/* =========================
    MOBILE
-========================================================= */
+========================= */
 
-@media(max-width:750px){
+@media(max-width:700px){
 
     .header{
+        height:64px;
+    }
 
+    .header-inner{
         padding:0 15px;
     }
 
-    .content{
-
-        padding:22px 15px 45px;
+    .logo{
+        font-size:25px;
     }
 
-    .hero{
-
-        align-items:flex-start;
-
-        flex-direction:column;
-    }
-
-    .hero h1{
-
-        font-size:28px;
-    }
-
-    .stats{
-
-        grid-template-columns:1fr;
-    }
-
-    .toolbar{
-
-        flex-direction:column;
-
-        align-items:stretch;
-    }
-
-    .filter,
-    .refresh-btn{
-
-        width:100%;
-    }
-
-    .order-header{
-
-        align-items:flex-start;
-
-        flex-direction:column;
-    }
-
-    .order-footer{
-
-        align-items:flex-start;
-
-        flex-direction:column;
-    }
-
-    .actions{
-
-        width:100%;
-    }
-
-    .btn{
-
-        flex:1;
-    }
-
-    .user-email{
-
+    .back-btn{
         display:none;
+    }
+
+    .cart-btn{
+        padding:9px 12px;
+        font-size:12px;
+    }
+
+    .container{
+        padding:28px 15px 50px;
+    }
+
+    .page-top{
+        align-items:flex-start;
+    }
+
+    .page-title{
+        font-size:30px;
+    }
+
+    .refresh-btn{
+        padding:9px 11px;
+        font-size:12px;
+    }
+
+    .order-top{
+        padding:17px;
+    }
+
+    .restaurant-row{
+        padding:16px 17px;
+    }
+
+    .items-section{
+        padding:0 17px 8px;
+    }
+
+    .order-bottom{
+        padding:16px 17px;
     }
 
 }
 
+@media(max-width:500px){
 
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media(max-width:430px){
-
-    .logo{
-
-        font-size:24px;
+    .order-top{
+        align-items:flex-start;
     }
 
-    .back-btn{
-
-        padding:9px 11px;
-
-        font-size:12px;
+    .restaurant-row{
+        align-items:flex-start;
     }
 
-    .user-name{
-
-        display:none;
+    .order-bottom{
+        display:block;
     }
 
-    .order-card{
-
-        padding:16px;
+    .total-box{
+        text-align:left;
+        margin-top:14px;
     }
 
-    .actions{
-
-        flex-wrap:wrap;
-    }
-
-    .btn{
-
-        min-width:calc(50% - 5px);
+    .delivery-address{
+        max-width:none;
     }
 
 }
@@ -1098,533 +747,525 @@ body{
 <body>
 
 
-<div class="page">
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <a
+            href="../index.html"
+            class="logo">
+
+            Beat<span>root</span>
+
+        </a>
 
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+        <div class="header-right">
 
-    <header class="header">
+            <button
+                class="header-btn back-btn"
+                onclick="goBack()">
+
+                ← Back
+
+            </button>
+
+
+            <button
+                class="header-btn cart-btn"
+                onclick="goCart()">
+
+                🛒 Cart
+                (<span id="cartCount">0</span>)
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+    <div class="page-top">
+
+        <div>
+
+            <h1 class="page-title">
+                My Orders
+            </h1>
+
+            <p class="page-subtitle">
+                Track and view your previous orders.
+            </p>
+
+        </div>
+
 
         <button
-            class="back-btn"
-            onclick="goHome()">
+            class="refresh-btn"
+            onclick="loadOrders()">
 
-            ← Back
+            ↻ Refresh
 
         </button>
 
+    </div>
 
-        <div class="logo">
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+
+    <div
+        id="ordersArea">
+
+        <div class="loading">
+
+            <div class="spinner"></div>
+
+            Loading your orders...
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <div class="footer-logo">
 
             Beat<span>root</span>
 
         </div>
 
+        <p>
+            Delicious food. Easy ordering.
+        </p>
 
-        <div class="user-box">
+    </div>
 
-            <div
-                class="user-avatar"
-                id="userAvatar">
+</footer>
 
-                U
 
-            </div>
 
-            <div class="user-info">
+<script>
 
-                <div
-                    class="user-name"
-                    id="userName">
+/* =========================================
+   SUPABASE
+========================================= */
 
-                    Customer
+const SUPABASE_URL =
+"https://jhihjnsxazmftdqlitgk.supabase.co";
 
-                </div>
+const SUPABASE_KEY =
+"sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-                <div
-                    class="user-email"
-                    id="userEmail">
+const sb =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
-                </div>
 
-            </div>
+/* =========================================
+   GLOBAL
+========================================= */
+
+let currentUser = null;
+
+let orders = [];
+
+
+/* =========================================
+   HTML ESCAPE
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showError(text){
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = text;
+
+    box.className =
+        "message error";
+
+}
+
+function hideMessage(){
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = "";
+
+    box.className =
+        "message";
+
+}
+
+
+/* =========================================
+   AUTH
+========================================= */
+
+async function checkUser(){
+
+    const result =
+        await sb.auth.getUser();
+
+
+    if(
+        result.error ||
+        !result.data.user
+    ){
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    currentUser =
+        result.data.user;
+
+    return true;
+
+}
+
+
+/* =========================================
+   LOAD CART COUNT
+========================================= */
+
+async function loadCartCount(){
+
+    if(!currentUser){
+        return;
+    }
+
+
+    const result =
+        await sb
+        .from("cart_items")
+        .select(
+            "quantity"
+        )
+        .eq(
+            "customer_id",
+            currentUser.id
+        );
+
+
+    if(result.error){
+
+        console.log(
+            "Cart count error:",
+            result.error
+        );
+
+        return;
+
+    }
+
+
+    const count =
+        (result.data || [])
+        .reduce(
+            (sum,item)=>
+                sum +
+                Number(
+                    item.quantity || 0
+                ),
+            0
+        );
+
+
+    document.getElementById(
+        "cartCount"
+    ).textContent = count;
+
+}
+
+
+/* =========================================
+   LOAD ORDERS
+========================================= */
+
+async function loadOrders(){
+
+    hideMessage();
+
+
+    const area =
+        document.getElementById(
+            "ordersArea"
+        );
+
+
+    area.innerHTML = `
+
+        <div class="loading">
+
+            <div class="spinner"></div>
+
+            Loading your orders...
 
         </div>
 
-    </header>
+    `;
 
 
+    const authenticated =
+        await checkUser();
 
-    <!-- =====================================================
-         CONTENT
-    ====================================================== -->
 
-    <main class="content">
+    if(!authenticated){
+        return;
+    }
 
 
-        <section class="hero">
+    await loadCartCount();
 
-            <div>
 
-                <h1>
-                    My Orders
-                </h1>
+    /*
+       Load orders first.
+    */
 
-                <p>
-                    View and manage your previous orders
-                </p>
+    const result =
+        await sb
+        .from("orders")
+        .select(`
+            *,
+            restaurants (
+                id,
+                name
+            )
+        `)
+        .eq(
+            "customer_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
 
-            </div>
 
-        </section>
+    if(result.error){
 
+        console.error(
+            "Orders error:",
+            result.error
+        );
 
 
-        <!-- =================================================
-             STATS
-        ================================================== -->
+        showError(
+            "Orders load cheyyan kazhinjilla: " +
+            result.error.message
+        );
 
-        <div
-            class="stats"
-            id="stats">
 
-            <div class="stat">
+        area.innerHTML = "";
 
-                <div class="stat-label">
-                    Total Orders
-                </div>
+        return;
 
-                <div
-                    class="stat-value"
-                    id="totalOrders">
+    }
 
-                    0
 
-                </div>
+    orders =
+        result.data || [];
 
-            </div>
 
+    if(orders.length === 0){
 
-            <div class="stat">
+        renderEmpty();
 
-                <div class="stat-label">
-                    Active Orders
-                </div>
+        return;
 
-                <div
-                    class="stat-value"
-                    id="activeOrders">
+    }
 
-                    0
 
-                </div>
+    /*
+       Load order items separately.
+       This avoids problems if the foreign
+       key relation name is different.
+    */
 
-            </div>
+    const orderIds =
+        orders.map(
+            order => order.id
+        );
 
 
-            <div class="stat">
+    const itemsResult =
+        await sb
+        .from("order_items")
+        .select("*")
+        .in(
+            "order_id",
+            orderIds
+        );
 
-                <div class="stat-label">
-                    Total Spent
-                </div>
 
-                <div
-                    class="stat-value"
-                    id="totalSpent">
+    if(itemsResult.error){
 
-                    ₹0
+        console.error(
+            "Order items error:",
+            itemsResult.error
+        );
 
-                </div>
+        /*
+           Still show orders even if
+           item details cannot load.
+        */
 
-            </div>
+        orders.forEach(order => {
 
-        </div>
+            order.order_items = [];
 
+        });
 
+    }
+    else{
 
-        <!-- =================================================
-             TOOLBAR
-        ================================================== -->
+        const items =
+            itemsResult.data || [];
 
-        <div class="toolbar">
 
-            <div class="search-box">
+        orders.forEach(order => {
 
-                <span class="search-icon">
-                    🔎
-                </span>
+            order.order_items =
+                items.filter(
+                    item =>
+                        String(
+                            item.order_id
+                        ) ===
+                        String(order.id)
+                );
 
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search order...">
+        });
 
-            </div>
+    }
 
 
-            <select
-                id="statusFilter"
-                class="filter">
+    renderOrders();
 
-                <option value="">
-                    All Orders
-                </option>
+}
 
-                <option value="pending">
-                    Pending
-                </option>
 
-                <option value="confirmed">
-                    Confirmed
-                </option>
+/* =========================================
+   EMPTY
+========================================= */
 
-                <option value="preparing">
-                    Preparing
-                </option>
+function renderEmpty(){
 
-                <option value="out_for_delivery">
-                    Out for Delivery
-                </option>
+    document.getElementById(
+        "ordersArea"
+    ).innerHTML = `
 
-                <option value="delivered">
-                    Delivered
-                </option>
-
-                <option value="cancelled">
-                    Cancelled
-                </option>
-
-            </select>
-
-
-            <button
-                class="refresh-btn"
-                onclick="loadOrders()">
-
-                ↻ Refresh
-
-            </button>
-
-        </div>
-
-
-
-        <!-- =================================================
-             ERROR
-        ================================================== -->
-
-        <div
-            class="error-box"
-            id="errorBox">
-
-        </div>
-
-
-
-        <!-- =================================================
-             LOGIN REQUIRED
-        ================================================== -->
-
-        <div
-            class="login-required"
-            id="loginRequired">
-
-            <div class="icon">
-                🔐
-            </div>
-
-            <h2>
-                Login Required
-            </h2>
-
-            <p>
-                Please login to view your orders.
-            </p>
-
-            <button
-                class="login-btn"
-                onclick="goLogin()">
-
-                Go to Login
-
-            </button>
-
-        </div>
-
-
-
-        <!-- =================================================
-             LOADING
-        ================================================== -->
-
-        <div
-            class="loading"
-            id="loadingOrders">
-
-            <div class="skeleton"></div>
-
-            <div class="skeleton"></div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             ORDERS
-        ================================================== -->
-
-        <div
-            class="orders-list"
-            id="ordersList">
-
-        </div>
-
-
-
-        <!-- =================================================
-             EMPTY
-        ================================================== -->
-
-        <div
-            class="empty"
-            id="emptyOrders">
+        <div class="empty">
 
             <div class="empty-icon">
                 📦
             </div>
 
             <h2>
-                No Orders Found
+                No orders yet
             </h2>
 
             <p>
-                Your orders will appear here after you place an order.
+                You haven't placed any orders yet.
+                Start exploring restaurants and order
+                something delicious.
             </p>
 
-            <button
-                class="home-btn"
-                onclick="goHome()">
+            <a
+                href="restaurants.html"
+                class="browse-btn">
 
-                Start Ordering
+                Browse Restaurants
 
-            </button>
+            </a>
 
         </div>
 
-
-    </main>
-
-</div>
-
-
-
-<script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
-
-const SUPABASE_URL =
-    "https://jhihjnsxazmftdqlitgk.supabase.co";
-
-
-const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
-
-
-const supabaseClient =
-    supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY,
-        {
-            auth:{
-                persistSession:true,
-                autoRefreshToken:true,
-                detectSessionInUrl:true
-            }
-        }
-    );
-
-
-/* =========================================================
-   GLOBAL
-========================================================= */
-
-let allOrders = [];
-
-let currentUser = null;
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function goHome(){
-
-    window.location.href =
-        "../index.html";
+    `;
 
 }
 
 
-function goLogin(){
-
-    window.location.href =
-        "login.html";
-
-}
-
-
-function viewOrder(orderId){
-
-    window.location.href =
-        "order-confirmation.html?order=" +
-        encodeURIComponent(orderId);
-
-}
-
-
-function trackOrder(orderId){
-
-    window.location.href =
-        "order-confirmation.html?order=" +
-        encodeURIComponent(orderId) +
-        "&track=true";
-
-}
-
-
-/* =========================================================
-   REORDER
-========================================================= */
-
-async function reorder(orderId){
-
-    try{
-
-        const order =
-            allOrders.find(
-                o => String(o.id) === String(orderId)
-            );
-
-
-        if(!order){
-
-            alert(
-                "Order details not found."
-            );
-
-            return;
-        }
-
-
-        const items =
-            order.order_items || [];
-
-
-        if(!items.length){
-
-            alert(
-                "This order has no items to reorder."
-            );
-
-            return;
-        }
-
-
-        /*
-         * Save order items temporarily.
-         * cart.html can read this data.
-         */
-
-        const cartItems =
-            items.map(item => ({
-
-                id:
-                    item.menu_item_id ||
-                    null,
-
-                menu_item_id:
-                    item.menu_item_id ||
-                    null,
-
-                item_name:
-                    item.item_name ||
-                    "Item",
-
-                quantity:
-                    Number(item.quantity || 1),
-
-                unit_price:
-                    Number(item.unit_price || 0)
-
-            }));
-
-
-        localStorage.setItem(
-            "beatroot_reorder",
-            JSON.stringify(cartItems)
-        );
-
-
-        alert(
-            "Items added for reorder. Opening cart..."
-        );
-
-
-        window.location.href =
-            "cart.html";
-
-    }
-    catch(error){
-
-        console.error(
-            "Reorder error:",
-            error
-        );
-
-        alert(
-            "Reorder cheyyan kazhinjilla."
-        );
-
-    }
-
-}
-
-
-/* =========================================================
+/* =========================================
    FORMAT DATE
-========================================================= */
+========================================= */
 
-function formatDate(dateString){
+function formatDate(value){
 
-    if(!dateString){
-
+    if(!value){
         return "-";
-
     }
 
 
     const date =
-        new Date(dateString);
+        new Date(value);
 
 
-    return date.toLocaleDateString(
+    if(isNaN(date.getTime())){
+        return String(value);
+    }
+
+
+    return date.toLocaleString(
         "en-IN",
         {
             day:"2-digit",
             month:"short",
-            year:"numeric"
-        }
-    )
-    +
-    " • "
-    +
-    date.toLocaleTimeString(
-        "en-IN",
-        {
+            year:"numeric",
             hour:"2-digit",
             minute:"2-digit"
         }
@@ -1633,910 +1274,424 @@ function formatDate(dateString){
 }
 
 
-/* =========================================================
-   NORMALIZE STATUS
-========================================================= */
+/* =========================================
+   STATUS CLASS
+========================================= */
 
-function normalizeStatus(status){
+function statusClass(status){
 
-    const s =
+    const value =
         String(
-            status ||
-            "pending"
+            status || "pending"
         )
         .toLowerCase()
         .trim();
 
 
-    if(s === "processing"){
-        return "preparing";
-    }
-
-
-    if(s === "completed"){
-        return "delivered";
-    }
-
-
-    if(s === "canceled"){
-        return "cancelled";
-    }
-
-
-    return s;
+    return value
+        .replace(/\s+/g,"-");
 
 }
 
 
-/* =========================================================
-   STATUS LABEL
-========================================================= */
+/* =========================================
+   STATUS TEXT
+========================================= */
 
-function statusLabel(status){
+function statusText(status){
 
-    const s =
-        normalizeStatus(status);
-
-
-    const labels = {
-
-        pending:
-            "Pending",
-
-        confirmed:
-            "Confirmed",
-
-        preparing:
-            "Preparing",
-
-        out_for_delivery:
-            "Out for Delivery",
-
-        delivered:
-            "Delivered",
-
-        cancelled:
-            "Cancelled"
-
-    };
+    if(!status){
+        return "Pending";
+    }
 
 
-    return labels[s] ||
-        (
-            s.charAt(0).toUpperCase() +
-            s.slice(1)
-        );
-
-}
+    const value =
+        String(status)
+        .replace(/[-_]+/g," ");
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(value){
-
-    return String(value ?? "")
+    return value
         .replace(
-            /[&<>"']/g,
-            function(match){
-
-                return {
-
-                    "&":"&amp;",
-                    "<":"&lt;",
-                    ">":"&gt;",
-                    '"':"&quot;",
-                    "'":"&#039;"
-
-                }[match];
-
-            }
+            /\w\S*/g,
+            word =>
+                word.charAt(0).toUpperCase() +
+                word.substring(1).toLowerCase()
         );
 
 }
 
 
-/* =========================================================
-   GET SESSION
-========================================================= */
+/* =========================================
+   PAYMENT TEXT
+========================================= */
 
-async function getCurrentUser(){
+function paymentText(value){
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .auth
-            .getSession();
+    if(!value){
+        return "Not specified";
+    }
 
 
-    if(error){
+    if(
+        String(value).toLowerCase()
+        === "cod"
+    ){
 
-        throw error;
+        return "Cash on Delivery";
 
     }
 
 
-    return data.session
-        ? data.session.user
-        : null;
+    if(
+        String(value).toLowerCase()
+        === "online"
+    ){
 
-}
-
-
-/* =========================================================
-   LOAD ORDERS
-========================================================= */
-
-async function loadOrders(){
-
-    const loading =
-        document.getElementById(
-            "loadingOrders"
-        );
-
-    const ordersList =
-        document.getElementById(
-            "ordersList"
-        );
-
-    const empty =
-        document.getElementById(
-            "emptyOrders"
-        );
-
-    const errorBox =
-        document.getElementById(
-            "errorBox"
-        );
-
-    const loginRequired =
-        document.getElementById(
-            "loginRequired"
-        );
-
-
-    loading.style.display =
-        "flex";
-
-    ordersList.innerHTML =
-        "";
-
-    empty.style.display =
-        "none";
-
-    errorBox.style.display =
-        "none";
-
-    loginRequired.style.display =
-        "none";
-
-
-    try{
-
-        /* =============================================
-           SESSION
-        ============================================== */
-
-        currentUser =
-            await getCurrentUser();
-
-
-        if(!currentUser){
-
-            loading.style.display =
-                "none";
-
-            loginRequired.style.display =
-                "block";
-
-            return;
-
-        }
-
-
-        updateUserUI(
-            currentUser
-        );
-
-
-        /* =============================================
-           ORDERS
-        ============================================== */
-
-        const {
-            data:orders,
-            error
-        } =
-            await supabaseClient
-
-                .from("orders")
-
-                .select(`
-                    id,
-                    status,
-                    total,
-                    customer_id,
-                    delivery_address,
-                    latitude,
-                    longitude,
-                    created_at,
-
-                    order_items (
-                        id,
-                        order_id,
-                        menu_item_id,
-                        item_name,
-                        quantity,
-                        unit_price
-                    )
-                `)
-
-                .eq(
-                    "customer_id",
-                    currentUser.id
-                )
-
-                .order(
-                    "created_at",
-                    {
-                        ascending:false
-                    }
-                );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        allOrders =
-            orders || [];
-
-
-        console.log(
-            "My Orders:",
-            allOrders
-        );
-
-
-        updateStats(
-            allOrders
-        );
-
-
-        loading.style.display =
-            "none";
-
-
-        renderOrders();
-
+        return "Online Payment";
 
     }
-    catch(error){
-
-        console.error(
-            "My Orders Error:",
-            error
-        );
 
 
-        loading.style.display =
-            "none";
-
-
-        errorBox.style.display =
-            "block";
-
-
-        errorBox.innerHTML = `
-
-            <strong>
-                Orders load cheyyan kazhinjilla.
-            </strong>
-
-            <br><br>
-
-            ${escapeHTML(
-                error.message ||
-                "Unknown error"
-            )}
-
-            <br><br>
-
-            <small>
-                Please refresh the page and try again.
-            </small>
-
-        `;
-
-    }
+    return String(value);
 
 }
 
 
-/* =========================================================
-   UPDATE USER UI
-========================================================= */
-
-function updateUserUI(user){
-
-    const email =
-        user.email ||
-        "";
-
-
-    const userName =
-        email
-            ? email.split("@")[0]
-            : "Customer";
-
-
-    document.getElementById(
-        "userName"
-    ).textContent =
-        userName;
-
-
-    document.getElementById(
-        "userEmail"
-    ).textContent =
-        email;
-
-
-    document.getElementById(
-        "userAvatar"
-    ).textContent =
-        userName
-            .charAt(0)
-            .toUpperCase();
-
-}
-
-
-/* =========================================================
-   UPDATE STATS
-========================================================= */
-
-function updateStats(orders){
-
-    const total =
-        orders.length;
-
-
-    const active =
-        orders.filter(
-            order => {
-
-                const s =
-                    normalizeStatus(
-                        order.status
-                    );
-
-                return ![
-                    "delivered",
-                    "cancelled"
-                ].includes(s);
-
-            }
-        ).length;
-
-
-    const spent =
-        orders.reduce(
-            (sum, order) => {
-
-                return sum +
-                    Number(
-                        order.total || 0
-                    );
-
-            },
-            0
-        );
-
-
-    document.getElementById(
-        "totalOrders"
-    ).textContent =
-        total;
-
-
-    document.getElementById(
-        "activeOrders"
-    ).textContent =
-        active;
-
-
-    document.getElementById(
-        "totalSpent"
-    ).textContent =
-        "₹" +
-        spent.toLocaleString(
-            "en-IN"
-        );
-
-}
-
-
-/* =========================================================
+/* =========================================
    RENDER ORDERS
-========================================================= */
+========================================= */
 
 function renderOrders(){
 
-    const ordersList =
+    const area =
         document.getElementById(
-            "ordersList"
-        );
-
-    const empty =
-        document.getElementById(
-            "emptyOrders"
+            "ordersArea"
         );
 
 
-    const search =
-        document.getElementById(
-            "searchInput"
-        )
-        .value
-        .toLowerCase()
-        .trim();
+    let html = "";
 
 
-    const filter =
-        document.getElementById(
-            "statusFilter"
-        )
-        .value;
+    orders.forEach(order => {
 
 
-    const filtered =
-        allOrders.filter(
-            order => {
-
-                const idMatch =
-                    String(order.id)
-                        .toLowerCase()
-                        .includes(search);
+        const restaurantName =
+            order.restaurants?.name ||
+            "Restaurant";
 
 
-                const status =
-                    normalizeStatus(
-                        order.status
-                    );
-
-
-                const statusMatch =
-                    !filter ||
-                    status === filter;
-
-
-                return (
-                    idMatch &&
-                    statusMatch
-                );
-
-            }
-        );
-
-
-    ordersList.innerHTML =
-        "";
-
-
-    if(!filtered.length){
-
-        empty.style.display =
-            "block";
-
-        return;
-
-    }
-
-
-    empty.style.display =
-        "none";
-
-
-    filtered.forEach(
-        order => {
-
-            ordersList.appendChild(
-                createOrderCard(
-                    order
-                )
+        const status =
+            statusText(
+                order.status
             );
 
+
+        const statusClassName =
+            statusClass(
+                order.status
+            );
+
+
+        const items =
+            order.order_items || [];
+
+
+        let itemsHTML = "";
+
+
+        if(items.length === 0){
+
+            itemsHTML = `
+
+                <div
+                    style="
+                        padding:18px 0;
+                        color:#888;
+                        font-size:13px;
+                    ">
+
+                    Order item details unavailable.
+
+                </div>
+
+            `;
+
         }
-    );
+        else{
 
-}
-
-
-/* =========================================================
-   CREATE ORDER CARD
-========================================================= */
-
-function createOrderCard(order){
-
-    const card =
-        document.createElement(
-            "article"
-        );
+            itemsHTML =
+                items
+                .map(item => {
 
 
-    card.className =
-        "order-card";
+                    const quantity =
+                        Number(
+                            item.quantity || 1
+                        );
 
 
-    const status =
-        normalizeStatus(
-            order.status
-        );
+                    const unitPrice =
+                        Number(
+                            item.unit_price || 0
+                        );
 
 
-    const items =
-        order.order_items ||
-        [];
+                    const total =
+                        quantity *
+                        unitPrice;
 
 
-    const total =
-        Number(
-            order.total || 0
-        );
+                    const image =
+                        item.image_url ||
+                        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80";
 
 
-    let itemsHTML =
-        "";
+                    return `
+
+                        <div class="item">
+
+                            <img
+                                class="item-image"
+                                src="${escapeHTML(image)}"
+                                alt="${escapeHTML(
+                                    item.item_name ||
+                                    "Food"
+                                )}"
+                            >
 
 
-    if(items.length){
+                            <div class="item-info">
 
-        items.forEach(
-            item => {
+                                <div class="item-name">
 
-                const qty =
-                    Number(
-                        item.quantity || 1
-                    );
+                                    ${escapeHTML(
+                                        item.item_name ||
+                                        "Food Item"
+                                    )}
 
-
-                const price =
-                    Number(
-                        item.unit_price || 0
-                    );
+                                </div>
 
 
-                const itemTotal =
-                    qty * price;
+                                <div class="item-quantity">
 
+                                    ${quantity}
+                                    ×
+                                    ₹${unitPrice.toFixed(2)}
 
-                itemsHTML += `
-
-                    <div class="item">
-
-                        <div class="item-left">
-
-                            <div class="item-quantity">
-
-                                ${qty}
+                                </div>
 
                             </div>
 
-                            <div class="item-name">
 
-                                ${escapeHTML(
-                                    item.item_name ||
-                                    "Food Item"
-                                )}
+                            <div class="item-price">
+
+                                ₹${total.toFixed(2)}
 
                             </div>
 
                         </div>
 
+                    `;
 
-                        <div class="item-price">
+                })
+                .join("");
 
-                            ₹${itemTotal.toLocaleString(
-                                "en-IN"
+        }
+
+
+        const totalAmount =
+            Number(
+                order.total_amount || 0
+            );
+
+
+        const deliveryAddress =
+            order.delivery_address ||
+            "Delivery address not available";
+
+
+        html += `
+
+            <div class="order-card">
+
+
+                <!-- ORDER HEADER -->
+
+                <div class="order-top">
+
+                    <div>
+
+                        <div class="order-id">
+
+                            Order #${escapeHTML(
+                                order.id
+                            )}
+
+                        </div>
+
+                        <div class="order-date">
+
+                            ${formatDate(
+                                order.created_at
                             )}
 
                         </div>
 
                     </div>
 
-                `;
 
-            }
-        );
+                    <span
+                        class="status ${statusClassName}">
 
-    }
-    else{
+                        ●
+                        ${escapeHTML(status)}
 
-        itemsHTML = `
+                    </span>
 
-            <div class="item">
+                </div>
 
-                <div class="item-left">
 
-                    <div class="item-quantity">
-                        1
+
+                <!-- RESTAURANT -->
+
+                <div class="restaurant-row">
+
+                    <div>
+
+                        <div class="restaurant-label">
+                            Restaurant
+                        </div>
+
+                        <div class="restaurant-name">
+
+                            🍽️
+                            ${escapeHTML(
+                                restaurantName
+                            )}
+
+                        </div>
+
                     </div>
 
-                    <div class="item-name">
-                        Order items
+
+                    <div class="payment-badge">
+
+                        💳
+                        ${escapeHTML(
+                            paymentText(
+                                order.payment_method
+                            )
+                        )}
+
                     </div>
 
                 </div>
+
+
+
+                <!-- ITEMS -->
+
+                <div class="items-section">
+
+                    ${itemsHTML}
+
+                </div>
+
+
+
+                <!-- BOTTOM -->
+
+                <div class="order-bottom">
+
+                    <div class="delivery-address">
+
+                        <strong>
+                            📍 Delivery Address
+                        </strong>
+
+                        ${escapeHTML(
+                            deliveryAddress
+                        )}
+
+                    </div>
+
+
+                    <div class="total-box">
+
+                        <div class="total-label">
+                            Total Amount
+                        </div>
+
+                        <div class="total-amount">
+
+                            ₹${totalAmount.toFixed(2)}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
 
             </div>
 
         `;
 
-    }
+    });
 
 
-    card.innerHTML = `
+    area.innerHTML = `
 
-        <!-- ORDER HEADER -->
+        <div class="orders-list">
 
-        <div class="order-header">
-
-            <div>
-
-                <div class="order-number">
-
-                    Order #${escapeHTML(
-                        String(order.id)
-                    )}
-
-                </div>
-
-                <div class="order-date">
-
-                    ${formatDate(
-                        order.created_at
-                    )}
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="status ${escapeHTML(status)}">
-
-                <span class="status-dot"></span>
-
-                ${escapeHTML(
-                    statusLabel(status)
-                )}
-
-            </div>
-
-        </div>
-
-
-
-        <!-- ITEMS -->
-
-        <div class="items">
-
-            ${itemsHTML}
-
-        </div>
-
-
-
-        <!-- FOOTER -->
-
-        <div class="order-footer">
-
-            <div>
-
-                <div class="total-label">
-                    Order Total
-                </div>
-
-                <div class="total-value">
-
-                    ₹${total.toLocaleString(
-                        "en-IN"
-                    )}
-
-                </div>
-
-            </div>
-
-
-            <div class="actions">
-
-                <button
-                    class="btn view-btn"
-                    data-action="view">
-
-                    View
-
-                </button>
-
-
-                <button
-                    class="btn track-btn"
-                    data-action="track">
-
-                    Track
-
-                </button>
-
-
-                <button
-                    class="btn reorder-btn"
-                    data-action="reorder">
-
-                    Reorder
-
-                </button>
-
-            </div>
+            ${html}
 
         </div>
 
     `;
 
-
-    /* =====================================================
-       BUTTON EVENTS
-    ====================================================== */
-
-    card
-        .querySelector(
-            '[data-action="view"]'
-        )
-        .addEventListener(
-            "click",
-            function(){
-
-                viewOrder(
-                    order.id
-                );
-
-            }
-        );
+}
 
 
-    card
-        .querySelector(
-            '[data-action="track"]'
-        )
-        .addEventListener(
-            "click",
-            function(){
+/* =========================================
+   NAVIGATION
+========================================= */
 
-                trackOrder(
-                    order.id
-                );
+function goCart(){
 
-            }
-        );
-
-
-    card
-        .querySelector(
-            '[data-action="reorder"]'
-        )
-        .addEventListener(
-            "click",
-            function(){
-
-                reorder(
-                    order.id
-                );
-
-            }
-        );
-
-
-    return card;
+    window.location.href =
+        "cart.html";
 
 }
 
 
-/* =========================================================
-   SEARCH
-========================================================= */
+function goBack(){
 
-document
-    .getElementById(
-        "searchInput"
-    )
-    .addEventListener(
-        "input",
-        function(){
+    if(
+        document.referrer &&
+        document.referrer.includes(
+            window.location.hostname
+        )
+    ){
 
-            renderOrders();
-
-        }
-    );
-
-
-/* =========================================================
-   FILTER
-========================================================= */
-
-document
-    .getElementById(
-        "statusFilter"
-    )
-    .addEventListener(
-        "change",
-        function(){
-
-            renderOrders();
-
-        }
-    );
-
-
-/* =========================================================
-   AUTH STATE CHANGE
-========================================================= */
-
-supabaseClient
-    .auth
-    .onAuthStateChange(
-        function(
-            event,
-            session
-        ){
-
-            console.log(
-                "Auth event:",
-                event
-            );
-
-
-            if(
-                event ===
-                "SIGNED_IN"
-            ){
-
-                loadOrders();
-
-            }
-
-
-            if(
-                event ===
-                "SIGNED_OUT"
-            ){
-
-                window.location.href =
-                    "login.html";
-
-            }
-
-        }
-    );
-
-
-/* =========================================================
-   START
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        loadOrders();
+        window.history.back();
 
     }
-);
+    else{
+
+        window.location.href =
+            "../index.html";
+
+    }
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadOrders();
 
 </script>
 
