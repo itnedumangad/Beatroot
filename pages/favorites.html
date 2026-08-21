@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Favorites - Beatroot</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/desktop.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f7f9;
+      color: #171717;
+    }
+
+    .app {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: auto;
+      background: #fff;
+    }
+
+    header {
+      padding: 18px 20px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: #f3f4f6;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .content {
+      padding: 20px;
+      padding-bottom: 90px;
+    }
+
+    .count {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .favorite-card {
+      display: flex;
+      gap: 13px;
+      padding: 12px;
+      border: 1px solid #e8e8e8;
+      border-radius: 15px;
+      margin-bottom: 14px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+
+    .food-image {
+      width: 92px;
+      height: 92px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #eee;
+      flex-shrink: 0;
+    }
+
+    .food-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .food-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .restaurant-name {
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .food-price {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 9px;
+    }
+
+    .rating {
+      font-size: 12px;
+      color: #777;
+    }
+
+    .remove-btn {
+      width: 35px;
+      height: 35px;
+      border: none;
+      border-radius: 50%;
+      background: #ffebee;
+      color: #e53935;
+      font-size: 18px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .bottom-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .view-btn,
+    .cart-btn {
+      border: none;
+      border-radius: 9px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .view-btn {
+      background: #f1f3f5;
+      color: #333;
+    }
+
+    .cart-btn {
+      background: #e53935;
+      color: #fff;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 65px 20px;
+      color: #777;
+    }
+
+    .heart {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .empty h3 {
+      margin: 0 0 8px;
+      color: #333;
+    }
+
+    .empty p {
+      margin: 0 0 22px;
+      font-size: 14px;
+    }
+
+    .browse-btn {
+      border: none;
+      background: #e53935;
+      color: white;
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 25px;
+      transform: translateX(-50%);
+      background: #222;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 25px;
+      font-size: 13px;
+      display: none;
+      z-index: 100;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    @media (min-width: 700px) {
+      .app {
+        max-width: 700px;
+      }
+
+      .favorite-card {
+        padding: 15px;
+      }
+
+      .food-image {
+        width: 115px;
+        height: 115px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- Header -->
+  <header>
+
+    <button class="back-btn" onclick="goBack()">
+      ‹
+    </button>
+
+    <div class="header-title">
+      Favorites
+    </div>
+
+  </header>
+
+
+  <!-- Content -->
+  <main class="content">
+
+    <div class="count" id="favoriteCount">
+      0 favorite items
+    </div>
+
+    <div id="favoritesList"></div>
+
+  </main>
+
+</div>
+
+
+<div class="toast" id="toast">
+  Added to cart
+</div>
+
+
+<script>
+
+  /*
+    Favorites data is stored locally for now.
+    Later we can connect this to Supabase.
+  */
+
+  let favorites = JSON.parse(
+    localStorage.getItem("beatroot_favorites")
+  ) || [];
+
+
+  /* Demo favorites if none exist */
+
+  if (favorites.length === 0) {
+
+    favorites = [
+
+      {
+        id: "food1",
+        name: "Chicken Biriyani",
+        restaurant: "Beatroot Restaurant",
+        price: 180,
+        rating: 4.7,
+        image: "https://images.unsplash.com/photo-1563379091339-03246963d51a?auto=format&fit=crop&w=500&q=80"
+      },
+
+      {
+        id: "food2",
+        name: "Chicken Fried Rice",
+        restaurant: "City Kitchen",
+        price: 160,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=500&q=80"
+      },
+
+      {
+        id: "food3",
+        name: "Chicken Burger",
+        restaurant: "Burger House",
+        price: 140,
+        rating: 4.6,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80"
+      }
+
+    ];
+
+    saveFavorites();
+  }
+
+
+  /* Render favorites */
+
+  function renderFavorites() {
+
+    const list =
+      document.getElementById("favoritesList");
+
+    const count =
+      document.getElementById("favoriteCount");
+
+
+    count.textContent =
+      `${favorites.length} favorite ${
+        favorites.length === 1 ? "item" : "items"
+      }`;
+
+
+    list.innerHTML = "";
+
+
+    if (favorites.length === 0) {
+
+      list.innerHTML = `
+
+        <div class="empty">
+
+          <div class="heart">
+            ♡
+          </div>
+
+          <h3>
+            No Favorites Yet
+          </h3>
+
+          <p>
+            Save your favorite food items here
+            for quick ordering.
+          </p>
+
+          <button
+            class="browse-btn"
+            onclick="browseRestaurants()">
+
+            Browse Restaurants
+
+          </button>
+
+        </div>
+
+      `;
+
+      return;
+    }
+
+
+    favorites.forEach(item => {
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "favorite-card";
+
+
+      card.innerHTML = `
+
+        <img
+          class="food-image"
+          src="${item.image}"
+          alt="${escapeHtml(item.name)}"
+          onerror="this.src='https://via.placeholder.com/200?text=Food'"
+        >
+
+        <div class="food-info">
+
+          <div class="food-name">
+            ${escapeHtml(item.name)}
+          </div>
+
+          <div class="restaurant-name">
+            ${escapeHtml(item.restaurant)}
+          </div>
+
+          <div class="food-price">
+            ₹${item.price}
+          </div>
+
+          <div class="rating">
+            ⭐ ${item.rating}
+          </div>
+
+          <div class="bottom-actions">
+
+            <button
+              class="view-btn"
+              onclick="viewItem('${item.id}')">
+
+              View
+
+            </button>
+
+            <button
+              class="cart-btn"
+              onclick="addToCart('${item.id}')">
+
+              Add to Cart
+
+            </button>
+
+          </div>
+
+        </div>
+
+        <button
+          class="remove-btn"
+          onclick="removeFavorite('${item.id}')"
+          title="Remove">
+
+          ♥
+          
+        </button>
+
+      `;
+
+
+      list.appendChild(card);
+
+    });
+
+  }
+
+
+  /* Remove favorite */
+
+  function removeFavorite(id) {
+
+    favorites =
+      favorites.filter(
+        item => item.id !== id
+      );
+
+    saveFavorites();
+
+    renderFavorites();
+
+    showToast("Removed from favorites");
+
+  }
+
+
+  /* Add to cart */
+
+  function addToCart(id) {
+
+    const item =
+      favorites.find(
+        item => item.id === id
+      );
+
+    if (!item) return;
+
+
+    let cart = JSON.parse(
+      localStorage.getItem("beatroot_cart")
+    ) || [];
+
+
+    const existing =
+      cart.find(
+        cartItem => cartItem.id === id
+      );
+
+
+    if (existing) {
+
+      existing.quantity =
+        (existing.quantity || 1) + 1;
+
+    } else {
+
+      cart.push({
+
+        ...item,
+
+        quantity: 1
+
+      });
+
+    }
+
+
+    localStorage.setItem(
+      "beatroot_cart",
+      JSON.stringify(cart)
+    );
+
+
+    showToast(
+      `${item.name} added to cart`
+    );
+
+  }
+
+
+  /* View item */
+
+  function viewItem(id) {
+
+    const item =
+      favorites.find(
+        item => item.id === id
+      );
+
+    if (!item) return;
+
+
+    /*
+      Later this can open:
+      restaurant.html?id=...
+    */
+
+    alert(
+      `${item.name}\n\nRestaurant: ${item.restaurant}\nPrice: ₹${item.price}`
+    );
+
+  }
+
+
+  /* Browse restaurants */
+
+  function browseRestaurants() {
+
+    window.location.href =
+      "restaurants.html";
+
+  }
+
+
+  /* Save favorites */
+
+  function saveFavorites() {
+
+    localStorage.setItem(
+      "beatroot_favorites",
+      JSON.stringify(favorites)
+    );
+
+  }
+
+
+  /* Toast */
+
+  function showToast(message) {
+
+    const toast =
+      document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+
+      toast.classList.remove("show");
+
+    }, 2200);
+
+  }
+
+
+  /* Back */
+
+  function goBack() {
+
+    if (history.length > 1) {
+
+      history.back();
+
+    } else {
+
+      window.location.href =
+        "../index.html";
+
+    }
+
+  }
+
+
+  /* Escape HTML */
+
+  function escapeHtml(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* Initial render */
+
+  renderFavorites();
+
+</script>
+
+</body>
+</html>

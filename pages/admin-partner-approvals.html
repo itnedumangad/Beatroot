@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Beatroot - Partner Approvals</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#111827;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.dashboard{
+    min-height:100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:250px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    background:#111827;
+    color:white;
+    padding:25px 15px;
+    z-index:100;
+}
+
+.brand{
+    font-size:28px;
+    font-weight:800;
+    padding:0 15px 30px;
+}
+
+.brand span{
+    color:#ef4444;
+}
+
+.admin-label{
+    color:#9ca3af;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:0 15px;
+    margin-bottom:10px;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin:5px 0;
+}
+
+.menu button{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#d1d5db;
+    padding:13px 15px;
+    border-radius:10px;
+    text-align:left;
+    font-size:14px;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#ef4444;
+    color:white;
+}
+
+.menu-icon{
+    display:inline-block;
+    width:25px;
+}
+
+.logout{
+    position:absolute;
+    bottom:20px;
+    left:15px;
+    right:15px;
+    width:calc(100% - 30px);
+    padding:12px;
+    border:1px solid #374151;
+    border-radius:10px;
+    background:transparent;
+    color:#d1d5db;
+}
+
+.logout:hover{
+    background:#1f2937;
+    color:white;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
+}
+
+.topbar{
+    height:75px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.top-title{
+    font-size:22px;
+    font-weight:700;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#ef4444;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.profile-text strong{
+    display:block;
+    font-size:13px;
+}
+
+.profile-text small{
+    color:#888;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:30px;
+}
+
+.page-header{
+    margin-bottom:25px;
+}
+
+.page-header h1{
+    font-size:27px;
+    margin-bottom:7px;
+}
+
+.page-header p{
+    color:#6b7280;
+    font-size:14px;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    display:none;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-size:13px;
+}
+
+.message.error{
+    display:block;
+    background:#fee2e2;
+    color:#b91c1c;
+    border:1px solid #fecaca;
+}
+
+.message.success{
+    display:block;
+    background:#dcfce7;
+    color:#15803d;
+    border:1px solid #bbf7d0;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:20px;
+}
+
+.stat-icon{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    margin-bottom:14px;
+}
+
+.pending-icon{
+    background:#fef3c7;
+}
+
+.approved-icon{
+    background:#dcfce7;
+}
+
+.rejected-icon{
+    background:#fee2e2;
+}
+
+.total-icon{
+    background:#dbeafe;
+}
+
+.stat h2{
+    font-size:27px;
+}
+
+.stat p{
+    margin-top:5px;
+    color:#6b7280;
+    font-size:12px;
+}
+
+/* =========================
+   FILTER
+========================= */
+
+.card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:22px;
+}
+
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.toolbar h2{
+    font-size:18px;
+}
+
+.filters{
+    display:flex;
+    gap:8px;
+}
+
+.filter-btn{
+    border:1px solid #e5e7eb;
+    background:white;
+    padding:8px 13px;
+    border-radius:8px;
+    font-size:12px;
+}
+
+.filter-btn.active{
+    background:#ef4444;
+    color:white;
+    border-color:#ef4444;
+}
+
+/* =========================
+   APPLICATION CARD
+========================= */
+
+.application{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:15px;
+}
+
+.application:last-child{
+    margin-bottom:0;
+}
+
+.application-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.partner-info{
+    display:flex;
+    gap:13px;
+    align-items:center;
+}
+
+.partner-icon{
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    background:#fff1f2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.partner-name{
+    font-size:17px;
+    font-weight:800;
+}
+
+.partner-type{
+    margin-top:4px;
+    color:#6b7280;
+    font-size:12px;
+}
+
+.status{
+    padding:7px 11px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.status-pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status-approved{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.status-rejected{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.details{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.detail{
+    background:#f9fafb;
+    border-radius:10px;
+    padding:12px;
+}
+
+.detail-label{
+    display:block;
+    color:#9ca3af;
+    font-size:10px;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+.detail-value{
+    color:#374151;
+    font-size:13px;
+    font-weight:600;
+    word-break:break-word;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    border-top:1px solid #f1f1f1;
+    padding-top:15px;
+}
+
+.action-btn{
+    border:0;
+    padding:10px 16px;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.approve{
+    background:#16a34a;
+    color:white;
+}
+
+.approve:hover{
+    background:#15803d;
+}
+
+.reject{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.reject:hover{
+    background:#fecaca;
+}
+
+.view{
+    background:#f3f4f6;
+    color:#374151;
+}
+
+.view:hover{
+    background:#e5e7eb;
+}
+
+/* =========================
+   EMPTY / LOADING
+========================= */
+
+.loading,
+.empty{
+    text-align:center;
+    padding:50px 20px;
+    color:#6b7280;
+}
+
+.empty-icon{
+    font-size:45px;
+    margin-bottom:12px;
+}
+
+.empty h3{
+    color:#374151;
+    margin-bottom:5px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:500;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:550px;
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    max-height:90vh;
+    overflow:auto;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:20px;
+}
+
+.close{
+    border:0;
+    background:#f3f4f6;
+    width:35px;
+    height:35px;
+    border-radius:8px;
+    font-size:18px;
+}
+
+.modal-detail{
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.modal-detail:last-child{
+    border-bottom:0;
+}
+
+.modal-detail label{
+    display:block;
+    color:#9ca3af;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.modal-detail div{
+    font-size:14px;
+    color:#374151;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-menu{
+    display:none;
+    border:0;
+    background:#f3f4f6;
+    padding:9px;
+    border-radius:8px;
+}
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .details{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .top-title{
+        font-size:17px;
+    }
+
+    .profile-text{
+        display:none;
+    }
+
+    .content{
+        padding:20px 15px;
+    }
+
+    .toolbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .filters{
+        width:100%;
+        overflow-x:auto;
+    }
+
+    .application-top{
+        flex-direction:column;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat h2{
+        font-size:22px;
+    }
+
+    .details{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .action-btn{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+        Beat<span>root</span>
+    </div>
+
+    <div class="admin-label">
+        Admin Panel
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <button onclick="go('admin-dashboard.html')">
+                <span class="menu-icon">📊</span>
+                Dashboard
+            </button>
+        </li>
+
+        <li>
+            <button onclick="go('admin-orders.html')">
+                <span class="menu-icon">🛒</span>
+                Orders
+            </button>
+        </li>
+
+        <li>
+            <button onclick="go('admin-customers.html')">
+                <span class="menu-icon">👥</span>
+                Customers
+            </button>
+        </li>
+
+        <li>
+            <button class="active">
+                <span class="menu-icon">🤝</span>
+                Partner Approvals
+            </button>
+        </li>
+
+        <li>
+            <button onclick="go('admin-restaurants.html')">
+                <span class="menu-icon">🍔</span>
+                Restaurants
+            </button>
+        </li>
+
+        <li>
+            <button onclick="go('admin-reports.html')">
+                <span class="menu-icon">📈</span>
+                Reports
+            </button>
+        </li>
+
+        <li>
+            <button onclick="go('settings.html')">
+                <span class="menu-icon">⚙️</span>
+                Settings
+            </button>
+        </li>
+
+    </ul>
+
+    <button class="logout" onclick="logout()">
+        🚪 Logout
+    </button>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+<header class="topbar">
+
+    <div style="display:flex;align-items:center;gap:12px;">
+
+        <button
+            class="mobile-menu"
+            onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <div class="top-title">
+            Partner Approvals
+        </div>
+
+    </div>
+
+    <div class="profile">
+
+        <div class="avatar" id="avatar">
+            A
+        </div>
+
+        <div class="profile-text">
+
+            <strong id="adminName">
+                Admin
+            </strong>
+
+            <small>
+                Administrator
+            </small>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+    <div class="page-header">
+
+        <h1>
+            Partner Applications
+        </h1>
+
+        <p>
+            Review and approve restaurant and delivery partner applications.
+        </p>
+
+    </div>
+
+
+    <div
+        id="messageBox"
+        class="message">
+    </div>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-icon pending-icon">
+                ⏳
+            </div>
+
+            <h2 id="pendingCount">
+                0
+            </h2>
+
+            <p>
+                Pending Applications
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon approved-icon">
+                ✅
+            </div>
+
+            <h2 id="approvedCount">
+                0
+            </h2>
+
+            <p>
+                Approved
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon rejected-icon">
+                ❌
+            </div>
+
+            <h2 id="rejectedCount">
+                0
+            </h2>
+
+            <p>
+                Rejected
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon total-icon">
+                🤝
+            </div>
+
+            <h2 id="totalCount">
+                0
+            </h2>
+
+            <p>
+                Total Applications
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- APPLICATIONS -->
+
+    <section class="card">
+
+        <div class="toolbar">
+
+            <h2>
+                Applications
+            </h2>
+
+            <div class="filters">
+
+                <button
+                    class="filter-btn active"
+                    id="filterPending"
+                    onclick="setFilter('pending')">
+                    Pending
+                </button>
+
+                <button
+                    class="filter-btn"
+                    id="filterApproved"
+                    onclick="setFilter('approved')">
+                    Approved
+                </button>
+
+                <button
+                    class="filter-btn"
+                    id="filterRejected"
+                    onclick="setFilter('rejected')">
+                    Rejected
+                </button>
+
+                <button
+                    class="filter-btn"
+                    id="filterAll"
+                    onclick="setFilter('all')">
+                    All
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="applications">
+
+            <div class="loading">
+                Loading applications...
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</div>
+
+</div>
+
+
+<!-- DETAILS MODAL -->
+
+<div
+    class="modal"
+    id="detailsModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Application Details
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://jhihjnsxazmftdqlitgk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let applications = [];
+
+let currentFilter = "pending";
+
+
+/* =========================================================
+   ADMIN CHECK
+========================================================= */
+
+async function checkAdmin(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.getUser();
+
+    if(error){
+
+        throw error;
+
+    }
+
+    const user = data.user;
+
+    if(!user){
+
+        window.location.href =
+            "login.html";
+
+        return null;
+
+    }
+
+    const {
+        data:roleData,
+        error:roleError
+    } =
+    await supabaseClient
+        .from("user_roles")
+        .select("role")
+        .eq(
+            "user_id",
+            user.id
+        )
+        .maybeSingle();
+
+    if(roleError){
+
+        throw roleError;
+
+    }
+
+    if(
+        !roleData ||
+        String(roleData.role).toLowerCase() !== "admin"
+    ){
+
+        await supabaseClient.auth.signOut();
+
+        alert(
+            "Admin access required."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return null;
+
+    }
+
+    document.getElementById(
+        "adminName"
+    ).textContent =
+        user.email
+            ? user.email.split("@")[0]
+            : "Admin";
+
+    document.getElementById(
+        "avatar"
+    ).textContent =
+        user.email
+            ? user.email.charAt(0).toUpperCase()
+            : "A";
+
+    return user;
+
+}
+
+
+/* =========================================================
+   LOAD APPLICATIONS
+========================================================= */
+
+async function loadApplications(){
+
+    try{
+
+        await checkAdmin();
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("partner_applications")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+        if(error){
+
+            throw error;
+
+        }
+
+        applications =
+            data || [];
+
+        updateStats();
+
+        renderApplications();
+
+    }
+    catch(error){
+
+        console.error(
+            "Applications error:",
+            error
+        );
+
+        showMessage(
+            "Unable to load partner applications: " +
+            error.message
+        );
+
+        document.getElementById(
+            "applications"
+        ).innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">⚠️</div>
+                <h3>Unable to load applications</h3>
+                <p>${escapeHTML(error.message)}</p>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+    const pending =
+        applications.filter(
+            x => normalizeStatus(x.status) === "pending"
+        ).length;
+
+    const approved =
+        applications.filter(
+            x => normalizeStatus(x.status) === "approved"
+        ).length;
+
+    const rejected =
+        applications.filter(
+            x => normalizeStatus(x.status) === "rejected"
+        ).length;
+
+    document.getElementById(
+        "pendingCount"
+    ).textContent = pending;
+
+    document.getElementById(
+        "approvedCount"
+    ).textContent = approved;
+
+    document.getElementById(
+        "rejectedCount"
+    ).textContent = rejected;
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        applications.length;
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function setFilter(filter){
+
+    currentFilter = filter;
+
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    if(filter === "pending"){
+        document
+            .getElementById("filterPending")
+            .classList.add("active");
+    }
+
+    if(filter === "approved"){
+        document
+            .getElementById("filterApproved")
+            .classList.add("active");
+    }
+
+    if(filter === "rejected"){
+        document
+            .getElementById("filterRejected")
+            .classList.add("active");
+    }
+
+    if(filter === "all"){
+        document
+            .getElementById("filterAll")
+            .classList.add("active");
+    }
+
+    renderApplications();
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderApplications(){
+
+    const container =
+        document.getElementById(
+            "applications"
+        );
+
+    let filtered =
+        applications;
+
+    if(currentFilter !== "all"){
+
+        filtered =
+            applications.filter(
+                application =>
+                    normalizeStatus(
+                        application.status
+                    ) === currentFilter
+            );
+
+    }
+
+    if(!filtered.length){
+
+        container.innerHTML = `
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ${
+                        currentFilter === "pending"
+                        ? "🎉"
+                        : "📭"
+                    }
+                </div>
+
+                <h3>
+                    ${
+                        currentFilter === "pending"
+                        ? "No pending applications"
+                        : "No applications found"
+                    }
+                </h3>
+
+                <p>
+                    There are no ${
+                        currentFilter === "all"
+                        ? ""
+                        : currentFilter
+                    } partner applications.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+    container.innerHTML =
+        filtered
+            .map(
+                application =>
+                    createApplicationHTML(
+                        application
+                    )
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   APPLICATION CARD
+========================================================= */
+
+function createApplicationHTML(application){
+
+    const status =
+        normalizeStatus(
+            application.status
+        );
+
+    const type =
+        String(
+            application.type ||
+            "restaurant"
+        ).toLowerCase();
+
+    const isRestaurant =
+        type === "restaurant" ||
+        type === "restaurant_owner";
+
+    const name =
+        application.business_name ||
+        application.full_name ||
+        "Partner Application";
+
+    const icon =
+        isRestaurant
+        ? "🍔"
+        : "🚴";
+
+    const typeText =
+        isRestaurant
+        ? "Restaurant Partner"
+        : "Delivery Partner";
+
+    const date =
+        formatDate(
+            application.created_at
+        );
+
+    return `
+
+        <div class="application">
+
+            <div class="application-top">
+
+                <div class="partner-info">
+
+                    <div class="partner-icon">
+                        ${icon}
+                    </div>
+
+                    <div>
+
+                        <div class="partner-name">
+                            ${escapeHTML(name)}
+                        </div>
+
+                        <div class="partner-type">
+                            ${typeText}
+                            • Applied ${date}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <span class="status status-${status}">
+                    ${capitalize(status)}
+                </span>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Applicant
+                    </span>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.full_name ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.email ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Phone
+                    </span>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.phone ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Address
+                    </span>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.address ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                ${
+                    !isRestaurant
+                    ? `
+                        <div class="detail">
+
+                            <span class="detail-label">
+                                Vehicle Number
+                            </span>
+
+                            <div class="detail-value">
+                                ${escapeHTML(
+                                    application.vehicle_number ||
+                                    "-"
+                                )}
+                            </div>
+
+                        </div>
+
+                        <div class="detail">
+
+                            <span class="detail-label">
+                                License Number
+                            </span>
+
+                            <div class="detail-value">
+                                ${escapeHTML(
+                                    application.license_number ||
+                                    "-"
+                                )}
+                            </div>
+
+                        </div>
+                    `
+                    : ""
+                }
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="action-btn view"
+                    onclick="viewApplication(${application.id})">
+
+                    👁 View Details
+
+                </button>
+
+
+                ${
+                    status === "pending"
+                    ? `
+
+                        <button
+                            class="action-btn approve"
+                            onclick="approveApplication(${application.id})">
+
+                            ✓ Approve
+
+                        </button>
+
+                        <button
+                            class="action-btn reject"
+                            onclick="rejectApplication(${application.id})">
+
+                            ✕ Reject
+
+                        </button>
+
+                    `
+                    : ""
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   VIEW DETAILS
+========================================================= */
+
+function viewApplication(id){
+
+    const application =
+        applications.find(
+            x => Number(x.id) === Number(id)
+        );
+
+    if(!application){
+
+        return;
+
+    }
+
+    const modalContent =
+        document.getElementById(
+            "modalContent"
+        );
+
+    modalContent.innerHTML = `
+
+        ${modalRow(
+            "Application ID",
+            application.id
+        )}
+
+        ${modalRow(
+            "Partner Type",
+            application.type || "-"
+        )}
+
+        ${modalRow(
+            "Full Name",
+            application.full_name || "-"
+        )}
+
+        ${modalRow(
+            "Business / Restaurant Name",
+            application.business_name || "-"
+        )}
+
+        ${modalRow(
+            "Email",
+            application.email || "-"
+        )}
+
+        ${modalRow(
+            "Phone",
+            application.phone || "-"
+        )}
+
+        ${modalRow(
+            "Address",
+            application.address || "-"
+        )}
+
+        ${modalRow(
+            "Vehicle Number",
+            application.vehicle_number || "-"
+        )}
+
+        ${modalRow(
+            "License Number",
+            application.license_number || "-"
+        )}
+
+        ${modalRow(
+            "Status",
+            application.status || "-"
+        )}
+
+        ${modalRow(
+            "Created At",
+            formatDateTime(application.created_at)
+        )}
+
+    `;
+
+    document
+        .getElementById("detailsModal")
+        .classList.add("show");
+
+}
+
+
+function modalRow(label,value){
+
+    return `
+
+        <div class="modal-detail">
+
+            <label>
+                ${escapeHTML(label)}
+            </label>
+
+            <div>
+                ${escapeHTML(value)}
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("detailsModal")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================================
+   APPROVE
+========================================================= */
+
+async function approveApplication(id){
+
+    const application =
+        applications.find(
+            x => Number(x.id) === Number(id)
+        );
+
+    if(!application){
+
+        return;
+
+    }
+
+    const confirmApprove =
+        confirm(
+            `Approve ${application.business_name || application.full_name || "this partner"}?`
+        );
+
+    if(!confirmApprove){
+
+        return;
+
+    }
+
+    try{
+
+        const {
+            data: { user },
+            error:authError
+        } =
+        await supabaseClient.auth.getUser();
+
+        if(authError){
+
+            throw authError;
+
+        }
+
+        if(!user){
+
+            throw new Error(
+                "Admin session expired."
+            );
+
+        }
+
+
+        /* UPDATE APPLICATION */
+
+        const {
+            error:applicationError
+        } =
+        await supabaseClient
+            .from("partner_applications")
+            .update({
+
+                status:"approved",
+
+                approved_at:
+                    new Date().toISOString(),
+
+                approved_by:
+                    user.id
+
+            })
+            .eq(
+                "id",
+                id
+            );
+
+        if(applicationError){
+
+            throw applicationError;
+
+        }
+
+
+        /* UPDATE USER ROLE */
+
+        if(application.user_id){
+
+            const {
+                error:roleError
+            } =
+            await supabaseClient
+                .from("user_roles")
+                .update({
+
+                    approval_status:
+                        "approved"
+
+                })
+                .eq(
+                    "user_id",
+                    application.user_id
+                );
+
+            if(roleError){
+
+                console.error(
+                    "Role update error:",
+                    roleError
+                );
+
+            }
+
+        }
+
+
+        showMessage(
+            "Partner application approved successfully.",
+            "success"
+        );
+
+        await loadApplications();
+
+    }
+    catch(error){
+
+        console.error(
+            "Approve error:",
+            error
+        );
+
+        showMessage(
+            "Approval failed: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   REJECT
+========================================================= */
+
+async function rejectApplication(id){
+
+    const application =
+        applications.find(
+            x => Number(x.id) === Number(id)
+        );
+
+    if(!application){
+
+        return;
+
+    }
+
+    const confirmReject =
+        confirm(
+            `Reject ${application.business_name || application.full_name || "this partner"}?`
+        );
+
+    if(!confirmReject){
+
+        return;
+
+    }
+
+    try{
+
+        const {
+            data: { user },
+            error:authError
+        } =
+        await supabaseClient.auth.getUser();
+
+        if(authError){
+
+            throw authError;
+
+        }
+
+        if(!user){
+
+            throw new Error(
+                "Admin session expired."
+            );
+
+        }
+
+
+        const {
+            error:applicationError
+        } =
+        await supabaseClient
+            .from("partner_applications")
+            .update({
+
+                status:"rejected",
+
+                rejected_at:
+                    new Date().toISOString()
+
+            })
+            .eq(
+                "id",
+                id
+            );
+
+        if(applicationError){
+
+            throw applicationError;
+
+        }
+
+
+        if(application.user_id){
+
+            const {
+                error:roleError
+            } =
+            await supabaseClient
+                .from("user_roles")
+                .update({
+
+                    approval_status:
+                        "rejected"
+
+                })
+                .eq(
+                    "user_id",
+                    application.user_id
+                );
+
+            if(roleError){
+
+                console.error(
+                    "Role rejection error:",
+                    roleError
+                );
+
+            }
+
+        }
+
+
+        showMessage(
+            "Partner application rejected.",
+            "success"
+        );
+
+        await loadApplications();
+
+    }
+    catch(error){
+
+        console.error(
+            "Reject error:",
+            error
+        );
+
+        showMessage(
+            "Rejection failed: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function normalizeStatus(status){
+
+    const value =
+        String(
+            status || "pending"
+        )
+        .toLowerCase()
+        .trim();
+
+    if(
+        value === "approved" ||
+        value === "approve"
+    ){
+
+        return "approved";
+
+    }
+
+    if(
+        value === "rejected" ||
+        value === "reject"
+    ){
+
+        return "rejected";
+
+    }
+
+    return "pending";
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(
+    message,
+    type="error"
+){
+
+    const box =
+        document.getElementById(
+            "messageBox"
+        );
+
+    box.textContent =
+        message;
+
+    box.className =
+        "message " + type;
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function capitalize(value){
+
+    value =
+        String(value || "");
+
+    return value
+        .charAt(0)
+        .toUpperCase() +
+        value.slice(1);
+
+}
+
+
+function formatDate(value){
+
+    if(!value){
+
+        return "-";
+
+    }
+
+    return new Date(value)
+        .toLocaleDateString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+}
+
+
+function formatDateTime(value){
+
+    if(!value){
+
+        return "-";
+
+    }
+
+    return new Date(value)
+        .toLocaleString(
+            "en-IN"
+        );
+
+}
+
+
+function escapeHTML(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function go(page){
+
+    window.location.href =
+        page;
+
+}
+
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+    if(
+        !confirm(
+            "Are you sure you want to logout?"
+        )
+    ){
+
+        return;
+
+    }
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   MODAL OUTSIDE CLICK
+========================================================= */
+
+document
+    .getElementById("detailsModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target === this
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadApplications();
+
+</script>
+
+</body>
+</html>
