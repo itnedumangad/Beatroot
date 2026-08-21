@@ -1,694 +1,1123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Beatroot - Login</title>
+<meta charset="UTF-8">
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <style>
-        *{
-            box-sizing:border-box;
-            margin:0;
-            padding:0;
-        }
+<title>Beatroot - Login</title>
 
-        html,body{
-            width:100%;
-            min-height:100%;
-            font-family:Arial,Helvetica,sans-serif;
-        }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        body{
-            min-height:100vh;
-            background:
-                radial-gradient(circle at top left,#ffe8e6,transparent 35%),
-                radial-gradient(circle at bottom right,#ffeef0,transparent 35%),
-                #f7f8fc;
+<style>
 
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:20px;
-        }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        .login-wrapper{
-            width:100%;
-            max-width:1050px;
-            min-height:620px;
+html,body{
+    width:100%;
+    min-height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+}
 
-            background:#fff;
+body{
+    min-height:100vh;
 
-            border-radius:28px;
+    background:
+        radial-gradient(
+            circle at top left,
+            #ffe8e6,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #ffeef0,
+            transparent 35%
+        ),
+        #f7f8fc;
 
-            box-shadow:
-                0 25px 70px rgba(0,0,0,.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-            overflow:hidden;
+    padding:20px;
+}
 
-            display:grid;
-            grid-template-columns:1fr 1fr;
-        }
+a{
+    text-decoration:none;
+}
 
-        /* LEFT */
 
-        .left{
-            background:
-                linear-gradient(
-                    145deg,
-                    #111827,
-                    #1f2937
-                );
 
-            color:#fff;
+/* =========================
+   MAIN WRAPPER
+========================= */
 
-            padding:55px;
+.login-wrapper{
 
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
+    width:100%;
 
-            position:relative;
-            overflow:hidden;
-        }
+    max-width:1050px;
 
-        .left::before{
-            content:"";
+    min-height:650px;
 
-            position:absolute;
+    background:#fff;
 
-            width:300px;
-            height:300px;
+    border-radius:28px;
 
-            border-radius:50%;
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.12);
 
-            background:rgba(239,68,68,.12);
+    overflow:hidden;
 
-            top:-120px;
-            right:-100px;
-        }
+    display:grid;
 
-        .left::after{
-            content:"";
+    grid-template-columns:1fr 1fr;
+}
 
-            position:absolute;
 
-            width:250px;
-            height:250px;
 
-            border-radius:50%;
+/* =========================
+   LEFT
+========================= */
 
-            background:rgba(255,255,255,.04);
+.left{
 
-            bottom:-100px;
-            left:-80px;
-        }
+    background:
+        linear-gradient(
+            145deg,
+            #111827,
+            #1f2937
+        );
 
-        .brand{
-            position:relative;
-            z-index:2;
+    color:#fff;
 
-            font-size:38px;
-            font-weight:800;
+    padding:55px;
 
-            margin-bottom:45px;
-        }
+    display:flex;
 
-        .brand span{
-            color:#ef4444;
-        }
+    flex-direction:column;
 
-        .left h1{
-            position:relative;
-            z-index:2;
+    justify-content:center;
 
-            font-size:42px;
-            line-height:1.15;
+    position:relative;
 
-            margin-bottom:18px;
-        }
+    overflow:hidden;
+}
 
-        .left p{
-            position:relative;
-            z-index:2;
+.left::before{
 
-            color:#d1d5db;
+    content:"";
 
-            font-size:16px;
-            line-height:1.7;
+    position:absolute;
 
-            max-width:430px;
-        }
+    width:300px;
 
-        .features{
-            position:relative;
-            z-index:2;
+    height:300px;
 
-            margin-top:40px;
-        }
+    border-radius:50%;
 
-        .feature{
-            display:flex;
-            align-items:center;
-            gap:12px;
+    background:rgba(239,68,68,.12);
 
-            margin:15px 0;
+    top:-120px;
 
-            color:#e5e7eb;
+    right:-100px;
+}
 
-            font-size:14px;
-        }
+.left::after{
 
-        .feature-icon{
-            width:35px;
-            height:35px;
+    content:"";
 
-            border-radius:10px;
+    position:absolute;
 
-            background:#ef4444;
+    width:250px;
 
-            display:flex;
-            align-items:center;
-            justify-content:center;
-        }
+    height:250px;
 
-        /* RIGHT */
+    border-radius:50%;
 
-        .right{
-            padding:55px;
+    background:rgba(255,255,255,.04);
 
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-        }
+    bottom:-100px;
 
-        .login-title{
-            font-size:30px;
-            font-weight:800;
+    left:-80px;
+}
 
-            color:#111827;
+.brand{
 
-            margin-bottom:8px;
-        }
+    position:relative;
 
-        .login-subtitle{
-            color:#6b7280;
+    z-index:2;
 
-            font-size:14px;
+    font-size:38px;
 
-            margin-bottom:30px;
-        }
+    font-weight:800;
 
-        .form-group{
-            margin-bottom:20px;
-        }
+    margin-bottom:45px;
+}
 
-        .form-group label{
-            display:block;
+.brand span{
+    color:#ef4444;
+}
 
-            font-size:13px;
-            font-weight:700;
+.left h1{
 
-            color:#374151;
+    position:relative;
 
-            margin-bottom:8px;
-        }
+    z-index:2;
 
-        .input-box{
-            position:relative;
-        }
+    font-size:42px;
 
-        .input-box input{
-            width:100%;
+    line-height:1.15;
 
-            height:52px;
+    margin-bottom:18px;
+}
 
-            border:1px solid #e5e7eb;
+.left p{
 
-            border-radius:12px;
+    position:relative;
 
-            padding:0 15px;
+    z-index:2;
 
-            font-size:14px;
+    color:#d1d5db;
 
-            outline:none;
+    font-size:16px;
 
-            transition:.2s;
+    line-height:1.7;
 
-            background:#fafafa;
-        }
+    max-width:430px;
+}
 
-        .input-box input:focus{
-            border-color:#ef4444;
+.features{
 
-            background:#fff;
+    position:relative;
 
-            box-shadow:
-                0 0 0 4px rgba(239,68,68,.08);
-        }
+    z-index:2;
 
-        .password-toggle{
-            position:absolute;
+    margin-top:40px;
+}
 
-            right:14px;
-            top:50%;
+.feature{
 
-            transform:translateY(-50%);
+    display:flex;
 
-            border:0;
-            background:transparent;
+    align-items:center;
 
-            cursor:pointer;
+    gap:12px;
 
-            font-size:18px;
-        }
+    margin:15px 0;
 
-        .options{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
+    color:#e5e7eb;
 
-            margin:5px 0 25px;
-        }
+    font-size:14px;
+}
 
-        .remember{
-            display:flex;
-            align-items:center;
-            gap:7px;
+.feature-icon{
 
-            color:#6b7280;
+    width:35px;
 
-            font-size:12px;
-        }
+    height:35px;
 
-        .remember input{
-            accent-color:#ef4444;
-        }
+    border-radius:10px;
 
-        .forgot{
-            border:0;
-            background:none;
+    background:#ef4444;
 
-            color:#ef4444;
+    display:flex;
 
-            cursor:pointer;
+    align-items:center;
 
-            font-size:12px;
-            font-weight:700;
-        }
+    justify-content:center;
+}
 
-        .login-btn{
-            width:100%;
 
-            height:52px;
 
-            border:0;
+/* =========================
+   RIGHT
+========================= */
 
-            border-radius:12px;
+.right{
 
-            background:#ef4444;
+    padding:45px 55px;
 
-            color:#fff;
+    display:flex;
 
-            font-size:15px;
+    flex-direction:column;
 
-            font-weight:700;
+    justify-content:center;
+}
 
-            cursor:pointer;
+.login-title{
 
-            transition:.2s;
-        }
+    font-size:30px;
 
-        .login-btn:hover{
-            background:#dc2626;
+    font-weight:800;
 
-            transform:translateY(-1px);
+    color:#111827;
 
-            box-shadow:
-                0 8px 20px rgba(239,68,68,.25);
-        }
+    margin-bottom:8px;
+}
 
-        .login-btn:disabled{
-            opacity:.65;
-            cursor:not-allowed;
-            transform:none;
-        }
+.login-subtitle{
 
-        .message{
-            display:none;
+    color:#6b7280;
 
-            padding:12px 14px;
+    font-size:14px;
 
-            border-radius:10px;
+    margin-bottom:25px;
+}
 
-            font-size:13px;
 
-            margin-bottom:18px;
-        }
 
-        .message.error{
-            display:block;
+/* =========================
+   FORM
+========================= */
 
-            background:#fee2e2;
+.form-group{
 
-            color:#b91c1c;
+    margin-bottom:18px;
+}
 
-            border:1px solid #fecaca;
-        }
+.form-group label{
 
-        .message.success{
-            display:block;
+    display:block;
 
-            background:#dcfce7;
+    font-size:13px;
 
-            color:#15803d;
+    font-weight:700;
 
-            border:1px solid #bbf7d0;
-        }
+    color:#374151;
 
-        .divider{
-            display:flex;
-            align-items:center;
+    margin-bottom:8px;
+}
 
-            gap:12px;
+.input-box{
 
-            margin:28px 0;
+    position:relative;
+}
 
-            color:#9ca3af;
+.input-box input{
 
-            font-size:12px;
-        }
+    width:100%;
 
-        .divider::before,
-        .divider::after{
-            content:"";
+    height:52px;
 
-            height:1px;
+    border:1px solid #e5e7eb;
 
-            background:#e5e7eb;
+    border-radius:12px;
 
-            flex:1;
-        }
+    padding:0 15px;
 
-        .footer-text{
-            text-align:center;
+    font-size:14px;
 
-            color:#9ca3af;
+    outline:none;
 
-            font-size:12px;
+    transition:.2s;
 
-            margin-top:25px;
-        }
+    background:#fafafa;
+}
 
-        .loading{
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            gap:8px;
-        }
+.input-box input:focus{
 
-        .spinner{
-            width:16px;
-            height:16px;
+    border-color:#ef4444;
 
-            border:2px solid rgba(255,255,255,.4);
-            border-top-color:#fff;
+    background:#fff;
 
-            border-radius:50%;
+    box-shadow:
+        0 0 0 4px rgba(239,68,68,.08);
+}
 
-            animation:spin .7s linear infinite;
-        }
 
-        @keyframes spin{
-            to{
-                transform:rotate(360deg);
-            }
-        }
 
-        /* MOBILE */
+/* PASSWORD */
 
-        @media(max-width:800px){
+.password-toggle{
 
-            body{
-                padding:12px;
-            }
+    position:absolute;
 
-            .login-wrapper{
-                grid-template-columns:1fr;
+    right:14px;
 
-                min-height:auto;
+    top:50%;
 
-                max-width:520px;
-            }
+    transform:translateY(-50%);
 
-            .left{
-                padding:35px 30px;
+    border:0;
 
-                min-height:280px;
-            }
+    background:transparent;
 
-            .brand{
-                font-size:30px;
-                margin-bottom:25px;
-            }
+    cursor:pointer;
 
-            .left h1{
-                font-size:30px;
-            }
+    font-size:18px;
+}
 
-            .left p{
-                font-size:14px;
-            }
 
-            .features{
-                display:none;
-            }
 
-            .right{
-                padding:35px 25px;
-            }
+/* =========================
+   OPTIONS
+========================= */
 
-        }
+.options{
 
-        @media(max-width:450px){
+    display:flex;
 
-            .left{
-                padding:30px 22px;
-            }
+    justify-content:space-between;
 
-            .right{
-                padding:30px 20px;
-            }
+    align-items:center;
 
-            .login-title{
-                font-size:25px;
-            }
+    margin:5px 0 20px;
+}
 
-            .options{
-                align-items:flex-start;
-            }
+.remember{
 
-        }
+    display:flex;
 
-    </style>
+    align-items:center;
+
+    gap:7px;
+
+    color:#6b7280;
+
+    font-size:12px;
+}
+
+.remember input{
+
+    accent-color:#ef4444;
+}
+
+.forgot{
+
+    border:0;
+
+    background:none;
+
+    color:#ef4444;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-btn{
+
+    width:100%;
+
+    height:52px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.login-btn:hover{
+
+    background:#dc2626;
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(239,68,68,.25);
+}
+
+.login-btn:disabled{
+
+    opacity:.65;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+
+    display:none;
+
+    padding:12px 14px;
+
+    border-radius:10px;
+
+    font-size:13px;
+
+    margin-bottom:18px;
+
+    line-height:1.5;
+}
+
+.message.error{
+
+    display:block;
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border:1px solid #fecaca;
+}
+
+.message.success{
+
+    display:block;
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    border:1px solid #bbf7d0;
+}
+
+.message.warning{
+
+    display:block;
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    border:1px solid #fde68a;
+}
+
+
+
+/* =========================
+   REGISTRATION
+========================= */
+
+.register-options{
+
+    margin-top:22px;
+
+    text-align:center;
+}
+
+.register-title{
+
+    color:#6b7280;
+
+    font-size:12px;
+
+    margin-bottom:10px;
+}
+
+
+
+/* CUSTOMER MAIN */
+
+.register-main{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:100%;
+
+    min-height:46px;
+
+    border:1px solid #ef4444;
+
+    border-radius:11px;
+
+    color:#ef4444;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    transition:.2s;
+
+    background:#fff;
+}
+
+.register-main:hover{
+
+    background:#fff1f2;
+
+    transform:translateY(-1px);
+}
+
+
+
+/* PARTNERS */
+
+.partner-options{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:10px;
+}
+
+.partner-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    text-align:left;
+
+    padding:11px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:11px;
+
+    color:#374151;
+
+    background:#fafafa;
+
+    transition:.2s;
+}
+
+.partner-card:hover{
+
+    border-color:#ef4444;
+
+    background:#fffafa;
+
+    transform:translateY(-1px);
+}
+
+.partner-card > span{
+
+    font-size:22px;
+}
+
+.partner-card strong{
+
+    display:block;
+
+    font-size:11px;
+}
+
+.partner-card small{
+
+    display:block;
+
+    color:#9ca3af;
+
+    font-size:9px;
+
+    margin-top:3px;
+
+    line-height:1.3;
+}
+
+
+
+/* =========================
+   DIVIDER
+========================= */
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin:22px 0 0;
+
+    color:#9ca3af;
+
+    font-size:12px;
+}
+
+.divider::before,
+.divider::after{
+
+    content:"";
+
+    height:1px;
+
+    background:#e5e7eb;
+
+    flex:1;
+}
+
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer-text{
+
+    text-align:center;
+
+    color:#9ca3af;
+
+    font-size:11px;
+
+    margin-top:15px;
+}
+
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+}
+
+.spinner{
+
+    width:16px;
+
+    height:16px;
+
+    border:2px solid rgba(255,255,255,.4);
+
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+    body{
+        padding:12px;
+    }
+
+    .login-wrapper{
+
+        grid-template-columns:1fr;
+
+        min-height:auto;
+
+        max-width:520px;
+    }
+
+    .left{
+
+        padding:35px 30px;
+
+        min-height:280px;
+    }
+
+    .brand{
+
+        font-size:30px;
+
+        margin-bottom:25px;
+    }
+
+    .left h1{
+
+        font-size:30px;
+    }
+
+    .left p{
+
+        font-size:14px;
+    }
+
+    .features{
+        display:none;
+    }
+
+    .right{
+
+        padding:35px 25px;
+    }
+}
+
+@media(max-width:450px){
+
+    .left{
+        padding:30px 22px;
+    }
+
+    .right{
+        padding:30px 20px;
+    }
+
+    .login-title{
+        font-size:25px;
+    }
+
+    .options{
+        align-items:flex-start;
+    }
+
+    .partner-options{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
 </head>
+
 
 <body>
 
+
 <div class="login-wrapper">
 
-    <!-- LEFT SIDE -->
 
-    <section class="left">
+<!-- =========================
+     LEFT SIDE
+========================= -->
 
-        <div class="brand">
-            Beat<span>root</span>
-        </div>
+<section class="left">
 
-        <h1>
-            Welcome Back!
-        </h1>
+    <div class="brand">
+        Beat<span>root</span>
+    </div>
 
-        <p>
-            Login to your Beatroot account and manage your
-            orders, restaurants and deliveries from one place.
-        </p>
+    <h1>
+        Welcome Back!
+    </h1>
 
-        <div class="features">
+    <p>
+        Login to your Beatroot account and enjoy
+        simple food ordering, restaurant management
+        and reliable delivery.
+    </p>
 
-            <div class="feature">
 
-                <div class="feature-icon">
-                    🛒
-                </div>
+    <div class="features">
 
-                <span>
-                    Manage your orders
-                </span>
+        <div class="feature">
 
+            <div class="feature-icon">
+                🛒
             </div>
 
-            <div class="feature">
-
-                <div class="feature-icon">
-                    🍔
-                </div>
-
-                <span>
-                    Restaurant management
-                </span>
-
-            </div>
-
-            <div class="feature">
-
-                <div class="feature-icon">
-                    🚴
-                </div>
-
-                <span>
-                    Delivery management
-                </span>
-
-            </div>
+            <span>
+                Easy food ordering
+            </span>
 
         </div>
 
-    </section>
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🍔
+            </div>
+
+            <span>
+                Restaurant partners
+            </span>
+
+        </div>
 
 
-    <!-- RIGHT SIDE -->
+        <div class="feature">
 
-    <section class="right">
+            <div class="feature-icon">
+                🚴
+            </div>
 
-        <h2 class="login-title">
-            Sign In
-        </h2>
+            <span>
+                Fast delivery network
+            </span>
 
-        <p class="login-subtitle">
-            Enter your account details to continue.
-        </p>
+        </div>
+
+    </div>
+
+</section>
 
 
-        <div id="messageBox" class="message"></div>
+
+<!-- =========================
+     RIGHT SIDE
+========================= -->
+
+<section class="right">
 
 
-        <form id="loginForm">
+    <h2 class="login-title">
+        Sign In
+    </h2>
 
-            <!-- EMAIL -->
 
-            <div class="form-group">
+    <p class="login-subtitle">
+        Sign in to your Beatroot account to continue.
+    </p>
 
-                <label for="email">
-                    Email Address
-                </label>
 
-                <div class="input-box">
 
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        autocomplete="email"
-                        required
-                    >
+    <div
+        id="messageBox"
+        class="message">
+    </div>
 
-                </div>
+
+
+    <!-- =========================
+         LOGIN FORM
+    ========================= -->
+
+    <form id="loginForm">
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <div class="input-box">
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
 
             </div>
 
-
-            <!-- PASSWORD -->
-
-            <div class="form-group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <div class="input-box">
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        autocomplete="current-password"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        class="password-toggle"
-                        onclick="togglePassword()"
-                        id="passwordToggle"
-                    >
-                        👁️
-                    </button>
-
-                </div>
-
-            </div>
+        </div>
 
 
-            <!-- OPTIONS -->
 
-            <div class="options">
+        <!-- PASSWORD -->
 
-                <label class="remember">
+        <div class="form-group">
 
-                    <input
-                        type="checkbox"
-                        id="remember"
-                    >
+            <label for="password">
+                Password
+            </label>
 
-                    Remember me
+            <div class="input-box">
 
-                </label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
 
                 <button
                     type="button"
-                    class="forgot"
-                    onclick="forgotPassword()"
-                >
-                    Forgot Password?
+                    class="password-toggle"
+                    onclick="togglePassword()"
+                    id="passwordToggle">
+
+                    👁️
+
                 </button>
 
             </div>
 
+        </div>
 
-            <!-- LOGIN -->
+
+
+        <!-- OPTIONS -->
+
+        <div class="options">
+
+            <label class="remember">
+
+                <input
+                    type="checkbox"
+                    id="remember">
+
+                Remember me
+
+            </label>
+
 
             <button
-                type="submit"
-                class="login-btn"
-                id="loginBtn"
-            >
-                Sign In
+                type="button"
+                class="forgot"
+                onclick="forgotPassword()">
+
+                Forgot Password?
+
             </button>
 
-        </form>
-
-
-        <div class="divider">
-            Beatroot
         </div>
 
 
-        <div class="footer-text">
-            © 2026 Beatroot. All rights reserved.
+
+        <!-- LOGIN -->
+
+        <button
+            type="submit"
+            class="login-btn"
+            id="loginBtn">
+
+            Sign In
+
+        </button>
+
+    </form>
+
+
+
+    <!-- =========================
+         REGISTER
+    ========================= -->
+
+    <div class="register-options">
+
+        <div class="register-title">
+            Don't have an account?
         </div>
 
-    </section>
+
+        <!-- CUSTOMER -->
+
+        <a
+            href="customer-register.html"
+            class="register-main">
+
+            👤 &nbsp; Create Customer Account
+
+        </a>
+
+
+        <!-- PARTNERS -->
+
+        <div class="partner-options">
+
+
+            <a
+                href="restaurant-register.html"
+                class="partner-card">
+
+                <span>
+                    🏪
+                </span>
+
+                <div>
+
+                    <strong>
+                        Restaurant Partner
+                    </strong>
+
+                    <small>
+                        Create Restaurant Account
+                    </small>
+
+                </div>
+
+            </a>
+
+
+
+            <a
+                href="delivery-register.html"
+                class="partner-card">
+
+                <span>
+                    🚴
+                </span>
+
+                <div>
+
+                    <strong>
+                        Delivery Partner
+                    </strong>
+
+                    <small>
+                        Create Delivery Account
+                    </small>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <div class="divider">
+        Beatroot
+    </div>
+
+
+    <div class="footer-text">
+        © 2026 Beatroot. All rights reserved.
+    </div>
+
+
+</section>
 
 </div>
 
 
+
 <script>
 
+
 /* =========================================================
-   SUPABASE CONFIGURATION
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
@@ -705,6 +1134,7 @@ const supabaseClient =
     );
 
 
+
 /* =========================================================
    ELEMENTS
 ========================================================= */
@@ -717,6 +1147,7 @@ const loginBtn =
 
 const messageBox =
     document.getElementById("messageBox");
+
 
 
 /* =========================================================
@@ -733,18 +1164,18 @@ function showMessage(
 
     messageBox.className =
         "message " + type;
-
 }
 
 
 function hideMessage(){
 
-    messageBox.textContent = "";
+    messageBox.textContent =
+        "";
 
     messageBox.className =
         "message";
-
 }
+
 
 
 /* =========================================================
@@ -762,20 +1193,262 @@ function togglePassword(){
 
     if(password.type === "password"){
 
-        password.type = "text";
+        password.type =
+            "text";
 
-        toggle.textContent = "🙈";
+        toggle.textContent =
+            "🙈";
 
     }
     else{
 
-        password.type = "password";
+        password.type =
+            "password";
 
-        toggle.textContent = "👁️";
+        toggle.textContent =
+            "👁️";
 
     }
 
 }
+
+
+
+/* =========================================================
+   GET PROFILE / ROLE
+========================================================= */
+
+async function getUserRole(userId){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("user_roles")
+        .select(`
+            id,
+            role,
+            restaurant_id,
+            delivery_boy_id,
+            approval_status
+        `)
+        .eq(
+            "user_id",
+            userId
+        )
+        .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Role query error:",
+            error
+        );
+
+        throw new Error(
+            "Unable to load account information."
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+
+/* =========================================================
+   APPROVAL STATUS
+========================================================= */
+
+function normalizeApprovalStatus(value){
+
+    const status =
+        String(
+            value || "approved"
+        )
+        .toLowerCase()
+        .trim();
+
+
+    return status;
+
+}
+
+
+
+/* =========================================================
+   CHECK RESTAURANT / DELIVERY APPROVAL
+========================================================= */
+
+function checkApproval(roleData){
+
+    const role =
+        String(
+            roleData.role || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    /* CUSTOMER */
+
+    if(role === "customer"){
+
+        return {
+            allowed:true
+        };
+
+    }
+
+
+    /* ADMIN */
+
+    if(role === "admin"){
+
+        return {
+            allowed:true
+        };
+
+    }
+
+
+    /* PARTNERS */
+
+    const approval =
+        normalizeApprovalStatus(
+            roleData.approval_status
+        );
+
+
+    if(
+        approval === "pending"
+    ){
+
+        return {
+            allowed:false,
+
+            message:
+                "Your account is waiting for admin approval. Please try again after approval."
+        };
+
+    }
+
+
+    if(
+        approval === "rejected"
+    ){
+
+        return {
+            allowed:false,
+
+            message:
+                "Your account application was rejected. Please contact Beatroot administrator."
+        };
+
+    }
+
+
+    if(
+        approval === "blocked" ||
+        approval === "suspended"
+    ){
+
+        return {
+            allowed:false,
+
+            message:
+                "Your account is currently unavailable. Please contact Beatroot administrator."
+        };
+
+    }
+
+
+    return {
+        allowed:true
+    };
+
+}
+
+
+
+/* =========================================================
+   ROLE REDIRECT
+========================================================= */
+
+function redirectByRole(roleData){
+
+    const role =
+        String(
+            roleData.role || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    /* ADMIN */
+
+    if(role === "admin"){
+
+        window.location.href =
+            "admin-dashboard.html";
+
+        return;
+
+    }
+
+
+    /* RESTAURANT */
+
+    if(
+        role === "restaurant" ||
+        role === "restaurant_owner"
+    ){
+
+        window.location.href =
+            "restaurant.html";
+
+        return;
+
+    }
+
+
+    /* DELIVERY */
+
+    if(
+        role === "delivery_boy" ||
+        role === "delivery"
+    ){
+
+        window.location.href =
+            "delivery-dashboard.html";
+
+        return;
+
+    }
+
+
+    /* CUSTOMER */
+
+    if(role === "customer"){
+
+        window.location.href =
+            "../index.html";
+
+        return;
+
+    }
+
+
+    throw new Error(
+        "Unknown account role."
+    );
+
+}
+
 
 
 /* =========================================================
@@ -805,7 +1478,10 @@ loginForm.addEventListener(
                 .value;
 
 
-        if(!email || !password){
+        if(
+            !email ||
+            !password
+        ){
 
             showMessage(
                 "Please enter your email and password."
@@ -816,9 +1492,9 @@ loginForm.addEventListener(
         }
 
 
-        /* BUTTON LOADING */
+        loginBtn.disabled =
+            true;
 
-        loginBtn.disabled = true;
 
         loginBtn.innerHTML = `
             <span class="loading">
@@ -830,21 +1506,23 @@ loginForm.addEventListener(
 
         try{
 
-            /* -----------------------------------------
-               SUPABASE LOGIN
-            ----------------------------------------- */
+
+            /* =========================================
+               SUPABASE AUTH
+            ========================================= */
 
             const {
                 data,
                 error
             } =
-            await supabaseClient.auth.signInWithPassword({
+            await supabaseClient.auth
+                .signInWithPassword({
 
-                email:email,
+                    email:email,
 
-                password:password
+                    password:password
 
-            });
+                });
 
 
             if(error){
@@ -854,7 +1532,10 @@ loginForm.addEventListener(
             }
 
 
-            if(!data || !data.user){
+            if(
+                !data ||
+                !data.user
+            ){
 
                 throw new Error(
                     "Login failed. User not found."
@@ -867,46 +1548,34 @@ loginForm.addEventListener(
                 data.user;
 
 
-            /* -----------------------------------------
-               GET USER ROLE
-            ----------------------------------------- */
 
-            const {
-                data:roleData,
-                error:roleError
-            } =
-            await supabaseClient
-                .from("user_roles")
-                .select(`
-                    id,
-                    role,
-                    restaurant_id,
-                    delivery_boy_id
-                `)
-                .eq(
-                    "user_id",
-                    user.id
-                )
-                .maybeSingle();
+            /* =========================================
+               EMAIL VERIFICATION
+            ========================================= */
 
+            if(
+                !user.email_confirmed_at
+            ){
 
-            if(roleError){
-
-                console.error(
-                    "Role error:",
-                    roleError
-                );
+                await supabaseClient.auth.signOut();
 
                 throw new Error(
-                    "Unable to load user role."
+                    "Please verify your email address before logging in."
                 );
 
             }
 
 
-            /* -----------------------------------------
-               NO ROLE
-            ----------------------------------------- */
+
+            /* =========================================
+               GET ROLE
+            ========================================= */
+
+            const roleData =
+                await getUserRole(
+                    user.id
+                );
+
 
             if(!roleData){
 
@@ -919,44 +1588,49 @@ loginForm.addEventListener(
             }
 
 
-            const role =
-                String(
-                    roleData.role || ""
-                )
-                .toLowerCase()
-                .trim();
+
+            /* =========================================
+               APPROVAL
+            ========================================= */
+
+            const approval =
+                checkApproval(
+                    roleData
+                );
 
 
-            console.log(
-                "Logged in user:",
-                user.email
-            );
+            if(
+                !approval.allowed
+            ){
 
-            console.log(
-                "User role:",
-                role
-            );
+                await supabaseClient.auth.signOut();
 
-            console.log(
-                "Role data:",
-                roleData
-            );
+                showMessage(
+                    approval.message,
+                    "warning"
+                );
+
+                loginBtn.disabled =
+                    false;
+
+                loginBtn.textContent =
+                    "Sign In";
+
+                return;
+
+            }
 
 
-            /* -----------------------------------------
-               SUCCESS MESSAGE
-            ----------------------------------------- */
+
+            /* =========================================
+               SUCCESS
+            ========================================= */
 
             showMessage(
                 "Login successful. Redirecting...",
                 "success"
             );
 
-
-            /*
-               Small delay so user can see
-               successful login message.
-            */
 
             await new Promise(
                 resolve =>
@@ -967,73 +1641,10 @@ loginForm.addEventListener(
             );
 
 
-            /* =========================================
-               ROLE BASED REDIRECTION
-            ========================================= */
-
-
-            /* ADMIN */
-
-            if(role === "admin"){
-
-                window.location.href =
-                    "admin-dashboard.html";
-
-                return;
-
-            }
-
-
-            /* RESTAURANT */
-
-            if(
-                role === "restaurant" ||
-                role === "restaurant_owner"
-            ){
-
-                window.location.href =
-                    "restaurant.html";
-
-                return;
-
-            }
-
-
-            /* DELIVERY BOY */
-
-            if(
-                role === "delivery_boy" ||
-                role === "delivery"
-            ){
-
-                window.location.href =
-                    "delivery-dashboard.html";
-
-                return;
-
-            }
-
-
-            /* CUSTOMER */
-
-            if(role === "customer"){
-
-                window.location.href =
-                    "../index.html";
-
-                return;
-
-            }
-
-
-            /* UNKNOWN ROLE */
-
-            await supabaseClient.auth.signOut();
-
-            throw new Error(
-                "Unknown account role: " +
-                role
+            redirectByRole(
+                roleData
             );
+
 
         }
         catch(error){
@@ -1045,25 +1656,18 @@ loginForm.addEventListener(
 
 
             let message =
+                error.message ||
                 "Login failed.";
 
 
-            if(error.message){
+            const lower =
+                message.toLowerCase();
 
-                message =
-                    error.message;
-
-            }
-
-
-            /* FRIENDLY SUPABASE ERRORS */
 
             if(
-                message
-                    .toLowerCase()
-                    .includes(
-                        "invalid login credentials"
-                    )
+                lower.includes(
+                    "invalid login credentials"
+                )
             ){
 
                 message =
@@ -1072,16 +1676,26 @@ loginForm.addEventListener(
             }
 
 
-            if(
-                message
-                    .toLowerCase()
-                    .includes(
-                        "email not confirmed"
-                    )
+            else if(
+                lower.includes(
+                    "email not confirmed"
+                )
             ){
 
                 message =
-                    "Please confirm your email before logging in.";
+                    "Please verify your email before logging in.";
+
+            }
+
+
+            else if(
+                lower.includes(
+                    "email address is not confirmed"
+                )
+            ){
+
+                message =
+                    "Please verify your email before logging in.";
 
             }
 
@@ -1091,7 +1705,8 @@ loginForm.addEventListener(
             );
 
 
-            loginBtn.disabled = false;
+            loginBtn.disabled =
+                false;
 
             loginBtn.textContent =
                 "Sign In";
@@ -1100,6 +1715,7 @@ loginForm.addEventListener(
 
     }
 );
+
 
 
 /* =========================================================
@@ -1125,9 +1741,11 @@ async function forgotPassword(){
             "Enter your email address first."
         );
 
+
         document
             .getElementById("email")
             .focus();
+
 
         return;
 
@@ -1141,12 +1759,17 @@ async function forgotPassword(){
         } =
         await supabaseClient.auth
             .resetPasswordForEmail(
+
                 email,
+
                 {
+
                     redirectTo:
                         window.location.origin +
                         "/pages/reset-password.html"
+
                 }
+
             );
 
 
@@ -1170,6 +1793,7 @@ async function forgotPassword(){
             error
         );
 
+
         showMessage(
             error.message ||
             "Unable to send password reset email."
@@ -1178,6 +1802,7 @@ async function forgotPassword(){
     }
 
 }
+
 
 
 /* =========================================================
@@ -1192,7 +1817,8 @@ async function checkExistingSession(){
             data,
             error
         } =
-        await supabaseClient.auth.getSession();
+        await supabaseClient.auth
+            .getSession();
 
 
         if(error){
@@ -1222,37 +1848,25 @@ async function checkExistingSession(){
             session.user;
 
 
-        /* -----------------------------------------
-           GET ROLE
-        ----------------------------------------- */
+        /* EMAIL CHECK */
 
-        const {
-            data:roleData,
-            error:roleError
-        } =
-        await supabaseClient
-            .from("user_roles")
-            .select(`
-                role,
-                restaurant_id,
-                delivery_boy_id
-            `)
-            .eq(
-                "user_id",
-                user.id
-            )
-            .maybeSingle();
+        if(
+            !user.email_confirmed_at
+        ){
 
-
-        if(roleError){
-
-            console.error(
-                roleError
-            );
+            await supabaseClient.auth.signOut();
 
             return;
 
         }
+
+
+        /* ROLE */
+
+        const roleData =
+            await getUserRole(
+                user.id
+            );
 
 
         if(!roleData){
@@ -1262,66 +1876,33 @@ async function checkExistingSession(){
         }
 
 
-        const role =
-            String(
-                roleData.role || ""
-            )
-            .toLowerCase()
-            .trim();
+        /* APPROVAL */
 
+        const approval =
+            checkApproval(
+                roleData
+            );
 
-        /* ADMIN */
-
-        if(role === "admin"){
-
-            window.location.href =
-                "admin-dashboard.html";
-
-            return;
-
-        }
-
-
-        /* RESTAURANT */
 
         if(
-            role === "restaurant" ||
-            role === "restaurant_owner"
+            !approval.allowed
         ){
 
-            window.location.href =
-                "restaurant.html";
+            await supabaseClient.auth.signOut();
+
+            showMessage(
+                approval.message,
+                "warning"
+            );
 
             return;
 
         }
 
 
-        /* DELIVERY */
-
-        if(
-            role === "delivery_boy" ||
-            role === "delivery"
-        ){
-
-            window.location.href =
-                "delivery-dashboard.html";
-
-            return;
-
-        }
-
-
-        /* CUSTOMER */
-
-        if(role === "customer"){
-
-            window.location.href =
-                "../index.html";
-
-            return;
-
-        }
+        redirectByRole(
+            roleData
+        );
 
     }
     catch(error){
@@ -1336,6 +1917,7 @@ async function checkExistingSession(){
 }
 
 
+
 /* =========================================================
    START
 ========================================================= */
@@ -1343,6 +1925,7 @@ async function checkExistingSession(){
 checkExistingSession();
 
 </script>
+
 
 </body>
 </html>
