@@ -1,512 +1,686 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beatroot - Login</title>
 
-<title>Beatroot - Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
 
-<style>
+        html,body{
+            width:100%;
+            min-height:100%;
+            font-family:Arial,Helvetica,sans-serif;
+        }
 
-*{
-    box-sizing:border-box;
-}
+        body{
+            min-height:100vh;
+            background:
+                radial-gradient(circle at top left,#ffe8e6,transparent 35%),
+                radial-gradient(circle at bottom right,#ffeef0,transparent 35%),
+                #f7f8fc;
 
-html,body{
-    margin:0;
-    padding:0;
-    width:100%;
-    min-height:100%;
-    font-family:Arial,Helvetica,sans-serif;
-}
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+        }
 
-body{
-    background:
-        radial-gradient(circle at top left,#ffe8e6,transparent 35%),
-        radial-gradient(circle at bottom right,#ffecec,transparent 35%),
-        #f6f7f9;
-}
+        .login-wrapper{
+            width:100%;
+            max-width:1050px;
+            min-height:620px;
 
-.login-page{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:25px;
-}
+            background:#fff;
 
-.login-container{
-    width:100%;
-    max-width:430px;
-}
+            border-radius:28px;
 
-.logo{
-    text-align:center;
-    font-size:42px;
-    font-weight:900;
-    letter-spacing:-2px;
-    color:#e53935;
-    margin-bottom:8px;
-}
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.12);
 
-.logo span{
-    color:#171717;
-}
+            overflow:hidden;
 
-.welcome{
-    text-align:center;
-    color:#777;
-    font-size:15px;
-    margin:0 0 28px;
-}
+            display:grid;
+            grid-template-columns:1fr 1fr;
+        }
 
-.login-card{
-    background:#fff;
-    border-radius:24px;
-    padding:32px;
-    box-shadow:0 20px 60px rgba(0,0,0,.10);
-    border:1px solid #eee;
-}
+        /* LEFT */
 
-.login-card h1{
-    margin:0;
-    font-size:27px;
-    color:#171717;
-}
+        .left{
+            background:
+                linear-gradient(
+                    145deg,
+                    #111827,
+                    #1f2937
+                );
 
-.subtitle{
-    color:#777;
-    font-size:14px;
-    margin:9px 0 25px;
-}
+            color:#fff;
 
-.input-group{
-    margin-bottom:16px;
-}
+            padding:55px;
 
-.input-group label{
-    display:block;
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:7px;
-    color:#333;
-}
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
 
-.input-group input{
-    width:100%;
-    height:50px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    padding:0 15px;
-    font-size:15px;
-    outline:none;
-    transition:.2s;
-    background:#fafafa;
-}
+            position:relative;
+            overflow:hidden;
+        }
 
-.input-group input:focus{
-    border-color:#e53935;
-    background:#fff;
-    box-shadow:0 0 0 3px rgba(229,57,53,.10);
-}
+        .left::before{
+            content:"";
 
-.login-button{
-    width:100%;
-    height:52px;
-    border:0;
-    border-radius:12px;
-    background:#e53935;
-    color:#fff;
-    font-size:15px;
-    font-weight:800;
-    cursor:pointer;
-    transition:.2s;
-    margin-top:5px;
-}
+            position:absolute;
 
-.login-button:hover{
-    background:#d92f2b;
-    transform:translateY(-1px);
-}
+            width:300px;
+            height:300px;
 
-.login-button:disabled{
-    opacity:.65;
-    cursor:not-allowed;
-    transform:none;
-}
+            border-radius:50%;
 
-.create-account{
-    text-align:center;
-    margin-top:22px;
-    font-size:14px;
-    color:#e53935;
-    font-weight:700;
-    cursor:pointer;
-}
+            background:rgba(239,68,68,.12);
 
-.create-account:hover{
-    text-decoration:underline;
-}
+            top:-120px;
+            right:-100px;
+        }
 
-.close-login{
-    text-align:center;
-    margin-top:16px;
-    color:#777;
-    font-size:14px;
-    cursor:pointer;
-}
+        .left::after{
+            content:"";
 
-.close-login:hover{
-    color:#222;
-}
+            position:absolute;
 
-#loginMessage,
-#registerMessage{
-    display:none;
-    margin-top:18px;
-    padding:12px;
-    border-radius:10px;
-    font-size:13px;
-    line-height:1.5;
-    text-align:center;
-}
+            width:250px;
+            height:250px;
 
-.register-modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    z-index:1000;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
+            border-radius:50%;
 
-.register-modal.show{
-    display:flex;
-}
+            background:rgba(255,255,255,.04);
 
-.register-box{
-    width:100%;
-    max-width:450px;
-    max-height:90vh;
-    overflow:auto;
-    background:#fff;
-    border-radius:22px;
-    padding:30px;
-    box-shadow:0 25px 80px rgba(0,0,0,.25);
-}
+            bottom:-100px;
+            left:-80px;
+        }
 
-.register-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:8px;
-}
+        .brand{
+            position:relative;
+            z-index:2;
 
-.register-header h2{
-    margin:0;
-    font-size:25px;
-}
+            font-size:38px;
+            font-weight:800;
 
-.register-close{
-    width:35px;
-    height:35px;
-    border:0;
-    border-radius:50%;
-    background:#f3f4f6;
-    font-size:20px;
-    cursor:pointer;
-}
+            margin-bottom:45px;
+        }
 
-.register-close:hover{
-    background:#fee2e2;
-    color:#e53935;
-}
+        .brand span{
+            color:#ef4444;
+        }
 
-.register-subtitle{
-    color:#777;
-    font-size:14px;
-    margin:0 0 22px;
-}
+        .left h1{
+            position:relative;
+            z-index:2;
 
-.register-button{
-    width:100%;
-    height:50px;
-    border:0;
-    border-radius:12px;
-    background:#e53935;
-    color:#fff;
-    font-size:15px;
-    font-weight:800;
-    cursor:pointer;
-}
+            font-size:42px;
+            line-height:1.15;
 
-.register-button:hover{
-    background:#d92f2b;
-}
+            margin-bottom:18px;
+        }
 
-.register-button:disabled{
-    opacity:.65;
-    cursor:not-allowed;
-}
+        .left p{
+            position:relative;
+            z-index:2;
 
-.back-login{
-    text-align:center;
-    margin-top:15px;
-    color:#e53935;
-    font-size:14px;
-    font-weight:700;
-    cursor:pointer;
-}
+            color:#d1d5db;
 
-@media(max-width:500px){
+            font-size:16px;
+            line-height:1.7;
 
-    .login-page{
-        padding:18px;
-    }
+            max-width:430px;
+        }
 
-    .login-card{
-        padding:25px 20px;
-        border-radius:20px;
-    }
+        .features{
+            position:relative;
+            z-index:2;
 
-    .logo{
-        font-size:36px;
-    }
+            margin-top:40px;
+        }
 
-    .login-card h1{
-        font-size:24px;
-    }
+        .feature{
+            display:flex;
+            align-items:center;
+            gap:12px;
 
-    .register-box{
-        padding:24px 20px;
-        border-radius:20px;
-    }
+            margin:15px 0;
 
-}
+            color:#e5e7eb;
 
-</style>
+            font-size:14px;
+        }
 
+        .feature-icon{
+            width:35px;
+            height:35px;
+
+            border-radius:10px;
+
+            background:#ef4444;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        /* RIGHT */
+
+        .right{
+            padding:55px;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+        }
+
+        .login-title{
+            font-size:30px;
+            font-weight:800;
+
+            color:#111827;
+
+            margin-bottom:8px;
+        }
+
+        .login-subtitle{
+            color:#6b7280;
+
+            font-size:14px;
+
+            margin-bottom:30px;
+        }
+
+        .form-group{
+            margin-bottom:20px;
+        }
+
+        .form-group label{
+            display:block;
+
+            font-size:13px;
+            font-weight:700;
+
+            color:#374151;
+
+            margin-bottom:8px;
+        }
+
+        .input-box{
+            position:relative;
+        }
+
+        .input-box input{
+            width:100%;
+
+            height:52px;
+
+            border:1px solid #e5e7eb;
+
+            border-radius:12px;
+
+            padding:0 15px;
+
+            font-size:14px;
+
+            outline:none;
+
+            transition:.2s;
+
+            background:#fafafa;
+        }
+
+        .input-box input:focus{
+            border-color:#ef4444;
+
+            background:#fff;
+
+            box-shadow:
+                0 0 0 4px rgba(239,68,68,.08);
+        }
+
+        .password-toggle{
+            position:absolute;
+
+            right:14px;
+            top:50%;
+
+            transform:translateY(-50%);
+
+            border:0;
+            background:transparent;
+
+            cursor:pointer;
+
+            font-size:18px;
+        }
+
+        .options{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            margin:5px 0 25px;
+        }
+
+        .remember{
+            display:flex;
+            align-items:center;
+            gap:7px;
+
+            color:#6b7280;
+
+            font-size:12px;
+        }
+
+        .remember input{
+            accent-color:#ef4444;
+        }
+
+        .forgot{
+            border:0;
+            background:none;
+
+            color:#ef4444;
+
+            cursor:pointer;
+
+            font-size:12px;
+            font-weight:700;
+        }
+
+        .login-btn{
+            width:100%;
+
+            height:52px;
+
+            border:0;
+
+            border-radius:12px;
+
+            background:#ef4444;
+
+            color:#fff;
+
+            font-size:15px;
+
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:.2s;
+        }
+
+        .login-btn:hover{
+            background:#dc2626;
+
+            transform:translateY(-1px);
+
+            box-shadow:
+                0 8px 20px rgba(239,68,68,.25);
+        }
+
+        .login-btn:disabled{
+            opacity:.65;
+            cursor:not-allowed;
+            transform:none;
+        }
+
+        .message{
+            display:none;
+
+            padding:12px 14px;
+
+            border-radius:10px;
+
+            font-size:13px;
+
+            margin-bottom:18px;
+        }
+
+        .message.error{
+            display:block;
+
+            background:#fee2e2;
+
+            color:#b91c1c;
+
+            border:1px solid #fecaca;
+        }
+
+        .message.success{
+            display:block;
+
+            background:#dcfce7;
+
+            color:#15803d;
+
+            border:1px solid #bbf7d0;
+        }
+
+        .divider{
+            display:flex;
+            align-items:center;
+
+            gap:12px;
+
+            margin:28px 0;
+
+            color:#9ca3af;
+
+            font-size:12px;
+        }
+
+        .divider::before,
+        .divider::after{
+            content:"";
+
+            height:1px;
+
+            background:#e5e7eb;
+
+            flex:1;
+        }
+
+        .footer-text{
+            text-align:center;
+
+            color:#9ca3af;
+
+            font-size:12px;
+
+            margin-top:25px;
+        }
+
+        .loading{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+        }
+
+        .spinner{
+            width:16px;
+            height:16px;
+
+            border:2px solid rgba(255,255,255,.4);
+            border-top-color:#fff;
+
+            border-radius:50%;
+
+            animation:spin .7s linear infinite;
+        }
+
+        @keyframes spin{
+            to{
+                transform:rotate(360deg);
+            }
+        }
+
+        /* MOBILE */
+
+        @media(max-width:800px){
+
+            body{
+                padding:12px;
+            }
+
+            .login-wrapper{
+                grid-template-columns:1fr;
+
+                min-height:auto;
+
+                max-width:520px;
+            }
+
+            .left{
+                padding:35px 30px;
+
+                min-height:280px;
+            }
+
+            .brand{
+                font-size:30px;
+                margin-bottom:25px;
+            }
+
+            .left h1{
+                font-size:30px;
+            }
+
+            .left p{
+                font-size:14px;
+            }
+
+            .features{
+                display:none;
+            }
+
+            .right{
+                padding:35px 25px;
+            }
+
+        }
+
+        @media(max-width:450px){
+
+            .left{
+                padding:30px 22px;
+            }
+
+            .right{
+                padding:30px 20px;
+            }
+
+            .login-title{
+                font-size:25px;
+            }
+
+            .options{
+                align-items:flex-start;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
 
-<div class="login-page">
+<div class="login-wrapper">
 
-<div class="login-container">
+    <!-- LEFT SIDE -->
 
-<div class="logo">
-    Beat<span>root</span>
-</div>
+    <section class="left">
 
-<p class="welcome">
-    Welcome to Beatroot
-</p>
+        <div class="brand">
+            Beat<span>root</span>
+        </div>
 
-<div class="login-card">
+        <h1>
+            Welcome Back!
+        </h1>
 
-<h1>
-    Login to Beatroot
-</h1>
+        <p>
+            Login to your Beatroot account and manage your
+            orders, restaurants and deliveries from one place.
+        </p>
 
-<p class="subtitle">
-    Login using your email and password.
-</p>
+        <div class="features">
 
-<div class="input-group">
+            <div class="feature">
 
-<label>
-    Email Address
-</label>
+                <div class="feature-icon">
+                    🛒
+                </div>
 
-<input
-    type="email"
-    id="loginEmail"
-    placeholder="Enter your email"
-    autocomplete="email"
->
+                <span>
+                    Manage your orders
+                </span>
 
-</div>
+            </div>
 
-<div class="input-group">
+            <div class="feature">
 
-<label>
-    Password
-</label>
+                <div class="feature-icon">
+                    🍔
+                </div>
 
-<input
-    type="password"
-    id="loginPassword"
-    placeholder="Enter your password"
-    autocomplete="current-password"
->
+                <span>
+                    Restaurant management
+                </span>
 
-</div>
+            </div>
 
-<button
-    class="login-button"
-    id="loginButton"
-    type="button"
-    onclick="loginUser()">
+            <div class="feature">
 
-    Login
+                <div class="feature-icon">
+                    🚴
+                </div>
 
-</button>
+                <span>
+                    Delivery management
+                </span>
 
-<div
-    class="create-account"
-    onclick="openRegister()">
+            </div>
 
-    Create New Account
+        </div>
 
-</div>
+    </section>
 
-<div
-    class="close-login"
-    onclick="goBack()">
 
-    Close
+    <!-- RIGHT SIDE -->
 
-</div>
+    <section class="right">
 
-<div id="loginMessage"></div>
+        <h2 class="login-title">
+            Sign In
+        </h2>
 
-</div>
+        <p class="login-subtitle">
+            Enter your account details to continue.
+        </p>
 
-</div>
 
-</div>
+        <div id="messageBox" class="message"></div>
 
 
-<!-- REGISTER -->
+        <form id="loginForm">
 
-<div
-    class="register-modal"
-    id="registerModal"
-    onclick="closeRegisterOutside(event)"
->
+            <!-- EMAIL -->
 
-<div class="register-box">
+            <div class="form-group">
 
-<div class="register-header">
+                <label for="email">
+                    Email Address
+                </label>
 
-<h2>
-    Create Account
-</h2>
+                <div class="input-box">
 
-<button
-    class="register-close"
-    onclick="closeRegister()">
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
 
-    ×
+                </div>
 
-</button>
+            </div>
 
-</div>
 
-<p class="register-subtitle">
-    Create your Beatroot customer account.
-</p>
+            <!-- PASSWORD -->
 
-<div class="input-group">
+            <div class="form-group">
 
-<label>
-    Full Name
-</label>
+                <label for="password">
+                    Password
+                </label>
 
-<input
-    type="text"
-    id="registerName"
-    placeholder="Enter your full name"
-    autocomplete="name"
->
+                <div class="input-box">
 
-</div>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
 
-<div class="input-group">
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword()"
+                        id="passwordToggle"
+                    >
+                        👁️
+                    </button>
 
-<label>
-    Phone Number
-</label>
+                </div>
 
-<input
-    type="tel"
-    id="registerPhone"
-    placeholder="Enter your phone number"
-    autocomplete="tel"
->
+            </div>
 
-</div>
 
-<div class="input-group">
+            <!-- OPTIONS -->
 
-<label>
-    Email Address
-</label>
+            <div class="options">
 
-<input
-    type="email"
-    id="registerEmail"
-    placeholder="Enter your email"
-    autocomplete="email"
->
+                <label class="remember">
 
-</div>
+                    <input
+                        type="checkbox"
+                        id="remember"
+                    >
 
-<div class="input-group">
+                    Remember me
 
-<label>
-    Password
-</label>
+                </label>
 
-<input
-    type="password"
-    id="registerPassword"
-    placeholder="Create a password"
-    autocomplete="new-password"
->
+                <button
+                    type="button"
+                    class="forgot"
+                    onclick="forgotPassword()"
+                >
+                    Forgot Password?
+                </button>
 
-</div>
+            </div>
 
-<div class="input-group">
 
-<label>
-    Confirm Password
-</label>
+            <!-- LOGIN -->
 
-<input
-    type="password"
-    id="registerConfirmPassword"
-    placeholder="Confirm your password"
-    autocomplete="new-password"
->
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginBtn"
+            >
+                Sign In
+            </button>
 
-</div>
+        </form>
 
-<button
-    class="register-button"
-    id="registerButton"
-    onclick="registerUser()">
 
-    Create Account
+        <div class="divider">
+            Beatroot
+        </div>
 
-</button>
 
-<div
-    class="back-login"
-    onclick="closeRegister()">
+        <div class="footer-text">
+            © 2026 Beatroot. All rights reserved.
+        </div>
 
-    ← Back to Login
-
-</div>
-
-<div id="registerMessage"></div>
-
-</div>
+    </section>
 
 </div>
 
@@ -514,7 +688,7 @@ body{
 <script>
 
 /* =========================================================
-   SUPABASE
+   SUPABASE CONFIGURATION
 ========================================================= */
 
 const SUPABASE_URL =
@@ -523,7 +697,8 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-const sb =
+
+const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
@@ -531,113 +706,533 @@ const sb =
 
 
 /* =========================================================
+   ELEMENTS
+========================================================= */
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const loginBtn =
+    document.getElementById("loginBtn");
+
+const messageBox =
+    document.getElementById("messageBox");
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(
+    message,
+    type = "error"
+){
+
+    messageBox.textContent =
+        message;
+
+    messageBox.className =
+        "message " + type;
+
+}
+
+
+function hideMessage(){
+
+    messageBox.textContent = "";
+
+    messageBox.className =
+        "message";
+
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+function togglePassword(){
+
+    const password =
+        document.getElementById("password");
+
+    const toggle =
+        document.getElementById("passwordToggle");
+
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        toggle.textContent = "🙈";
+
+    }
+    else{
+
+        password.type = "password";
+
+        toggle.textContent = "👁️";
+
+    }
+
+}
+
+
+/* =========================================================
    LOGIN
 ========================================================= */
 
-async function loginUser(){
+loginForm.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        hideMessage();
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            document
+                .getElementById("password")
+                .value;
+
+
+        if(!email || !password){
+
+            showMessage(
+                "Please enter your email and password."
+            );
+
+            return;
+
+        }
+
+
+        /* BUTTON LOADING */
+
+        loginBtn.disabled = true;
+
+        loginBtn.innerHTML = `
+            <span class="loading">
+                <span class="spinner"></span>
+                Signing in...
+            </span>
+        `;
+
+
+        try{
+
+            /* -----------------------------------------
+               SUPABASE LOGIN
+            ----------------------------------------- */
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.auth.signInWithPassword({
+
+                email:email,
+
+                password:password
+
+            });
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            if(!data || !data.user){
+
+                throw new Error(
+                    "Login failed. User not found."
+                );
+
+            }
+
+
+            const user =
+                data.user;
+
+
+            /* -----------------------------------------
+               GET USER ROLE
+            ----------------------------------------- */
+
+            const {
+                data:roleData,
+                error:roleError
+            } =
+            await supabaseClient
+                .from("user_roles")
+                .select(`
+                    id,
+                    role,
+                    restaurant_id,
+                    delivery_boy_id
+                `)
+                .eq(
+                    "user_id",
+                    user.id
+                )
+                .maybeSingle();
+
+
+            if(roleError){
+
+                console.error(
+                    "Role error:",
+                    roleError
+                );
+
+                throw new Error(
+                    "Unable to load user role."
+                );
+
+            }
+
+
+            /* -----------------------------------------
+               NO ROLE
+            ----------------------------------------- */
+
+            if(!roleData){
+
+                await supabaseClient.auth.signOut();
+
+                throw new Error(
+                    "Your account does not have a role assigned. Please contact the administrator."
+                );
+
+            }
+
+
+            const role =
+                String(
+                    roleData.role || ""
+                )
+                .toLowerCase()
+                .trim();
+
+
+            console.log(
+                "Logged in user:",
+                user.email
+            );
+
+            console.log(
+                "User role:",
+                role
+            );
+
+            console.log(
+                "Role data:",
+                roleData
+            );
+
+
+            /* -----------------------------------------
+               SUCCESS MESSAGE
+            ----------------------------------------- */
+
+            showMessage(
+                "Login successful. Redirecting...",
+                "success"
+            );
+
+
+            /*
+               Small delay so user can see
+               successful login message.
+            */
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        500
+                    )
+            );
+
+
+            /* =========================================
+               ROLE BASED REDIRECTION
+            ========================================= */
+
+
+            /* ADMIN */
+
+            if(role === "admin"){
+
+                window.location.href =
+                    "admin-dashboard.html";
+
+                return;
+
+            }
+
+
+            /* RESTAURANT */
+
+            if(
+                role === "restaurant" ||
+                role === "restaurant_owner"
+            ){
+
+                window.location.href =
+                    "restaurant.html";
+
+                return;
+
+            }
+
+
+            /* DELIVERY BOY */
+
+            if(
+                role === "delivery_boy" ||
+                role === "delivery"
+            ){
+
+                window.location.href =
+                    "delivery-dashboard.html";
+
+                return;
+
+            }
+
+
+            /* CUSTOMER */
+
+            if(role === "customer"){
+
+                window.location.href =
+                    "../index.html";
+
+                return;
+
+            }
+
+
+            /* UNKNOWN ROLE */
+
+            await supabaseClient.auth.signOut();
+
+            throw new Error(
+                "Unknown account role: " +
+                role
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            let message =
+                "Login failed.";
+
+
+            if(error.message){
+
+                message =
+                    error.message;
+
+            }
+
+
+            /* FRIENDLY SUPABASE ERRORS */
+
+            if(
+                message
+                    .toLowerCase()
+                    .includes(
+                        "invalid login credentials"
+                    )
+            ){
+
+                message =
+                    "Invalid email or password.";
+
+            }
+
+
+            if(
+                message
+                    .toLowerCase()
+                    .includes(
+                        "email not confirmed"
+                    )
+            ){
+
+                message =
+                    "Please confirm your email before logging in.";
+
+            }
+
+
+            showMessage(
+                message
+            );
+
+
+            loginBtn.disabled = false;
+
+            loginBtn.textContent =
+                "Sign In";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FORGOT PASSWORD
+========================================================= */
+
+async function forgotPassword(){
+
+    hideMessage();
+
 
     const email =
         document
-        .getElementById("loginEmail")
-        .value
-        .trim()
-        .toLowerCase();
+            .getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
 
-    const password =
+
+    if(!email){
+
+        showMessage(
+            "Enter your email address first."
+        );
+
         document
-        .getElementById("loginPassword")
-        .value;
-
-    const message =
-        document.getElementById(
-            "loginMessage"
-        );
-
-    const button =
-        document.getElementById(
-            "loginButton"
-        );
-
-    message.style.display = "none";
-
-    if(!email || !password){
-
-        showLoginMessage(
-            "Email and password enter cheyyuka.",
-            "error"
-        );
+            .getElementById("email")
+            .focus();
 
         return;
+
     }
 
-    button.disabled = true;
-    button.textContent = "Logging in...";
 
     try{
 
-        /* ---------------------------------------------
-           AUTH LOGIN
-        --------------------------------------------- */
+        const {
+            error
+        } =
+        await supabaseClient.auth
+            .resetPasswordForEmail(
+                email,
+                {
+                    redirectTo:
+                        window.location.origin +
+                        "/pages/reset-password.html"
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        showMessage(
+            "Password reset email has been sent. Please check your inbox.",
+            "success"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Password reset error:",
+            error
+        );
+
+        showMessage(
+            error.message ||
+            "Unable to send password reset email."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CHECK EXISTING SESSION
+========================================================= */
+
+async function checkExistingSession(){
+
+    try{
 
         const {
             data,
             error
         } =
-        await sb.auth.signInWithPassword({
+        await supabaseClient.auth.getSession();
 
-            email:email,
-
-            password:password
-
-        });
 
         if(error){
 
             console.error(
-                "Login Error:",
+                "Session error:",
                 error
             );
 
-            showLoginMessage(
-                error.message,
-                "error"
-            );
-
-            button.disabled = false;
-            button.textContent = "Login";
-
             return;
-        }
 
-        if(!data.session){
-
-            showLoginMessage(
-                "Login session create cheyyan kazhinjilla.",
-                "error"
-            );
-
-            button.disabled = false;
-            button.textContent = "Login";
-
-            return;
         }
 
 
-        /* ---------------------------------------------
-           GET USER ROLE
-        --------------------------------------------- */
+        const session =
+            data.session;
+
+
+        if(!session){
+
+            return;
+
+        }
+
 
         const user =
-            data.user;
+            session.user;
+
+
+        /* -----------------------------------------
+           GET ROLE
+        ----------------------------------------- */
 
         const {
-            data: roleData,
-            error: roleError
+            data:roleData,
+            error:roleError
         } =
-        await sb
+        await supabaseClient
             .from("user_roles")
             .select(`
-                id,
                 role,
                 restaurant_id,
                 delivery_boy_id
@@ -652,60 +1247,27 @@ async function loginUser(){
         if(roleError){
 
             console.error(
-                "Role Error:",
                 roleError
             );
 
-            showLoginMessage(
-                "User role check cheyyan kazhinjilla.",
-                "error"
-            );
-
-            await sb.auth.signOut();
-
-            button.disabled = false;
-            button.textContent = "Login";
-
             return;
+
         }
 
-
-        /* ---------------------------------------------
-           NO ROLE
-        --------------------------------------------- */
 
         if(!roleData){
 
-            showLoginMessage(
-                "User role set cheythittilla. Admin-ne contact cheyyuka.",
-                "error"
-            );
-
-            await sb.auth.signOut();
-
-            button.disabled = false;
-            button.textContent = "Login";
-
             return;
+
         }
 
-
-        /* ---------------------------------------------
-           ROLE ROUTING
-        --------------------------------------------- */
 
         const role =
             String(
                 roleData.role || ""
-            ).toLowerCase();
-
-
-        console.log(
-            "Logged in:",
-            user.email,
-            "Role:",
-            role
-        );
+            )
+            .toLowerCase()
+            .trim();
 
 
         /* ADMIN */
@@ -713,64 +1275,40 @@ async function loginUser(){
         if(role === "admin"){
 
             window.location.href =
-                "./admin-dashboard.html";
+                "admin-dashboard.html";
 
             return;
+
         }
 
 
         /* RESTAURANT */
 
-        if(role === "restaurant"){
-
-            if(!roleData.restaurant_id){
-
-                showLoginMessage(
-                    "Restaurant account-il restaurant assign cheythittilla.",
-                    "error"
-                );
-
-                await sb.auth.signOut();
-
-                button.disabled = false;
-                button.textContent = "Login";
-
-                return;
-            }
+        if(
+            role === "restaurant" ||
+            role === "restaurant_owner"
+        ){
 
             window.location.href =
-                "./restaurant-dashboard.html";
+                "restaurant.html";
 
             return;
+
         }
 
 
-        /* DELIVERY BOY */
+        /* DELIVERY */
 
         if(
             role === "delivery_boy" ||
             role === "delivery"
         ){
 
-            if(!roleData.delivery_boy_id){
-
-                showLoginMessage(
-                    "Delivery Boy account-il delivery profile assign cheythittilla.",
-                    "error"
-                );
-
-                await sb.auth.signOut();
-
-                button.disabled = false;
-                button.textContent = "Login";
-
-                return;
-            }
-
             window.location.href =
-                "./delivery-dashboard.html";
+                "delivery-dashboard.html";
 
             return;
+
         }
 
 
@@ -782,458 +1320,27 @@ async function loginUser(){
                 "../index.html";
 
             return;
+
         }
 
-
-        /* UNKNOWN ROLE */
-
-        showLoginMessage(
-            "Unknown user role: " + role,
-            "error"
-        );
-
-        await sb.auth.signOut();
-
-        button.disabled = false;
-        button.textContent = "Login";
-
     }
-
     catch(error){
 
         console.error(
-            "Login Exception:",
+            "Session check error:",
             error
         );
 
-        showLoginMessage(
-            "Something went wrong. Veendum try cheyyuka.",
-            "error"
-        );
-
-        button.disabled = false;
-        button.textContent = "Login";
     }
 
 }
 
 
 /* =========================================================
-   LOGIN MESSAGE
+   START
 ========================================================= */
 
-function showLoginMessage(
-    text,
-    type
-){
-
-    const message =
-        document.getElementById(
-            "loginMessage"
-        );
-
-    message.textContent =
-        text;
-
-    message.style.display =
-        "block";
-
-    if(type === "error"){
-
-        message.style.background =
-            "#fff0f0";
-
-        message.style.color =
-            "#d32f2f";
-
-        message.style.border =
-            "1px solid #ffd0d0";
-
-    }
-    else{
-
-        message.style.background =
-            "#ecfdf5";
-
-        message.style.color =
-            "#15803d";
-
-        message.style.border =
-            "1px solid #bbf7d0";
-    }
-
-}
-
-
-/* =========================================================
-   REGISTER
-========================================================= */
-
-function openRegister(){
-
-    document
-        .getElementById("registerModal")
-        .classList.add("show");
-
-    document
-        .getElementById("registerName")
-        .focus();
-}
-
-
-function closeRegister(){
-
-    document
-        .getElementById("registerModal")
-        .classList.remove("show");
-}
-
-
-function closeRegisterOutside(event){
-
-    if(
-        event.target ===
-        document.getElementById(
-            "registerModal"
-        )
-    ){
-
-        closeRegister();
-    }
-}
-
-
-/* =========================================================
-   REGISTER USER
-========================================================= */
-
-async function registerUser(){
-
-    const name =
-        document
-        .getElementById("registerName")
-        .value
-        .trim();
-
-    const phone =
-        document
-        .getElementById("registerPhone")
-        .value
-        .trim();
-
-    const email =
-        document
-        .getElementById("registerEmail")
-        .value
-        .trim()
-        .toLowerCase();
-
-    const password =
-        document
-        .getElementById("registerPassword")
-        .value;
-
-    const confirmPassword =
-        document
-        .getElementById(
-            "registerConfirmPassword"
-        )
-        .value;
-
-    const message =
-        document.getElementById(
-            "registerMessage"
-        );
-
-    const button =
-        document.getElementById(
-            "registerButton"
-        );
-
-    message.style.display =
-        "none";
-
-
-    if(
-        !name ||
-        !phone ||
-        !email ||
-        !password ||
-        !confirmPassword
-    ){
-
-        showRegisterMessage(
-            "Ella fields-um fill cheyyuka.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const phoneDigits =
-        phone.replace(
-            /\D/g,
-            ""
-        );
-
-
-    if(phoneDigits.length < 10){
-
-        showRegisterMessage(
-            "Valid phone number enter cheyyuka.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(password.length < 6){
-
-        showRegisterMessage(
-            "Password minimum 6 characters venam.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(password !== confirmPassword){
-
-        showRegisterMessage(
-            "Passwords match cheyyunnilla.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    button.disabled = true;
-    button.textContent =
-        "Creating Account...";
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await sb.auth.signUp({
-
-            email:email,
-
-            password:password,
-
-            options:{
-
-                data:{
-
-                    full_name:name,
-
-                    phone:phone
-
-                }
-
-            }
-
-        });
-
-
-        if(error){
-
-            console.error(
-                "Signup Error:",
-                error
-            );
-
-            showRegisterMessage(
-                error.message,
-                "error"
-            );
-
-            button.disabled = false;
-            button.textContent =
-                "Create Account";
-
-            return;
-        }
-
-
-        if(!data.user){
-
-            showRegisterMessage(
-                "Account create cheyyan kazhinjilla.",
-                "error"
-            );
-
-            button.disabled = false;
-            button.textContent =
-                "Create Account";
-
-            return;
-        }
-
-
-        showRegisterMessage(
-            "Account successfully created! Check your email if confirmation is required.",
-            "success"
-        );
-
-
-        button.textContent =
-            "Account Created";
-
-
-        if(!data.session){
-
-            setTimeout(
-                function(){
-
-                    closeRegister();
-
-                    document.getElementById(
-                        "loginEmail"
-                    ).value =
-                        email;
-
-                    document.getElementById(
-                        "loginPassword"
-                    ).focus();
-
-                },
-                1200
-            );
-
-        }
-        else{
-
-            /* Newly registered users are customers */
-
-            window.location.href =
-                "../index.html";
-        }
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Registration Exception:",
-            error
-        );
-
-        showRegisterMessage(
-            "Something went wrong. Veendum try cheyyuka.",
-            "error"
-        );
-
-        button.disabled = false;
-        button.textContent =
-            "Create Account";
-    }
-
-}
-
-
-/* =========================================================
-   REGISTER MESSAGE
-========================================================= */
-
-function showRegisterMessage(
-    text,
-    type
-){
-
-    const message =
-        document.getElementById(
-            "registerMessage"
-        );
-
-    message.textContent =
-        text;
-
-    message.style.display =
-        "block";
-
-
-    if(type === "error"){
-
-        message.style.background =
-            "#fff0f0";
-
-        message.style.color =
-            "#d32f2f";
-
-        message.style.border =
-            "1px solid #ffd0d0";
-
-    }
-    else{
-
-        message.style.background =
-            "#ecfdf5";
-
-        message.style.color =
-            "#15803d";
-
-        message.style.border =
-            "1px solid #bbf7d0";
-    }
-
-}
-
-
-/* =========================================================
-   CLOSE
-========================================================= */
-
-function goBack(){
-
-    window.history.back();
-
-}
-
-
-/* =========================================================
-   ENTER KEY
-========================================================= */
-
-document
-    .getElementById("loginPassword")
-    .addEventListener(
-        "keydown",
-        function(event){
-
-            if(event.key === "Enter"){
-
-                loginUser();
-
-            }
-
-        }
-    );
-
-
-document
-    .getElementById(
-        "registerConfirmPassword"
-    )
-    .addEventListener(
-        "keydown",
-        function(event){
-
-            if(event.key === "Enter"){
-
-                registerUser();
-
-            }
-
-        }
-    );
+checkExistingSession();
 
 </script>
 
