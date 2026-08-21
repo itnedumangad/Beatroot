@@ -1,0 +1,3667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Beatroot - Restaurant Orders</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#111827;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+}
+
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.app{
+    min-height:100vh;
+    display:flex;
+}
+
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+
+    width:250px;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    background:#111827;
+
+    color:white;
+
+    padding:24px 15px;
+
+    z-index:100;
+
+    transition:.25s;
+}
+
+.brand{
+
+    font-size:28px;
+
+    font-weight:800;
+
+    padding:0 15px 30px;
+}
+
+.brand span{
+    color:#ef4444;
+}
+
+.restaurant-label{
+
+    font-size:11px;
+
+    color:#9ca3af;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    padding:0 15px;
+
+    margin-bottom:10px;
+}
+
+.restaurant-name{
+
+    margin:0 10px 22px;
+
+    padding:12px;
+
+    background:#1f2937;
+
+    border-radius:10px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    color:#f9fafb;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+}
+
+.menu{
+
+    list-style:none;
+}
+
+.menu li{
+    margin:5px 0;
+}
+
+.menu button{
+
+    width:100%;
+
+    border:0;
+
+    background:transparent;
+
+    color:#d1d5db;
+
+    padding:13px 15px;
+
+    text-align:left;
+
+    border-radius:10px;
+
+    font-size:14px;
+}
+
+.menu button:hover,
+.menu button.active{
+
+    background:#ef4444;
+
+    color:white;
+}
+
+.menu-icon{
+
+    width:25px;
+
+    display:inline-block;
+}
+
+.sidebar-bottom{
+
+    position:absolute;
+
+    left:15px;
+
+    right:15px;
+
+    bottom:20px;
+}
+
+.logout{
+
+    width:100%;
+
+    border:1px solid #374151;
+
+    background:transparent;
+
+    color:#d1d5db;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    font-size:13px;
+}
+
+.logout:hover{
+
+    background:#1f2937;
+
+    color:white;
+}
+
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+
+    margin-left:250px;
+
+    width:calc(100% - 250px);
+
+    min-height:100vh;
+}
+
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+
+    height:75px;
+
+    background:white;
+
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 30px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:50;
+}
+
+.left-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.mobile-menu{
+
+    display:none;
+
+    border:0;
+
+    background:#f3f4f6;
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:9px;
+
+    font-size:19px;
+}
+
+.page-title{
+
+    font-size:22px;
+
+    font-weight:800;
+}
+
+.top-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.notification{
+
+    width:40px;
+
+    height:40px;
+
+    border:1px solid #e5e7eb;
+
+    background:white;
+
+    border-radius:10px;
+
+    font-size:18px;
+}
+
+.avatar{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    background:#ef4444;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:800;
+}
+
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+
+    padding:30px;
+}
+
+.heading{
+
+    margin-bottom:22px;
+}
+
+.heading h1{
+
+    font-size:28px;
+
+    margin-bottom:6px;
+}
+
+.heading p{
+
+    color:#6b7280;
+
+    font-size:14px;
+}
+
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:16px;
+
+    margin-bottom:22px;
+}
+
+.stat{
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:15px;
+
+    padding:20px;
+}
+
+.stat-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.stat-icon{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:11px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+}
+
+.blue{
+    background:#dbeafe;
+}
+
+.orange{
+    background:#ffedd5;
+}
+
+.green{
+    background:#dcfce7;
+}
+
+.red{
+    background:#fee2e2;
+}
+
+.stat h2{
+
+    font-size:27px;
+
+    margin-top:16px;
+}
+
+.stat p{
+
+    font-size:12px;
+
+    color:#6b7280;
+
+    margin-top:4px;
+}
+
+
+
+/* =========================================================
+   ORDERS CARD
+========================================================= */
+
+.orders-card{
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:16px;
+
+    overflow:hidden;
+}
+
+.orders-header{
+
+    padding:20px;
+
+    border-bottom:1px solid #eee;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+.orders-header h2{
+
+    font-size:18px;
+}
+
+.controls{
+
+    display:flex;
+
+    gap:10px;
+}
+
+.search{
+
+    width:240px;
+
+    height:40px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:9px;
+
+    padding:0 12px;
+
+    outline:none;
+
+    font-size:13px;
+}
+
+.search:focus{
+
+    border-color:#ef4444;
+}
+
+.filter{
+
+    height:40px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:9px;
+
+    padding:0 12px;
+
+    outline:none;
+
+    background:white;
+
+    font-size:13px;
+}
+
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrapper{
+
+    overflow-x:auto;
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:900px;
+}
+
+th{
+
+    padding:13px 15px;
+
+    text-align:left;
+
+    font-size:11px;
+
+    color:#6b7280;
+
+    background:#fafafa;
+
+    border-bottom:1px solid #eee;
+
+    text-transform:uppercase;
+}
+
+td{
+
+    padding:15px;
+
+    border-bottom:1px solid #f1f1f1;
+
+    font-size:13px;
+
+    vertical-align:middle;
+}
+
+tr:last-child td{
+
+    border-bottom:0;
+}
+
+.order-id{
+
+    font-weight:800;
+
+    color:#111827;
+}
+
+.customer{
+
+    font-weight:700;
+
+    margin-bottom:3px;
+}
+
+.phone{
+
+    color:#6b7280;
+
+    font-size:11px;
+}
+
+.amount{
+
+    font-weight:800;
+}
+
+.date{
+
+    color:#6b7280;
+
+    font-size:11px;
+}
+
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+.status-confirmed{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+}
+
+.status-preparing{
+
+    background:#ffedd5;
+
+    color:#c2410c;
+}
+
+.status-delivered{
+
+    background:#dcfce7;
+
+    color:#15803d;
+}
+
+.status-cancelled{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+}
+
+.status-pending{
+
+    background:#fef3c7;
+
+    color:#92400e;
+}
+
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.actions{
+
+    display:flex;
+
+    gap:6px;
+
+    flex-wrap:wrap;
+}
+
+.action-btn{
+
+    border:1px solid #e5e7eb;
+
+    background:white;
+
+    border-radius:7px;
+
+    padding:7px 9px;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+.action-btn:hover{
+
+    background:#f9fafb;
+}
+
+.view-btn{
+
+    color:#2563eb;
+}
+
+.prepare-btn{
+
+    color:#c2410c;
+}
+
+.deliver-btn{
+
+    color:#15803d;
+}
+
+.cancel-btn{
+
+    color:#dc2626;
+}
+
+
+
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
+.loading,
+.empty{
+
+    text-align:center;
+
+    padding:50px;
+
+    color:#6b7280;
+}
+
+.loading-spinner{
+
+    width:28px;
+
+    height:28px;
+
+    border:3px solid #e5e7eb;
+
+    border-top-color:#ef4444;
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+
+    margin:0 auto 12px;
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message{
+
+    display:none;
+
+    padding:13px 15px;
+
+    border-radius:10px;
+
+    margin-bottom:18px;
+
+    font-size:13px;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.success{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    border:1px solid #bbf7d0;
+}
+
+.message.error{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border:1px solid #fecaca;
+}
+
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(17,24,39,.55);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    z-index:500;
+}
+
+.modal.show{
+
+    display:flex;
+}
+
+.modal-box{
+
+    width:100%;
+
+    max-width:700px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:18px;
+
+    box-shadow:0 25px 80px rgba(0,0,0,.25);
+}
+
+.modal-header{
+
+    padding:20px;
+
+    border-bottom:1px solid #eee;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+.modal-header h2{
+
+    font-size:19px;
+}
+
+.close{
+
+    width:35px;
+
+    height:35px;
+
+    border:0;
+
+    background:#f3f4f6;
+
+    border-radius:8px;
+
+    font-size:18px;
+}
+
+.modal-body{
+
+    padding:20px;
+}
+
+.detail-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+.detail-box{
+
+    background:#f9fafb;
+
+    border:1px solid #eee;
+
+    border-radius:10px;
+
+    padding:13px;
+}
+
+.detail-label{
+
+    color:#6b7280;
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    margin-bottom:5px;
+}
+
+.detail-value{
+
+    font-size:13px;
+
+    font-weight:700;
+
+    word-break:break-word;
+}
+
+
+
+/* =========================================================
+   ITEMS
+========================================================= */
+
+.items-title{
+
+    font-size:15px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+}
+
+.item-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:11px 0;
+
+    border-bottom:1px solid #eee;
+
+    font-size:13px;
+}
+
+.item-row:last-child{
+
+    border-bottom:0;
+}
+
+.item-name{
+
+    font-weight:700;
+}
+
+.item-meta{
+
+    color:#6b7280;
+
+    font-size:11px;
+
+    margin-top:3px;
+}
+
+.item-price{
+
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+.totals{
+
+    margin-top:15px;
+
+    border-top:1px solid #eee;
+
+    padding-top:12px;
+}
+
+.total-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:6px 0;
+
+    font-size:13px;
+}
+
+.total-final{
+
+    font-size:17px;
+
+    font-weight:800;
+
+    padding-top:10px;
+
+    margin-top:5px;
+
+    border-top:1px solid #eee;
+}
+
+
+
+/* =========================================================
+   MODAL STATUS ACTIONS
+========================================================= */
+
+.modal-actions{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    margin-top:20px;
+}
+
+.modal-action{
+
+    border:0;
+
+    border-radius:9px;
+
+    padding:11px 15px;
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:800;
+}
+
+.modal-confirmed{
+
+    background:#2563eb;
+}
+
+.modal-preparing{
+
+    background:#ea580c;
+}
+
+.modal-delivered{
+
+    background:#16a34a;
+}
+
+.modal-cancel{
+
+    background:#dc2626;
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:1050px){
+
+    .stats{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+
+        transform:translateX(-100%);
+    }
+
+    .sidebar.open{
+
+        transform:translateX(0);
+    }
+
+    .main{
+
+        margin-left:0;
+
+        width:100%;
+    }
+
+    .mobile-menu{
+
+        display:block;
+    }
+
+    .topbar{
+
+        padding:0 15px;
+    }
+
+    .page-title{
+
+        font-size:17px;
+    }
+
+    .content{
+
+        padding:20px 15px;
+    }
+
+    .heading h1{
+
+        font-size:23px;
+    }
+
+    .orders-header{
+
+        align-items:stretch;
+
+        flex-direction:column;
+    }
+
+    .controls{
+
+        flex-direction:column;
+    }
+
+    .search{
+
+        width:100%;
+    }
+
+    .filter{
+
+        width:100%;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .stats{
+
+        grid-template-columns:1fr 1fr;
+
+        gap:10px;
+    }
+
+    .stat{
+
+        padding:15px;
+    }
+
+    .stat h2{
+
+        font-size:22px;
+    }
+
+    .detail-grid{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+        Beat<span>root</span>
+    </div>
+
+    <div class="restaurant-label">
+        Restaurant Partner
+    </div>
+
+    <div class="restaurant-name"
+         id="restaurantName">
+        Loading...
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <button onclick="goDashboard()">
+                <span class="menu-icon">📊</span>
+                Dashboard
+            </button>
+        </li>
+
+        <li>
+            <button class="active">
+                <span class="menu-icon">🛒</span>
+                Orders
+            </button>
+        </li>
+
+        <li>
+            <button onclick="goMenu()">
+                <span class="menu-icon">🍔</span>
+                Menu
+            </button>
+        </li>
+
+        <li>
+            <button onclick="goProfile()">
+                <span class="menu-icon">🏪</span>
+                Restaurant Profile
+            </button>
+        </li>
+
+    </ul>
+
+
+    <div class="sidebar-bottom">
+
+        <button class="logout"
+                onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+
+<header class="topbar">
+
+    <div class="left-top">
+
+        <button class="mobile-menu"
+                onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <div class="page-title">
+            Orders
+        </div>
+
+    </div>
+
+
+    <div class="top-right">
+
+        <button class="notification">
+            🔔
+        </button>
+
+        <div class="avatar"
+             id="avatar">
+            R
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<main class="content">
+
+
+<div class="heading">
+
+    <h1>
+        Restaurant Orders
+    </h1>
+
+    <p>
+        Manage incoming customer orders from your restaurant.
+    </p>
+
+</div>
+
+
+
+<div id="messageBox"
+     class="message">
+</div>
+
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats">
+
+
+<div class="stat">
+
+    <div class="stat-top">
+
+        <div>
+            <small>Total Orders</small>
+        </div>
+
+        <div class="stat-icon blue">
+            🛒
+        </div>
+
+    </div>
+
+    <h2 id="totalCount">
+        0
+    </h2>
+
+    <p>
+        All restaurant orders
+    </p>
+
+</div>
+
+
+
+<div class="stat">
+
+    <div class="stat-top">
+
+        <div>
+            <small>New / Confirmed</small>
+        </div>
+
+        <div class="stat-icon orange">
+            📦
+        </div>
+
+    </div>
+
+    <h2 id="confirmedCount">
+        0
+    </h2>
+
+    <p>
+        Waiting to prepare
+    </p>
+
+</div>
+
+
+
+<div class="stat">
+
+    <div class="stat-top">
+
+        <div>
+            <small>Preparing</small>
+        </div>
+
+        <div class="stat-icon orange">
+            👨‍🍳
+        </div>
+
+    </div>
+
+    <h2 id="preparingCount">
+        0
+    </h2>
+
+    <p>
+        Currently preparing
+    </p>
+
+</div>
+
+
+
+<div class="stat">
+
+    <div class="stat-top">
+
+        <div>
+            <small>Delivered</small>
+        </div>
+
+        <div class="stat-icon green">
+            ✅
+        </div>
+
+    </div>
+
+    <h2 id="deliveredCount">
+        0
+    </h2>
+
+    <p>
+        Completed orders
+    </p>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ORDERS
+===================================================== -->
+
+<section class="orders-card">
+
+
+<div class="orders-header">
+
+    <h2>
+        All Orders
+    </h2>
+
+
+    <div class="controls">
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search"
+            placeholder="Search order or customer...">
+
+        <select
+            id="statusFilter"
+            class="filter">
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="confirmed">
+                Confirmed
+            </option>
+
+            <option value="preparing">
+                Preparing
+            </option>
+
+            <option value="delivered">
+                Delivered
+            </option>
+
+            <option value="cancelled">
+                Cancelled
+            </option>
+
+            <option value="pending">
+                Pending
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>
+        Order
+    </th>
+
+    <th>
+        Customer
+    </th>
+
+    <th>
+        Date
+    </th>
+
+    <th>
+        Payment
+    </th>
+
+    <th>
+        Total
+    </th>
+
+    <th>
+        Status
+    </th>
+
+    <th>
+        Action
+    </th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="ordersTable">
+
+<tr>
+
+<td colspan="7">
+
+    <div class="loading">
+
+        <div class="loading-spinner"></div>
+
+        Loading orders...
+
+    </div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ORDER DETAILS MODAL
+===================================================== -->
+
+<div class="modal"
+     id="orderModal">
+
+<div class="modal-box">
+
+
+<div class="modal-header">
+
+    <h2>
+        Order Details
+    </h2>
+
+    <button class="close"
+            onclick="closeModal()">
+        ×
+    </button>
+
+</div>
+
+
+
+<div class="modal-body"
+     id="modalBody">
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://jhihjnsxazmftdqlitgk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+let currentUser = null;
+
+let restaurantId = null;
+
+let restaurantInfo = null;
+
+let allOrders = [];
+
+let currentOrder = null;
+
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const ordersTable =
+    document.getElementById(
+        "ordersTable"
+    );
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+const statusFilter =
+    document.getElementById(
+        "statusFilter"
+    );
+
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(
+    message,
+    type="success"
+){
+
+    const box =
+        document.getElementById(
+            "messageBox"
+        );
+
+    box.textContent =
+        message;
+
+    box.className =
+        "message show " + type;
+
+    setTimeout(() => {
+
+        box.className =
+            "message";
+
+    },5000);
+
+}
+
+
+
+/* =========================================================
+   AUTH + RESTAURANT
+========================================================= */
+
+async function initialize(){
+
+    try{
+
+        const {
+            data: {
+                user
+            },
+            error: authError
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if(authError){
+
+            throw authError;
+
+        }
+
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        document.getElementById(
+            "avatar"
+        ).textContent =
+            (
+                user.email ||
+                "R"
+            )
+            .charAt(0)
+            .toUpperCase();
+
+
+
+        /* =================================================
+           GET RESTAURANT ROLE
+        ================================================= */
+
+        const {
+            data: roleData,
+            error: roleError
+        } =
+        await supabaseClient
+            .from("user_roles")
+            .select(
+                "restaurant_id, role, approval_status"
+            )
+            .eq(
+                "user_id",
+                user.id
+            )
+            .eq(
+                "role",
+                "restaurant"
+            )
+            .maybeSingle();
+
+
+        if(roleError){
+
+            throw roleError;
+
+        }
+
+
+        if(
+            !roleData ||
+            !roleData.restaurant_id
+        ){
+
+            throw new Error(
+                "Restaurant account is not linked to a restaurant."
+            );
+
+        }
+
+
+        if(
+            roleData.approval_status &&
+            roleData.approval_status !==
+            "approved"
+        ){
+
+            throw new Error(
+                "Your restaurant account is still waiting for admin approval."
+            );
+
+        }
+
+
+        restaurantId =
+            roleData.restaurant_id;
+
+
+
+        /* =================================================
+           RESTAURANT DETAILS
+        ================================================= */
+
+        const {
+            data: restaurant,
+            error: restaurantError
+        } =
+        await supabaseClient
+            .from("restaurants")
+            .select(
+                "id,name,address,phone,description"
+            )
+            .eq(
+                "id",
+                restaurantId
+            )
+            .single();
+
+
+        if(restaurantError){
+
+            throw restaurantError;
+
+        }
+
+
+        restaurantInfo =
+            restaurant;
+
+
+        document.getElementById(
+            "restaurantName"
+        ).textContent =
+            restaurant.name;
+
+
+
+        await loadOrders();
+
+    }
+    catch(error){
+
+        console.error(
+            "Initialization error:",
+            error
+        );
+
+        showMessage(
+            error.message ||
+            "Unable to load restaurant account.",
+            "error"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   LOAD ORDERS
+========================================================= */
+
+async function loadOrders(){
+
+    ordersTable.innerHTML = `
+
+        <tr>
+
+            <td colspan="7">
+
+                <div class="loading">
+
+                    <div class="loading-spinner"></div>
+
+                    Loading orders...
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+    try{
+
+        const {
+            data: orders,
+            error
+        } =
+        await supabaseClient
+            .from("orders")
+            .select(`
+                id,
+                customer_id,
+                restaurant_id,
+                delivery_partner_id,
+                status,
+                total,
+                total_amount,
+                subtotal,
+                delivery_fee,
+                delivery_address,
+                latitude,
+                longitude,
+                payment_method,
+                created_at,
+                customer_name,
+                customer_phone,
+                phone,
+                notes
+            `)
+            .eq(
+                "restaurant_id",
+                restaurantId
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        allOrders =
+            orders || [];
+
+
+        updateStats();
+
+
+        renderOrders(
+            getFilteredOrders()
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Orders error:",
+            error
+        );
+
+        ordersTable.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty">
+
+                        Unable to load orders.<br>
+
+                        ${escapeHTML(
+                            error.message
+                        )}
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+    let confirmed = 0;
+
+    let preparing = 0;
+
+    let delivered = 0;
+
+
+    allOrders.forEach(order => {
+
+        const status =
+            String(
+                order.status ||
+                "pending"
+            )
+            .toLowerCase();
+
+
+        if(status === "confirmed"){
+
+            confirmed++;
+
+        }
+
+
+        if(
+            status === "preparing" ||
+            status === "processing"
+        ){
+
+            preparing++;
+
+        }
+
+
+        if(
+            status === "delivered" ||
+            status === "completed"
+        ){
+
+            delivered++;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        allOrders.length;
+
+
+    document.getElementById(
+        "confirmedCount"
+    ).textContent =
+        confirmed;
+
+
+    document.getElementById(
+        "preparingCount"
+    ).textContent =
+        preparing;
+
+
+    document.getElementById(
+        "deliveredCount"
+    ).textContent =
+        delivered;
+
+}
+
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function getFilteredOrders(){
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    const selectedStatus =
+        statusFilter.value;
+
+
+    return allOrders.filter(order => {
+
+        const status =
+            String(
+                order.status ||
+                "pending"
+            )
+            .toLowerCase();
+
+
+        const orderId =
+            String(
+                order.id
+            )
+            .toLowerCase();
+
+
+        const customer =
+            String(
+                order.customer_name ||
+                ""
+            )
+            .toLowerCase();
+
+
+        const phone =
+            String(
+                order.customer_phone ||
+                order.phone ||
+                ""
+            )
+            .toLowerCase();
+
+
+        const matchesSearch =
+            !search ||
+            orderId.includes(search) ||
+            customer.includes(search) ||
+            phone.includes(search);
+
+
+        const matchesStatus =
+            selectedStatus === "all" ||
+            normalizeStatus(status) ===
+            selectedStatus;
+
+
+        return (
+            matchesSearch &&
+            matchesStatus
+        );
+
+    });
+
+}
+
+
+
+/* =========================================================
+   RENDER ORDERS
+========================================================= */
+
+function renderOrders(orders){
+
+    if(!orders.length){
+
+        ordersTable.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty">
+
+                        📦<br><br>
+
+                        No orders found.
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    ordersTable.innerHTML =
+        orders.map(order => {
+
+            const status =
+                String(
+                    order.status ||
+                    "pending"
+                );
+
+
+            const normalized =
+                normalizeStatus(
+                    status
+                );
+
+
+            const total =
+                getOrderTotal(
+                    order
+                );
+
+
+            const customerName =
+                order.customer_name ||
+                "Customer";
+
+
+            const customerPhone =
+                order.customer_phone ||
+                order.phone ||
+                "";
+
+
+            return `
+
+                <tr>
+
+                    <td>
+
+                        <div class="order-id">
+
+                            #${escapeHTML(
+                                order.id
+                            )}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="customer">
+
+                            ${escapeHTML(
+                                customerName
+                            )}
+
+                        </div>
+
+                        <div class="phone">
+
+                            ${escapeHTML(
+                                customerPhone
+                            )}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="date">
+
+                            ${formatDate(
+                                order.created_at
+                            )}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHTML(
+                            order.payment_method ||
+                            "Not specified"
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="amount">
+
+                            ₹${Number(
+                                total
+                            ).toLocaleString(
+                                "en-IN"
+                            )}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="status ${getStatusClass(status)}">
+
+                            ${escapeHTML(
+                                capitalize(
+                                    status
+                                )
+                            )}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="action-btn view-btn"
+                                onclick="viewOrder(${order.id})">
+
+                                View
+
+                            </button>
+
+
+                            ${getActionButtons(
+                                order,
+                                normalized
+                            )}
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+function getActionButtons(
+    order,
+    status
+){
+
+    let html = "";
+
+
+    if(
+        status === "pending"
+    ){
+
+        html += `
+
+            <button
+                class="action-btn view-btn"
+                onclick="updateOrderStatus(
+                    ${order.id},
+                    'confirmed'
+                )">
+
+                Confirm
+
+            </button>
+
+        `;
+
+    }
+
+
+    if(
+        status === "confirmed"
+    ){
+
+        html += `
+
+            <button
+                class="action-btn prepare-btn"
+                onclick="updateOrderStatus(
+                    ${order.id},
+                    'preparing'
+                )">
+
+                Prepare
+
+            </button>
+
+        `;
+
+    }
+
+
+    if(
+        status === "preparing"
+    ){
+
+        html += `
+
+            <button
+                class="action-btn deliver-btn"
+                onclick="updateOrderStatus(
+                    ${order.id},
+                    'delivered'
+                )">
+
+                Delivered
+
+            </button>
+
+        `;
+
+    }
+
+
+    if(
+        status !== "delivered" &&
+        status !== "cancelled"
+    ){
+
+        html += `
+
+            <button
+                class="action-btn cancel-btn"
+                onclick="updateOrderStatus(
+                    ${order.id},
+                    'cancelled'
+                )">
+
+                Cancel
+
+            </button>
+
+        `;
+
+    }
+
+
+    return html;
+
+}
+
+
+
+/* =========================================================
+   VIEW ORDER
+========================================================= */
+
+async function viewOrder(orderId){
+
+    const order =
+        allOrders.find(
+            item =>
+                Number(item.id) ===
+                Number(orderId)
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    currentOrder =
+        order;
+
+
+    const modalBody =
+        document.getElementById(
+            "modalBody"
+        );
+
+
+    modalBody.innerHTML = `
+
+        <div class="loading">
+
+            <div class="loading-spinner"></div>
+
+            Loading order details...
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById(
+            "orderModal"
+        )
+        .classList.add("show");
+
+
+    try{
+
+        const {
+            data: items,
+            error
+        } =
+        await supabaseClient
+            .from("order_items")
+            .select(`
+                id,
+                order_id,
+                menu_item_id,
+                item_name,
+                quantity,
+                unit_price
+            `)
+            .eq(
+                "order_id",
+                orderId
+            )
+            .order(
+                "id",
+                {
+                    ascending:true
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        renderOrderModal(
+            order,
+            items || []
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Order item error:",
+            error
+        );
+
+
+        modalBody.innerHTML = `
+
+            <div class="empty">
+
+                Unable to load order items.<br><br>
+
+                ${escapeHTML(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   RENDER MODAL
+========================================================= */
+
+function renderOrderModal(
+    order,
+    items
+){
+
+    const total =
+        getOrderTotal(
+            order
+        );
+
+
+    const subtotal =
+        Number(
+            order.subtotal ||
+            0
+        );
+
+
+    const deliveryFee =
+        Number(
+            order.delivery_fee ||
+            0
+        );
+
+
+    let itemsHTML = "";
+
+
+    if(!items.length){
+
+        itemsHTML = `
+
+            <div class="empty">
+
+                No item details found.
+
+            </div>
+
+        `;
+
+    }
+    else{
+
+        itemsHTML =
+            items.map(item => {
+
+                const quantity =
+                    Number(
+                        item.quantity ||
+                        0
+                    );
+
+
+                const unitPrice =
+                    Number(
+                        item.unit_price ||
+                        0
+                    );
+
+
+                const lineTotal =
+                    quantity *
+                    unitPrice;
+
+
+                return `
+
+                    <div class="item-row">
+
+                        <div>
+
+                            <div class="item-name">
+
+                                ${escapeHTML(
+                                    item.item_name ||
+                                    "Item"
+                                )}
+
+                            </div>
+
+                            <div class="item-meta">
+
+                                Qty:
+                                ${quantity}
+                                ×
+                                ₹${unitPrice.toLocaleString(
+                                    "en-IN"
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="item-price">
+
+                            ₹${lineTotal.toLocaleString(
+                                "en-IN"
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+    }
+
+
+
+    const status =
+        order.status ||
+        "pending";
+
+
+    document.getElementById(
+        "modalBody"
+    ).innerHTML = `
+
+
+        <div class="detail-grid">
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Order ID
+                </div>
+
+                <div class="detail-value">
+                    #${escapeHTML(
+                        order.id
+                    )}
+                </div>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Status
+                </div>
+
+                <div class="detail-value">
+
+                    <span class="status ${getStatusClass(status)}">
+
+                        ${escapeHTML(
+                            capitalize(
+                                status
+                            )
+                        )}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Customer
+                </div>
+
+                <div class="detail-value">
+
+                    ${escapeHTML(
+                        order.customer_name ||
+                        "Customer"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Phone
+                </div>
+
+                <div class="detail-value">
+
+                    ${escapeHTML(
+                        order.customer_phone ||
+                        order.phone ||
+                        "-"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Payment Method
+                </div>
+
+                <div class="detail-value">
+
+                    ${escapeHTML(
+                        order.payment_method ||
+                        "-"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <div class="detail-label">
+                    Order Date
+                </div>
+
+                <div class="detail-value">
+
+                    ${formatDate(
+                        order.created_at
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-box"
+                 style="grid-column:1/-1;">
+
+                <div class="detail-label">
+                    Delivery Address
+                </div>
+
+                <div class="detail-value">
+
+                    ${escapeHTML(
+                        order.delivery_address ||
+                        "Not provided"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            ${
+                order.notes
+                ?
+                `
+
+                <div class="detail-box"
+                     style="grid-column:1/-1;">
+
+                    <div class="detail-label">
+                        Notes
+                    </div>
+
+                    <div class="detail-value">
+
+                        ${escapeHTML(
+                            order.notes
+                        )}
+
+                    </div>
+
+                </div>
+
+                `
+                :
+                ""
+            }
+
+
+        </div>
+
+
+
+        <div class="items-title">
+
+            Ordered Items
+
+        </div>
+
+
+        <div>
+
+            ${itemsHTML}
+
+        </div>
+
+
+
+        <div class="totals">
+
+
+            <div class="total-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong>
+                    ₹${subtotal.toLocaleString(
+                        "en-IN"
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span>
+                    Delivery Fee
+                </span>
+
+                <strong>
+                    ₹${deliveryFee.toLocaleString(
+                        "en-IN"
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="total-row total-final">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ₹${Number(
+                        total
+                    ).toLocaleString(
+                        "en-IN"
+                    )}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="modal-actions">
+
+
+            ${
+                normalizeStatus(status) ===
+                "pending"
+                ?
+                `
+
+                <button
+                    class="modal-action modal-confirmed"
+                    onclick="updateOrderStatus(
+                        ${order.id},
+                        'confirmed',
+                        true
+                    )">
+
+                    ✓ Confirm Order
+
+                </button>
+
+                `
+                :
+                ""
+            }
+
+
+            ${
+                normalizeStatus(status) ===
+                "confirmed"
+                ?
+                `
+
+                <button
+                    class="modal-action modal-preparing"
+                    onclick="updateOrderStatus(
+                        ${order.id},
+                        'preparing',
+                        true
+                    )">
+
+                    👨‍🍳 Start Preparing
+
+                </button>
+
+                `
+                :
+                ""
+            }
+
+
+            ${
+                normalizeStatus(status) ===
+                "preparing"
+                ?
+                `
+
+                <button
+                    class="modal-action modal-delivered"
+                    onclick="updateOrderStatus(
+                        ${order.id},
+                        'delivered',
+                        true
+                    )">
+
+                    ✓ Mark Delivered
+
+                </button>
+
+                `
+                :
+                ""
+            }
+
+
+            ${
+                normalizeStatus(status) !==
+                "delivered" &&
+                normalizeStatus(status) !==
+                "cancelled"
+                ?
+                `
+
+                <button
+                    class="modal-action modal-cancel"
+                    onclick="updateOrderStatus(
+                        ${order.id},
+                        'cancelled',
+                        true
+                    )">
+
+                    ✕ Cancel Order
+
+                </button>
+
+                `
+                :
+                ""
+            }
+
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* =========================================================
+   UPDATE STATUS
+========================================================= */
+
+async function updateOrderStatus(
+    orderId,
+    newStatus,
+    fromModal=false
+){
+
+    const order =
+        allOrders.find(
+            item =>
+                Number(item.id) ===
+                Number(orderId)
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    const currentStatus =
+        normalizeStatus(
+            order.status
+        );
+
+
+    if(
+        newStatus ===
+        "cancelled"
+    ){
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to cancel this order?"
+            );
+
+
+        if(!confirmed){
+
+            return;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       STATUS FLOW VALIDATION
+    ===================================================== */
+
+    if(
+        newStatus ===
+        "preparing" &&
+        currentStatus !==
+        "confirmed"
+    ){
+
+        showMessage(
+            "Only confirmed orders can be moved to preparing.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        newStatus ===
+        "delivered" &&
+        currentStatus !==
+        "preparing"
+    ){
+
+        showMessage(
+            "Only preparing orders can be marked as delivered.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("orders")
+            .update({
+
+                status:
+                    newStatus
+
+            })
+            .eq(
+                "id",
+                orderId
+            )
+            .eq(
+                "restaurant_id",
+                restaurantId
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        order.status =
+            newStatus;
+
+
+        updateStats();
+
+
+        renderOrders(
+            getFilteredOrders()
+        );
+
+
+        if(fromModal){
+
+            renderOrderModal(
+                order,
+                await getOrderItems(
+                    orderId
+                )
+            );
+
+        }
+
+
+        showMessage(
+            `Order #${orderId} updated to ${capitalize(newStatus)}.`,
+            "success"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Status update error:",
+            error
+        );
+
+
+        showMessage(
+            "Unable to update order: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   GET ORDER ITEMS
+========================================================= */
+
+async function getOrderItems(
+    orderId
+){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("order_items")
+        .select(`
+            id,
+            order_id,
+            menu_item_id,
+            item_name,
+            quantity,
+            unit_price
+        `)
+        .eq(
+            "order_id",
+            orderId
+        )
+        .order(
+            "id",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            error
+        );
+
+        return [];
+
+    }
+
+
+    return data || [];
+
+}
+
+
+
+/* =========================================================
+   STATUS NORMALIZE
+========================================================= */
+
+function normalizeStatus(
+    status
+){
+
+    const value =
+        String(
+            status ||
+            "pending"
+        )
+        .toLowerCase();
+
+
+    if(
+        value ===
+        "processing"
+    ){
+
+        return "preparing";
+
+    }
+
+
+    if(
+        value ===
+        "completed"
+    ){
+
+        return "delivered";
+
+    }
+
+
+    if(
+        value ===
+        "canceled"
+    ){
+
+        return "cancelled";
+
+    }
+
+
+    return value;
+
+}
+
+
+
+/* =========================================================
+   STATUS CLASS
+========================================================= */
+
+function getStatusClass(
+    status
+){
+
+    const value =
+        normalizeStatus(
+            status
+        );
+
+
+    if(value === "confirmed"){
+
+        return "status-confirmed";
+
+    }
+
+
+    if(value === "preparing"){
+
+        return "status-preparing";
+
+    }
+
+
+    if(value === "delivered"){
+
+        return "status-delivered";
+
+    }
+
+
+    if(value === "cancelled"){
+
+        return "status-cancelled";
+
+    }
+
+
+    return "status-pending";
+
+}
+
+
+
+/* =========================================================
+   ORDER TOTAL
+========================================================= */
+
+function getOrderTotal(
+    order
+){
+
+    if(
+        order.total_amount !==
+        null &&
+        order.total_amount !==
+        undefined
+    ){
+
+        return Number(
+            order.total_amount
+        ) || 0;
+
+    }
+
+
+    if(
+        order.total !==
+        null &&
+        order.total !==
+        undefined
+    ){
+
+        return Number(
+            order.total
+        ) || 0;
+
+    }
+
+
+    return (
+        Number(
+            order.subtotal ||
+            0
+        ) +
+        Number(
+            order.delivery_fee ||
+            0
+        )
+    );
+
+}
+
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(
+    value
+){
+
+    if(!value){
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "-";
+
+    }
+
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   CAPITALIZE
+========================================================= */
+
+function capitalize(
+    text
+){
+
+    text =
+        String(
+            text ||
+            ""
+        );
+
+
+    return (
+        text
+            .charAt(0)
+            .toUpperCase() +
+        text.slice(1)
+    );
+
+}
+
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ??
+        ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal(){
+
+    document
+        .getElementById(
+            "orderModal"
+        )
+        .classList.remove(
+            "show"
+        );
+
+    currentOrder =
+        null;
+
+}
+
+
+document
+    .getElementById(
+        "orderModal"
+    )
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                this
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+
+/* =========================================================
+   SEARCH / FILTER
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    function(){
+
+        renderOrders(
+            getFilteredOrders()
+        );
+
+    }
+);
+
+
+statusFilter.addEventListener(
+    "change",
+    function(){
+
+        renderOrders(
+            getFilteredOrders()
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goDashboard(){
+
+    window.location.href =
+        "restaurant-dashboard.html";
+
+}
+
+
+function goMenu(){
+
+    window.location.href =
+        "restaurant-menu.html";
+
+}
+
+
+function goProfile(){
+
+    window.location.href =
+        "restaurant-profile.html";
+
+}
+
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    await supabaseClient.auth.signOut();
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initialize();
+
+
+</script>
+
+
+</body>
+
+</html>
