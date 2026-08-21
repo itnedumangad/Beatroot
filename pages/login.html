@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Beatroot - Login</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -28,137 +23,68 @@ html,body{
 
 body{
     min-height:100vh;
-
     background:
-        radial-gradient(
-            circle at top left,
-            #ffe8e6,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            #ffeef0,
-            transparent 35%
-        ),
+        radial-gradient(circle at top left,#ffe8e6,transparent 35%),
+        radial-gradient(circle at bottom right,#ffeef0,transparent 35%),
         #f7f8fc;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:20px;
 }
 
-a{
-    text-decoration:none;
-}
-
-
-
-/* =========================
-   MAIN WRAPPER
-========================= */
-
-.login-wrapper{
-
+.auth-wrapper{
     width:100%;
-
-    max-width:1050px;
-
+    max-width:1100px;
     min-height:650px;
-
     background:#fff;
-
     border-radius:28px;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.12);
-
+    box-shadow:0 25px 70px rgba(0,0,0,.12);
     overflow:hidden;
-
     display:grid;
-
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1.05fr;
 }
 
-
-
-/* =========================
-   LEFT
-========================= */
+/* LEFT */
 
 .left{
-
-    background:
-        linear-gradient(
-            145deg,
-            #111827,
-            #1f2937
-        );
-
+    background:linear-gradient(145deg,#111827,#1f2937);
     color:#fff;
-
     padding:55px;
-
     display:flex;
-
     flex-direction:column;
-
     justify-content:center;
-
     position:relative;
-
     overflow:hidden;
 }
 
-.left::before{
-
+.left:before{
     content:"";
-
     position:absolute;
-
-    width:300px;
-
-    height:300px;
-
+    width:320px;
+    height:320px;
     border-radius:50%;
-
     background:rgba(239,68,68,.12);
-
     top:-120px;
-
     right:-100px;
 }
 
-.left::after{
-
+.left:after{
     content:"";
-
     position:absolute;
-
     width:250px;
-
     height:250px;
-
     border-radius:50%;
-
     background:rgba(255,255,255,.04);
-
     bottom:-100px;
-
     left:-80px;
 }
 
 .brand{
-
     position:relative;
-
     z-index:2;
-
     font-size:38px;
-
     font-weight:800;
-
     margin-bottom:45px;
 }
 
@@ -167,609 +93,319 @@ a{
 }
 
 .left h1{
-
     position:relative;
-
     z-index:2;
-
     font-size:42px;
-
     line-height:1.15;
-
     margin-bottom:18px;
 }
 
 .left p{
-
     position:relative;
-
     z-index:2;
-
     color:#d1d5db;
-
     font-size:16px;
-
     line-height:1.7;
-
     max-width:430px;
 }
 
 .features{
-
     position:relative;
-
     z-index:2;
-
     margin-top:40px;
 }
 
 .feature{
-
     display:flex;
-
     align-items:center;
-
     gap:12px;
-
     margin:15px 0;
-
     color:#e5e7eb;
-
     font-size:14px;
 }
 
 .feature-icon{
-
     width:35px;
-
     height:35px;
-
     border-radius:10px;
-
     background:#ef4444;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 }
 
-
-
-/* =========================
-   RIGHT
-========================= */
+/* RIGHT */
 
 .right{
-
-    padding:45px 55px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
+    padding:42px 50px;
+    overflow-y:auto;
 }
 
 .login-title{
-
     font-size:30px;
-
     font-weight:800;
-
     color:#111827;
-
-    margin-bottom:8px;
+    margin-bottom:7px;
 }
 
 .login-subtitle{
-
     color:#6b7280;
-
     font-size:14px;
-
     margin-bottom:25px;
 }
 
+/* ACCOUNT SWITCH */
 
+.account-switch{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:7px;
+    padding:5px;
+    background:#f3f4f6;
+    border-radius:12px;
+    margin-bottom:24px;
+}
 
-/* =========================
-   FORM
-========================= */
+.account-tab{
+    border:0;
+    background:transparent;
+    padding:11px 5px;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+    color:#6b7280;
+}
+
+.account-tab.active{
+    background:#fff;
+    color:#ef4444;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+/* FORM */
 
 .form-group{
-
-    margin-bottom:18px;
+    margin-bottom:16px;
 }
 
 .form-group label{
-
     display:block;
-
     font-size:13px;
-
     font-weight:700;
-
     color:#374151;
-
-    margin-bottom:8px;
+    margin-bottom:7px;
 }
 
 .input-box{
-
     position:relative;
 }
 
-.input-box input{
-
+.input-box input,
+.input-box select{
     width:100%;
-
-    height:52px;
-
+    height:48px;
     border:1px solid #e5e7eb;
-
-    border-radius:12px;
-
-    padding:0 15px;
-
+    border-radius:11px;
+    padding:0 13px;
     font-size:14px;
-
     outline:none;
-
-    transition:.2s;
-
     background:#fafafa;
 }
 
-.input-box input:focus{
-
+.input-box input:focus,
+.input-box select:focus{
     border-color:#ef4444;
-
     background:#fff;
-
-    box-shadow:
-        0 0 0 4px rgba(239,68,68,.08);
+    box-shadow:0 0 0 4px rgba(239,68,68,.08);
 }
-
-
-
-/* PASSWORD */
 
 .password-toggle{
-
     position:absolute;
-
-    right:14px;
-
+    right:12px;
     top:50%;
-
     transform:translateY(-50%);
-
     border:0;
-
     background:transparent;
-
     cursor:pointer;
-
-    font-size:18px;
+    font-size:17px;
 }
 
-
-
-/* =========================
-   OPTIONS
-========================= */
+.two-column{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
 
 .options{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
-    margin:5px 0 20px;
+    margin:3px 0 20px;
 }
 
 .remember{
-
     display:flex;
-
     align-items:center;
-
     gap:7px;
-
     color:#6b7280;
-
     font-size:12px;
 }
 
 .remember input{
-
     accent-color:#ef4444;
 }
 
 .forgot{
-
     border:0;
-
     background:none;
-
     color:#ef4444;
-
     cursor:pointer;
-
     font-size:12px;
-
     font-weight:700;
 }
 
-
-
-/* =========================
-   LOGIN BUTTON
-========================= */
-
-.login-btn{
-
+.primary-btn{
     width:100%;
-
-    height:52px;
-
+    height:50px;
     border:0;
-
-    border-radius:12px;
-
+    border-radius:11px;
     background:#ef4444;
-
     color:#fff;
-
     font-size:15px;
-
     font-weight:700;
-
     cursor:pointer;
-
-    transition:.2s;
 }
 
-.login-btn:hover{
-
+.primary-btn:hover{
     background:#dc2626;
-
-    transform:translateY(-1px);
-
-    box-shadow:
-        0 8px 20px rgba(239,68,68,.25);
 }
 
-.login-btn:disabled{
-
-    opacity:.65;
-
+.primary-btn:disabled{
+    opacity:.6;
     cursor:not-allowed;
-
-    transform:none;
 }
-
-
-
-/* =========================
-   MESSAGE
-========================= */
 
 .message{
-
     display:none;
-
     padding:12px 14px;
-
     border-radius:10px;
-
     font-size:13px;
-
-    margin-bottom:18px;
-
+    margin-bottom:16px;
     line-height:1.5;
 }
 
 .message.error{
-
     display:block;
-
     background:#fee2e2;
-
     color:#b91c1c;
-
     border:1px solid #fecaca;
 }
 
 .message.success{
-
     display:block;
-
     background:#dcfce7;
-
     color:#15803d;
-
     border:1px solid #bbf7d0;
 }
 
 .message.warning{
-
     display:block;
-
     background:#fef3c7;
-
     color:#92400e;
-
     border:1px solid #fde68a;
 }
 
-
-
-/* =========================
-   REGISTRATION
-========================= */
-
-.register-options{
-
-    margin-top:22px;
-
-    text-align:center;
-}
-
-.register-title{
-
-    color:#6b7280;
-
+.info-box{
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    color:#9a3412;
+    border-radius:10px;
+    padding:11px 12px;
     font-size:12px;
-
-    margin-bottom:10px;
+    line-height:1.5;
+    margin-bottom:16px;
 }
 
-
-
-/* CUSTOMER MAIN */
-
-.register-main{
-
+.divider{
     display:flex;
-
     align-items:center;
-
-    justify-content:center;
-
-    width:100%;
-
-    min-height:46px;
-
-    border:1px solid #ef4444;
-
-    border-radius:11px;
-
-    color:#ef4444;
-
-    font-size:14px;
-
-    font-weight:800;
-
-    transition:.2s;
-
-    background:#fff;
-}
-
-.register-main:hover{
-
-    background:#fff1f2;
-
-    transform:translateY(-1px);
-}
-
-
-
-/* PARTNERS */
-
-.partner-options{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:10px;
-
-    margin-top:10px;
-}
-
-.partner-card{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:9px;
-
-    text-align:left;
-
-    padding:11px;
-
-    border:1px solid #e5e7eb;
-
-    border-radius:11px;
-
-    color:#374151;
-
-    background:#fafafa;
-
-    transition:.2s;
-}
-
-.partner-card:hover{
-
-    border-color:#ef4444;
-
-    background:#fffafa;
-
-    transform:translateY(-1px);
-}
-
-.partner-card > span{
-
-    font-size:22px;
-}
-
-.partner-card strong{
-
-    display:block;
-
+    gap:12px;
+    margin:22px 0;
+    color:#9ca3af;
     font-size:11px;
 }
 
-.partner-card small{
-
-    display:block;
-
-    color:#9ca3af;
-
-    font-size:9px;
-
-    margin-top:3px;
-
-    line-height:1.3;
-}
-
-
-
-/* =========================
-   DIVIDER
-========================= */
-
-.divider{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin:22px 0 0;
-
-    color:#9ca3af;
-
-    font-size:12px;
-}
-
-.divider::before,
-.divider::after{
-
+.divider:before,
+.divider:after{
     content:"";
-
     height:1px;
-
     background:#e5e7eb;
-
     flex:1;
 }
 
-
-
-/* =========================
-   FOOTER
-========================= */
-
 .footer-text{
-
     text-align:center;
-
     color:#9ca3af;
-
     font-size:11px;
-
-    margin-top:15px;
+    margin-top:20px;
 }
 
-
-
-/* =========================
-   LOADING
-========================= */
+.hidden{
+    display:none !important;
+}
 
 .loading{
-
     display:inline-flex;
-
     align-items:center;
-
     justify-content:center;
-
     gap:8px;
 }
 
 .spinner{
-
     width:16px;
-
     height:16px;
-
     border:2px solid rgba(255,255,255,.4);
-
     border-top-color:#fff;
-
     border-radius:50%;
-
     animation:spin .7s linear infinite;
 }
 
 @keyframes spin{
-
     to{
         transform:rotate(360deg);
     }
 }
 
+/* MOBILE */
 
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:800px){
+@media(max-width:850px){
 
     body{
         padding:12px;
     }
 
-    .login-wrapper{
-
+    .auth-wrapper{
         grid-template-columns:1fr;
-
         min-height:auto;
-
         max-width:520px;
     }
 
     .left{
-
-        padding:35px 30px;
-
-        min-height:280px;
+        padding:32px 28px;
+        min-height:260px;
     }
 
     .brand{
-
         font-size:30px;
-
         margin-bottom:25px;
     }
 
     .left h1{
-
         font-size:30px;
     }
 
     .left p{
-
         font-size:14px;
     }
 
@@ -778,48 +414,41 @@ a{
     }
 
     .right{
-
-        padding:35px 25px;
+        padding:32px 25px;
     }
 }
 
-@media(max-width:450px){
-
-    .left{
-        padding:30px 22px;
-    }
+@media(max-width:480px){
 
     .right{
-        padding:30px 20px;
+        padding:28px 18px;
     }
 
     .login-title{
         font-size:25px;
     }
 
+    .account-switch{
+        grid-template-columns:1fr;
+    }
+
+    .two-column{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
     .options{
         align-items:flex-start;
     }
-
-    .partner-options{
-        grid-template-columns:1fr;
-    }
 }
-
 </style>
-
 </head>
-
 
 <body>
 
+<div class="auth-wrapper">
 
-<div class="login-wrapper">
-
-
-<!-- =========================
-     LEFT SIDE
-========================= -->
+<!-- LEFT -->
 
 <section class="left">
 
@@ -828,54 +457,31 @@ a{
     </div>
 
     <h1>
-        Welcome Back!
+        Food. Delivered.
+        Made Simple.
     </h1>
 
     <p>
-        Login to your Beatroot account and enjoy
-        simple food ordering, restaurant management
-        and reliable delivery.
+        Login to Beatroot and enjoy easy food ordering,
+        restaurant management and delivery management
+        from one platform.
     </p>
-
 
     <div class="features">
 
         <div class="feature">
-
-            <div class="feature-icon">
-                🛒
-            </div>
-
-            <span>
-                Easy food ordering
-            </span>
-
+            <div class="feature-icon">🛒</div>
+            <span>Easy food ordering</span>
         </div>
 
-
         <div class="feature">
-
-            <div class="feature-icon">
-                🍔
-            </div>
-
-            <span>
-                Restaurant partners
-            </span>
-
+            <div class="feature-icon">🍔</div>
+            <span>Restaurant management</span>
         </div>
 
-
         <div class="feature">
-
-            <div class="feature-icon">
-                🚴
-            </div>
-
-            <span>
-                Fast delivery network
-            </span>
-
+            <div class="feature-icon">🚴</div>
+            <span>Delivery management</span>
         </div>
 
     </div>
@@ -883,98 +489,99 @@ a{
 </section>
 
 
-
-<!-- =========================
-     RIGHT SIDE
-========================= -->
+<!-- RIGHT -->
 
 <section class="right">
 
-
-    <h2 class="login-title">
+    <h2 class="login-title" id="formTitle">
         Sign In
     </h2>
 
-
-    <p class="login-subtitle">
-        Sign in to your Beatroot account to continue.
+    <p class="login-subtitle" id="formSubtitle">
+        Enter your account details to continue.
     </p>
 
 
+    <!-- ACCOUNT TYPE -->
 
-    <div
-        id="messageBox"
-        class="message">
+    <div class="account-switch">
+
+        <button
+            type="button"
+            class="account-tab active"
+            id="loginTab"
+            onclick="showLogin()">
+            Sign In
+        </button>
+
+        <button
+            type="button"
+            class="account-tab"
+            id="customerTab"
+            onclick="showSignup('customer')">
+            Customer
+        </button>
+
+        <button
+            type="button"
+            class="account-tab"
+            id="partnerTab"
+            onclick="showPartnerOptions()">
+            Restaurant / Delivery
+        </button>
+
     </div>
 
 
+    <div id="messageBox" class="message"></div>
 
-    <!-- =========================
-         LOGIN FORM
-    ========================= -->
+
+    <!-- LOGIN FORM -->
 
     <form id="loginForm">
 
-
-        <!-- EMAIL -->
-
         <div class="form-group">
 
-            <label for="email">
-                Email Address
-            </label>
+            <label>Email Address</label>
 
             <div class="input-box">
 
                 <input
                     type="email"
-                    id="email"
+                    id="loginEmail"
                     placeholder="Enter your email"
                     autocomplete="email"
-                    required
-                >
+                    required>
 
             </div>
 
         </div>
 
 
-
-        <!-- PASSWORD -->
-
         <div class="form-group">
 
-            <label for="password">
-                Password
-            </label>
+            <label>Password</label>
 
             <div class="input-box">
 
                 <input
                     type="password"
-                    id="password"
+                    id="loginPassword"
                     placeholder="Enter your password"
                     autocomplete="current-password"
-                    required
-                >
+                    required>
 
                 <button
                     type="button"
                     class="password-toggle"
-                    onclick="togglePassword()"
-                    id="passwordToggle">
-
+                    onclick="togglePassword('loginPassword',this)">
                     👁️
-
                 </button>
 
             </div>
 
         </div>
 
-
-
-        <!-- OPTIONS -->
 
         <div class="options">
 
@@ -988,7 +595,6 @@ a{
 
             </label>
 
-
             <button
                 type="button"
                 class="forgot"
@@ -1001,12 +607,9 @@ a{
         </div>
 
 
-
-        <!-- LOGIN -->
-
         <button
             type="submit"
-            class="login-btn"
+            class="primary-btn"
             id="loginBtn">
 
             Sign In
@@ -1016,85 +619,223 @@ a{
     </form>
 
 
+    <!-- SIGNUP FORM -->
 
-    <!-- =========================
-         REGISTER
-    ========================= -->
+    <form
+        id="signupForm"
+        class="hidden">
 
-    <div class="register-options">
-
-        <div class="register-title">
-            Don't have an account?
-        </div>
+        <div id="signupInfo" class="info-box hidden"></div>
 
 
-        <!-- CUSTOMER -->
+        <div class="two-column">
 
-        <a
-            href="customer-register.html"
-            class="register-main">
+            <div class="form-group">
 
-            👤 &nbsp; Create Customer Account
+                <label>Full Name</label>
 
-        </a>
+                <div class="input-box">
 
-
-        <!-- PARTNERS -->
-
-        <div class="partner-options">
-
-
-            <a
-                href="restaurant-register.html"
-                class="partner-card">
-
-                <span>
-                    🏪
-                </span>
-
-                <div>
-
-                    <strong>
-                        Restaurant Partner
-                    </strong>
-
-                    <small>
-                        Create Restaurant Account
-                    </small>
+                    <input
+                        type="text"
+                        id="signupName"
+                        placeholder="Your full name"
+                        required>
 
                 </div>
 
-            </a>
+            </div>
 
 
+            <div class="form-group">
 
-            <a
-                href="delivery-register.html"
-                class="partner-card">
+                <label>Phone</label>
 
-                <span>
-                    🚴
-                </span>
+                <div class="input-box">
 
-                <div>
-
-                    <strong>
-                        Delivery Partner
-                    </strong>
-
-                    <small>
-                        Create Delivery Account
-                    </small>
+                    <input
+                        type="tel"
+                        id="signupPhone"
+                        placeholder="Phone number"
+                        required>
 
                 </div>
 
-            </a>
-
+            </div>
 
         </div>
 
-    </div>
 
+        <!-- RESTAURANT ONLY -->
+
+        <div
+            id="restaurantFields"
+            class="hidden">
+
+            <div class="form-group">
+
+                <label>Restaurant Name</label>
+
+                <div class="input-box">
+
+                    <input
+                        type="text"
+                        id="restaurantName"
+                        placeholder="Restaurant name">
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Restaurant Address</label>
+
+                <div class="input-box">
+
+                    <input
+                        type="text"
+                        id="restaurantAddress"
+                        placeholder="Restaurant address">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DELIVERY ONLY -->
+
+        <div
+            id="deliveryFields"
+            class="hidden">
+
+            <div class="form-group">
+
+                <label>Address</label>
+
+                <div class="input-box">
+
+                    <input
+                        type="text"
+                        id="deliveryAddress"
+                        placeholder="Your address">
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Vehicle Type</label>
+
+                <div class="input-box">
+
+                    <select id="vehicleType">
+
+                        <option value="">
+                            Select vehicle
+                        </option>
+
+                        <option value="bike">
+                            Bike
+                        </option>
+
+                        <option value="scooter">
+                            Scooter
+                        </option>
+
+                        <option value="car">
+                            Car
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Email Address</label>
+
+            <div class="input-box">
+
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Password</label>
+
+            <div class="input-box">
+
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create password"
+                    minlength="6"
+                    required>
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="togglePassword('signupPassword',this)">
+                    👁️
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Confirm Password</label>
+
+            <div class="input-box">
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm password"
+                    minlength="6"
+                    required>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="primary-btn"
+            id="signupBtn">
+
+            Create Customer Account
+
+        </button>
+
+    </form>
 
 
     <div class="divider">
@@ -1106,15 +847,12 @@ a{
         © 2026 Beatroot. All rights reserved.
     </div>
 
-
 </section>
 
 </div>
 
 
-
 <script>
-
 
 /* =========================================================
    SUPABASE
@@ -1126,13 +864,18 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
     );
 
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let signupRole = "customer";
 
 
 /* =========================================================
@@ -1142,313 +885,220 @@ const supabaseClient =
 const loginForm =
     document.getElementById("loginForm");
 
+const signupForm =
+    document.getElementById("signupForm");
+
 const loginBtn =
     document.getElementById("loginBtn");
 
+const signupBtn =
+    document.getElementById("signupBtn");
+
 const messageBox =
     document.getElementById("messageBox");
-
 
 
 /* =========================================================
    MESSAGE
 ========================================================= */
 
-function showMessage(
-    message,
-    type = "error"
-){
+function showMessage(message,type="error"){
 
     messageBox.textContent =
         message;
 
     messageBox.className =
         "message " + type;
+
 }
 
 
 function hideMessage(){
 
-    messageBox.textContent =
-        "";
+    messageBox.textContent = "";
 
     messageBox.className =
         "message";
+
 }
 
 
-
 /* =========================================================
-   PASSWORD TOGGLE
+   TABS
 ========================================================= */
 
-function togglePassword(){
+function resetTabs(){
 
-    const password =
-        document.getElementById("password");
+    document
+        .getElementById("loginTab")
+        .classList.remove("active");
 
-    const toggle =
-        document.getElementById("passwordToggle");
+    document
+        .getElementById("customerTab")
+        .classList.remove("active");
+
+    document
+        .getElementById("partnerTab")
+        .classList.remove("active");
+
+}
 
 
-    if(password.type === "password"){
+function showLogin(){
 
-        password.type =
-            "text";
+    resetTabs();
 
-        toggle.textContent =
-            "🙈";
+    document
+        .getElementById("loginTab")
+        .classList.add("active");
+
+    loginForm.classList.remove("hidden");
+
+    signupForm.classList.add("hidden");
+
+    document.getElementById("formTitle")
+        .textContent = "Sign In";
+
+    document.getElementById("formSubtitle")
+        .textContent =
+        "Enter your account details to continue.";
+
+    hideMessage();
+
+}
+
+
+function showSignup(role){
+
+    signupRole = role;
+
+    resetTabs();
+
+    document
+        .getElementById("customerTab")
+        .classList.add("active");
+
+    loginForm.classList.add("hidden");
+
+    signupForm.classList.remove("hidden");
+
+    document.getElementById("formTitle")
+        .textContent =
+        role === "customer"
+            ? "Create Customer Account"
+            : role === "restaurant"
+                ? "Restaurant Registration"
+                : "Delivery Boy Registration";
+
+    document.getElementById("formSubtitle")
+        .textContent =
+        role === "customer"
+            ? "Create your Beatroot customer account."
+            : "Submit your details for admin approval.";
+
+    document.getElementById("restaurantFields")
+        .classList.toggle(
+            "hidden",
+            role !== "restaurant"
+        );
+
+    document.getElementById("deliveryFields")
+        .classList.toggle(
+            "hidden",
+            role !== "delivery_boy"
+        );
+
+    const info =
+        document.getElementById("signupInfo");
+
+    if(role === "customer"){
+
+        info.classList.add("hidden");
+
+        signupBtn.textContent =
+            "Create Customer Account";
+
+    }
+
+    if(role === "restaurant"){
+
+        info.classList.remove("hidden");
+
+        info.textContent =
+            "Restaurant accounts require administrator approval before they can access the restaurant dashboard.";
+
+        signupBtn.textContent =
+            "Submit Restaurant Registration";
+
+    }
+
+    if(role === "delivery_boy"){
+
+        info.classList.remove("hidden");
+
+        info.textContent =
+            "Delivery Boy accounts require administrator approval before they can access the delivery dashboard.";
+
+        signupBtn.textContent =
+            "Submit Delivery Registration";
+
+    }
+
+    hideMessage();
+
+}
+
+
+/* =========================================================
+   PARTNER OPTIONS
+========================================================= */
+
+function showPartnerOptions(){
+
+    const choice =
+        confirm(
+            "OK = Restaurant\nCancel = Delivery Boy"
+        );
+
+    if(choice){
+
+        showSignup("restaurant");
 
     }
     else{
 
-        password.type =
-            "password";
-
-        toggle.textContent =
-            "👁️";
+        showSignup("delivery_boy");
 
     }
 
 }
-
 
 
 /* =========================================================
-   GET PROFILE / ROLE
+   PASSWORD
 ========================================================= */
 
-async function getUserRole(userId){
+function togglePassword(id,button){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .from("user_roles")
-        .select(`
-            id,
-            role,
-            restaurant_id,
-            delivery_boy_id,
-            approval_status
-        `)
-        .eq(
-            "user_id",
-            userId
-        )
-        .maybeSingle();
+    const input =
+        document.getElementById(id);
 
+    if(input.type === "password"){
 
-    if(error){
+        input.type = "text";
 
-        console.error(
-            "Role query error:",
-            error
-        );
-
-        throw new Error(
-            "Unable to load account information."
-        );
+        button.textContent = "🙈";
 
     }
+    else{
 
+        input.type = "password";
 
-    return data;
+        button.textContent = "👁️";
+
+    }
 
 }
-
-
-
-/* =========================================================
-   APPROVAL STATUS
-========================================================= */
-
-function normalizeApprovalStatus(value){
-
-    const status =
-        String(
-            value || "approved"
-        )
-        .toLowerCase()
-        .trim();
-
-
-    return status;
-
-}
-
-
-
-/* =========================================================
-   CHECK RESTAURANT / DELIVERY APPROVAL
-========================================================= */
-
-function checkApproval(roleData){
-
-    const role =
-        String(
-            roleData.role || ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    /* CUSTOMER */
-
-    if(role === "customer"){
-
-        return {
-            allowed:true
-        };
-
-    }
-
-
-    /* ADMIN */
-
-    if(role === "admin"){
-
-        return {
-            allowed:true
-        };
-
-    }
-
-
-    /* PARTNERS */
-
-    const approval =
-        normalizeApprovalStatus(
-            roleData.approval_status
-        );
-
-
-    if(
-        approval === "pending"
-    ){
-
-        return {
-            allowed:false,
-
-            message:
-                "Your account is waiting for admin approval. Please try again after approval."
-        };
-
-    }
-
-
-    if(
-        approval === "rejected"
-    ){
-
-        return {
-            allowed:false,
-
-            message:
-                "Your account application was rejected. Please contact Beatroot administrator."
-        };
-
-    }
-
-
-    if(
-        approval === "blocked" ||
-        approval === "suspended"
-    ){
-
-        return {
-            allowed:false,
-
-            message:
-                "Your account is currently unavailable. Please contact Beatroot administrator."
-        };
-
-    }
-
-
-    return {
-        allowed:true
-    };
-
-}
-
-
-
-/* =========================================================
-   ROLE REDIRECT
-========================================================= */
-
-function redirectByRole(roleData){
-
-    const role =
-        String(
-            roleData.role || ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    /* ADMIN */
-
-    if(role === "admin"){
-
-        window.location.href =
-            "admin-dashboard.html";
-
-        return;
-
-    }
-
-
-    /* RESTAURANT */
-
-    if(
-        role === "restaurant" ||
-        role === "restaurant_owner"
-    ){
-
-        window.location.href =
-            "restaurant.html";
-
-        return;
-
-    }
-
-
-    /* DELIVERY */
-
-    if(
-        role === "delivery_boy" ||
-        role === "delivery"
-    ){
-
-        window.location.href =
-            "delivery-dashboard.html";
-
-        return;
-
-    }
-
-
-    /* CUSTOMER */
-
-    if(role === "customer"){
-
-        window.location.href =
-            "../index.html";
-
-        return;
-
-    }
-
-
-    throw new Error(
-        "Unknown account role."
-    );
-
-}
-
 
 
 /* =========================================================
@@ -1463,25 +1113,17 @@ loginForm.addEventListener(
 
         hideMessage();
 
-
         const email =
-            document
-                .getElementById("email")
+            document.getElementById("loginEmail")
                 .value
                 .trim()
                 .toLowerCase();
 
-
         const password =
-            document
-                .getElementById("password")
+            document.getElementById("loginPassword")
                 .value;
 
-
-        if(
-            !email ||
-            !password
-        ){
+        if(!email || !password){
 
             showMessage(
                 "Please enter your email and password."
@@ -1491,10 +1133,7 @@ loginForm.addEventListener(
 
         }
 
-
-        loginBtn.disabled =
-            true;
-
+        loginBtn.disabled = true;
 
         loginBtn.innerHTML = `
             <span class="loading">
@@ -1503,13 +1142,7 @@ loginForm.addEventListener(
             </span>
         `;
 
-
         try{
-
-
-            /* =========================================
-               SUPABASE AUTH
-            ========================================= */
 
             const {
                 data,
@@ -1519,8 +1152,355 @@ loginForm.addEventListener(
                 .signInWithPassword({
 
                     email:email,
-
                     password:password
+
+                });
+
+            if(error){
+
+                throw error;
+
+            }
+
+            if(!data?.user){
+
+                throw new Error(
+                    "Login failed."
+                );
+
+            }
+
+            const user =
+                data.user;
+
+
+            /* EMAIL VERIFICATION */
+
+            if(!user.email_confirmed_at){
+
+                await supabaseClient.auth.signOut();
+
+                throw new Error(
+                    "Please verify your email before logging in."
+                );
+
+            }
+
+
+            /* GET ROLE */
+
+            const {
+                data:roleData,
+                error:roleError
+            } =
+            await supabaseClient
+                .from("user_roles")
+                .select(`
+                    id,
+                    role,
+                    restaurant_id,
+                    delivery_boy_id
+                `)
+                .eq(
+                    "user_id",
+                    user.id
+                )
+                .maybeSingle();
+
+
+            if(roleError){
+
+                throw roleError;
+
+            }
+
+
+            if(!roleData){
+
+                await supabaseClient.auth.signOut();
+
+                throw new Error(
+                    "Your account is waiting for administrator approval."
+                );
+
+            }
+
+
+            const role =
+                String(
+                    roleData.role || ""
+                )
+                .toLowerCase()
+                .trim();
+
+
+            /* ADMIN */
+
+            if(role === "admin"){
+
+                window.location.href =
+                    "admin-dashboard.html";
+
+                return;
+
+            }
+
+
+            /* RESTAURANT */
+
+            if(
+                role === "restaurant" ||
+                role === "restaurant_owner"
+            ){
+
+                window.location.href =
+                    "restaurant.html";
+
+                return;
+
+            }
+
+
+            /* DELIVERY */
+
+            if(
+                role === "delivery" ||
+                role === "delivery_boy"
+            ){
+
+                window.location.href =
+                    "delivery-dashboard.html";
+
+                return;
+
+            }
+
+
+            /* CUSTOMER */
+
+            if(role === "customer"){
+
+                window.location.href =
+                    "../index.html";
+
+                return;
+
+            }
+
+
+            await supabaseClient.auth.signOut();
+
+            throw new Error(
+                "Your account role is not configured."
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            let msg =
+                error.message ||
+                "Login failed.";
+
+            if(
+                msg.toLowerCase()
+                    .includes(
+                        "invalid login credentials"
+                    )
+            ){
+
+                msg =
+                    "Invalid email or password.";
+
+            }
+
+            showMessage(msg);
+
+            loginBtn.disabled = false;
+
+            loginBtn.textContent =
+                "Sign In";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SIGNUP
+========================================================= */
+
+signupForm.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        hideMessage();
+
+
+        const name =
+            document.getElementById("signupName")
+                .value
+                .trim();
+
+        const phone =
+            document.getElementById("signupPhone")
+                .value
+                .trim();
+
+        const email =
+            document.getElementById("signupEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+        const password =
+            document.getElementById("signupPassword")
+                .value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword")
+                .value;
+
+
+        if(!name || !phone || !email || !password){
+
+            showMessage(
+                "Please fill all required fields."
+            );
+
+            return;
+
+        }
+
+
+        if(password.length < 6){
+
+            showMessage(
+                "Password must contain at least 6 characters."
+            );
+
+            return;
+
+        }
+
+
+        if(password !== confirmPassword){
+
+            showMessage(
+                "Passwords do not match."
+            );
+
+            return;
+
+        }
+
+
+        /* RESTAURANT VALIDATION */
+
+        if(signupRole === "restaurant"){
+
+            const restaurantName =
+                document.getElementById("restaurantName")
+                    .value
+                    .trim();
+
+            const restaurantAddress =
+                document.getElementById("restaurantAddress")
+                    .value
+                    .trim();
+
+            if(!restaurantName || !restaurantAddress){
+
+                showMessage(
+                    "Please enter restaurant name and address."
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        /* DELIVERY VALIDATION */
+
+        if(signupRole === "delivery_boy"){
+
+            const address =
+                document.getElementById("deliveryAddress")
+                    .value
+                    .trim();
+
+            const vehicle =
+                document.getElementById("vehicleType")
+                    .value;
+
+            if(!address || !vehicle){
+
+                showMessage(
+                    "Please enter address and select vehicle type."
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        signupBtn.disabled = true;
+
+        signupBtn.innerHTML = `
+            <span class="loading">
+                <span class="spinner"></span>
+                Creating Account...
+            </span>
+        `;
+
+
+        try{
+
+            /*
+             * CREATE SUPABASE AUTH USER
+             *
+             * Customer:
+             * email verification required.
+             *
+             * Restaurant / Delivery:
+             * email verification required +
+             * admin approval required.
+             */
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.auth
+                .signUp({
+
+                    email:email,
+
+                    password:password,
+
+                    options:{
+                        emailRedirectTo:
+                            window.location.origin +
+                            "/pages/login.html",
+
+                        data:{
+                            full_name:name,
+                            phone:phone,
+                            requested_role:
+                                signupRole
+                        }
+                    }
 
                 });
 
@@ -1532,13 +1512,10 @@ loginForm.addEventListener(
             }
 
 
-            if(
-                !data ||
-                !data.user
-            ){
+            if(!data?.user){
 
                 throw new Error(
-                    "Login failed. User not found."
+                    "Unable to create account."
                 );
 
             }
@@ -1548,174 +1525,287 @@ loginForm.addEventListener(
                 data.user;
 
 
+            /*
+             * CREATE PROFILE
+             */
 
-            /* =========================================
-               EMAIL VERIFICATION
-            ========================================= */
+            const {
+                error:profileError
+            } =
+            await supabaseClient
+                .from("profiles")
+                .upsert({
 
-            if(
-                !user.email_confirmed_at
-            ){
+                    id:user.id,
 
-                await supabaseClient.auth.signOut();
+                    full_name:name,
 
-                throw new Error(
-                    "Please verify your email address before logging in."
+                    phone:phone
+
+                });
+
+
+            if(profileError){
+
+                console.error(
+                    "Profile error:",
+                    profileError
                 );
 
             }
 
 
+            /*
+             * CUSTOMER
+             */
 
-            /* =========================================
-               GET ROLE
-            ========================================= */
-
-            const roleData =
-                await getUserRole(
-                    user.id
-                );
-
-
-            if(!roleData){
-
-                await supabaseClient.auth.signOut();
-
-                throw new Error(
-                    "Your account does not have a role assigned. Please contact the administrator."
-                );
-
-            }
-
-
-
-            /* =========================================
-               APPROVAL
-            ========================================= */
-
-            const approval =
-                checkApproval(
-                    roleData
-                );
-
-
-            if(
-                !approval.allowed
-            ){
-
-                await supabaseClient.auth.signOut();
+            if(signupRole === "customer"){
 
                 showMessage(
-                    approval.message,
-                    "warning"
+                    "Account created successfully. Please check your email and verify your email address before logging in.",
+                    "success"
                 );
 
-                loginBtn.disabled =
-                    false;
+                signupForm.reset();
 
-                loginBtn.textContent =
-                    "Sign In";
+                signupBtn.disabled = false;
+
+                signupBtn.textContent =
+                    "Create Customer Account";
 
                 return;
 
             }
 
 
+            /*
+             * RESTAURANT REQUEST
+             */
 
-            /* =========================================
-               SUCCESS
-            ========================================= */
+            if(signupRole === "restaurant"){
 
-            showMessage(
-                "Login successful. Redirecting...",
-                "success"
-            );
+                const restaurantName =
+                    document.getElementById("restaurantName")
+                        .value
+                        .trim();
 
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        500
-                    )
-            );
+                const restaurantAddress =
+                    document.getElementById("restaurantAddress")
+                        .value
+                        .trim();
 
 
-            redirectByRole(
-                roleData
-            );
+                /*
+                 * IMPORTANT:
+                 *
+                 * This table should be created:
+                 *
+                 * partner_signup_requests
+                 *
+                 * with:
+                 * id
+                 * user_id
+                 * role
+                 * full_name
+                 * phone
+                 * email
+                 * restaurant_name
+                 * address
+                 * status
+                 * created_at
+                 */
 
+                const {
+                    error:requestError
+                } =
+                await supabaseClient
+                    .from("partner_signup_requests")
+                    .insert({
+
+                        user_id:user.id,
+
+                        role:"restaurant",
+
+                        full_name:name,
+
+                        phone:phone,
+
+                        email:email,
+
+                        restaurant_name:
+                            restaurantName,
+
+                        address:
+                            restaurantAddress,
+
+                        status:"pending"
+
+                    });
+
+
+                if(requestError){
+
+                    console.error(
+                        requestError
+                    );
+
+                    /*
+                     * Auth account exists even if
+                     * request table fails.
+                     */
+
+                    throw new Error(
+                        "Account created, but approval request could not be saved. Please contact administrator."
+                    );
+
+                }
+
+
+                showMessage(
+                    "Restaurant registration submitted. Please verify your email. Your account will become active after administrator approval.",
+                    "success"
+                );
+
+
+                signupForm.reset();
+
+                signupBtn.disabled = false;
+
+                signupBtn.textContent =
+                    "Submit Restaurant Registration";
+
+                return;
+
+            }
+
+
+            /*
+             * DELIVERY BOY REQUEST
+             */
+
+            if(signupRole === "delivery_boy"){
+
+                const address =
+                    document.getElementById("deliveryAddress")
+                        .value
+                        .trim();
+
+                const vehicle =
+                    document.getElementById("vehicleType")
+                        .value;
+
+
+                const {
+                    error:requestError
+                } =
+                await supabaseClient
+                    .from("partner_signup_requests")
+                    .insert({
+
+                        user_id:user.id,
+
+                        role:"delivery_boy",
+
+                        full_name:name,
+
+                        phone:phone,
+
+                        email:email,
+
+                        address:address,
+
+                        vehicle_type:vehicle,
+
+                        status:"pending"
+
+                    });
+
+
+                if(requestError){
+
+                    console.error(
+                        requestError
+                    );
+
+                    throw new Error(
+                        "Account created, but approval request could not be saved. Please contact administrator."
+                    );
+
+                }
+
+
+                showMessage(
+                    "Delivery Boy registration submitted. Please verify your email. Your account will become active after administrator approval.",
+                    "success"
+                );
+
+
+                signupForm.reset();
+
+                signupBtn.disabled = false;
+
+                signupBtn.textContent =
+                    "Submit Delivery Registration";
+
+                return;
+
+            }
 
         }
         catch(error){
 
             console.error(
-                "Login error:",
+                "Signup error:",
                 error
             );
 
 
-            let message =
+            let msg =
                 error.message ||
-                "Login failed.";
-
-
-            const lower =
-                message.toLowerCase();
+                "Account creation failed.";
 
 
             if(
-                lower.includes(
-                    "invalid login credentials"
-                )
+                msg.toLowerCase()
+                    .includes(
+                        "user already registered"
+                    )
             ){
 
-                message =
-                    "Invalid email or password.";
+                msg =
+                    "This email is already registered.";
 
             }
 
 
-            else if(
-                lower.includes(
-                    "email not confirmed"
-                )
-            ){
-
-                message =
-                    "Please verify your email before logging in.";
-
-            }
+            showMessage(msg);
 
 
-            else if(
-                lower.includes(
-                    "email address is not confirmed"
-                )
-            ){
+            signupBtn.disabled = false;
 
-                message =
-                    "Please verify your email before logging in.";
+            if(signupRole === "customer"){
+
+                signupBtn.textContent =
+                    "Create Customer Account";
 
             }
+            else if(signupRole === "restaurant"){
 
+                signupBtn.textContent =
+                    "Submit Restaurant Registration";
 
-            showMessage(
-                message
-            );
+            }
+            else{
 
+                signupBtn.textContent =
+                    "Submit Delivery Registration";
 
-            loginBtn.disabled =
-                false;
-
-            loginBtn.textContent =
-                "Sign In";
+            }
 
         }
 
     }
 );
-
 
 
 /* =========================================================
@@ -1726,10 +1816,8 @@ async function forgotPassword(){
 
     hideMessage();
 
-
     const email =
-        document
-            .getElementById("email")
+        document.getElementById("loginEmail")
             .value
             .trim()
             .toLowerCase();
@@ -1741,11 +1829,9 @@ async function forgotPassword(){
             "Enter your email address first."
         );
 
-
         document
-            .getElementById("email")
+            .getElementById("loginEmail")
             .focus();
-
 
         return;
 
@@ -1759,17 +1845,12 @@ async function forgotPassword(){
         } =
         await supabaseClient.auth
             .resetPasswordForEmail(
-
                 email,
-
                 {
-
                     redirectTo:
                         window.location.origin +
                         "/pages/reset-password.html"
-
                 }
-
             );
 
 
@@ -1788,11 +1869,7 @@ async function forgotPassword(){
     }
     catch(error){
 
-        console.error(
-            "Password reset error:",
-            error
-        );
-
+        console.error(error);
 
         showMessage(
             error.message ||
@@ -1802,7 +1879,6 @@ async function forgotPassword(){
     }
 
 }
-
 
 
 /* =========================================================
@@ -1821,23 +1897,7 @@ async function checkExistingSession(){
             .getSession();
 
 
-        if(error){
-
-            console.error(
-                "Session error:",
-                error
-            );
-
-            return;
-
-        }
-
-
-        const session =
-            data.session;
-
-
-        if(!session){
+        if(error || !data?.session){
 
             return;
 
@@ -1845,14 +1905,14 @@ async function checkExistingSession(){
 
 
         const user =
-            session.user;
+            data.session.user;
 
 
-        /* EMAIL CHECK */
+        /*
+         * Email must be verified
+         */
 
-        if(
-            !user.email_confirmed_at
-        ){
+        if(!user.email_confirmed_at){
 
             await supabaseClient.auth.signOut();
 
@@ -1861,61 +1921,110 @@ async function checkExistingSession(){
         }
 
 
-        /* ROLE */
-
-        const roleData =
-            await getUserRole(
+        const {
+            data:roleData,
+            error:roleError
+        } =
+        await supabaseClient
+            .from("user_roles")
+            .select(`
+                role,
+                restaurant_id,
+                delivery_boy_id
+            `)
+            .eq(
+                "user_id",
                 user.id
-            );
+            )
+            .maybeSingle();
 
+
+        if(roleError){
+
+            console.error(roleError);
+
+            return;
+
+        }
+
+
+        /*
+         * No role = approval pending
+         */
 
         if(!roleData){
 
+            await supabaseClient.auth.signOut();
+
             return;
 
         }
 
 
-        /* APPROVAL */
+        const role =
+            String(
+                roleData.role || ""
+            )
+            .toLowerCase()
+            .trim();
 
-        const approval =
-            checkApproval(
-                roleData
-            );
+
+        if(role === "admin"){
+
+            window.location.href =
+                "admin-dashboard.html";
+
+            return;
+
+        }
 
 
         if(
-            !approval.allowed
+            role === "restaurant" ||
+            role === "restaurant_owner"
         ){
 
-            await supabaseClient.auth.signOut();
-
-            showMessage(
-                approval.message,
-                "warning"
-            );
+            window.location.href =
+                "restaurant.html";
 
             return;
 
         }
 
 
-        redirectByRole(
-            roleData
-        );
+        if(
+            role === "delivery" ||
+            role === "delivery_boy"
+        ){
+
+            window.location.href =
+                "delivery-dashboard.html";
+
+            return;
+
+        }
+
+
+        if(role === "customer"){
+
+            window.location.href =
+                "../index.html";
+
+            return;
+
+        }
 
     }
     catch(error){
 
         console.error(
-            "Session check error:",
+            "Session error:",
             error
         );
 
     }
 
 }
-
 
 
 /* =========================================================
@@ -1925,7 +2034,6 @@ async function checkExistingSession(){
 checkExistingSession();
 
 </script>
-
 
 </body>
 </html>
