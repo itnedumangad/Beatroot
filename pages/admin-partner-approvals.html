@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Beatroot - Partner Approvals</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#111827;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+.side{
+    position:fixed;
+    inset:0 auto 0 0;
+    width:250px;
+    background:#111827;
+    color:white;
+    padding:25px 15px;
+    z-index:1000;
+}
+
+.brand{
+    font-size:28px;
+    font-weight:800;
+    padding:0 15px 30px;
+}
+
+.brand span{
+    color:#ef4444;
+}
+
+.label{
+    color:#9ca3af;
+    font-size:12px;
+    text-transform:uppercase;
+    padding:0 15px 10px;
+}
+
+.menu button,
+.logout{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#d1d5db;
+    padding:13px 15px;
+    text-align:left;
+    border-radius:10px;
+    cursor:pointer;
+    margin:3px 0;
+    font-size:14px;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#ef4444;
+    color:white;
+}
+
+.bottom{
+    position:absolute;
+    bottom:20px;
+    left:15px;
+    right:15px;
+}
+
+.logout{
+    border:1px solid #374151;
+}
+
+.main{
+    margin-left:250px;
+}
+
+.top{
+    height:75px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:500;
+}
+
+.title{
+    font-size:22px;
+    font-weight:700;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#ef4444;
+    color:white;
+    display:grid;
+    place-items:center;
+    font-weight:bold;
+}
+
+.content{
+    padding:30px;
+}
+
+.head{
+    margin-bottom:22px;
+}
+
+.head h1{
+    font-size:28px;
+    margin-bottom:6px;
+}
+
+.head p{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-bottom:22px;
+}
+
+.stat{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:15px;
+    padding:20px;
+}
+
+.stat-label{
+    color:#6b7280;
+    font-size:13px;
+    margin-bottom:9px;
+}
+
+.stat-value{
+    font-size:27px;
+    font-weight:800;
+}
+
+.card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:22px;
+}
+
+.toolbar{
+    display:flex;
+    gap:12px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+}
+
+.search{
+    flex:1;
+    min-width:220px;
+    height:44px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    padding:0 13px;
+    outline:none;
+}
+
+.search:focus{
+    border-color:#ef4444;
+}
+
+.filter{
+    height:44px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    padding:0 12px;
+    background:white;
+}
+
+.refresh{
+    height:44px;
+    padding:0 17px;
+    border:0;
+    border-radius:10px;
+    background:#111827;
+    color:white;
+    cursor:pointer;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    min-width:950px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    text-align:left;
+    padding:14px 11px;
+    border-bottom:1px solid #eee;
+    font-size:13px;
+}
+
+th{
+    color:#6b7280;
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+.type-badge{
+    display:inline-flex;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.type-restaurant{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.type-delivery{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.status{
+    display:inline-flex;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.status.pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status.approved{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.status.rejected{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.btn{
+    border:0;
+    border-radius:8px;
+    padding:8px 11px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+}
+
+.view{
+    background:#f3f4f6;
+    color:#111827;
+}
+
+.approve{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.reject{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.message{
+    display:none;
+    padding:13px 15px;
+    border-radius:10px;
+    margin-bottom:18px;
+    font-size:13px;
+}
+
+.message.error{
+    display:block;
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.message.success{
+    display:block;
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.empty{
+    text-align:center;
+    padding:45px;
+    color:#6b7280;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:5000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:600px;
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:18px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+.modal-head h2{
+    font-size:20px;
+}
+
+.close{
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:50%;
+    background:#f3f4f6;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.modal-body{
+    padding:22px;
+}
+
+.detail-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.detail{
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:12px;
+}
+
+.detail.full{
+    grid-column:1/-1;
+}
+
+.detail-label{
+    color:#6b7280;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.detail-value{
+    font-size:14px;
+    font-weight:600;
+    word-break:break-word;
+}
+
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+}
+
+.modal-actions button{
+    flex:1;
+    height:45px;
+    border:0;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.modal-approve{
+    background:#16a34a;
+    color:white;
+}
+
+.modal-reject{
+    background:#dc2626;
+    color:white;
+}
+
+@media(max-width:750px){
+
+    .side{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .content{
+        padding:20px 15px;
+    }
+
+    .top{
+        padding:0 15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .detail-grid{
+        grid-template-columns:1fr;
+    }
+
+    .detail.full{
+        grid-column:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="side">
+
+    <div class="brand">
+        Beat<span>root</span>
+    </div>
+
+    <div class="label">
+        Admin Panel
+    </div>
+
+    <div class="menu">
+
+        <button onclick="go('admin-dashboard.html')">
+            📊 Dashboard
+        </button>
+
+        <button onclick="go('my-orders.html')">
+            🛒 Orders
+        </button>
+
+        <button onclick="go('customers.html')">
+            👥 Customers
+        </button>
+
+        <button onclick="go('restaurants.html')">
+            🍔 Restaurants
+        </button>
+
+        <button class="active">
+            🤝 Partner Approvals
+        </button>
+
+        <button onclick="go('reports.html')">
+            📈 Reports
+        </button>
+
+        <button onclick="go('settings.html')">
+            ⚙️ Settings
+        </button>
+
+    </div>
+
+    <div class="bottom">
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            🚪 Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+<header class="top">
+
+    <div class="title">
+        Partner Approvals
+    </div>
+
+    <div class="profile">
+
+        <div
+            class="avatar"
+            id="avatar">
+            A
+        </div>
+
+        <strong id="adminName">
+            Admin
+        </strong>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+    <div class="head">
+
+        <h1>
+            Partner Approvals
+        </h1>
+
+        <p>
+            Review and approve Restaurant and Delivery Boy registrations.
+        </p>
+
+    </div>
+
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Pending Requests
+            </div>
+
+            <div
+                class="stat-value"
+                id="pendingCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Restaurants
+            </div>
+
+            <div
+                class="stat-value"
+                id="restaurantCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Delivery Boys
+            </div>
+
+            <div
+                class="stat-value"
+                id="deliveryCount">
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <section class="card">
+
+        <div class="toolbar">
+
+            <input
+                type="text"
+                id="search"
+                class="search"
+                placeholder="Search name, email, phone...">
+
+            <select
+                id="filter"
+                class="filter">
+
+                <option value="">
+                    All Requests
+                </option>
+
+                <option value="pending">
+                    Pending
+                </option>
+
+                <option value="approved">
+                    Approved
+                </option>
+
+                <option value="rejected">
+                    Rejected
+                </option>
+
+                <option value="restaurant">
+                    Restaurants
+                </option>
+
+                <option value="delivery_boy">
+                    Delivery Boys
+                </option>
+
+            </select>
+
+            <button
+                class="refresh"
+                onclick="loadRequests()">
+
+                ↻ Refresh
+
+            </button>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Type</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Phone</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody id="rows">
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="empty">
+
+                        Loading requests...
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+    class="modal"
+    id="modal"
+    onclick="closeOutside(event)">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2>
+                Partner Details
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="modal-body"
+            id="modalBody">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    "https://jhihjnsxazmftdqlitgk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
+const ADMIN_EMAIL =
+    "itnedumangad@gmail.com";
+
+const sb =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let requests = [];
+
+let selectedRequest = null;
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const rows =
+    document.getElementById("rows");
+
+const search =
+    document.getElementById("search");
+
+const filter =
+    document.getElementById("filter");
+
+const modal =
+    document.getElementById("modal");
+
+const modalBody =
+    document.getElementById("modalBody");
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function esc(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function go(page){
+
+    window.location.href = page;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(text,type="success"){
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = text;
+
+    box.className =
+        "message " + type;
+
+    setTimeout(() => {
+
+        box.className =
+            "message";
+
+        box.textContent = "";
+
+    },4000);
+
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+async function checkAdmin(){
+
+    const {
+        data,
+        error
+    } =
+    await sb.auth.getUser();
+
+    if(
+        error ||
+        !data ||
+        !data.user
+    ){
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    const user =
+        data.user;
+
+
+    /*
+     * Admin email check
+     */
+
+    if(
+        user.email.toLowerCase() !==
+        ADMIN_EMAIL.toLowerCase()
+    ){
+
+        alert(
+            "Access denied. Admin only."
+        );
+
+        window.location.href =
+            "../index.html";
+
+        return false;
+
+    }
+
+
+    document.getElementById(
+        "adminName"
+    ).textContent =
+        user.email.split("@")[0];
+
+
+    document.getElementById(
+        "avatar"
+    ).textContent =
+        user.email.charAt(0).toUpperCase();
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   LOAD REQUESTS
+===================================================== */
+
+async function loadRequests(){
+
+    rows.innerHTML = `
+        <tr>
+            <td colspan="8" class="empty">
+                Loading requests...
+            </td>
+        </tr>
+    `;
+
+
+    if(!await checkAdmin()){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await sb
+            .from("partner_signup_requests")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        requests =
+            data || [];
+
+
+        updateStats();
+
+        render();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        rows.innerHTML = `
+            <tr>
+                <td colspan="8" class="empty">
+                    Unable to load requests.
+                    <br><br>
+                    ${esc(error.message)}
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(){
+
+    const pending =
+        requests.filter(
+            x => x.status === "pending"
+        ).length;
+
+
+    const restaurants =
+        requests.filter(
+            x =>
+                x.role === "restaurant" &&
+                x.status === "pending"
+        ).length;
+
+
+    const delivery =
+        requests.filter(
+            x =>
+                x.role === "delivery_boy" &&
+                x.status === "pending"
+        ).length;
+
+
+    document.getElementById(
+        "pendingCount"
+    ).textContent = pending;
+
+
+    document.getElementById(
+        "restaurantCount"
+    ).textContent = restaurants;
+
+
+    document.getElementById(
+        "deliveryCount"
+    ).textContent = delivery;
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render(){
+
+    const q =
+        search.value
+            .toLowerCase()
+            .trim();
+
+    const f =
+        filter.value;
+
+
+    const list =
+        requests.filter(request => {
+
+            const text =
+                (
+                    request.full_name +
+                    " " +
+                    request.email +
+                    " " +
+                    request.phone +
+                    " " +
+                    request.restaurant_name
+                )
+                .toLowerCase();
+
+
+            const searchMatch =
+                !q ||
+                text.includes(q);
+
+
+            let filterMatch = true;
+
+
+            if(
+                f === "restaurant" ||
+                f === "delivery_boy"
+            ){
+
+                filterMatch =
+                    request.role === f;
+
+            }
+            else if(f){
+
+                filterMatch =
+                    request.status === f;
+
+            }
+
+
+            return (
+                searchMatch &&
+                filterMatch
+            );
+
+        });
+
+
+    if(!list.length){
+
+        rows.innerHTML = `
+            <tr>
+                <td
+                    colspan="8"
+                    class="empty">
+
+                    No requests found.
+
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    rows.innerHTML =
+        list.map(request => {
+
+            const isRestaurant =
+                request.role ===
+                "restaurant";
+
+
+            const date =
+                request.created_at
+                    ? new Date(
+                        request.created_at
+                    ).toLocaleString(
+                        "en-IN"
+                    )
+                    : "-";
+
+
+            return `
+
+            <tr>
+
+                <td>
+                    #${esc(request.id)}
+                </td>
+
+                <td>
+
+                    <span
+                        class="type-badge ${
+                            isRestaurant
+                                ? "type-restaurant"
+                                : "type-delivery"
+                        }">
+
+                        ${
+                            isRestaurant
+                                ? "🏪 Restaurant"
+                                : "🚴 Delivery"
+                        }
+
+                    </span>
+
+                </td>
+
+                <td>
+                    <strong>
+                        ${esc(
+                            request.full_name
+                        )}
+                    </strong>
+                </td>
+
+                <td>
+                    ${esc(
+                        request.email
+                    )}
+                </td>
+
+                <td>
+                    ${esc(
+                        request.phone
+                    )}
+                </td>
+
+                <td>
+
+                    <span
+                        class="status ${
+                            request.status
+                        }">
+
+                        ${esc(
+                            request.status
+                        )}
+
+                    </span>
+
+                </td>
+
+                <td>
+                    ${esc(date)}
+                </td>
+
+                <td>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn view"
+                            onclick="
+                                openDetails(
+                                    ${request.id}
+                                )
+                            ">
+
+                            View
+
+                        </button>
+
+                        ${
+                            request.status === "pending"
+                            ? `
+
+                            <button
+                                class="btn approve"
+                                onclick="
+                                    approveRequest(
+                                        ${request.id}
+                                    )
+                                ">
+
+                                Approve
+
+                            </button>
+
+                            <button
+                                class="btn reject"
+                                onclick="
+                                    rejectRequest(
+                                        ${request.id}
+                                    )
+                                ">
+
+                                Reject
+
+                            </button>
+
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   VIEW DETAILS
+===================================================== */
+
+function openDetails(id){
+
+    const request =
+        requests.find(
+            x => Number(x.id) ===
+                 Number(id)
+        );
+
+
+    if(!request){
+
+        return;
+
+    }
+
+
+    selectedRequest =
+        request;
+
+
+    const isRestaurant =
+        request.role === "restaurant";
+
+
+    modalBody.innerHTML = `
+
+        <div class="detail-grid">
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Request ID
+                </div>
+
+                <div class="detail-value">
+                    #${esc(request.id)}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Account Type
+                </div>
+
+                <div class="detail-value">
+
+                    ${
+                        isRestaurant
+                            ? "🏪 Restaurant"
+                            : "🚴 Delivery Boy"
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Full Name
+                </div>
+
+                <div class="detail-value">
+                    ${esc(request.full_name)}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Phone
+                </div>
+
+                <div class="detail-value">
+                    ${esc(request.phone)}
+                </div>
+
+            </div>
+
+
+            <div class="detail full">
+
+                <div class="detail-label">
+                    Email
+                </div>
+
+                <div class="detail-value">
+                    ${esc(request.email)}
+                </div>
+
+            </div>
+
+
+            ${
+                isRestaurant
+                ? `
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Restaurant Name
+                    </div>
+
+                    <div class="detail-value">
+                        ${esc(
+                            request.restaurant_name ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Address
+                    </div>
+
+                    <div class="detail-value">
+                        ${esc(
+                            request.address ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+                `
+                :
+                `
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Vehicle
+                    </div>
+
+                    <div class="detail-value">
+                        ${esc(
+                            request.vehicle_type ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Address
+                    </div>
+
+                    <div class="detail-value">
+                        ${esc(
+                            request.address ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+                `
+            }
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Status
+                </div>
+
+                <div class="detail-value">
+                    ${esc(request.status)}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Registered
+                </div>
+
+                <div class="detail-value">
+
+                    ${
+                        request.created_at
+                            ? new Date(
+                                request.created_at
+                              ).toLocaleString(
+                                "en-IN"
+                              )
+                            : "-"
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        ${
+            request.status === "pending"
+            ? `
+
+            <div class="modal-actions">
+
+                <button
+                    class="modal-approve"
+                    onclick="
+                        approveRequest(
+                            ${request.id}
+                        )
+                    ">
+
+                    ✓ Approve
+
+                </button>
+
+                <button
+                    class="modal-reject"
+                    onclick="
+                        rejectRequest(
+                            ${request.id}
+                        )
+                    ">
+
+                    ✕ Reject
+
+                </button>
+
+            </div>
+
+            `
+            : ""
+        }
+
+    `;
+
+
+    modal.classList.add("show");
+
+}
+
+
+/* =====================================================
+   APPROVE
+===================================================== */
+
+async function approveRequest(id){
+
+    const request =
+        requests.find(
+            x => Number(x.id) ===
+                 Number(id)
+        );
+
+
+    if(!request){
+
+        return;
+
+    }
+
+
+    if(request.status !== "pending"){
+
+        showMessage(
+            "This request has already been processed.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `Approve ${request.full_name}?`
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+         * 1. Update request status
+         */
+
+        const {
+            error:requestError
+        } =
+        await sb
+            .from("partner_signup_requests")
+            .update({
+
+                status:"approved",
+
+                reviewed_at:
+                    new Date().toISOString()
+
+            })
+            .eq(
+                "id",
+                id
+            );
+
+
+        if(requestError){
+
+            throw requestError;
+
+        }
+
+
+        /*
+         * 2. Create role
+         */
+
+        const {
+            error:roleError
+        } =
+        await sb
+            .from("user_roles")
+            .upsert({
+
+                user_id:
+                    request.user_id,
+
+                role:
+                    request.role
+
+            });
+
+
+        if(roleError){
+
+            /*
+             * Rollback request status
+             */
+
+            await sb
+                .from(
+                    "partner_signup_requests"
+                )
+                .update({
+                    status:"pending"
+                })
+                .eq(
+                    "id",
+                    id
+                );
+
+            throw roleError;
+
+        }
+
+
+        /*
+         * 3. Restaurant record
+         */
+
+        if(request.role === "restaurant"){
+
+            const {
+                error:restaurantError
+            } =
+            await sb
+                .from("restaurants")
+                .insert({
+
+                    name:
+                        request.restaurant_name ||
+                        request.full_name,
+
+                    description:
+                        "Beatroot Restaurant",
+
+                    phone:
+                        request.phone,
+
+                    address:
+                        request.address
+
+                });
+
+
+            if(restaurantError){
+
+                console.error(
+                    "Restaurant creation error:",
+                    restaurantError
+                );
+
+            }
+
+        }
+
+
+        /*
+         * 4. Refresh
+         */
+
+        showMessage(
+            "Partner approved successfully.",
+            "success"
+        );
+
+
+        closeModal();
+
+        await loadRequests();
+
+    }
+    catch(error){
+
+        console.error(
+            "Approval error:",
+            error
+        );
+
+        showMessage(
+            "Approval failed: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   REJECT
+===================================================== */
+
+async function rejectRequest(id){
+
+    const request =
+        requests.find(
+            x => Number(x.id) ===
+                 Number(id)
+        );
+
+
+    if(!request){
+
+        return;
+
+    }
+
+
+    if(request.status !== "pending"){
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `Reject ${request.full_name}'s registration?`
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await sb
+            .from("partner_signup_requests")
+            .update({
+
+                status:"rejected",
+
+                reviewed_at:
+                    new Date().toISOString()
+
+            })
+            .eq(
+                "id",
+                id
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        /*
+         * Remove any role if previously created
+         */
+
+        await sb
+            .from("user_roles")
+            .delete()
+            .eq(
+                "user_id",
+                request.user_id
+            );
+
+
+        showMessage(
+            "Registration rejected.",
+            "success"
+        );
+
+
+        closeModal();
+
+        await loadRequests();
+
+    }
+    catch(error){
+
+        console.error(
+            "Reject error:",
+            error
+        );
+
+        showMessage(
+            "Rejection failed: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function closeModal(){
+
+    modal.classList.remove("show");
+
+    selectedRequest = null;
+
+}
+
+
+function closeOutside(event){
+
+    if(event.target === modal){
+
+        closeModal();
+
+    }
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+search.addEventListener(
+    "input",
+    render
+);
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+filter.addEventListener(
+    "change",
+    render
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout(){
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    await sb.auth.signOut();
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadRequests();
+
+</script>
+
+</body>
+</html>
