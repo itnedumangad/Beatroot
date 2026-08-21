@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -22,16 +24,17 @@ body{
 }
 
 button,
-input,
-textarea{
+input{
     font-family:inherit;
 }
 
-/* HEADER */
+/* ================================
+   HEADER
+================================ */
 
 .header{
     height:72px;
-    background:#ffffff;
+    background:#fff;
     border-bottom:1px solid #e5e7eb;
     display:flex;
     align-items:center;
@@ -63,7 +66,7 @@ textarea{
     height:40px;
     border-radius:50%;
     background:#ef3838;
-    color:white;
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -72,6 +75,7 @@ textarea{
 
 .admin-text{
     line-height:1.2;
+    text-align:right;
 }
 
 .admin-text strong{
@@ -83,19 +87,23 @@ textarea{
     color:#6b7280;
 }
 
-/* LAYOUT */
+/* ================================
+   LAYOUT
+================================ */
 
 .layout{
     display:flex;
     min-height:calc(100vh - 72px);
 }
 
-/* SIDEBAR */
+/* ================================
+   SIDEBAR
+================================ */
 
 .sidebar{
     width:235px;
     background:#111827;
-    color:white;
+    color:#fff;
     padding:25px 14px;
     flex-shrink:0;
 }
@@ -124,12 +132,12 @@ textarea{
 
 .nav-item:hover{
     background:#1f2937;
-    color:white;
+    color:#fff;
 }
 
 .nav-item.active{
     background:#ef3838;
-    color:white;
+    color:#fff;
     font-weight:700;
 }
 
@@ -139,7 +147,9 @@ textarea{
     justify-content:center;
 }
 
-/* MAIN */
+/* ================================
+   MAIN
+================================ */
 
 .main{
     flex:1;
@@ -168,7 +178,7 @@ textarea{
 .add-btn{
     border:0;
     background:#ef3838;
-    color:white;
+    color:#fff;
     padding:13px 20px;
     border-radius:10px;
     font-size:14px;
@@ -181,7 +191,9 @@ textarea{
     background:#dc2626;
 }
 
-/* STATS */
+/* ================================
+   STATS
+================================ */
 
 .stats{
     display:grid;
@@ -191,7 +203,7 @@ textarea{
 }
 
 .stat-card{
-    background:white;
+    background:#fff;
     border:1px solid #e5e7eb;
     border-radius:15px;
     padding:20px;
@@ -208,10 +220,12 @@ textarea{
     font-weight:800;
 }
 
-/* CONTENT */
+/* ================================
+   CONTENT CARD
+================================ */
 
 .content-card{
-    background:white;
+    background:#fff;
     border:1px solid #e5e7eb;
     border-radius:16px;
     overflow:hidden;
@@ -242,7 +256,9 @@ textarea{
     border-color:#ef3838;
 }
 
-/* TABLE */
+/* ================================
+   TABLE
+================================ */
 
 .table-wrap{
     overflow-x:auto;
@@ -279,9 +295,14 @@ tr:hover td{
     color:#111827;
 }
 
-.description{
-    color:#6b7280;
-    max-width:300px;
+.id-badge{
+    display:inline-block;
+    background:#f3f4f6;
+    color:#374151;
+    padding:5px 9px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:700;
 }
 
 .action-buttons{
@@ -320,7 +341,9 @@ tr:hover td{
     color:#6b7280;
 }
 
-/* MODAL */
+/* ================================
+   MODAL
+================================ */
 
 .modal-overlay{
     position:fixed;
@@ -339,8 +362,8 @@ tr:hover td{
 
 .modal{
     width:100%;
-    max-width:520px;
-    background:white;
+    max-width:480px;
+    background:#fff;
     border-radius:18px;
     box-shadow:0 25px 70px rgba(0,0,0,.2);
     overflow:hidden;
@@ -368,6 +391,11 @@ tr:hover td{
     font-size:20px;
 }
 
+.close:hover{
+    background:#fee2e2;
+    color:#ef3838;
+}
+
 .form{
     padding:24px;
 }
@@ -383,24 +411,18 @@ tr:hover td{
     margin-bottom:7px;
 }
 
-.form-group input,
-.form-group textarea{
+.form-group input{
     width:100%;
-    padding:12px 13px;
+    padding:13px;
     border:1px solid #d1d5db;
     border-radius:9px;
     outline:none;
     font-size:14px;
 }
 
-.form-group textarea{
-    min-height:95px;
-    resize:vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus{
+.form-group input:focus{
     border-color:#ef3838;
+    box-shadow:0 0 0 3px rgba(239,56,56,.08);
 }
 
 .modal-footer{
@@ -413,7 +435,7 @@ tr:hover td{
 
 .cancel-btn{
     border:1px solid #d1d5db;
-    background:white;
+    background:#fff;
     padding:11px 17px;
     border-radius:9px;
     cursor:pointer;
@@ -422,11 +444,15 @@ tr:hover td{
 .save-btn{
     border:0;
     background:#ef3838;
-    color:white;
+    color:#fff;
     padding:11px 20px;
     border-radius:9px;
     font-weight:700;
     cursor:pointer;
+}
+
+.save-btn:hover{
+    background:#dc2626;
 }
 
 .save-btn:disabled{
@@ -434,26 +460,31 @@ tr:hover td{
     cursor:not-allowed;
 }
 
-/* TOAST */
+/* ================================
+   TOAST
+================================ */
 
 .toast{
     position:fixed;
     right:25px;
     bottom:25px;
     background:#111827;
-    color:white;
+    color:#fff;
     padding:14px 18px;
     border-radius:10px;
     display:none;
     z-index:200;
     font-size:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
 }
 
 .toast.show{
     display:block;
 }
 
-/* MOBILE */
+/* ================================
+   MOBILE
+================================ */
 
 @media(max-width:850px){
 
@@ -482,6 +513,10 @@ tr:hover td{
 
     .page-top{
         flex-direction:column;
+    }
+
+    .add-btn{
+        width:100%;
     }
 
     .search{
@@ -519,11 +554,22 @@ tr:hover td{
     .layout{
         min-height:calc(100vh - 64px);
     }
+
+    th,
+    td{
+        padding:12px;
+    }
 }
+
 </style>
+
 </head>
 
 <body>
+
+<!-- ================================
+     HEADER
+================================ -->
 
 <header class="header">
 
@@ -534,11 +580,11 @@ tr:hover td{
     <div class="header-right">
 
         <div class="admin-text">
-            <strong>Admin</strong>
+            <strong id="adminName">Admin</strong>
             <small>Administrator</small>
         </div>
 
-        <div class="admin-badge">
+        <div class="admin-badge" id="adminAvatar">
             A
         </div>
 
@@ -549,185 +595,234 @@ tr:hover td{
 
 <div class="layout">
 
-    <!-- SIDEBAR -->
+<!-- ================================
+     SIDEBAR
+================================ -->
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <div class="sidebar-title">
-            Admin Panel
+    <div class="sidebar-title">
+        Admin Panel
+    </div>
+
+    <a class="nav-item"
+       href="admin-dashboard.html">
+        📊
+        <span class="nav-text">Dashboard</span>
+    </a>
+
+    <a class="nav-item"
+       href="admin-orders.html">
+        🛒
+        <span class="nav-text">Orders</span>
+    </a>
+
+    <a class="nav-item"
+       href="admin-customers.html">
+        👥
+        <span class="nav-text">Customers</span>
+    </a>
+
+    <a class="nav-item active"
+       href="admin-restaurants.html">
+        🍔
+        <span class="nav-text">Restaurants</span>
+    </a>
+
+    <a class="nav-item"
+       href="admin-reports.html">
+        📈
+        <span class="nav-text">Reports</span>
+    </a>
+
+    <a class="nav-item"
+       href="settings.html">
+        ⚙️
+        <span class="nav-text">Settings</span>
+    </a>
+
+    <a class="nav-item logout"
+       href="login.html"
+       onclick="return confirmLogout()">
+        🚪
+        <span class="nav-text">Logout</span>
+    </a>
+
+</aside>
+
+
+<!-- ================================
+     MAIN
+================================ -->
+
+<main class="main">
+
+    <div class="page-top">
+
+        <div class="page-title">
+
+            <h1>
+                Restaurants
+            </h1>
+
+            <p>
+                Manage all restaurants available on Beatroot.
+            </p>
+
         </div>
 
-        <a class="nav-item"
-           href="admin-dashboard.html">
-            📊
-            <span class="nav-text">Dashboard</span>
-        </a>
+        <button
+            class="add-btn"
+            onclick="openAddModal()">
 
-        <a class="nav-item"
-           href="my-orders.html">
-            🛒
-            <span class="nav-text">Orders</span>
-        </a>
+            + Add Restaurant
 
-        <a class="nav-item"
-           href="customers.html">
-            👥
-            <span class="nav-text">Customers</span>
-        </a>
+        </button>
 
-        <a class="nav-item active"
-           href="restaurants.html">
-            🍔
-            <span class="nav-text">Restaurants</span>
-        </a>
-
-        <a class="nav-item"
-           href="reports.html">
-            📈
-            <span class="nav-text">Reports</span>
-        </a>
-
-        <a class="nav-item"
-           href="settings.html">
-            ⚙️
-            <span class="nav-text">Settings</span>
-        </a>
-
-        <a class="nav-item logout"
-           href="login.html">
-            🚪
-            <span class="nav-text">Logout</span>
-        </a>
-
-    </aside>
+    </div>
 
 
-    <!-- MAIN -->
+    <!-- ================================
+         STATS
+    ================================= -->
 
-    <main class="main">
+    <div class="stats">
 
-        <div class="page-top">
+        <div class="stat-card">
 
-            <div class="page-title">
-                <h1>Restaurants</h1>
-                <p>
-                    Manage all restaurants available on Beatroot.
-                </p>
+            <div class="stat-label">
+                Total Restaurants
             </div>
 
-            <button class="add-btn"
-                    onclick="openAddModal()">
-                + Add Restaurant
-            </button>
+            <div
+                class="stat-value"
+                id="totalRestaurants">
 
-        </div>
+                0
 
-
-        <!-- STATS -->
-
-        <div class="stats">
-
-            <div class="stat-card">
-                <div class="stat-label">
-                    Total Restaurants
-                </div>
-
-                <div class="stat-value"
-                     id="totalRestaurants">
-                    0
-                </div>
-            </div>
-
-
-            <div class="stat-card">
-                <div class="stat-label">
-                    Active Restaurants
-                </div>
-
-                <div class="stat-value"
-                     id="activeRestaurants">
-                    0
-                </div>
-            </div>
-
-
-            <div class="stat-card">
-                <div class="stat-label">
-                    Database Status
-                </div>
-
-                <div class="stat-value"
-                     id="dbStatus"
-                     style="font-size:18px;">
-                    Connecting...
-                </div>
             </div>
 
         </div>
 
 
-        <!-- RESTAURANTS -->
+        <div class="stat-card">
 
-        <section class="content-card">
+            <div class="stat-label">
+                Active Restaurants
+            </div>
 
-            <div class="toolbar">
+            <div
+                class="stat-value"
+                id="activeRestaurants">
 
-                <h2>
-                    Restaurant List
-                </h2>
-
-                <input
-                    type="text"
-                    class="search"
-                    id="searchInput"
-                    placeholder="Search restaurants..."
-                    oninput="filterRestaurants()"
-                >
+                0
 
             </div>
 
+        </div>
 
-            <div class="table-wrap">
 
-                <table>
+        <div class="stat-card">
 
-                    <thead>
-                        <tr>
+            <div class="stat-label">
+                Database Status
+            </div>
 
-                            <th>ID</th>
+            <div
+                class="stat-value"
+                id="dbStatus"
+                style="font-size:18px;">
 
-                            <th>Restaurant</th>
-
-                            <th>Description</th>
-
-                            <th>Phone</th>
-
-                            <th>Address</th>
-
-                            <th>Actions</th>
-
-                        </tr>
-                    </thead>
-
-                    <tbody id="restaurantTable">
-
-                    </tbody>
-
-                </table>
+                Connecting...
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </div>
+
+
+    <!-- ================================
+         RESTAURANT LIST
+    ================================= -->
+
+    <section class="content-card">
+
+        <div class="toolbar">
+
+            <h2>
+                Restaurant List
+            </h2>
+
+            <input
+                type="text"
+                class="search"
+                id="searchInput"
+                placeholder="Search restaurants..."
+                oninput="filterRestaurants()"
+            >
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Restaurant
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="restaurantTable">
+
+                    <tr>
+
+                        <td
+                            colspan="3"
+                            class="loading">
+
+                            Loading restaurants...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
 
 </div>
 
 
-<!-- MODAL -->
+<!-- ================================
+     ADD / EDIT MODAL
+================================ -->
 
-<div class="modal-overlay"
-     id="modalOverlay">
+<div
+    class="modal-overlay"
+    id="modalOverlay">
 
     <div class="modal">
 
@@ -737,9 +832,12 @@ tr:hover td{
                 Add Restaurant
             </h2>
 
-            <button class="close"
-                    onclick="closeModal()">
+            <button
+                class="close"
+                onclick="closeModal()">
+
                 ×
+
             </button>
 
         </div>
@@ -757,50 +855,7 @@ tr:hover td{
                     type="text"
                     id="restaurantName"
                     placeholder="Enter restaurant name"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Description
-                </label>
-
-                <textarea
-                    id="restaurantDescription"
-                    placeholder="Enter restaurant description"
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Phone
-                </label>
-
-                <input
-                    type="text"
-                    id="restaurantPhone"
-                    placeholder="Enter phone number"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Address
-                </label>
-
-                <input
-                    type="text"
-                    id="restaurantAddress"
-                    placeholder="Enter address"
+                    maxlength="100"
                 >
 
             </div>
@@ -810,15 +865,21 @@ tr:hover td{
 
         <div class="modal-footer">
 
-            <button class="cancel-btn"
-                    onclick="closeModal()">
+            <button
+                class="cancel-btn"
+                onclick="closeModal()">
+
                 Cancel
+
             </button>
 
-            <button class="save-btn"
-                    id="saveButton"
-                    onclick="saveRestaurant()">
+            <button
+                class="save-btn"
+                id="saveButton"
+                onclick="saveRestaurant()">
+
                 Save Restaurant
+
             </button>
 
         </div>
@@ -828,16 +889,19 @@ tr:hover td{
 </div>
 
 
-<div class="toast"
-     id="toast">
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast">
 </div>
 
 
 <script>
 
 /* =====================================================
-   SUPABASE CONFIGURATION
-   ===================================================== */
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
     "https://jhihjnsxazmftdqlitgk.supabase.co";
@@ -845,16 +909,24 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
+const sb =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
-const sb = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+const ADMIN_EMAIL =
+    "itnedumangad@gmail.com";
 
 
 /* =====================================================
    VARIABLES
-   ===================================================== */
+===================================================== */
 
 let restaurants = [];
 
@@ -862,188 +934,356 @@ let editingId = null;
 
 
 /* =====================================================
-   LOAD RESTAURANTS
-   ===================================================== */
+   ADMIN AUTH CHECK
+===================================================== */
 
-async function loadRestaurants(){
-
-    const table =
-        document.getElementById("restaurantTable");
-
-    table.innerHTML = `
-        <tr>
-            <td colspan="6" class="loading">
-                Loading restaurants...
-            </td>
-        </tr>
-    `;
+async function checkAdmin(){
 
     try{
 
-        const { data, error } =
-            await sb
-                .from("restaurants")
-                .select("*")
-                .order("id", { ascending:true });
+        const {
+            data,
+            error
+        } =
+        await sb.auth.getUser();
 
         if(error){
 
-            console.error(error);
+            throw error;
 
-            document.getElementById("dbStatus")
-                .textContent = "Error";
-
-            table.innerHTML = `
-                <tr>
-                    <td colspan="6" class="empty">
-                        Failed to load restaurants.
-                        <br><br>
-                        ${escapeHtml(error.message)}
-                    </td>
-                </tr>
-            `;
-
-            return;
         }
 
+        const user =
+            data.user;
 
-        restaurants = data || [];
+        if(!user){
 
+            window.location.href =
+                "login.html";
 
-        document.getElementById("dbStatus")
-            .textContent = "Connected";
+            return false;
 
+        }
 
-        updateStats();
+        if(
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ){
 
-        renderRestaurants(restaurants);
+            alert(
+                "Access denied. Admin only."
+            );
+
+            window.location.href =
+                "admin-dashboard.html";
+
+            return false;
+
+        }
+
+        const email =
+            user.email;
+
+        document.getElementById(
+            "adminName"
+        ).textContent =
+            email.split("@")[0];
+
+        document.getElementById(
+            "adminAvatar"
+        ).textContent =
+            email
+                .charAt(0)
+                .toUpperCase();
+
+        return true;
 
     }
-
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Auth error:",
+            error
+        );
 
-        document.getElementById("dbStatus")
-            .textContent = "Offline";
+        window.location.href =
+            "login.html";
 
-        table.innerHTML = `
-            <tr>
-                <td colspan="6" class="empty">
-                    Database connection failed.
-                </td>
-            </tr>
-        `;
+        return false;
+
     }
 
 }
 
 
 /* =====================================================
-   RENDER
-   ===================================================== */
+   LOAD RESTAURANTS
+===================================================== */
+
+async function loadRestaurants(){
+
+    const table =
+        document.getElementById(
+            "restaurantTable"
+        );
+
+    table.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="3"
+                class="loading">
+
+                Loading restaurants...
+
+            </td>
+
+        </tr>
+
+    `;
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await sb
+            .from("restaurants")
+            .select("id,name")
+            .order(
+                "id",
+                {
+                    ascending:true
+                }
+            );
+
+        if(error){
+
+            console.error(
+                "Restaurant load error:",
+                error
+            );
+
+            document.getElementById(
+                "dbStatus"
+            ).textContent =
+                "Error";
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="3"
+                        class="empty">
+
+                        Failed to load restaurants.
+
+                        <br><br>
+
+                        ${escapeHtml(
+                            error.message
+                        )}
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        restaurants =
+            data || [];
+
+
+        document.getElementById(
+            "dbStatus"
+        ).textContent =
+            "Connected";
+
+
+        updateStats();
+
+        renderRestaurants(
+            restaurants
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+        document.getElementById(
+            "dbStatus"
+        ).textContent =
+            "Offline";
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="3"
+                    class="empty">
+
+                    Database connection failed.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER RESTAURANTS
+===================================================== */
 
 function renderRestaurants(list){
 
     const table =
-        document.getElementById("restaurantTable");
+        document.getElementById(
+            "restaurantTable"
+        );
 
 
     if(!list.length){
 
         table.innerHTML = `
+
             <tr>
-                <td colspan="6" class="empty">
+
+                <td
+                    colspan="3"
+                    class="empty">
+
                     No restaurants found.
+
                     <br><br>
-                    Click "+ Add Restaurant" to create one.
+
+                    Click
+                    "+ Add Restaurant"
+                    to create one.
+
                 </td>
+
             </tr>
+
         `;
 
         return;
+
     }
 
 
-    table.innerHTML = list.map(r => `
+    table.innerHTML =
+        list.map(
+            restaurant => `
 
-        <tr>
+                <tr>
 
-            <td>
-                #${r.id}
-            </td>
+                    <td>
 
-            <td>
-                <div class="restaurant-name">
-                    ${escapeHtml(r.name || "-")}
-                </div>
-            </td>
+                        <span class="id-badge">
 
-            <td>
-                <div class="description">
-                    ${escapeHtml(r.description || "-")}
-                </div>
-            </td>
+                            #${restaurant.id}
 
-            <td>
-                ${escapeHtml(r.phone || "-")}
-            </td>
+                        </span>
 
-            <td>
-                ${escapeHtml(r.address || "-")}
-            </td>
+                    </td>
 
-            <td>
 
-                <div class="action-buttons">
+                    <td>
 
-                    <button
-                        class="action-btn edit-btn"
-                        onclick="editRestaurant(${r.id})">
-                        Edit
-                    </button>
+                        <div class="restaurant-name">
 
-                    <button
-                        class="action-btn delete-btn"
-                        onclick="deleteRestaurant(${r.id})">
-                        Delete
-                    </button>
+                            ${escapeHtml(
+                                restaurant.name ||
+                                "-"
+                            )}
 
-                </div>
+                        </div>
 
-            </td>
+                    </td>
 
-        </tr>
 
-    `).join("");
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <button
+                                class="action-btn edit-btn"
+                                onclick="editRestaurant(${restaurant.id})">
+
+                                Edit
+
+                            </button>
+
+
+                            <button
+                                class="action-btn delete-btn"
+                                onclick="deleteRestaurant(${restaurant.id})">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `
+        ).join("");
 
 }
 
 
 /* =====================================================
-   STATS
-   ===================================================== */
+   UPDATE STATS
+===================================================== */
 
 function updateStats(){
 
-    document.getElementById("totalRestaurants")
-        .textContent = restaurants.length;
+    document.getElementById(
+        "totalRestaurants"
+    ).textContent =
+        restaurants.length;
 
-    document.getElementById("activeRestaurants")
-        .textContent = restaurants.length;
+
+    document.getElementById(
+        "activeRestaurants"
+    ).textContent =
+        restaurants.length;
 
 }
 
 
 /* =====================================================
    SEARCH
-   ===================================================== */
+===================================================== */
 
 function filterRestaurants(){
 
     const search =
         document
-            .getElementById("searchInput")
+            .getElementById(
+                "searchInput"
+            )
             .value
             .toLowerCase()
             .trim();
@@ -1051,288 +1291,331 @@ function filterRestaurants(){
 
     if(!search){
 
-        renderRestaurants(restaurants);
+        renderRestaurants(
+            restaurants
+        );
 
         return;
+
     }
 
 
     const filtered =
-        restaurants.filter(r => {
+        restaurants.filter(
+            restaurant => {
 
-            return (
+                return String(
+                    restaurant.name || ""
+                )
+                .toLowerCase()
+                .includes(search);
 
-                (r.name || "")
-                    .toLowerCase()
-                    .includes(search)
-
-                ||
-
-                (r.description || "")
-                    .toLowerCase()
-                    .includes(search)
-
-                ||
-
-                (r.phone || "")
-                    .toLowerCase()
-                    .includes(search)
-
-                ||
-
-                (r.address || "")
-                    .toLowerCase()
-                    .includes(search)
-
-            );
-
-        });
+            }
+        );
 
 
-    renderRestaurants(filtered);
+    renderRestaurants(
+        filtered
+    );
 
 }
 
 
 /* =====================================================
-   ADD MODAL
-   ===================================================== */
+   ADD
+===================================================== */
 
 function openAddModal(){
 
-    editingId = null;
-
-    document.getElementById("modalTitle")
-        .textContent = "Add Restaurant";
-
-    document.getElementById("saveButton")
-        .textContent = "Save Restaurant";
+    editingId =
+        null;
 
 
-    document.getElementById("restaurantName")
-        .value = "";
-
-    document.getElementById("restaurantDescription")
-        .value = "";
-
-    document.getElementById("restaurantPhone")
-        .value = "";
-
-    document.getElementById("restaurantAddress")
-        .value = "";
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Add Restaurant";
 
 
-    document.getElementById("modalOverlay")
-        .classList.add("show");
+    document.getElementById(
+        "saveButton"
+    ).textContent =
+        "Save Restaurant";
+
+
+    document.getElementById(
+        "restaurantName"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "modalOverlay"
+    )
+    .classList
+    .add("show");
+
+
+    setTimeout(
+        function(){
+
+            document.getElementById(
+                "restaurantName"
+            ).focus();
+
+        },
+        100
+    );
 
 }
 
 
 /* =====================================================
    EDIT
-   ===================================================== */
+===================================================== */
 
 function editRestaurant(id){
 
     const restaurant =
-        restaurants.find(r => r.id === id);
+        restaurants.find(
+            item =>
+                item.id === id
+        );
 
 
     if(!restaurant){
 
-        showToast("Restaurant not found.");
+        showToast(
+            "Restaurant not found."
+        );
 
         return;
+
     }
 
 
-    editingId = id;
+    editingId =
+        id;
 
 
-    document.getElementById("modalTitle")
-        .textContent = "Edit Restaurant";
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Edit Restaurant";
 
 
-    document.getElementById("saveButton")
-        .textContent = "Update Restaurant";
+    document.getElementById(
+        "saveButton"
+    ).textContent =
+        "Update Restaurant";
 
 
-    document.getElementById("restaurantName")
-        .value = restaurant.name || "";
+    document.getElementById(
+        "restaurantName"
+    ).value =
+        restaurant.name || "";
 
 
-    document.getElementById("restaurantDescription")
-        .value = restaurant.description || "";
+    document.getElementById(
+        "modalOverlay"
+    )
+    .classList
+    .add("show");
 
 
-    document.getElementById("restaurantPhone")
-        .value = restaurant.phone || "";
+    setTimeout(
+        function(){
 
+            document.getElementById(
+                "restaurantName"
+            ).focus();
 
-    document.getElementById("restaurantAddress")
-        .value = restaurant.address || "";
-
-
-    document.getElementById("modalOverlay")
-        .classList.add("show");
+        },
+        100
+    );
 
 }
 
 
 /* =====================================================
    CLOSE MODAL
-   ===================================================== */
+===================================================== */
 
 function closeModal(){
 
-    document.getElementById("modalOverlay")
-        .classList.remove("show");
+    document.getElementById(
+        "modalOverlay"
+    )
+    .classList
+    .remove("show");
 
 }
 
 
 /* =====================================================
    SAVE / UPDATE
-   ===================================================== */
+===================================================== */
 
 async function saveRestaurant(){
 
     const name =
         document
-            .getElementById("restaurantName")
-            .value
-            .trim();
-
-    const description =
-        document
-            .getElementById("restaurantDescription")
-            .value
-            .trim();
-
-    const phone =
-        document
-            .getElementById("restaurantPhone")
-            .value
-            .trim();
-
-    const address =
-        document
-            .getElementById("restaurantAddress")
+            .getElementById(
+                "restaurantName"
+            )
             .value
             .trim();
 
 
     if(!name){
 
-        showToast("Restaurant name is required.");
+        showToast(
+            "Restaurant name is required."
+        );
 
         return;
+
     }
 
 
     const button =
-        document.getElementById("saveButton");
+        document.getElementById(
+            "saveButton"
+        );
 
-    button.disabled = true;
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        editingId === null
+            ? "Saving..."
+            : "Updating...";
 
 
     try{
 
-        let error;
+        let result;
 
+
+        /* ==========================
+           ADD
+        ========================== */
 
         if(editingId === null){
 
-            const result =
+            result =
                 await sb
                     .from("restaurants")
-                    .insert([
-                        {
-                            name:name,
-                            description:description,
-                            phone:phone,
-                            address:address
-                        }
-                    ]);
-
-
-            error = result.error;
-
-
-        }else{
-
-            const result =
-                await sb
-                    .from("restaurants")
-                    .update({
-                        name:name,
-                        description:description,
-                        phone:phone,
-                        address:address
-                    })
-                    .eq("id", editingId);
-
-
-            error = result.error;
+                    .insert({
+                        name:name
+                    });
 
         }
 
 
-        if(error){
+        /* ==========================
+           UPDATE
+        ========================== */
 
-            console.error(error);
+        else{
 
-            showToast(
-                "Error: " + error.message
+            result =
+                await sb
+                    .from("restaurants")
+                    .update({
+                        name:name
+                    })
+                    .eq(
+                        "id",
+                        editingId
+                    );
+
+        }
+
+
+        if(result.error){
+
+            console.error(
+                result.error
             );
 
-            button.disabled = false;
+            showToast(
+                "Error: " +
+                result.error.message
+            );
 
             return;
+
         }
 
 
         showToast(
+
             editingId === null
+
                 ? "Restaurant added successfully."
+
                 : "Restaurant updated successfully."
+
         );
 
 
         closeModal();
 
+
         await loadRestaurants();
 
     }
-
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Save error:",
+            error
+        );
 
         showToast(
             "Something went wrong."
         );
 
     }
+    finally{
 
+        button.disabled =
+            false;
 
-    button.disabled = false;
+        button.textContent =
+            editingId === null
+                ? "Save Restaurant"
+                : "Update Restaurant";
+
+    }
 
 }
 
 
 /* =====================================================
    DELETE
-   ===================================================== */
+===================================================== */
 
 async function deleteRestaurant(id){
 
     const restaurant =
-        restaurants.find(r => r.id === id);
+        restaurants.find(
+            item =>
+                item.id === id
+        );
 
 
     if(!restaurant){
+
+        showToast(
+            "Restaurant not found."
+        );
+
         return;
+
     }
 
 
@@ -1343,22 +1626,31 @@ async function deleteRestaurant(id){
 
 
     if(!confirmed){
+
         return;
+
     }
 
 
     try{
 
-        const { error } =
-            await sb
-                .from("restaurants")
-                .delete()
-                .eq("id", id);
+        const {
+            error
+        } =
+        await sb
+            .from("restaurants")
+            .delete()
+            .eq(
+                "id",
+                id
+            );
 
 
         if(error){
 
-            console.error(error);
+            console.error(
+                error
+            );
 
             showToast(
                 "Delete failed: " +
@@ -1366,6 +1658,7 @@ async function deleteRestaurant(id){
             );
 
             return;
+
         }
 
 
@@ -1377,10 +1670,11 @@ async function deleteRestaurant(id){
         await loadRestaurants();
 
     }
-
     catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         showToast(
             "Something went wrong."
@@ -1393,65 +1687,151 @@ async function deleteRestaurant(id){
 
 /* =====================================================
    TOAST
-   ===================================================== */
+===================================================== */
 
 function showToast(message){
 
     const toast =
-        document.getElementById("toast");
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
+        document.getElementById(
+            "toast"
+        );
 
 
-    setTimeout(() => {
+    toast.textContent =
+        message;
 
-        toast.classList.remove("show");
 
-    }, 3000);
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function(){
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        3000
+    );
 
 }
 
 
 /* =====================================================
    ESCAPE HTML
-   ===================================================== */
+===================================================== */
 
 function escapeHtml(value){
 
     return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
 /* =====================================================
-   MODAL CLICK OUTSIDE
-   ===================================================== */
+   LOGOUT CONFIRM
+===================================================== */
+
+function confirmLogout(){
+
+    return confirm(
+        "Are you sure you want to logout?"
+    );
+
+}
+
+
+/* =====================================================
+   MODAL OUTSIDE CLICK
+===================================================== */
 
 document
-    .getElementById("modalOverlay")
-    .addEventListener("click", function(e){
+    .getElementById(
+        "modalOverlay"
+    )
+    .addEventListener(
+        "click",
+        function(event){
 
-        if(e.target === this){
+            if(
+                event.target ===
+                this
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
 
             closeModal();
 
         }
 
-    });
+    }
+);
 
 
 /* =====================================================
    START
-   ===================================================== */
+===================================================== */
 
-loadRestaurants();
+async function startPage(){
+
+    const isAdmin =
+        await checkAdmin();
+
+
+    if(!isAdmin){
+
+        return;
+
+    }
+
+
+    await loadRestaurants();
+
+}
+
+
+startPage();
 
 </script>
 
