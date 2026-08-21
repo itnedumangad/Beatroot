@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,20 +11,31 @@
 
 <style>
 
-/* =========================================================
-   RESET
-========================================================= */
-
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
     background:#f5f7fb;
     color:#171717;
+}
+
+/* REMOVE UNDERLINES */
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+button{
+    text-decoration:none !important;
 }
 
 /* =========================================================
@@ -118,6 +130,11 @@ body{
     cursor:pointer;
 }
 
+.logout:hover{
+    background:#1f2937;
+    color:white;
+}
+
 /* =========================================================
    MAIN
 ========================================================= */
@@ -175,6 +192,10 @@ body{
     font-size:18px;
 }
 
+.notification:hover{
+    background:#f9fafb;
+}
+
 .profile{
     display:flex;
     align-items:center;
@@ -221,6 +242,19 @@ body{
 
 .welcome p{
     color:#6b7280;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error{
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:20px;
+    display:none;
 }
 
 /* =========================================================
@@ -336,6 +370,10 @@ body{
     cursor:pointer;
     font-size:12px;
     font-weight:bold;
+}
+
+.view-all:hover{
+    background:#fee2e2;
 }
 
 /* =========================================================
@@ -471,15 +509,6 @@ td{
     color:#777;
 }
 
-.error{
-    background:#fee2e2;
-    color:#b91c1c;
-    padding:15px;
-    border-radius:10px;
-    margin-bottom:20px;
-    display:none;
-}
-
 /* =========================================================
    MOBILE
 ========================================================= */
@@ -561,7 +590,6 @@ td{
 
 </style>
 </head>
-
 
 <body>
 
@@ -661,7 +689,6 @@ td{
             </div>
 
         </div>
-
 
         <div class="top-right">
 
@@ -1081,7 +1108,6 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
-
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
@@ -1092,16 +1118,6 @@ const supabaseClient =
 /* =========================================================
    ADMIN EMAIL
 ========================================================= */
-
-/*
-   Ivide NINTE ADMIN EMAIL kodukkuka.
-
-   Example:
-
-   const ADMIN_EMAIL =
-       "itnedumangad@gmail.com";
-
-*/
 
 const ADMIN_EMAIL =
     "itnedumangad@gmail.com";
@@ -1128,16 +1144,16 @@ async function loadDashboard(){
 
     try{
 
+        /* -----------------------------------------------
+           LOGIN CHECK
+        ----------------------------------------------- */
+
         const {
             data: { user },
             error: authError
         } =
         await supabaseClient.auth.getUser();
 
-
-        /* -----------------------------------------------
-           LOGIN CHECK
-        ----------------------------------------------- */
 
         if(authError){
 
@@ -1161,21 +1177,23 @@ async function loadDashboard(){
 
 
         /* -----------------------------------------------
-           ADMIN EMAIL CHECK
+           ADMIN ONLY CHECK
         ----------------------------------------------- */
 
         if(
-            ADMIN_EMAIL !==
-            "YOUR_ADMIN_EMAIL@gmail.com" &&
-            user.email !== ADMIN_EMAIL
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
         ){
 
             alert(
                 "Access denied. Admin only."
             );
 
+            await supabaseClient.auth.signOut();
+
             window.location.href =
-                "home.html";
+                "login.html";
 
             return;
 
@@ -1257,11 +1275,9 @@ async function loadDashboard(){
         const today =
             new Date();
 
-
         const todayString =
             today.toISOString()
                 .split("T")[0];
-
 
         const todayOrders =
             allOrders.filter(order => {
@@ -1340,10 +1356,7 @@ async function loadDashboard(){
                 ).toLowerCase();
 
 
-            if(
-                status === "confirmed" ||
-                status === "confirmed"
-            ){
+            if(status === "confirmed"){
 
                 confirmed++;
 
@@ -1495,7 +1508,7 @@ function renderRecentOrders(orders){
 
                         <div class="order-number">
 
-                            #${order.id}
+                            #${escapeHTML(order.id)}
 
                         </div>
 
@@ -1515,7 +1528,9 @@ function renderRecentOrders(orders){
                             class="status
                             ${getStatusClass(status)}">
 
-                            ${capitalize(status)}
+                            ${escapeHTML(
+                                capitalize(status)
+                            )}
 
                         </span>
 
@@ -1552,7 +1567,8 @@ function renderRecentOrders(orders){
 function getStatusClass(status){
 
     const value =
-        status.toLowerCase();
+        String(status)
+        .toLowerCase();
 
 
     if(
@@ -1605,10 +1621,29 @@ function getStatusClass(status){
 
 function capitalize(text){
 
+    text =
+        String(text || "");
+
     return text
         .charAt(0)
         .toUpperCase() +
         text.slice(1);
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
