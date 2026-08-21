@@ -10,6 +10,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+/* Hide dashboard until authentication is verified */
+document.documentElement.style.visibility = "hidden";
+</script>
+
 <style>
 
 *{
@@ -42,6 +47,7 @@ a{
     text-decoration:none;
 }
 
+
 /* =========================================================
    LAYOUT
 ========================================================= */
@@ -50,6 +56,7 @@ a{
     display:flex;
     min-height:100vh;
 }
+
 
 /* =========================================================
    SIDEBAR
@@ -191,6 +198,7 @@ a{
     color:white;
 }
 
+
 /* =========================================================
    MAIN
 ========================================================= */
@@ -202,6 +210,7 @@ a{
 
     min-height:100vh;
 }
+
 
 /* =========================================================
    TOPBAR
@@ -341,6 +350,7 @@ a{
     font-size:11px;
 }
 
+
 /* =========================================================
    CONTENT
 ========================================================= */
@@ -364,6 +374,7 @@ a{
 
     font-size:14px;
 }
+
 
 /* =========================================================
    MESSAGE
@@ -400,6 +411,7 @@ a{
 
     border:1px solid #bbf7d0;
 }
+
 
 /* =========================================================
    RESTAURANT INFO
@@ -454,6 +466,7 @@ a{
 
     white-space:nowrap;
 }
+
 
 /* =========================================================
    STATS
@@ -560,6 +573,7 @@ a{
     margin-top:5px;
 }
 
+
 /* =========================================================
    GRID
 ========================================================= */
@@ -572,6 +586,7 @@ a{
 
     gap:20px;
 }
+
 
 /* =========================================================
    CARD
@@ -620,6 +635,7 @@ a{
 .view-btn:hover{
     background:#fee2e2;
 }
+
 
 /* =========================================================
    ORDERS
@@ -727,6 +743,7 @@ td{
     color:#92400e;
 }
 
+
 /* =========================================================
    QUICK ACTIONS
 ========================================================= */
@@ -776,6 +793,7 @@ td{
     font-weight:800;
 }
 
+
 /* =========================================================
    SUMMARY
 ========================================================= */
@@ -804,6 +822,7 @@ td{
     font-weight:800;
 }
 
+
 /* =========================================================
    EMPTY
 ========================================================= */
@@ -825,6 +844,7 @@ td{
 
     color:#777;
 }
+
 
 /* =========================================================
    MOBILE
@@ -1064,7 +1084,6 @@ td{
 </aside>
 
 
-
 <!-- =====================================================
      MAIN
 ===================================================== -->
@@ -1158,7 +1177,6 @@ td{
 </header>
 
 
-
 <!-- CONTENT -->
 
 <main class="content">
@@ -1181,7 +1199,6 @@ td{
         class="message"
         id="messageBox">
     </div>
-
 
 
     <!-- RESTAURANT -->
@@ -1219,7 +1236,6 @@ td{
 
 
     </div>
-
 
 
     <!-- =================================================
@@ -1263,7 +1279,6 @@ td{
         </div>
 
 
-
         <div class="stat-card">
 
 
@@ -1298,7 +1313,6 @@ td{
         </div>
 
 
-
         <div class="stat-card">
 
 
@@ -1331,7 +1345,6 @@ td{
 
 
         </div>
-
 
 
         <div class="stat-card">
@@ -1371,13 +1384,11 @@ td{
     </section>
 
 
-
     <!-- =================================================
          GRID
     ================================================= -->
 
     <section class="grid">
-
 
 
         <!-- RECENT ORDERS -->
@@ -1403,7 +1414,6 @@ td{
 
 
             </div>
-
 
 
             <div class="table-wrapper">
@@ -1464,7 +1474,6 @@ td{
         </div>
 
 
-
         <!-- RIGHT SIDE -->
 
         <div>
@@ -1502,7 +1511,6 @@ td{
                     </button>
 
 
-
                     <button
                         class="quick-btn"
                         onclick="openMenu()">
@@ -1518,7 +1526,6 @@ td{
                     </button>
 
 
-
                     <button
                         class="quick-btn"
                         onclick="openRestaurant()">
@@ -1532,7 +1539,6 @@ td{
                         </span>
 
                     </button>
-
 
 
                     <button
@@ -1554,7 +1560,6 @@ td{
 
 
             </div>
-
 
 
             <!-- ORDER SUMMARY -->
@@ -1674,7 +1679,6 @@ td{
 </div>
 
 
-
 <script>
 
 /* =========================================================
@@ -1708,89 +1712,140 @@ let allOrders = [];
 
 
 /* =========================================================
-   SIDEBAR
+   REDIRECT
 ========================================================= */
 
-function toggleSidebar(){
+function redirectToLogin(){
 
-    document
-        .getElementById("sidebar")
-        .classList
-        .toggle("open");
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+function redirectByRole(role){
+
+    role =
+        String(
+            role || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    if(role === "admin"){
+
+        window.location.replace(
+            "admin-dashboard.html"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        role === "customer"
+    ){
+
+        window.location.replace(
+            "customer-dashboard.html"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        role === "delivery" ||
+        role === "delivery_boy"
+    ){
+
+        window.location.replace(
+            "delivery-dashboard.html"
+        );
+
+        return;
+
+    }
+
+
+    redirectToLogin();
 
 }
 
 
 /* =========================================================
-   MESSAGE
-========================================================= */
-
-function showMessage(
-    message,
-    type="error"
-){
-
-    const box =
-        document.getElementById(
-            "messageBox"
-        );
-
-    box.textContent =
-        message;
-
-    box.className =
-        "message " + type;
-
-}
-
-
-function hideMessage(){
-
-    const box =
-        document.getElementById(
-            "messageBox"
-        );
-
-    box.textContent =
-        "";
-
-    box.className =
-        "message";
-
-}
-
-
-/* =========================================================
-   AUTH
+   AUTHENTICATION
 ========================================================= */
 
 async function initialize(){
 
     try{
 
-        hideMessage();
 
+        /* =============================================
+           CHECK SESSION
+        ============================================= */
 
         const {
-            data,
-            error
+            data:sessionData,
+            error:sessionError
+        } =
+        await supabaseClient
+            .auth
+            .getSession();
+
+
+        if(sessionError){
+
+            throw sessionError;
+
+        }
+
+
+        const session =
+            sessionData?.session;
+
+
+        if(!session){
+
+            redirectToLogin();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           GET USER
+        ============================================= */
+
+        const {
+            data:userData,
+            error:userError
         } =
         await supabaseClient
             .auth
             .getUser();
 
 
-        if(error){
+        if(userError){
 
-            throw error;
+            throw userError;
 
         }
 
 
-        if(!data || !data.user){
+        const user =
+            userData?.user;
 
-            window.location.href =
-                "login.html";
+
+        if(!user){
+
+            redirectToLogin();
 
             return;
 
@@ -1798,31 +1853,28 @@ async function initialize(){
 
 
         currentUser =
-            data.user;
-
-
-        const email =
-            currentUser.email ||
-            "Restaurant";
-
-
-        document.getElementById(
-            "ownerName"
-        ).textContent =
-            email.split("@")[0];
-
-
-        document.getElementById(
-            "avatar"
-        ).textContent =
-            email
-                .charAt(0)
-                .toUpperCase();
-
+            user;
 
 
         /* =============================================
-           RESTAURANT ROLE
+           EMAIL VERIFICATION
+        ============================================= */
+
+        if(!user.email_confirmed_at){
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            redirectToLogin();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           USER ROLE
         ============================================= */
 
         const {
@@ -1836,11 +1888,7 @@ async function initialize(){
             )
             .eq(
                 "user_id",
-                currentUser.id
-            )
-            .eq(
-                "role",
-                "restaurant"
+                user.id
             )
             .maybeSingle();
 
@@ -1852,27 +1900,59 @@ async function initialize(){
         }
 
 
-        if(
-            !roleData ||
-            !roleData.restaurant_id
-        ){
+        if(!roleData){
 
-            throw new Error(
-                "Restaurant account is not linked to a restaurant."
-            );
+            await supabaseClient
+                .auth
+                .signOut();
+
+            redirectToLogin();
+
+            return;
 
         }
 
 
-        if(
-            roleData.approval_status &&
-            roleData.approval_status !==
-            "approved"
-        ){
+        const role =
+            String(
+                roleData.role || ""
+            )
+            .toLowerCase()
+            .trim();
 
-            throw new Error(
-                "Your restaurant account is still waiting for admin approval."
+
+        /* =============================================
+           ROLE CHECK
+        ============================================= */
+
+        if(role !== "restaurant"){
+
+            redirectByRole(
+                role
             );
+
+            return;
+
+        }
+
+
+        /* =============================================
+           RESTAURANT ID
+        ============================================= */
+
+        if(!roleData.restaurant_id){
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            alert(
+                "Your restaurant account is not linked to a restaurant."
+            );
+
+            redirectToLogin();
+
+            return;
 
         }
 
@@ -1881,72 +1961,67 @@ async function initialize(){
             roleData.restaurant_id;
 
 
-
         /* =============================================
-           RESTAURANT DETAILS
+           APPROVAL
         ============================================= */
 
-        const {
-            data:restaurant,
-            error:restaurantError
-        } =
-        await supabaseClient
-            .from("restaurants")
-            .select(`
-                id,
-                name,
-                address,
-                phone,
-                description
-            `)
-            .eq(
-                "id",
-                restaurantId
+        const approval =
+            String(
+                roleData.approval_status || ""
             )
-            .maybeSingle();
+            .toLowerCase()
+            .trim();
 
 
-        if(restaurantError){
+        if(approval !== "approved"){
 
-            throw restaurantError;
+            await supabaseClient
+                .auth
+                .signOut();
 
-        }
-
-
-        if(!restaurant){
-
-            throw new Error(
-                "Restaurant details not found."
+            alert(
+                "Your restaurant application is waiting for admin approval."
             );
 
+            redirectToLogin();
+
+            return;
+
         }
 
 
-        restaurantData =
-            restaurant;
+        /* =============================================
+           USER DISPLAY
+        ============================================= */
 
-
-        document.getElementById(
-            "restaurantName"
-        ).textContent =
-            restaurant.name ||
+        const email =
+            user.email ||
             "Restaurant";
 
 
-        document.getElementById(
-            "sideRestaurantName"
-        ).textContent =
-            restaurant.name ||
-            "Restaurant";
+        const displayName =
+            email.split("@")[0];
 
 
         document.getElementById(
-            "restaurantAddress"
+            "ownerName"
         ).textContent =
-            restaurant.address ||
-            restaurant.phone ||
-            "Address not available";
+            displayName;
 
+
+        document.getElementById(
+            "avatar"
+        ).textContent =
+            displayName
+                .charAt(0)
+                .toUpperCase();
+
+
+        /* =============================================
+           LOAD RESTAURANT
+        ============================================= */
+
+        await loadRestaurant();
 
 
         /* =============================================
@@ -1956,21 +2031,115 @@ async function initialize(){
         await loadDashboardData();
 
 
+        /* =============================================
+           SHOW PAGE
+        ============================================= */
+
+        document.documentElement.style.visibility =
+            "visible";
+
+
+        console.log(
+            "Restaurant authentication successful."
+        );
+
+
     }
     catch(error){
 
         console.error(
-            "Dashboard error:",
+            "Authentication error:",
             error
         );
 
 
-        showMessage(
-            error.message ||
-            "Unable to load restaurant dashboard."
+        try{
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+        }
+        catch(e){
+
+            console.error(e);
+
+        }
+
+
+        redirectToLogin();
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD RESTAURANT
+========================================================= */
+
+async function loadRestaurant(){
+
+    const {
+        data:restaurant,
+        error
+    } =
+    await supabaseClient
+        .from("restaurants")
+        .select(`
+            id,
+            name,
+            address,
+            phone,
+            description
+        `)
+        .eq(
+            "id",
+            restaurantId
+        )
+        .maybeSingle();
+
+
+    if(error){
+
+        throw error;
+
+    }
+
+
+    if(!restaurant){
+
+        throw new Error(
+            "Restaurant details not found."
         );
 
     }
+
+
+    restaurantData =
+        restaurant;
+
+
+    document.getElementById(
+        "restaurantName"
+    ).textContent =
+        restaurant.name ||
+        "Restaurant";
+
+
+    document.getElementById(
+        "sideRestaurantName"
+    ).textContent =
+        restaurant.name ||
+        "Restaurant";
+
+
+    document.getElementById(
+        "restaurantAddress"
+    ).textContent =
+        restaurant.address ||
+        restaurant.phone ||
+        "Address not available";
 
 }
 
@@ -2014,7 +2183,18 @@ async function loadDashboardData(){
 
     if(error){
 
-        throw error;
+        console.warn(
+            "Orders could not be loaded:",
+            error
+        );
+
+        allOrders = [];
+
+        updateStatistics();
+
+        renderRecentOrders([]);
+
+        return;
 
     }
 
@@ -2057,7 +2237,6 @@ function updateStatistics(){
     let delivered = 0;
 
     let cancelled = 0;
-
 
     let todayCount = 0;
 
@@ -2108,10 +2287,9 @@ function updateStatistics(){
 
             if(
                 order.created_at &&
-                order.created_at
-                    .startsWith(
-                        today
-                    )
+                order.created_at.startsWith(
+                    today
+                )
             ){
 
                 todayCount++;
@@ -2218,9 +2396,7 @@ function renderRecentOrders(
     if(!orders.length){
 
         table.innerHTML = `
-
             <tr>
-
                 <td
                     colspan="4"
                     class="empty">
@@ -2228,9 +2404,7 @@ function renderRecentOrders(
                     No orders found.
 
                 </td>
-
             </tr>
-
         `;
 
         return;
@@ -2257,9 +2431,7 @@ function renderRecentOrders(
 
 
                 return `
-
                     <tr>
-
 
                         <td>
 
@@ -2285,6 +2457,7 @@ function renderRecentOrders(
 
                             </div>
 
+
                             <div class="order-phone">
 
                                 ${escapeHTML(
@@ -2305,9 +2478,7 @@ function renderRecentOrders(
                                 ${getStatusClass(status)}">
 
                                 ${escapeHTML(
-                                    getStatusText(
-                                        status
-                                    )
+                                    getStatusText(status)
                                 )}
 
                             </span>
@@ -2327,9 +2498,7 @@ function renderRecentOrders(
 
                         </td>
 
-
                     </tr>
-
                 `;
 
             }
@@ -2343,9 +2512,7 @@ function renderRecentOrders(
    STATUS
 ========================================================= */
 
-function normalizeStatus(
-    value
-){
+function normalizeStatus(value){
 
     const status =
         String(
@@ -2357,8 +2524,7 @@ function normalizeStatus(
 
 
     if(
-        status ===
-        "processing"
+        status === "processing"
     ){
 
         return "preparing";
@@ -2367,8 +2533,7 @@ function normalizeStatus(
 
 
     if(
-        status ===
-        "completed"
+        status === "completed"
     ){
 
         return "delivered";
@@ -2377,8 +2542,7 @@ function normalizeStatus(
 
 
     if(
-        status ===
-        "canceled"
+        status === "canceled"
     ){
 
         return "cancelled";
@@ -2387,10 +2551,8 @@ function normalizeStatus(
 
 
     if(
-        status ===
-        "out-for-delivery" ||
-        status ===
-        "out for delivery"
+        status === "out-for-delivery" ||
+        status === "out for delivery"
     ){
 
         return "out_for_delivery";
@@ -2403,9 +2565,7 @@ function normalizeStatus(
 }
 
 
-function getStatusText(
-    status
-){
+function getStatusText(status){
 
     const names = {
 
@@ -2433,7 +2593,7 @@ function getStatusText(
     };
 
 
-    return (
+    return(
         names[status] ||
         capitalize(status)
     );
@@ -2441,46 +2601,56 @@ function getStatusText(
 }
 
 
-function getStatusClass(
-    status
-){
+function getStatusClass(status){
 
-    if(status === "confirmed"){
+    if(
+        status === "confirmed"
+    ){
 
         return "status-confirmed";
 
     }
 
 
-    if(status === "preparing"){
+    if(
+        status === "preparing"
+    ){
 
         return "status-preparing";
 
     }
 
 
-    if(status === "ready"){
+    if(
+        status === "ready"
+    ){
 
         return "status-ready";
 
     }
 
 
-    if(status === "out_for_delivery"){
+    if(
+        status === "out_for_delivery"
+    ){
 
         return "status-out";
 
     }
 
 
-    if(status === "delivered"){
+    if(
+        status === "delivered"
+    ){
 
         return "status-delivered";
 
     }
 
 
-    if(status === "cancelled"){
+    if(
+        status === "cancelled"
+    ){
 
         return "status-cancelled";
 
@@ -2488,6 +2658,20 @@ function getStatusClass(
 
 
     return "status-pending";
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .toggle("open");
 
 }
 
@@ -2570,19 +2754,18 @@ async function logout(){
         .signOut();
 
 
-    window.location.href =
-        "login.html";
+    window.location.replace(
+        "login.html"
+    );
 
 }
 
 
 /* =========================================================
-   ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
-function escapeHTML(
-    value
-){
+function escapeHTML(value){
 
     return String(
         value ?? ""
@@ -2615,20 +2798,16 @@ function escapeHTML(
    CAPITALIZE
 ========================================================= */
 
-function capitalize(
-    text
-){
+function capitalize(text){
 
     text =
         String(
-            text ||
-            ""
+            text || ""
         );
 
 
-    return (
-        text.charAt(0)
-        .toUpperCase() +
+    return(
+        text.charAt(0).toUpperCase() +
         text.slice(1)
     );
 
