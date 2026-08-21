@@ -4,9 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Beatroot - Restaurant Registration</title>
 
@@ -22,6 +20,7 @@
 
 body{
     min-height:100vh;
+
     font-family:Arial,Helvetica,sans-serif;
 
     background:
@@ -32,6 +31,7 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
+
     padding:20px;
 }
 
@@ -40,8 +40,10 @@ a{
 }
 
 .wrapper{
+
     width:100%;
     max-width:1100px;
+
     min-height:700px;
 
     background:#fff;
@@ -54,13 +56,14 @@ a{
         0 25px 70px rgba(0,0,0,.12);
 
     display:grid;
+
     grid-template-columns:1fr 1fr;
 }
 
 
-/* =========================
+/* =========================================================
    LEFT
-========================= */
+========================================================= */
 
 .left{
 
@@ -76,10 +79,13 @@ a{
     padding:55px;
 
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
 
     position:relative;
+
     overflow:hidden;
 }
 
@@ -120,9 +126,11 @@ a{
 .brand{
 
     position:relative;
+
     z-index:2;
 
     font-size:38px;
+
     font-weight:800;
 
     margin-bottom:38px;
@@ -135,11 +143,13 @@ a{
 .partner-badge{
 
     position:relative;
+
     z-index:2;
 
     display:inline-flex;
 
     align-items:center;
+
     gap:8px;
 
     width:max-content;
@@ -155,6 +165,7 @@ a{
     border-radius:20px;
 
     font-size:12px;
+
     font-weight:700;
 
     margin-bottom:20px;
@@ -163,9 +174,11 @@ a{
 .left h1{
 
     position:relative;
+
     z-index:2;
 
     font-size:40px;
+
     line-height:1.15;
 
     margin-bottom:18px;
@@ -174,11 +187,13 @@ a{
 .left p{
 
     position:relative;
+
     z-index:2;
 
     color:#d1d5db;
 
     font-size:15px;
+
     line-height:1.7;
 
     max-width:430px;
@@ -187,6 +202,7 @@ a{
 .features{
 
     position:relative;
+
     z-index:2;
 
     margin-top:35px;
@@ -219,26 +235,30 @@ a{
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 }
 
 
-/* =========================
+/* =========================================================
    RIGHT
-========================= */
+========================================================= */
 
 .right{
 
     padding:38px 50px;
 
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
 }
 
 .title{
 
     font-size:29px;
+
     font-weight:800;
 
     color:#111827;
@@ -251,15 +271,16 @@ a{
     color:#6b7280;
 
     font-size:13px;
+
     line-height:1.5;
 
     margin-bottom:20px;
 }
 
 
-/* =========================
+/* =========================================================
    MESSAGE
-========================= */
+========================================================= */
 
 .message{
 
@@ -270,6 +291,7 @@ a{
     border-radius:10px;
 
     font-size:13px;
+
     line-height:1.5;
 
     margin-bottom:16px;
@@ -298,9 +320,9 @@ a{
 }
 
 
-/* =========================
+/* =========================================================
    FORM
-========================= */
+========================================================= */
 
 .form-row{
 
@@ -321,6 +343,7 @@ a{
     display:block;
 
     font-size:12px;
+
     font-weight:700;
 
     color:#374151;
@@ -353,6 +376,7 @@ a{
 }
 
 .input-box input{
+
     height:46px;
 }
 
@@ -377,15 +401,16 @@ a{
 }
 
 
-/* =========================
+/* =========================================================
    PASSWORD
-========================= */
+========================================================= */
 
 .password-toggle{
 
     position:absolute;
 
     right:12px;
+
     top:50%;
 
     transform:translateY(-50%);
@@ -400,9 +425,9 @@ a{
 }
 
 
-/* =========================
-   BUTTON
-========================= */
+/* =========================================================
+   SUBMIT
+========================================================= */
 
 .register-btn{
 
@@ -449,9 +474,9 @@ a{
 }
 
 
-/* =========================
-   INFO
-========================= */
+/* =========================================================
+   APPROVAL
+========================================================= */
 
 .approval-info{
 
@@ -491,15 +516,16 @@ a{
 }
 
 
-/* =========================
+/* =========================================================
    LOADING
-========================= */
+========================================================= */
 
 .loading{
 
     display:inline-flex;
 
     align-items:center;
+
     justify-content:center;
 
     gap:8px;
@@ -528,9 +554,9 @@ a{
 }
 
 
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media(max-width:850px){
 
@@ -560,18 +586,22 @@ a{
     }
 
     .left h1{
+
         font-size:30px;
     }
 
     .left p{
+
         font-size:14px;
     }
 
     .features{
+
         display:none;
     }
 
     .right{
+
         padding:35px 25px;
     }
 
@@ -611,23 +641,27 @@ a{
 <div class="wrapper">
 
 
-<!-- =========================
+<!-- =====================================================
      LEFT
-========================= -->
+===================================================== -->
 
 <section class="left">
+
 
     <div class="brand">
         Beat<span>root</span>
     </div>
 
+
     <div class="partner-badge">
         🏪 Restaurant Partner
     </div>
 
+
     <h1>
         Grow Your Restaurant With Beatroot
     </h1>
+
 
     <p>
         Join Beatroot and reach more customers,
@@ -635,7 +669,9 @@ a{
         from one simple platform.
     </p>
 
+
     <div class="features">
+
 
         <div class="feature">
 
@@ -675,20 +711,23 @@ a{
 
         </div>
 
+
     </div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      RIGHT
-========================= -->
+===================================================== -->
 
 <section class="right">
+
 
     <h2 class="title">
         Restaurant Registration
     </h2>
+
 
     <p class="subtitle">
         Submit your restaurant details to become a Beatroot partner.
@@ -707,6 +746,7 @@ a{
         <!-- RESTAURANT + OWNER -->
 
         <div class="form-row">
+
 
             <div class="form-group">
 
@@ -747,12 +787,14 @@ a{
 
             </div>
 
+
         </div>
 
 
         <!-- EMAIL + PHONE -->
 
         <div class="form-row">
+
 
             <div class="form-group">
 
@@ -794,6 +836,7 @@ a{
                 </div>
 
             </div>
+
 
         </div>
 
@@ -842,6 +885,7 @@ a{
         <!-- PASSWORD -->
 
         <div class="form-row">
+
 
             <div class="form-group">
 
@@ -912,6 +956,7 @@ a{
 
             </div>
 
+
         </div>
 
 
@@ -923,6 +968,7 @@ a{
             Submit Restaurant Application
 
         </button>
+
 
     </form>
 
@@ -955,6 +1001,7 @@ a{
 
     </div>
 
+
 </section>
 
 </div>
@@ -972,6 +1019,7 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
+
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
@@ -988,10 +1036,12 @@ const registerForm =
         "registerForm"
     );
 
+
 const registerBtn =
     document.getElementById(
         "registerBtn"
     );
+
 
 const messageBox =
     document.getElementById(
@@ -1005,7 +1055,7 @@ const messageBox =
 
 function showMessage(
     message,
-    type = "error"
+    type="error"
 ){
 
     messageBox.textContent =
@@ -1029,7 +1079,7 @@ function hideMessage(){
 
 
 /* =========================================================
-   PASSWORD TOGGLE
+   PASSWORD
 ========================================================= */
 
 function togglePassword(
@@ -1047,8 +1097,10 @@ function togglePassword(
             buttonId
         );
 
+
     if(
-        input.type === "password"
+        input.type ===
+        "password"
     ){
 
         input.type =
@@ -1075,13 +1127,16 @@ function togglePassword(
    PHONE VALIDATION
 ========================================================= */
 
-function validatePhone(phone){
+function validatePhone(
+    phone
+){
 
     const cleaned =
         phone.replace(
             /\D/g,
             ""
         );
+
 
     return (
         cleaned.length >= 10 &&
@@ -1175,9 +1230,9 @@ registerForm.addEventListener(
                 .value;
 
 
-        /* =========================
+        /* =================================================
            VALIDATION
-        ========================= */
+        ================================================= */
 
         if(
             restaurantName.length < 2
@@ -1205,8 +1260,21 @@ registerForm.addEventListener(
         }
 
 
+        if(!email){
+
+            showMessage(
+                "Please enter a valid email address."
+            );
+
+            return;
+
+        }
+
+
         if(
-            !validatePhone(phone)
+            !validatePhone(
+                phone
+            )
         ){
 
             showMessage(
@@ -1245,7 +1313,8 @@ registerForm.addEventListener(
 
 
         if(
-            password !== confirmPassword
+            password !==
+            confirmPassword
         ){
 
             showMessage(
@@ -1257,26 +1326,25 @@ registerForm.addEventListener(
         }
 
 
-        /* =========================
-           BUTTON LOADING
-        ========================= */
-
         registerBtn.disabled =
             true;
+
 
         registerBtn.innerHTML = `
             <span class="loading">
                 <span class="spinner"></span>
-                Submitting application...
+                Creating application...
             </span>
         `;
 
 
         try{
 
-            /* =========================================
-               1. CREATE AUTH USER
-            ========================================= */
+
+            /* =================================================
+               STEP 1
+               CREATE AUTH USER
+            ================================================= */
 
             const {
                 data,
@@ -1284,9 +1352,11 @@ registerForm.addEventListener(
             } =
             await supabaseClient.auth.signUp({
 
-                email:email,
+                email:
+                    email,
 
-                password:password,
+                password:
+                    password,
 
                 options:{
 
@@ -1338,9 +1408,10 @@ registerForm.addEventListener(
                 data.user;
 
 
-            /* =========================================
-               2. CREATE RESTAURANT
-            ========================================= */
+            /* =================================================
+               STEP 2
+               CREATE RESTAURANT
+            ================================================= */
 
             const {
                 data:restaurantData,
@@ -1363,16 +1434,13 @@ registerForm.addEventListener(
                         address
 
                 })
-                .select("id")
+                .select(
+                    "id"
+                )
                 .single();
 
 
             if(restaurantError){
-
-                console.error(
-                    "Restaurant insert error:",
-                    restaurantError
-                );
 
                 throw new Error(
                     "Restaurant details could not be saved: " +
@@ -1386,9 +1454,10 @@ registerForm.addEventListener(
                 restaurantData.id;
 
 
-            /* =========================================
-               3. PROFILE
-            ========================================= */
+            /* =================================================
+               STEP 3
+               PROFILE
+            ================================================= */
 
             const {
                 error:profileError
@@ -1414,75 +1483,18 @@ registerForm.addEventListener(
 
             if(profileError){
 
-                console.error(
-                    "Profile error:",
+                console.warn(
+                    "Profile warning:",
                     profileError
                 );
 
-                throw new Error(
-                    "Profile could not be saved: " +
-                    profileError.message
-                );
-
             }
 
 
-            /* =========================================
-               4. PARTNER APPLICATION
-            ========================================= */
-
-            const {
-                error:applicationError
-            } =
-            await supabaseClient
-                .from("partner_applications")
-                .insert({
-
-                    user_id:
-                        user.id,
-
-                    full_name:
-                        ownerName,
-
-                    email:
-                        email,
-
-                    phone:
-                        phone,
-
-                    type:
-                        "restaurant",
-
-                    status:
-                        "pending",
-
-                    business_name:
-                        restaurantName,
-
-                    address:
-                        address
-
-                });
-
-
-            if(applicationError){
-
-                console.error(
-                    "Partner application error:",
-                    applicationError
-                );
-
-                throw new Error(
-                    "Partner application could not be submitted: " +
-                    applicationError.message
-                );
-
-            }
-
-
-            /* =========================================
-               5. USER ROLE
-            ========================================= */
+            /* =================================================
+               STEP 4
+               USER ROLE
+            ================================================= */
 
             const {
                 error:roleError
@@ -1508,32 +1520,85 @@ registerForm.addEventListener(
 
             if(roleError){
 
-                console.error(
-                    "Role error:",
-                    roleError
-                );
-
                 throw new Error(
-                    "Restaurant role could not be created: " +
+                    "User role could not be created: " +
                     roleError.message
                 );
 
             }
 
 
-            /* =========================================
-               6. SIGN OUT
-            ========================================= */
+            /* =================================================
+               STEP 5
+               PARTNER APPLICATION
+               
+               THIS IS THE IMPORTANT NEW PART
+            ================================================= */
+
+            const {
+                error:applicationError
+            } =
+            await supabaseClient
+                .from("partner_applications")
+                .insert({
+
+                    user_id:
+                        user.id,
+
+                    type:
+                        "restaurant",
+
+                    full_name:
+                        ownerName,
+
+                    owner_name:
+                        ownerName,
+
+                    email:
+                        email,
+
+                    phone:
+                        phone,
+
+                    business_name:
+                        restaurantName,
+
+                    address:
+                        address,
+
+                    description:
+                        description,
+
+                    status:
+                        "pending"
+
+                });
+
+
+            if(applicationError){
+
+                throw new Error(
+                    "Partner application could not be created: " +
+                    applicationError.message
+                );
+
+            }
+
+
+            /* =================================================
+               STEP 6
+               SIGN OUT
+            ================================================= */
 
             await supabaseClient.auth.signOut();
 
 
-            /* =========================================
-               7. SUCCESS
-            ========================================= */
+            /* =================================================
+               SUCCESS
+            ================================================= */
 
             showMessage(
-                "Restaurant application submitted successfully! Please verify your email. After email verification, your application will be reviewed by the Beatroot administrator.",
+                "Restaurant application submitted successfully. Please verify your email. Your application is now waiting for admin approval.",
                 "success"
             );
 
@@ -1543,6 +1608,7 @@ registerForm.addEventListener(
 
             registerBtn.disabled =
                 false;
+
 
             registerBtn.textContent =
                 "Submit Restaurant Application";
@@ -1588,6 +1654,7 @@ registerForm.addEventListener(
 
             registerBtn.disabled =
                 false;
+
 
             registerBtn.textContent =
                 "Submit Restaurant Application";
