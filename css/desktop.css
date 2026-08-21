@@ -1,0 +1,173 @@
+/* =================================
+   BEATROOT DESKTOP DESIGN
+   ================================= */
+
+@media (min-width: 768px) {
+
+    body {
+        background: #f3f4f6;
+    }
+
+    .app {
+        max-width: 1400px;
+        min-height: 100vh;
+        margin: 0 auto;
+        background: #fff;
+    }
+
+    header {
+        padding: 22px 45px;
+    }
+
+    .container {
+        max-width: 1250px;
+        margin: 0 auto;
+        padding: 30px 45px;
+    }
+
+    .logo {
+        font-size: 34px;
+    }
+
+    /* Hero */
+
+    .hero {
+        max-width: 1200px;
+        margin: 25px auto;
+        padding: 35px 40px;
+        border-radius: 22px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    /* Search */
+
+    .search {
+        max-width: 1200px;
+        margin: 20px auto;
+    }
+
+    /* Categories */
+
+    .categories {
+        max-width: 1200px;
+        margin: 25px auto;
+    }
+
+    /* Restaurant grid */
+
+    .restaurant-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Menu grid */
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    /* Cards */
+
+    .card {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    /* Page title */
+
+    .page-title {
+        font-size: 30px;
+    }
+
+    /* Forms */
+
+    .form-container {
+        width: 100%;
+        max-width: 520px;
+        margin: 50px auto;
+        padding: 35px;
+        background: #fff;
+        border-radius: 22px;
+        box-shadow: 0 10px 35px rgba(0,0,0,.08);
+    }
+
+    /* Cart */
+
+    .cart-container {
+        max-width: 900px;
+        margin: 30px auto;
+    }
+
+    /* Orders */
+
+    .orders-container {
+        max-width: 1000px;
+        margin: 30px auto;
+    }
+
+    /* Profile */
+
+    .profile-container {
+        max-width: 900px;
+        margin: 30px auto;
+    }
+
+    /* Admin */
+
+    #admin {
+        min-height: 100vh;
+        background: #f3f4f6;
+    }
+
+    .admin-layout {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        min-height: 100vh;
+    }
+
+    .admin-sidebar {
+        background: #1f2937;
+        color: #fff;
+        padding: 25px 18px;
+    }
+
+    .admin-main {
+        padding: 30px;
+    }
+
+    .admin-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+
+    .admin-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 22px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 5px 18px rgba(0,0,0,.05);
+    }
+
+    .admin-menu {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 25px;
+    }
+
+    /* Desktop buttons */
+
+    .btn {
+        padding: 13px 22px;
+    }
+
+}
