@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Beatroot - Login</title>
 
@@ -16,16 +11,11 @@
 
 <style>
 
-/* =========================
-   RESET
-========================= */
-
 *{
     box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
     margin:0;
     padding:0;
     width:100%;
@@ -35,471 +25,265 @@ body{
 
 body{
     background:
-        radial-gradient(
-            circle at top left,
-            #ffe8e6,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            #ffecec,
-            transparent 35%
-        ),
+        radial-gradient(circle at top left,#ffe8e6,transparent 35%),
+        radial-gradient(circle at bottom right,#ffecec,transparent 35%),
         #f6f7f9;
 }
 
-
-/* =========================
-   LOGIN PAGE
-========================= */
-
 .login-page{
-
     min-height:100vh;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     padding:25px;
 }
 
 .login-container{
-
     width:100%;
-
     max-width:430px;
 }
 
-
-/* =========================
-   LOGO
-========================= */
-
 .logo{
-
     text-align:center;
-
     font-size:42px;
-
     font-weight:900;
-
     letter-spacing:-2px;
-
     color:#e53935;
-
     margin-bottom:8px;
 }
 
 .logo span{
-
     color:#171717;
 }
 
 .welcome{
-
     text-align:center;
-
     color:#777;
-
     font-size:15px;
-
     margin:0 0 28px;
 }
 
-
-/* =========================
-   LOGIN CARD
-========================= */
-
 .login-card{
-
     background:#fff;
-
     border-radius:24px;
-
     padding:32px;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.10);
-
+    box-shadow:0 20px 60px rgba(0,0,0,.10);
     border:1px solid #eee;
 }
 
 .login-card h1{
-
     margin:0;
-
     font-size:27px;
-
     color:#171717;
 }
 
 .subtitle{
-
     color:#777;
-
     font-size:14px;
-
     margin:9px 0 25px;
 }
 
-
-/* =========================
-   INPUT
-========================= */
-
 .input-group{
-
     margin-bottom:16px;
 }
 
 .input-group label{
-
     display:block;
-
     font-size:13px;
-
     font-weight:700;
-
     margin-bottom:7px;
-
     color:#333;
 }
 
 .input-group input{
-
     width:100%;
-
     height:50px;
-
     border:1px solid #ddd;
-
     border-radius:12px;
-
     padding:0 15px;
-
     font-size:15px;
-
     outline:none;
-
     transition:.2s;
-
     background:#fafafa;
 }
 
 .input-group input:focus{
-
     border-color:#e53935;
-
     background:#fff;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(229,57,53,.10);
+    box-shadow:0 0 0 3px rgba(229,57,53,.10);
 }
 
-
-/* =========================
-   LOGIN BUTTON
-========================= */
-
 .login-button{
-
     width:100%;
-
     height:52px;
-
     border:0;
-
     border-radius:12px;
-
     background:#e53935;
-
     color:#fff;
-
     font-size:15px;
-
     font-weight:800;
-
     cursor:pointer;
-
     transition:.2s;
-
     margin-top:5px;
 }
 
 .login-button:hover{
-
     background:#d92f2b;
-
     transform:translateY(-1px);
 }
 
 .login-button:disabled{
-
     opacity:.65;
-
     cursor:not-allowed;
-
     transform:none;
 }
 
-
-/* =========================
-   LINKS
-========================= */
-
 .create-account{
-
     text-align:center;
-
     margin-top:22px;
-
     font-size:14px;
-
     color:#e53935;
-
     font-weight:700;
-
     cursor:pointer;
 }
 
 .create-account:hover{
-
     text-decoration:underline;
 }
 
 .close-login{
-
     text-align:center;
-
     margin-top:16px;
-
     color:#777;
-
     font-size:14px;
-
     cursor:pointer;
 }
 
 .close-login:hover{
-
     color:#222;
 }
 
-
-/* =========================
-   MESSAGES
-========================= */
-
 #loginMessage,
 #registerMessage{
-
     display:none;
-
     margin-top:18px;
-
     padding:12px;
-
     border-radius:10px;
-
     font-size:13px;
-
     line-height:1.5;
-
     text-align:center;
 }
 
-
-/* =========================
-   REGISTER MODAL
-========================= */
-
 .register-modal{
-
     display:none;
-
     position:fixed;
-
     inset:0;
-
     background:rgba(0,0,0,.55);
-
     z-index:1000;
-
     align-items:center;
-
     justify-content:center;
-
     padding:20px;
 }
 
 .register-modal.show{
-
     display:flex;
 }
 
 .register-box{
-
     width:100%;
-
     max-width:450px;
-
     max-height:90vh;
-
     overflow:auto;
-
     background:#fff;
-
     border-radius:22px;
-
     padding:30px;
-
-    box-shadow:
-        0 25px 80px
-        rgba(0,0,0,.25);
+    box-shadow:0 25px 80px rgba(0,0,0,.25);
 }
 
 .register-header{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     margin-bottom:8px;
 }
 
 .register-header h2{
-
     margin:0;
-
     font-size:25px;
 }
 
 .register-close{
-
     width:35px;
-
     height:35px;
-
     border:0;
-
     border-radius:50%;
-
     background:#f3f4f6;
-
     font-size:20px;
-
     cursor:pointer;
 }
 
 .register-close:hover{
-
     background:#fee2e2;
-
     color:#e53935;
 }
 
 .register-subtitle{
-
     color:#777;
-
     font-size:14px;
-
     margin:0 0 22px;
 }
 
-
-/* =========================
-   REGISTER BUTTON
-========================= */
-
 .register-button{
-
     width:100%;
-
     height:50px;
-
     border:0;
-
     border-radius:12px;
-
     background:#e53935;
-
     color:#fff;
-
     font-size:15px;
-
     font-weight:800;
-
     cursor:pointer;
 }
 
 .register-button:hover{
-
     background:#d92f2b;
 }
 
 .register-button:disabled{
-
     opacity:.65;
-
     cursor:not-allowed;
 }
 
 .back-login{
-
     text-align:center;
-
     margin-top:15px;
-
     color:#e53935;
-
     font-size:14px;
-
     font-weight:700;
-
     cursor:pointer;
 }
-
-
-/* =========================
-   MOBILE
-========================= */
 
 @media(max-width:500px){
 
     .login-page{
-
         padding:18px;
     }
 
     .login-card{
-
         padding:25px 20px;
-
         border-radius:20px;
     }
 
     .logo{
-
         font-size:36px;
     }
 
     .login-card h1{
-
         font-size:24px;
     }
 
     .register-box{
-
         padding:24px 20px;
-
         border-radius:20px;
     }
 
@@ -509,139 +293,96 @@ body{
 
 </head>
 
-
 <body>
-
-
-<!-- =========================
-     LOGIN
-========================= -->
 
 <div class="login-page">
 
-    <div class="login-container">
+<div class="login-container">
 
+<div class="logo">
+    Beat<span>root</span>
+</div>
 
-        <div class="logo">
+<p class="welcome">
+    Welcome to Beatroot
+</p>
 
-            Beat<span>root</span>
+<div class="login-card">
 
-        </div>
+<h1>
+    Login to Beatroot
+</h1>
 
+<p class="subtitle">
+    Login using your email and password.
+</p>
 
-        <p class="welcome">
+<div class="input-group">
 
-            Welcome to Beatroot
+<label>
+    Email Address
+</label>
 
-        </p>
+<input
+    type="email"
+    id="loginEmail"
+    placeholder="Enter your email"
+    autocomplete="email"
+>
 
+</div>
 
-        <div class="login-card">
+<div class="input-group">
 
+<label>
+    Password
+</label>
 
-            <h1>
+<input
+    type="password"
+    id="loginPassword"
+    placeholder="Enter your password"
+    autocomplete="current-password"
+>
 
-                Login to Beatroot
+</div>
 
-            </h1>
+<button
+    class="login-button"
+    id="loginButton"
+    type="button"
+    onclick="loginUser()">
 
+    Login
 
-            <p class="subtitle">
+</button>
 
-                Login using your email and password.
+<div
+    class="create-account"
+    onclick="openRegister()">
 
-            </p>
+    Create New Account
 
+</div>
 
-            <!-- EMAIL -->
+<div
+    class="close-login"
+    onclick="goBack()">
 
-            <div class="input-group">
+    Close
 
-                <label>
-                    Email Address
-                </label>
+</div>
 
-                <input
-                    type="email"
-                    id="loginEmail"
-                    placeholder="Enter your email"
-                    autocomplete="email"
-                >
+<div id="loginMessage"></div>
 
-            </div>
+</div>
 
-
-            <!-- PASSWORD -->
-
-            <div class="input-group">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                >
-
-            </div>
-
-
-            <!-- LOGIN -->
-
-            <button
-                class="login-button"
-                id="loginButton"
-                type="button"
-                onclick="loginUser()">
-
-                Login
-
-            </button>
-
-
-            <!-- REGISTER -->
-
-            <div
-                class="create-account"
-                onclick="openRegister()">
-
-                Create New Account
-
-            </div>
-
-
-            <!-- CLOSE -->
-
-            <div
-                class="close-login"
-                onclick="goBack()">
-
-                Close
-
-            </div>
-
-
-            <!-- LOGIN MESSAGE -->
-
-            <div
-                id="loginMessage">
-            </div>
-
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 
-
-<!-- =========================
-     REGISTER MODAL
-========================= -->
+<!-- REGISTER -->
 
 <div
     class="register-modal"
@@ -649,174 +390,138 @@ body{
     onclick="closeRegisterOutside(event)"
 >
 
+<div class="register-box">
 
-    <div class="register-box">
+<div class="register-header">
 
+<h2>
+    Create Account
+</h2>
 
-        <div class="register-header">
+<button
+    class="register-close"
+    onclick="closeRegister()">
 
-            <h2>
-                Create Account
-            </h2>
+    ×
 
+</button>
 
-            <button
-                class="register-close"
-                onclick="closeRegister()">
+</div>
 
-                ×
+<p class="register-subtitle">
+    Create your Beatroot customer account.
+</p>
 
-            </button>
+<div class="input-group">
 
-        </div>
+<label>
+    Full Name
+</label>
 
+<input
+    type="text"
+    id="registerName"
+    placeholder="Enter your full name"
+    autocomplete="name"
+>
 
-        <p class="register-subtitle">
+</div>
 
-            Create your Beatroot customer account.
+<div class="input-group">
 
-        </p>
+<label>
+    Phone Number
+</label>
 
+<input
+    type="tel"
+    id="registerPhone"
+    placeholder="Enter your phone number"
+    autocomplete="tel"
+>
 
-        <!-- FULL NAME -->
+</div>
 
-        <div class="input-group">
+<div class="input-group">
 
-            <label>
-                Full Name
-            </label>
+<label>
+    Email Address
+</label>
 
-            <input
-                type="text"
-                id="registerName"
-                placeholder="Enter your full name"
-                autocomplete="name"
-            >
+<input
+    type="email"
+    id="registerEmail"
+    placeholder="Enter your email"
+    autocomplete="email"
+>
 
-        </div>
+</div>
 
+<div class="input-group">
 
-        <!-- PHONE -->
+<label>
+    Password
+</label>
 
-        <div class="input-group">
+<input
+    type="password"
+    id="registerPassword"
+    placeholder="Create a password"
+    autocomplete="new-password"
+>
 
-            <label>
-                Phone Number
-            </label>
+</div>
 
-            <input
-                type="tel"
-                id="registerPhone"
-                placeholder="Enter your phone number"
-                autocomplete="tel"
-            >
+<div class="input-group">
 
-        </div>
+<label>
+    Confirm Password
+</label>
 
+<input
+    type="password"
+    id="registerConfirmPassword"
+    placeholder="Confirm your password"
+    autocomplete="new-password"
+>
 
-        <!-- EMAIL -->
+</div>
 
-        <div class="input-group">
+<button
+    class="register-button"
+    id="registerButton"
+    onclick="registerUser()">
 
-            <label>
-                Email Address
-            </label>
+    Create Account
 
-            <input
-                type="email"
-                id="registerEmail"
-                placeholder="Enter your email"
-                autocomplete="email"
-            >
+</button>
 
-        </div>
+<div
+    class="back-login"
+    onclick="closeRegister()">
 
+    ← Back to Login
 
-        <!-- PASSWORD -->
+</div>
 
-        <div class="input-group">
+<div id="registerMessage"></div>
 
-            <label>
-                Password
-            </label>
-
-            <input
-                type="password"
-                id="registerPassword"
-                placeholder="Create a password"
-                autocomplete="new-password"
-            >
-
-        </div>
-
-
-        <!-- CONFIRM PASSWORD -->
-
-        <div class="input-group">
-
-            <label>
-                Confirm Password
-            </label>
-
-            <input
-                type="password"
-                id="registerConfirmPassword"
-                placeholder="Confirm your password"
-                autocomplete="new-password"
-            >
-
-        </div>
-
-
-        <!-- REGISTER -->
-
-        <button
-            class="register-button"
-            id="registerButton"
-            onclick="registerUser()">
-
-            Create Account
-
-        </button>
-
-
-        <!-- BACK -->
-
-        <div
-            class="back-login"
-            onclick="closeRegister()">
-
-            ← Back to Login
-
-        </div>
-
-
-        <!-- REGISTER MESSAGE -->
-
-        <div
-            id="registerMessage">
-        </div>
-
-
-    </div>
+</div>
 
 </div>
 
 
-
 <script>
 
-/* =========================================
+/* =========================================================
    SUPABASE
-========================================= */
+========================================================= */
 
 const SUPABASE_URL =
     "https://jhihjnsxazmftdqlitgk.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
-
 
 const sb =
     supabase.createClient(
@@ -825,9 +530,9 @@ const sb =
     );
 
 
-/* =========================================
+/* =========================================================
    LOGIN
-========================================= */
+========================================================= */
 
 async function loginUser(){
 
@@ -838,28 +543,22 @@ async function loginUser(){
         .trim()
         .toLowerCase();
 
-
     const password =
         document
         .getElementById("loginPassword")
         .value;
-
 
     const message =
         document.getElementById(
             "loginMessage"
         );
 
-
     const button =
         document.getElementById(
             "loginButton"
         );
 
-
-    message.style.display =
-        "none";
-
+    message.style.display = "none";
 
     if(!email || !password){
 
@@ -871,18 +570,14 @@ async function loginUser(){
         return;
     }
 
-
     button.disabled = true;
-
-    button.textContent =
-        "Logging in...";
-
+    button.textContent = "Logging in...";
 
     try{
 
-        /* =========================
+        /* ---------------------------------------------
            AUTH LOGIN
-        ========================= */
+        --------------------------------------------- */
 
         const {
             data,
@@ -896,7 +591,6 @@ async function loginUser(){
 
         });
 
-
         if(error){
 
             console.error(
@@ -904,72 +598,55 @@ async function loginUser(){
                 error
             );
 
-
             showLoginMessage(
                 error.message,
                 "error"
             );
 
-
             button.disabled = false;
-
-            button.textContent =
-                "Login";
+            button.textContent = "Login";
 
             return;
         }
 
-
-        if(
-            !data ||
-            !data.user
-        ){
+        if(!data.session){
 
             showLoginMessage(
-                "Login failed. Please try again.",
+                "Login session create cheyyan kazhinjilla.",
                 "error"
             );
 
-
             button.disabled = false;
-
-            button.textContent =
-                "Login";
+            button.textContent = "Login";
 
             return;
         }
 
+
+        /* ---------------------------------------------
+           GET USER ROLE
+        --------------------------------------------- */
 
         const user =
             data.user;
 
-
-        console.log(
-            "Logged in user:",
-            user
-        );
-
-
-        /* =========================
-           GET ROLE
-        ========================= */
-
         const {
-            data:roleData,
-            error:roleError
+            data: roleData,
+            error: roleError
         } =
         await sb
-        .from("user_roles")
-        .select(`
-            role,
-            restaurant_id,
-            delivery_boy_id
-        `)
-        .eq(
-            "user_id",
-            user.id
-        )
-        .maybeSingle();
+            .from("user_roles")
+            .select(`
+                id,
+                role,
+                restaurant_id,
+                delivery_boy_id
+            `)
+            .eq(
+                "user_id",
+                user.id
+            )
+            .maybeSingle();
 
 
         if(roleError){
@@ -979,107 +656,59 @@ async function loginUser(){
                 roleError
             );
 
-
-            await sb.auth.signOut();
-
-
             showLoginMessage(
-                "User role load cheyyan kazhinjilla. Please try again.",
+                "User role check cheyyan kazhinjilla.",
                 "error"
             );
 
+            await sb.auth.signOut();
 
             button.disabled = false;
-
-            button.textContent =
-                "Login";
+            button.textContent = "Login";
 
             return;
         }
 
 
-        /* =========================
-           ROLE NOT FOUND
-        ========================= */
+        /* ---------------------------------------------
+           NO ROLE
+        --------------------------------------------- */
 
         if(!roleData){
 
-            /*
-              New customer accounts can be
-              created by registration.
+            showLoginMessage(
+                "User role set cheythittilla. Admin-ne contact cheyyuka.",
+                "error"
+            );
 
-              If trigger has not yet created
-              user_roles, create customer role.
-            */
+            await sb.auth.signOut();
 
-            const {
-                error:createRoleError
-            } =
-            await sb
-            .from("user_roles")
-            .insert({
-
-                user_id:user.id,
-
-                role:"customer"
-
-            });
-
-
-            if(createRoleError){
-
-                console.error(
-                    "Create Role Error:",
-                    createRoleError
-                );
-
-
-                await sb.auth.signOut();
-
-
-                showLoginMessage(
-                    "User role kandethan kazhinjilla. Admin-ne contact cheyyuka.",
-                    "error"
-                );
-
-
-                button.disabled = false;
-
-                button.textContent =
-                    "Login";
-
-                return;
-            }
-
-
-            window.location.href =
-                "../index.html";
+            button.disabled = false;
+            button.textContent = "Login";
 
             return;
         }
 
 
-        /* =========================
-           NORMALIZE ROLE
-        ========================= */
+        /* ---------------------------------------------
+           ROLE ROUTING
+        --------------------------------------------- */
 
         const role =
             String(
                 roleData.role || ""
-            )
-            .trim()
-            .toLowerCase();
+            ).toLowerCase();
 
 
         console.log(
-            "User Role:",
+            "Logged in:",
+            user.email,
+            "Role:",
             role
         );
 
 
-        /* =========================
-           ADMIN
-        ========================= */
+        /* ADMIN */
 
         if(role === "admin"){
 
@@ -1090,44 +719,24 @@ async function loginUser(){
         }
 
 
-        /* =========================
-           RESTAURANT
-        ========================= */
+        /* RESTAURANT */
 
         if(role === "restaurant"){
 
             if(!roleData.restaurant_id){
 
-                await sb.auth.signOut();
-
-
                 showLoginMessage(
-                    "Restaurant account proper restaurant-umayi link cheythittilla. Admin-ne contact cheyyuka.",
+                    "Restaurant account-il restaurant assign cheythittilla.",
                     "error"
                 );
 
+                await sb.auth.signOut();
 
                 button.disabled = false;
-
-                button.textContent =
-                    "Login";
+                button.textContent = "Login";
 
                 return;
             }
-
-
-            /*
-              Store restaurant ID temporarily
-              for dashboard initialization.
-            */
-
-            sessionStorage.setItem(
-                "beatrootRestaurantId",
-                String(
-                    roleData.restaurant_id
-                )
-            );
-
 
             window.location.href =
                 "./restaurant-dashboard.html";
@@ -1136,43 +745,27 @@ async function loginUser(){
         }
 
 
-        /* =========================
-           DELIVERY BOY
-        ========================= */
+        /* DELIVERY BOY */
 
         if(
             role === "delivery_boy" ||
-            role === "delivery-boy" ||
             role === "delivery"
         ){
 
             if(!roleData.delivery_boy_id){
 
-                await sb.auth.signOut();
-
-
                 showLoginMessage(
-                    "Delivery Boy account proper profile-umayi link cheythittilla. Admin-ne contact cheyyuka.",
+                    "Delivery Boy account-il delivery profile assign cheythittilla.",
                     "error"
                 );
 
+                await sb.auth.signOut();
 
                 button.disabled = false;
-
-                button.textContent =
-                    "Login";
+                button.textContent = "Login";
 
                 return;
             }
-
-
-            sessionStorage.setItem(
-                "beatrootDeliveryBoyId",
-                String(
-                    roleData.delivery_boy_id
-                )
-            );
-
 
             window.location.href =
                 "./delivery-dashboard.html";
@@ -1181,9 +774,7 @@ async function loginUser(){
         }
 
 
-        /* =========================
-           CUSTOMER
-        ========================= */
+        /* CUSTOMER */
 
         if(role === "customer"){
 
@@ -1194,23 +785,17 @@ async function loginUser(){
         }
 
 
-        /* =========================
-           UNKNOWN ROLE
-        ========================= */
-
-        await sb.auth.signOut();
-
+        /* UNKNOWN ROLE */
 
         showLoginMessage(
-            "Invalid user role. Admin-ne contact cheyyuka.",
+            "Unknown user role: " + role,
             "error"
         );
 
+        await sb.auth.signOut();
 
         button.disabled = false;
-
-        button.textContent =
-            "Login";
+        button.textContent = "Login";
 
     }
 
@@ -1221,25 +806,21 @@ async function loginUser(){
             error
         );
 
-
         showLoginMessage(
             "Something went wrong. Veendum try cheyyuka.",
             "error"
         );
 
-
         button.disabled = false;
-
-        button.textContent =
-            "Login";
+        button.textContent = "Login";
     }
 
 }
 
 
-/* =========================================
+/* =========================================================
    LOGIN MESSAGE
-========================================= */
+========================================================= */
 
 function showLoginMessage(
     text,
@@ -1251,14 +832,11 @@ function showLoginMessage(
             "loginMessage"
         );
 
-
     message.textContent =
         text;
 
-
     message.style.display =
         "block";
-
 
     if(type === "error"){
 
@@ -1287,40 +865,27 @@ function showLoginMessage(
 }
 
 
-/* =========================================
-   OPEN REGISTER
-========================================= */
+/* =========================================================
+   REGISTER
+========================================================= */
 
 function openRegister(){
 
     document
-        .getElementById(
-            "registerModal"
-        )
+        .getElementById("registerModal")
         .classList.add("show");
 
-
     document
-        .getElementById(
-            "registerName"
-        )
+        .getElementById("registerName")
         .focus();
-
 }
 
-
-/* =========================================
-   CLOSE REGISTER
-========================================= */
 
 function closeRegister(){
 
     document
-        .getElementById(
-            "registerModal"
-        )
+        .getElementById("registerModal")
         .classList.remove("show");
-
 }
 
 
@@ -1334,53 +899,39 @@ function closeRegisterOutside(event){
     ){
 
         closeRegister();
-
     }
-
 }
 
 
-/* =========================================
-   CUSTOMER REGISTRATION
-========================================= */
+/* =========================================================
+   REGISTER USER
+========================================================= */
 
 async function registerUser(){
 
     const name =
         document
-        .getElementById(
-            "registerName"
-        )
+        .getElementById("registerName")
         .value
         .trim();
-
 
     const phone =
         document
-        .getElementById(
-            "registerPhone"
-        )
+        .getElementById("registerPhone")
         .value
         .trim();
 
-
     const email =
         document
-        .getElementById(
-            "registerEmail"
-        )
+        .getElementById("registerEmail")
         .value
         .trim()
         .toLowerCase();
 
-
     const password =
         document
-        .getElementById(
-            "registerPassword"
-        )
+        .getElementById("registerPassword")
         .value;
-
 
     const confirmPassword =
         document
@@ -1389,26 +940,19 @@ async function registerUser(){
         )
         .value;
 
-
     const message =
         document.getElementById(
             "registerMessage"
         );
-
 
     const button =
         document.getElementById(
             "registerButton"
         );
 
-
     message.style.display =
         "none";
 
-
-    /* =========================
-       VALIDATION
-    ========================= */
 
     if(
         !name ||
@@ -1427,17 +971,6 @@ async function registerUser(){
     }
 
 
-    if(name.length < 2){
-
-        showRegisterMessage(
-            "Valid full name enter cheyyuka.",
-            "error"
-        );
-
-        return;
-    }
-
-
     const phoneDigits =
         phone.replace(
             /\D/g,
@@ -1445,9 +978,7 @@ async function registerUser(){
         );
 
 
-    if(
-        phoneDigits.length < 10
-    ){
+    if(phoneDigits.length < 10){
 
         showRegisterMessage(
             "Valid phone number enter cheyyuka.",
@@ -1469,10 +1000,7 @@ async function registerUser(){
     }
 
 
-    if(
-        password !==
-        confirmPassword
-    ){
+    if(password !== confirmPassword){
 
         showRegisterMessage(
             "Passwords match cheyyunnilla.",
@@ -1484,16 +1012,11 @@ async function registerUser(){
 
 
     button.disabled = true;
-
     button.textContent =
         "Creating Account...";
 
 
     try{
-
-        /* =========================
-           CREATE AUTH USER
-        ========================= */
 
         const {
             data,
@@ -1527,15 +1050,12 @@ async function registerUser(){
                 error
             );
 
-
             showRegisterMessage(
                 error.message,
                 "error"
             );
 
-
             button.disabled = false;
-
             button.textContent =
                 "Create Account";
 
@@ -1550,9 +1070,7 @@ async function registerUser(){
                 "error"
             );
 
-
             button.disabled = false;
-
             button.textContent =
                 "Create Account";
 
@@ -1560,53 +1078,8 @@ async function registerUser(){
         }
 
 
-        /* =========================
-           CUSTOMER ROLE
-        ========================= */
-
-        /*
-          Normally the database trigger
-          should create user_roles.
-
-          If it does not, create it here.
-        */
-
-        if(data.session){
-
-            const {
-                error:roleError
-            } =
-            await sb
-            .from("user_roles")
-            .upsert({
-
-                user_id:data.user.id,
-
-                role:"customer"
-
-            },{
-                onConflict:"user_id"
-            });
-
-
-            if(roleError){
-
-                console.error(
-                    "Customer role error:",
-                    roleError
-                );
-
-            }
-
-        }
-
-
-        /* =========================
-           SUCCESS
-        ========================= */
-
         showRegisterMessage(
-            "Account successfully created!",
+            "Account successfully created! Check your email if confirmation is required.",
             "success"
         );
 
@@ -1615,51 +1088,33 @@ async function registerUser(){
             "Account Created";
 
 
-        /* =========================
-           EMAIL CONFIRMATION
-        ========================= */
-
         if(!data.session){
 
             setTimeout(
                 function(){
 
-                    alert(
-                        "Account created. Email confirmation required aanenkil email verify cheythathinu shesham login cheyyuka."
-                    );
-
-
                     closeRegister();
-
 
                     document.getElementById(
                         "loginEmail"
                     ).value =
                         email;
 
+                    document.getElementById(
+                        "loginPassword"
+                    ).focus();
+
                 },
                 1200
             );
 
         }
-
         else{
 
-            /*
-              New registration is always
-              a CUSTOMER account.
-            */
+            /* Newly registered users are customers */
 
-            setTimeout(
-                function(){
-
-                    window.location.href =
-                        "../index.html";
-
-                },
-                800
-            );
-
+            window.location.href =
+                "../index.html";
         }
 
     }
@@ -1671,15 +1126,12 @@ async function registerUser(){
             error
         );
 
-
         showRegisterMessage(
             "Something went wrong. Veendum try cheyyuka.",
             "error"
         );
 
-
         button.disabled = false;
-
         button.textContent =
             "Create Account";
     }
@@ -1687,9 +1139,9 @@ async function registerUser(){
 }
 
 
-/* =========================================
+/* =========================================================
    REGISTER MESSAGE
-========================================= */
+========================================================= */
 
 function showRegisterMessage(
     text,
@@ -1701,10 +1153,8 @@ function showRegisterMessage(
             "registerMessage"
         );
 
-
     message.textContent =
         text;
-
 
     message.style.display =
         "block";
@@ -1737,9 +1187,9 @@ function showRegisterMessage(
 }
 
 
-/* =========================================
+/* =========================================================
    CLOSE
-========================================= */
+========================================================= */
 
 function goBack(){
 
@@ -1748,51 +1198,44 @@ function goBack(){
 }
 
 
-/* =========================================
-   ENTER KEY - LOGIN
-========================================= */
+/* =========================================================
+   ENTER KEY
+========================================================= */
 
 document
-.getElementById(
-    "loginPassword"
-)
-.addEventListener(
-    "keydown",
-    function(event){
+    .getElementById("loginPassword")
+    .addEventListener(
+        "keydown",
+        function(event){
 
-        if(event.key === "Enter"){
+            if(event.key === "Enter"){
 
-            loginUser();
+                loginUser();
+
+            }
 
         }
+    );
 
-    }
-);
-
-
-/* =========================================
-   ENTER KEY - REGISTER
-========================================= */
 
 document
-.getElementById(
-    "registerConfirmPassword"
-)
-.addEventListener(
-    "keydown",
-    function(event){
+    .getElementById(
+        "registerConfirmPassword"
+    )
+    .addEventListener(
+        "keydown",
+        function(event){
 
-        if(event.key === "Enter"){
+            if(event.key === "Enter"){
 
-            registerUser();
+                registerUser();
+
+            }
 
         }
-
-    }
-);
+    );
 
 </script>
 
 </body>
-
 </html>
