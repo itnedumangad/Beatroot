@@ -2,11 +2,8 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Beatroot - Delivery Partner Registration</title>
 
@@ -22,7 +19,6 @@
 
 body{
     min-height:100vh;
-
     font-family:Arial,Helvetica,sans-serif;
 
     background:
@@ -33,65 +29,43 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:20px;
-}
-
-a{
-    text-decoration:none;
 }
 
 .wrapper{
     width:100%;
-    max-width:1050px;
+    max-width:1100px;
+    min-height:700px;
 
     background:#fff;
-
     border-radius:28px;
-
     overflow:hidden;
 
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.12);
+    box-shadow:0 25px 70px rgba(0,0,0,.12);
 
     display:grid;
-
     grid-template-columns:1fr 1fr;
 }
 
 
-/* =========================
-   LEFT
-========================= */
+/* LEFT */
 
 .left{
-
-    background:
-        linear-gradient(
-            145deg,
-            #111827,
-            #1f2937
-        );
-
+    background:linear-gradient(145deg,#111827,#1f2937);
     color:white;
 
     padding:55px;
 
     display:flex;
-
     flex-direction:column;
-
     justify-content:center;
 
     position:relative;
-
     overflow:hidden;
 }
 
 .left:before{
-
     content:"";
-
     position:absolute;
 
     width:320px;
@@ -106,9 +80,7 @@ a{
 }
 
 .left:after{
-
     content:"";
-
     position:absolute;
 
     width:260px;
@@ -123,13 +95,10 @@ a{
 }
 
 .brand{
-
     position:relative;
-
     z-index:2;
 
     font-size:38px;
-
     font-weight:800;
 
     margin-bottom:38px;
@@ -140,10 +109,12 @@ a{
 }
 
 .partner-badge{
-
     position:relative;
-
     z-index:2;
+
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
 
     width:max-content;
 
@@ -158,66 +129,52 @@ a{
     border-radius:20px;
 
     font-size:12px;
-
     font-weight:700;
 
     margin-bottom:20px;
 }
 
 .left h1{
-
     position:relative;
-
     z-index:2;
 
     font-size:40px;
-
     line-height:1.15;
 
     margin-bottom:18px;
 }
 
 .left p{
-
     position:relative;
-
     z-index:2;
 
     color:#d1d5db;
 
     font-size:15px;
-
     line-height:1.7;
 
     max-width:430px;
 }
 
 .features{
-
     position:relative;
-
     z-index:2;
 
     margin-top:35px;
 }
 
 .feature{
-
     display:flex;
-
     align-items:center;
-
     gap:12px;
 
     margin:14px 0;
 
     color:#e5e7eb;
-
     font-size:14px;
 }
 
 .feature-icon{
-
     width:36px;
     height:36px;
 
@@ -226,32 +183,23 @@ a{
     background:#ef4444;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 }
 
 
-/* =========================
-   RIGHT
-========================= */
+/* RIGHT */
 
 .right{
-
-    padding:45px 50px;
+    padding:38px 50px;
 
     display:flex;
-
     flex-direction:column;
-
     justify-content:center;
 }
 
 .title{
-
     font-size:29px;
-
     font-weight:800;
 
     color:#111827;
@@ -260,23 +208,18 @@ a{
 }
 
 .subtitle{
-
     color:#6b7280;
 
     font-size:13px;
-
     line-height:1.5;
 
     margin-bottom:20px;
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* MESSAGE */
 
 .message{
-
     display:none;
 
     padding:12px 14px;
@@ -284,59 +227,46 @@ a{
     border-radius:10px;
 
     font-size:13px;
-
     line-height:1.5;
 
     margin-bottom:16px;
 }
 
 .message.error{
-
     display:block;
 
     background:#fee2e2;
-
     color:#b91c1c;
 
     border:1px solid #fecaca;
 }
 
 .message.success{
-
     display:block;
 
     background:#dcfce7;
-
     color:#15803d;
 
     border:1px solid #bbf7d0;
 }
 
 
-/* =========================
-   FORM
-========================= */
+/* FORM */
 
 .form-row{
-
     display:grid;
-
     grid-template-columns:1fr 1fr;
-
     gap:12px;
 }
 
 .form-group{
-
     margin-bottom:14px;
 }
 
 .form-group label{
-
     display:block;
 
     font-size:12px;
-
     font-weight:700;
 
     color:#374151;
@@ -367,21 +297,18 @@ a{
     background:#fafafa;
 
     transition:.2s;
+
+    font-family:inherit;
 }
 
 .input-box input,
 .input-box select{
-
     height:46px;
 }
 
 .input-box textarea{
-
-    min-height:70px;
-
+    min-height:72px;
     resize:vertical;
-
-    font-family:inherit;
 }
 
 .input-box input:focus,
@@ -404,7 +331,6 @@ a{
     position:absolute;
 
     right:12px;
-
     top:50%;
 
     transform:translateY(-50%);
@@ -419,9 +345,7 @@ a{
 }
 
 
-/* =========================
-   SUBMIT
-========================= */
+/* BUTTON */
 
 .register-btn{
 
@@ -449,7 +373,6 @@ a{
 }
 
 .register-btn:hover{
-
     background:#dc2626;
 
     transform:translateY(-1px);
@@ -459,7 +382,6 @@ a{
 }
 
 .register-btn:disabled{
-
     opacity:.65;
 
     cursor:not-allowed;
@@ -468,9 +390,7 @@ a{
 }
 
 
-/* =========================
-   APPROVAL
-========================= */
+/* INFO */
 
 .approval-info{
 
@@ -503,23 +423,18 @@ a{
 }
 
 .login-link a{
-
     color:#ef4444;
-
     font-weight:800;
 }
 
 
-/* =========================
-   LOADING
-========================= */
+/* LOADING */
 
 .loading{
 
     display:inline-flex;
 
     align-items:center;
-
     justify-content:center;
 
     gap:8px;
@@ -528,7 +443,6 @@ a{
 .spinner{
 
     width:16px;
-
     height:16px;
 
     border:2px solid rgba(255,255,255,.4);
@@ -545,12 +459,11 @@ a{
     to{
         transform:rotate(360deg);
     }
+
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:850px){
 
@@ -559,45 +472,36 @@ a{
     }
 
     .wrapper{
-
         grid-template-columns:1fr;
-
         max-width:550px;
     }
 
     .left{
-
         padding:35px 30px;
-
         min-height:270px;
     }
 
     .brand{
-
         font-size:30px;
-
         margin-bottom:25px;
     }
 
     .left h1{
-
         font-size:30px;
     }
 
     .left p{
-
         font-size:14px;
     }
 
     .features{
-
         display:none;
     }
 
     .right{
-
         padding:35px 25px;
     }
+
 }
 
 @media(max-width:500px){
@@ -611,15 +515,14 @@ a{
     }
 
     .form-row{
-
         grid-template-columns:1fr;
-
         gap:0;
     }
 
     .title{
         font-size:25px;
     }
+
 }
 
 </style>
@@ -629,13 +532,10 @@ a{
 
 <body>
 
-
 <div class="wrapper">
 
 
-<!-- =========================
-     LEFT
-========================= -->
+<!-- LEFT -->
 
 <section class="left">
 
@@ -653,8 +553,8 @@ a{
 
     <p>
         Join Beatroot as a delivery partner and
-        deliver food orders from restaurants to
-        customers in your area.
+        earn by delivering food from restaurants
+        directly to customers.
     </p>
 
     <div class="features">
@@ -666,11 +566,10 @@ a{
             </div>
 
             <span>
-                Flexible delivery opportunities
+                Flexible delivery work
             </span>
 
         </div>
-
 
         <div class="feature">
 
@@ -679,20 +578,19 @@ a{
             </div>
 
             <span>
-                Manage your assigned orders
+                Receive delivery orders
             </span>
 
         </div>
 
-
         <div class="feature">
 
             <div class="feature-icon">
-                📊
+                💰
             </div>
 
             <span>
-                Track your delivery activity
+                Track your deliveries and earnings
             </span>
 
         </div>
@@ -702,10 +600,7 @@ a{
 </section>
 
 
-
-<!-- =========================
-     RIGHT
-========================= -->
+<!-- RIGHT -->
 
 <section class="right">
 
@@ -714,8 +609,7 @@ a{
     </h2>
 
     <p class="subtitle">
-        Create your delivery partner account and submit
-        your application for approval.
+        Submit your details to become a Beatroot delivery partner.
     </p>
 
 
@@ -728,7 +622,7 @@ a{
     <form id="registerForm">
 
 
-        <!-- NAME -->
+        <!-- NAME + PHONE -->
 
         <div class="form-row">
 
@@ -744,7 +638,6 @@ a{
                         type="text"
                         id="fullName"
                         placeholder="Enter your full name"
-                        autocomplete="name"
                         required
                     >
 
@@ -764,9 +657,8 @@ a{
                     <input
                         type="tel"
                         id="phone"
-                        placeholder="Enter mobile number"
+                        placeholder="Mobile number"
                         maxlength="15"
-                        autocomplete="tel"
                         required
                     >
 
@@ -775,7 +667,6 @@ a{
             </div>
 
         </div>
-
 
 
         <!-- EMAIL -->
@@ -801,7 +692,6 @@ a{
         </div>
 
 
-
         <!-- ADDRESS -->
 
         <div class="form-group">
@@ -823,11 +713,97 @@ a{
         </div>
 
 
+        <!-- VEHICLE -->
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label for="vehicleType">
+                    Vehicle Type
+                </label>
+
+                <div class="input-box">
+
+                    <select
+                        id="vehicleType"
+                        required
+                    >
+
+                        <option value="">
+                            Select vehicle
+                        </option>
+
+                        <option value="bike">
+                            Bike
+                        </option>
+
+                        <option value="scooter">
+                            Scooter
+                        </option>
+
+                        <option value="cycle">
+                            Bicycle
+                        </option>
+
+                        <option value="car">
+                            Car
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="vehicleNumber">
+                    Vehicle Number
+                </label>
+
+                <div class="input-box">
+
+                    <input
+                        type="text"
+                        id="vehicleNumber"
+                        placeholder="KL 01 AB 1234"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LICENSE -->
+
+        <div class="form-group">
+
+            <label for="licenseNumber">
+                Driving Licence Number
+            </label>
+
+            <div class="input-box">
+
+                <input
+                    type="text"
+                    id="licenseNumber"
+                    placeholder="Enter driving licence number"
+                    required
+                >
+
+            </div>
+
+        </div>
+
 
         <!-- PASSWORD -->
 
         <div class="form-row">
-
 
             <div class="form-group">
 
@@ -849,11 +825,11 @@ a{
                     <button
                         type="button"
                         class="password-toggle"
-                        id="passwordToggle"
                         onclick="togglePassword(
                             'password',
                             'passwordToggle'
-                        )">
+                        )"
+                        id="passwordToggle">
 
                         👁️
 
@@ -884,11 +860,11 @@ a{
                     <button
                         type="button"
                         class="password-toggle"
-                        id="confirmToggle"
                         onclick="togglePassword(
                             'confirmPassword',
                             'confirmToggle'
-                        )">
+                        )"
+                        id="confirmToggle">
 
                         👁️
 
@@ -901,18 +877,14 @@ a{
         </div>
 
 
-
-        <!-- SUBMIT -->
-
         <button
             type="submit"
             class="register-btn"
             id="registerBtn">
 
-            Submit Delivery Application
+            Submit Delivery Partner Application
 
         </button>
-
 
     </form>
 
@@ -920,18 +892,18 @@ a{
     <div class="approval-info">
 
         📧 <strong>Email verification:</strong>
-        Verify your email address after registration.
+        After registration, verify your email address.
 
         <br><br>
 
         ⏳ <strong>Admin approval:</strong>
-        Your account will remain pending until
-        Beatroot administrator approves your application.
+        Your delivery partner account will remain pending
+        until Beatroot administrator approves your application.
 
         <br><br>
 
-        ✅ After approval, you can login and access
-        the Delivery Dashboard.
+        ✅ After approval, you can login and start receiving
+        delivery assignments.
 
     </div>
 
@@ -951,7 +923,6 @@ a{
 </div>
 
 
-
 <script>
 
 /* =========================================================
@@ -963,7 +934,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
-
 
 const supabaseClient =
     supabase.createClient(
@@ -1045,7 +1015,8 @@ function togglePassword(
         input.type === "password"
     ){
 
-        input.type = "text";
+        input.type =
+            "text";
 
         button.textContent =
             "🙈";
@@ -1053,7 +1024,8 @@ function togglePassword(
     }
     else{
 
-        input.type = "password";
+        input.type =
+            "password";
 
         button.textContent =
             "👁️";
@@ -1098,21 +1070,27 @@ registerForm.addEventListener(
 
         const fullName =
             document
-                .getElementById("fullName")
+                .getElementById(
+                    "fullName"
+                )
                 .value
                 .trim();
 
 
         const phone =
             document
-                .getElementById("phone")
+                .getElementById(
+                    "phone"
+                )
                 .value
                 .trim();
 
 
         const email =
             document
-                .getElementById("email")
+                .getElementById(
+                    "email"
+                )
                 .value
                 .trim()
                 .toLowerCase();
@@ -1120,27 +1098,60 @@ registerForm.addEventListener(
 
         const address =
             document
-                .getElementById("address")
+                .getElementById(
+                    "address"
+                )
                 .value
                 .trim();
 
 
+        const vehicleType =
+            document
+                .getElementById(
+                    "vehicleType"
+                )
+                .value;
+
+
+        const vehicleNumber =
+            document
+                .getElementById(
+                    "vehicleNumber"
+                )
+                .value
+                .trim()
+                .toUpperCase();
+
+
+        const licenseNumber =
+            document
+                .getElementById(
+                    "licenseNumber"
+                )
+                .value
+                .trim()
+                .toUpperCase();
+
+
         const password =
             document
-                .getElementById("password")
+                .getElementById(
+                    "password"
+                )
                 .value;
 
 
         const confirmPassword =
             document
-                .getElementById("confirmPassword")
+                .getElementById(
+                    "confirmPassword"
+                )
                 .value;
 
 
-
-        /* =========================
+        /* =================================================
            VALIDATION
-        ========================= */
+        ================================================= */
 
         if(
             fullName.length < 2
@@ -1173,7 +1184,46 @@ registerForm.addEventListener(
         ){
 
             showMessage(
-                "Please enter your address."
+                "Please enter your complete address."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            !vehicleType
+        ){
+
+            showMessage(
+                "Please select your vehicle type."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            vehicleNumber.length < 4
+        ){
+
+            showMessage(
+                "Please enter a valid vehicle number."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            licenseNumber.length < 5
+        ){
+
+            showMessage(
+                "Please enter your driving licence number."
             );
 
             return;
@@ -1195,8 +1245,7 @@ registerForm.addEventListener(
 
 
         if(
-            password !==
-            confirmPassword
+            password !== confirmPassword
         ){
 
             showMessage(
@@ -1208,60 +1257,69 @@ registerForm.addEventListener(
         }
 
 
+        /* =================================================
+           LOADING
+        ================================================= */
 
         registerBtn.disabled =
             true;
 
-
         registerBtn.innerHTML = `
             <span class="loading">
                 <span class="spinner"></span>
-                Creating account...
+                Submitting application...
             </span>
         `;
-
 
 
         try{
 
 
-            /* =========================================
-               CREATE AUTH USER
-            ========================================= */
+            /* =================================================
+               1. CREATE AUTH USER
+            ================================================= */
 
             const {
                 data,
                 error
             } =
-            await supabaseClient.auth
-                .signUp({
+            await supabaseClient.auth.signUp({
 
-                    email:email,
+                email:email,
 
-                    password:password,
+                password:password,
 
-                    options:{
+                options:{
 
-                        emailRedirectTo:
-                            window.location.origin +
-                            "/pages/login.html",
+                    emailRedirectTo:
+                        window.location.origin +
+                        "/pages/login.html",
 
-                        data:{
+                    data:{
 
-                            role:
-                                "delivery_boy",
+                        role:
+                            "delivery_boy",
 
-                            full_name:
-                                fullName,
+                        full_name:
+                            fullName,
 
-                            phone:
-                                phone
+                        phone:
+                            phone,
 
-                        }
+                        vehicle_type:
+                            vehicleType,
+
+                        vehicle_number:
+                            vehicleNumber,
+
+                        license_number:
+                            licenseNumber
 
                     }
 
-                });
+                }
+
+            });
 
 
             if(error){
@@ -1277,7 +1335,7 @@ registerForm.addEventListener(
             ){
 
                 throw new Error(
-                    "Delivery account creation failed."
+                    "Delivery partner account creation failed."
                 );
 
             }
@@ -1287,10 +1345,9 @@ registerForm.addEventListener(
                 data.user;
 
 
-
-            /* =========================================
-               CREATE PROFILE
-            ========================================= */
+            /* =================================================
+               2. PROFILE
+            ================================================= */
 
             const {
                 error:profileError
@@ -1321,20 +1378,23 @@ registerForm.addEventListener(
                     profileError
                 );
 
+                throw new Error(
+                    "Profile could not be saved: " +
+                    profileError.message
+                );
+
             }
 
 
-
-            /* =========================================
-               CREATE DELIVERY BOY
-            ========================================= */
+            /* =================================================
+               3. PARTNER APPLICATION
+            ================================================= */
 
             const {
-                data:deliveryData,
-                error:deliveryError
+                error:applicationError
             } =
             await supabaseClient
-                .from("delivery_boys")
+                .from("partner_applications")
                 .insert({
 
                     user_id:
@@ -1343,51 +1403,45 @@ registerForm.addEventListener(
                     full_name:
                         fullName,
 
-                    phone:
-                        phone,
-
                     email:
                         email,
 
-                    address:
-                        address,
+                    phone:
+                        phone,
+
+                    type:
+                        "delivery_boy",
 
                     status:
                         "pending",
 
-                    approval_status:
-                        "pending"
+                    business_name:
+                        "Delivery Partner",
 
-                })
-                .select(
-                    "id"
-                )
-                .single();
+                    address:
+                        address
+
+                });
 
 
-            if(deliveryError){
+            if(applicationError){
 
                 console.error(
-                    "Delivery boy error:",
-                    deliveryError
+                    "Partner application error:",
+                    applicationError
                 );
 
                 throw new Error(
-                    "Delivery partner details could not be saved: " +
-                    deliveryError.message
+                    "Partner application could not be submitted: " +
+                    applicationError.message
                 );
 
             }
 
 
-            const deliveryBoyId =
-                deliveryData.id;
-
-
-
-            /* =========================================
-               USER ROLE
-            ========================================= */
+            /* =================================================
+               4. USER ROLE
+            ================================================= */
 
             const {
                 error:roleError
@@ -1403,7 +1457,7 @@ registerForm.addEventListener(
                         "delivery_boy",
 
                     delivery_boy_id:
-                        deliveryBoyId,
+                        user.id,
 
                     approval_status:
                         "pending"
@@ -1419,28 +1473,26 @@ registerForm.addEventListener(
                 );
 
                 throw new Error(
-                    "Delivery role could not be created: " +
+                    "Delivery partner role could not be created: " +
                     roleError.message
                 );
 
             }
 
 
-
-            /* =========================================
-               SIGN OUT
-            ========================================= */
+            /* =================================================
+               5. SIGN OUT
+            ================================================= */
 
             await supabaseClient.auth.signOut();
 
 
-
-            /* =========================================
-               SUCCESS
-            ========================================= */
+            /* =================================================
+               6. SUCCESS
+            ================================================= */
 
             showMessage(
-                "Registration successful. Please verify your email. Your delivery partner account will be activated after admin approval.",
+                "Delivery partner application submitted successfully! Please verify your email. Your application will be reviewed by the Beatroot administrator.",
                 "success"
             );
 
@@ -1452,7 +1504,7 @@ registerForm.addEventListener(
                 false;
 
             registerBtn.textContent =
-                "Submit Delivery Application";
+                "Submit Delivery Partner Application";
 
 
         }
@@ -1466,7 +1518,7 @@ registerForm.addEventListener(
 
             let message =
                 error.message ||
-                "Unable to create delivery partner account.";
+                "Unable to submit delivery partner application.";
 
 
             const lower =
@@ -1497,7 +1549,7 @@ registerForm.addEventListener(
                 false;
 
             registerBtn.textContent =
-                "Submit Delivery Application";
+                "Submit Delivery Partner Application";
 
         }
 
@@ -1505,7 +1557,6 @@ registerForm.addEventListener(
 );
 
 </script>
-
 
 </body>
 
