@@ -10,11 +10,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-/* Hide dashboard until authentication is verified */
-document.documentElement.style.visibility = "hidden";
-</script>
-
 <style>
 
 *{
@@ -47,7 +42,6 @@ a{
     text-decoration:none;
 }
 
-
 /* =========================================================
    LAYOUT
 ========================================================= */
@@ -57,26 +51,21 @@ a{
     min-height:100vh;
 }
 
-
 /* =========================================================
    SIDEBAR
 ========================================================= */
 
 .sidebar{
     width:250px;
-
     background:#111827;
-
     color:white;
 
     position:fixed;
-
     left:0;
     top:0;
     bottom:0;
 
     padding:25px 15px;
-
     z-index:100;
 
     transition:.25s;
@@ -85,7 +74,6 @@ a{
 .brand{
     font-size:28px;
     font-weight:800;
-
     padding:0 15px 28px;
 }
 
@@ -95,37 +83,26 @@ a{
 
 .panel-label{
     font-size:11px;
-
     color:#9ca3af;
-
     padding:0 15px;
-
     margin-bottom:10px;
-
     text-transform:uppercase;
-
     letter-spacing:1px;
 }
 
 .restaurant-name-side{
     margin:0 10px 20px;
-
     padding:11px 12px;
 
     background:#1f2937;
-
     border-radius:9px;
 
     color:#f9fafb;
-
     font-size:12px;
-
     font-weight:bold;
 
     white-space:nowrap;
-
     overflow:hidden;
-
     text-overflow:ellipsis;
 }
 
@@ -139,38 +116,29 @@ a{
 
 .menu button{
     width:100%;
-
     border:0;
-
     background:transparent;
-
     color:#d1d5db;
 
     padding:13px 15px;
-
     text-align:left;
-
     border-radius:10px;
-
     font-size:14px;
 }
 
 .menu button:hover,
 .menu button.active{
     background:#ef4444;
-
     color:white;
 }
 
 .menu-icon{
     width:27px;
-
     display:inline-block;
 }
 
 .sidebar-bottom{
     position:absolute;
-
     left:15px;
     right:15px;
     bottom:20px;
@@ -180,24 +148,18 @@ a{
     width:100%;
 
     border:1px solid #374151;
-
     background:transparent;
-
     color:#d1d5db;
 
     padding:12px;
-
     border-radius:10px;
-
     font-size:13px;
 }
 
 .logout:hover{
     background:#1f2937;
-
     color:white;
 }
-
 
 /* =========================================================
    MAIN
@@ -205,12 +167,9 @@ a{
 
 .main{
     margin-left:250px;
-
     width:calc(100% - 250px);
-
     min-height:100vh;
 }
-
 
 /* =========================================================
    TOPBAR
@@ -220,29 +179,22 @@ a{
     height:75px;
 
     background:white;
-
     border-bottom:1px solid #e5e7eb;
 
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 
     padding:0 30px;
 
     position:sticky;
-
     top:0;
-
     z-index:50;
 }
 
 .left-top{
     display:flex;
-
     align-items:center;
-
     gap:12px;
 }
 
@@ -250,50 +202,37 @@ a{
     display:none;
 
     border:0;
-
     background:#f3f4f6;
 
     width:40px;
-
     height:40px;
 
     border-radius:9px;
-
     font-size:18px;
 }
 
 .top-title{
     font-size:22px;
-
     font-weight:800;
 }
 
 .top-right{
     display:flex;
-
     align-items:center;
-
     gap:12px;
 }
 
 .notification{
     width:40px;
-
     height:40px;
 
     border:1px solid #e5e7eb;
-
     background:white;
 
     border-radius:10px;
-
     font-size:18px;
 
     position:relative;
-}
-
-.notification:hover{
-    background:#f9fafb;
 }
 
 .notification-dot{
@@ -303,7 +242,6 @@ a{
     height:7px;
 
     background:#ef4444;
-
     border-radius:50%;
 
     top:8px;
@@ -312,27 +250,21 @@ a{
 
 .profile{
     display:flex;
-
     align-items:center;
-
     gap:10px;
 }
 
 .avatar{
     width:40px;
-
     height:40px;
 
     border-radius:50%;
 
     background:#ef4444;
-
     color:white;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     font-weight:800;
@@ -340,16 +272,13 @@ a{
 
 .profile-text strong{
     display:block;
-
     font-size:13px;
 }
 
 .profile-text small{
     color:#888;
-
     font-size:11px;
 }
-
 
 /* =========================================================
    CONTENT
@@ -365,16 +294,13 @@ a{
 
 .welcome h1{
     font-size:28px;
-
     margin-bottom:6px;
 }
 
 .welcome p{
     color:#6b7280;
-
     font-size:14px;
 }
-
 
 /* =========================================================
    MESSAGE
@@ -384,34 +310,32 @@ a{
     display:none;
 
     padding:13px 15px;
-
     border-radius:10px;
 
     margin-bottom:20px;
-
     font-size:13px;
 }
 
 .message.error{
     display:block;
-
     background:#fee2e2;
-
     color:#b91c1c;
-
     border:1px solid #fecaca;
 }
 
 .message.success{
     display:block;
-
     background:#dcfce7;
-
     color:#15803d;
-
     border:1px solid #bbf7d0;
 }
 
+.message.warning{
+    display:block;
+    background:#fff7ed;
+    color:#9a3412;
+    border:1px solid #fed7aa;
+}
 
 /* =========================================================
    RESTAURANT INFO
@@ -419,19 +343,15 @@ a{
 
 .restaurant-card{
     background:white;
-
     border:1px solid #e5e7eb;
 
     border-radius:16px;
-
     padding:20px;
 
     margin-bottom:22px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 
     gap:20px;
@@ -439,34 +359,27 @@ a{
 
 .restaurant-details h2{
     font-size:18px;
-
     margin-bottom:5px;
 }
 
 .restaurant-details p{
     color:#6b7280;
-
     font-size:12px;
-
     line-height:1.5;
 }
 
 .approved{
     background:#dcfce7;
-
     color:#15803d;
 
     padding:8px 13px;
-
     border-radius:20px;
 
     font-size:11px;
-
     font-weight:800;
 
     white-space:nowrap;
 }
-
 
 /* =========================================================
    STATS
@@ -474,10 +387,7 @@ a{
 
 .stats{
     display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
+    grid-template-columns:repeat(4,1fr);
     gap:17px;
 
     margin-bottom:25px;
@@ -487,13 +397,11 @@ a{
     background:white;
 
     border:1px solid #e5e7eb;
-
     border-radius:16px;
 
     padding:20px;
 
     position:relative;
-
     overflow:hidden;
 }
 
@@ -503,13 +411,11 @@ a{
     position:absolute;
 
     width:75px;
-
     height:75px;
 
     border-radius:50%;
 
     right:-25px;
-
     top:-25px;
 
     background:#f3f4f6;
@@ -517,27 +423,21 @@ a{
 
 .stat-top{
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 
     position:relative;
-
     z-index:2;
 }
 
 .stat-icon{
     width:44px;
-
     height:44px;
 
     border-radius:11px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     font-size:20px;
@@ -561,18 +461,14 @@ a{
 
 .stat-card h3{
     font-size:27px;
-
     margin-top:17px;
 }
 
 .stat-card p{
     color:#6b7280;
-
     font-size:12px;
-
     margin-top:5px;
 }
-
 
 /* =========================================================
    GRID
@@ -580,13 +476,9 @@ a{
 
 .grid{
     display:grid;
-
-    grid-template-columns:
-        2fr 1fr;
-
+    grid-template-columns:2fr 1fr;
     gap:20px;
 }
-
 
 /* =========================================================
    CARD
@@ -596,7 +488,6 @@ a{
     background:white;
 
     border:1px solid #e5e7eb;
-
     border-radius:16px;
 
     padding:21px;
@@ -604,9 +495,7 @@ a{
 
 .card-header{
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 
     margin-bottom:18px;
@@ -620,15 +509,12 @@ a{
     border:0;
 
     background:#fff1f2;
-
     color:#e53935;
 
     padding:8px 12px;
-
     border-radius:8px;
 
     font-size:11px;
-
     font-weight:bold;
 }
 
@@ -636,9 +522,8 @@ a{
     background:#fee2e2;
 }
 
-
 /* =========================================================
-   ORDERS
+   TABLE
 ========================================================= */
 
 .table-wrapper{
@@ -647,7 +532,6 @@ a{
 
 table{
     width:100%;
-
     border-collapse:collapse;
 }
 
@@ -655,7 +539,6 @@ th{
     text-align:left;
 
     font-size:10px;
-
     color:#6b7280;
 
     padding:11px 7px;
@@ -677,25 +560,25 @@ td{
 
 .order-customer{
     font-weight:bold;
-
     margin-bottom:3px;
 }
 
 .order-phone{
     color:#9ca3af;
-
     font-size:10px;
 }
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .status{
     display:inline-block;
 
     padding:6px 9px;
-
     border-radius:20px;
 
     font-size:10px;
-
     font-weight:bold;
 
     white-space:nowrap;
@@ -703,46 +586,38 @@ td{
 
 .status-confirmed{
     background:#dbeafe;
-
     color:#2563eb;
 }
 
 .status-preparing{
     background:#ffedd5;
-
     color:#c2410c;
 }
 
 .status-ready{
     background:#ede9fe;
-
     color:#6d28d9;
 }
 
 .status-out{
     background:#e0f2fe;
-
     color:#0369a1;
 }
 
 .status-delivered{
     background:#dcfce7;
-
     color:#15803d;
 }
 
 .status-cancelled{
     background:#fee2e2;
-
     color:#dc2626;
 }
 
 .status-pending{
     background:#fef3c7;
-
     color:#92400e;
 }
-
 
 /* =========================================================
    QUICK ACTIONS
@@ -750,49 +625,37 @@ td{
 
 .quick-actions{
     display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
+    grid-template-columns:1fr 1fr;
     gap:11px;
 }
 
 .quick-btn{
     border:1px solid #e5e7eb;
-
     background:#fafafa;
 
     padding:17px 8px;
-
     border-radius:11px;
 
     text-align:center;
-
     transition:.2s;
 }
 
 .quick-btn:hover{
     background:#fff1f2;
-
     border-color:#fecaca;
-
     transform:translateY(-1px);
 }
 
 .quick-icon{
     font-size:23px;
-
     margin-bottom:7px;
 }
 
 .quick-btn span{
     display:block;
-
     font-size:11px;
-
     font-weight:800;
 }
-
 
 /* =========================================================
    SUMMARY
@@ -804,7 +667,6 @@ td{
 
 .summary-row{
     display:flex;
-
     justify-content:space-between;
 
     padding:11px 0;
@@ -822,29 +684,22 @@ td{
     font-weight:800;
 }
 
-
 /* =========================================================
-   EMPTY
+   EMPTY / LOADING
 ========================================================= */
 
 .empty{
     text-align:center;
-
     padding:35px 10px;
-
     color:#777;
-
     font-size:12px;
 }
 
 .loading{
     text-align:center;
-
     padding:35px;
-
     color:#777;
 }
-
 
 /* =========================================================
    MOBILE
@@ -853,8 +708,7 @@ td{
 @media(max-width:1050px){
 
     .stats{
-        grid-template-columns:
-            repeat(2,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
     .grid{
@@ -875,7 +729,6 @@ td{
 
     .main{
         margin-left:0;
-
         width:100%;
     }
 
@@ -897,7 +750,6 @@ td{
 
     .restaurant-card{
         align-items:flex-start;
-
         flex-direction:column;
     }
 
@@ -906,9 +758,7 @@ td{
 @media(max-width:500px){
 
     .stats{
-        grid-template-columns:
-            1fr 1fr;
-
+        grid-template-columns:1fr 1fr;
         gap:10px;
     }
 
@@ -967,7 +817,6 @@ td{
 
 
     <ul class="menu">
-
 
         <li>
 
@@ -1065,7 +914,6 @@ td{
 
         </li>
 
-
     </ul>
 
 
@@ -1091,13 +939,9 @@ td{
 <div class="main">
 
 
-<!-- TOPBAR -->
-
 <header class="topbar">
 
-
     <div class="left-top">
-
 
         <button
             class="mobile-menu"
@@ -1107,19 +951,14 @@ td{
 
         </button>
 
-
         <div class="top-title">
-
             Restaurant Dashboard
-
         </div>
-
 
     </div>
 
 
     <div class="top-right">
-
 
         <button
             class="notification"
@@ -1138,7 +977,6 @@ td{
 
         <div class="profile">
 
-
             <div
                 class="avatar"
                 id="avatar">
@@ -1150,531 +988,465 @@ td{
 
             <div class="profile-text">
 
-
-                <strong
-                    id="ownerName">
-
+                <strong id="ownerName">
                     Restaurant
-
                 </strong>
 
-
                 <small>
-
                     Restaurant Partner
-
                 </small>
-
 
             </div>
 
-
         </div>
-
 
     </div>
 
 </header>
 
 
-<!-- CONTENT -->
+<!-- =====================================================
+     CONTENT
+===================================================== -->
 
 <main class="content">
 
 
-    <div class="welcome">
+<div class="welcome">
 
-        <h1>
-            Dashboard Overview 👋
-        </h1>
+    <h1>
+        Dashboard Overview 👋
+    </h1>
 
-        <p>
-            Manage your restaurant, menu and customer orders from here.
+    <p>
+        Manage your restaurant, menu and customer orders from here.
+    </p>
+
+</div>
+
+
+<div
+    class="message"
+    id="messageBox">
+</div>
+
+
+<!-- RESTAURANT -->
+
+<div class="restaurant-card">
+
+    <div class="restaurant-details">
+
+        <h2 id="restaurantName">
+            Loading restaurant...
+        </h2>
+
+        <p id="restaurantAddress">
+            Loading...
         </p>
 
     </div>
 
 
-    <div
-        class="message"
-        id="messageBox">
+    <div class="approved">
+        ✓ Approved Restaurant
     </div>
 
+</div>
 
-    <!-- RESTAURANT -->
 
-    <div class="restaurant-card">
+<!-- =================================================
+     STATS
+================================================= -->
 
+<section class="stats">
 
-        <div class="restaurant-details">
 
+<div class="stat-card">
 
-            <h2
-                id="restaurantName">
-
-                Loading restaurant...
-
-            </h2>
-
-
-            <p
-                id="restaurantAddress">
-
-                Loading...
-
-            </p>
-
-
-        </div>
-
-
-        <div class="approved">
-
-            ✓ Approved Restaurant
-
-        </div>
-
-
-    </div>
-
-
-    <!-- =================================================
-         STATS
-    ================================================= -->
-
-    <section class="stats">
-
-
-        <div class="stat-card">
-
-
-            <div class="stat-top">
-
-
-                <div>
-                    <small>
-                        Total Orders
-                    </small>
-                </div>
-
-
-                <div class="stat-icon blue">
-                    🛒
-                </div>
-
-
-            </div>
-
-
-            <h3 id="totalOrders">
-                0
-            </h3>
-
-
-            <p>
-                All restaurant orders
-            </p>
-
-
-        </div>
-
-
-        <div class="stat-card">
-
-
-            <div class="stat-top">
-
-
-                <div>
-                    <small>
-                        Today's Orders
-                    </small>
-                </div>
-
-
-                <div class="stat-icon orange">
-                    📦
-                </div>
-
-
-            </div>
-
-
-            <h3 id="todayOrders">
-                0
-            </h3>
-
-
-            <p>
-                Orders received today
-            </p>
-
-
-        </div>
-
-
-        <div class="stat-card">
-
-
-            <div class="stat-top">
-
-
-                <div>
-                    <small>
-                        Preparing
-                    </small>
-                </div>
-
-
-                <div class="stat-icon orange">
-                    👨‍🍳
-                </div>
-
-
-            </div>
-
-
-            <h3 id="preparingOrders">
-                0
-            </h3>
-
-
-            <p>
-                Currently preparing
-            </p>
-
-
-        </div>
-
-
-        <div class="stat-card">
-
-
-            <div class="stat-top">
-
-
-                <div>
-                    <small>
-                        Delivered
-                    </small>
-                </div>
-
-
-                <div class="stat-icon green">
-                    ✅
-                </div>
-
-
-            </div>
-
-
-            <h3 id="deliveredOrders">
-                0
-            </h3>
-
-
-            <p>
-                Completed orders
-            </p>
-
-
-        </div>
-
-
-    </section>
-
-
-    <!-- =================================================
-         GRID
-    ================================================= -->
-
-    <section class="grid">
-
-
-        <!-- RECENT ORDERS -->
-
-        <div class="card">
-
-
-            <div class="card-header">
-
-
-                <h2>
-                    Recent Orders
-                </h2>
-
-
-                <button
-                    class="view-btn"
-                    onclick="openOrders()">
-
-                    View All
-
-                </button>
-
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-
-                <table>
-
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                ORDER
-                            </th>
-
-                            <th>
-                                CUSTOMER
-                            </th>
-
-                            <th>
-                                STATUS
-                            </th>
-
-                            <th>
-                                TOTAL
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody
-                        id="ordersTable">
-
-                        <tr>
-
-                            <td
-                                colspan="4"
-                                class="loading">
-
-                                Loading orders...
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-
-                </table>
-
-
-            </div>
-
-
-        </div>
-
-
-        <!-- RIGHT SIDE -->
+    <div class="stat-top">
 
         <div>
-
-
-            <!-- QUICK ACTIONS -->
-
-            <div class="card">
-
-
-                <div class="card-header">
-
-                    <h2>
-                        Quick Actions
-                    </h2>
-
-                </div>
-
-
-                <div class="quick-actions">
-
-
-                    <button
-                        class="quick-btn"
-                        onclick="openOrders()">
-
-                        <div class="quick-icon">
-                            🛒
-                        </div>
-
-                        <span>
-                            Orders
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        class="quick-btn"
-                        onclick="openMenu()">
-
-                        <div class="quick-icon">
-                            🍔
-                        </div>
-
-                        <span>
-                            Manage Menu
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        class="quick-btn"
-                        onclick="openRestaurant()">
-
-                        <div class="quick-icon">
-                            🏪
-                        </div>
-
-                        <span>
-                            Restaurant
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        class="quick-btn"
-                        onclick="openReports()">
-
-                        <div class="quick-icon">
-                            📈
-                        </div>
-
-                        <span>
-                            Reports
-                        </span>
-
-                    </button>
-
-
-                </div>
-
-
-            </div>
-
-
-            <!-- ORDER SUMMARY -->
-
-            <div class="card summary">
-
-
-                <div class="card-header">
-
-                    <h2>
-                        Order Summary
-                    </h2>
-
-                </div>
-
-
-                <div class="summary-row">
-
-                    <span>
-                        Pending
-                    </span>
-
-                    <span
-                        class="summary-value"
-                        id="pendingCount">
-
-                        0
-
-                    </span>
-
-                </div>
-
-
-                <div class="summary-row">
-
-                    <span>
-                        Confirmed
-                    </span>
-
-                    <span
-                        class="summary-value"
-                        id="confirmedCount">
-
-                        0
-
-                    </span>
-
-                </div>
-
-
-                <div class="summary-row">
-
-                    <span>
-                        Preparing
-                    </span>
-
-                    <span
-                        class="summary-value"
-                        id="summaryPreparing">
-
-                        0
-
-                    </span>
-
-                </div>
-
-
-                <div class="summary-row">
-
-                    <span>
-                        Delivered
-                    </span>
-
-                    <span
-                        class="summary-value"
-                        id="summaryDelivered">
-
-                        0
-
-                    </span>
-
-                </div>
-
-
-                <div class="summary-row">
-
-                    <span>
-                        Cancelled
-                    </span>
-
-                    <span
-                        class="summary-value"
-                        id="cancelledCount">
-
-                        0
-
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
+            <small>
+                Total Orders
+            </small>
         </div>
 
+        <div class="stat-icon blue">
+            🛒
+        </div>
 
-    </section>
+    </div>
+
+    <h3 id="totalOrders">
+        0
+    </h3>
+
+    <p>
+        All restaurant orders
+    </p>
+
+</div>
 
 
-</main>
+<div class="stat-card">
+
+    <div class="stat-top">
+
+        <div>
+            <small>
+                Today's Orders
+            </small>
+        </div>
+
+        <div class="stat-icon orange">
+            📦
+        </div>
+
+    </div>
+
+    <h3 id="todayOrders">
+        0
+    </h3>
+
+    <p>
+        Orders received today
+    </p>
+
+</div>
+
+
+<div class="stat-card">
+
+    <div class="stat-top">
+
+        <div>
+            <small>
+                Preparing
+            </small>
+        </div>
+
+        <div class="stat-icon orange">
+            👨‍🍳
+        </div>
+
+    </div>
+
+    <h3 id="preparingOrders">
+        0
+    </h3>
+
+    <p>
+        Currently preparing
+    </p>
+
+</div>
+
+
+<div class="stat-card">
+
+    <div class="stat-top">
+
+        <div>
+            <small>
+                Delivered
+            </small>
+        </div>
+
+        <div class="stat-icon green">
+            ✅
+        </div>
+
+    </div>
+
+    <h3 id="deliveredOrders">
+        0
+    </h3>
+
+    <p>
+        Completed orders
+    </p>
+
+</div>
+
+
+</section>
+
+
+<!-- =================================================
+     GRID
+===================================================== -->
+
+<section class="grid">
+
+
+<!-- RECENT ORDERS -->
+
+<div class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Recent Orders
+        </h2>
+
+        <button
+            class="view-btn"
+            onclick="openOrders()">
+
+            View All
+
+        </button>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ORDER
+                    </th>
+
+                    <th>
+                        CUSTOMER
+                    </th>
+
+                    <th>
+                        STATUS
+                    </th>
+
+                    <th>
+                        TOTAL
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="ordersTable">
+
+                <tr>
+
+                    <td
+                        colspan="4"
+                        class="loading">
+
+                        Loading orders...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- RIGHT -->
+
+<div>
+
+
+<!-- QUICK ACTIONS -->
+
+<div class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+    </div>
+
+
+    <div class="quick-actions">
+
+
+        <button
+            class="quick-btn"
+            onclick="openOrders()">
+
+            <div class="quick-icon">
+                🛒
+            </div>
+
+            <span>
+                Orders
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="openMenu()">
+
+            <div class="quick-icon">
+                🍔
+            </div>
+
+            <span>
+                Manage Menu
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="openRestaurant()">
+
+            <div class="quick-icon">
+                🏪
+            </div>
+
+            <span>
+                Restaurant
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="openReports()">
+
+            <div class="quick-icon">
+                📈
+            </div>
+
+            <span>
+                Reports
+            </span>
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<!-- ORDER SUMMARY -->
+
+<div class="card summary">
+
+    <div class="card-header">
+
+        <h2>
+            Order Summary
+        </h2>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Pending
+        </span>
+
+        <span
+            class="summary-value"
+            id="pendingCount">
+
+            0
+
+        </span>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Confirmed
+        </span>
+
+        <span
+            class="summary-value"
+            id="confirmedCount">
+
+            0
+
+        </span>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Preparing
+        </span>
+
+        <span
+            class="summary-value"
+            id="summaryPreparing">
+
+            0
+
+        </span>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Delivered
+        </span>
+
+        <span
+            class="summary-value"
+            id="summaryDelivered">
+
+            0
+
+        </span>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Cancelled
+        </span>
+
+        <span
+            class="summary-value"
+            id="cancelledCount">
+
+            0
+
+        </span>
+
+    </div>
+
+</div>
 
 
 </div>
 
+</section>
+
+
+</main>
+
+</div>
 
 </div>
 
@@ -1690,6 +1462,7 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
 
 const supabaseClient =
     supabase.createClient(
@@ -1712,67 +1485,54 @@ let allOrders = [];
 
 
 /* =========================================================
-   REDIRECT
+   SIDEBAR
 ========================================================= */
 
-function redirectToLogin(){
+function toggleSidebar(){
 
-    window.location.replace(
-        "login.html"
-    );
+    document
+        .getElementById("sidebar")
+        .classList
+        .toggle("open");
 
 }
 
 
-function redirectByRole(role){
+/* =========================================================
+   MESSAGE
+========================================================= */
 
-    role =
-        String(
-            role || ""
-        )
-        .toLowerCase()
-        .trim();
+function showMessage(
+    message,
+    type="error"
+){
 
-
-    if(role === "admin"){
-
-        window.location.replace(
-            "admin-dashboard.html"
+    const box =
+        document.getElementById(
+            "messageBox"
         );
 
-        return;
+    box.textContent =
+        message;
 
-    }
+    box.className =
+        "message " + type;
+
+}
 
 
-    if(
-        role === "customer"
-    ){
+function hideMessage(){
 
-        window.location.replace(
-            "customer-dashboard.html"
+    const box =
+        document.getElementById(
+            "messageBox"
         );
 
-        return;
+    box.textContent =
+        "";
 
-    }
-
-
-    if(
-        role === "delivery" ||
-        role === "delivery_boy"
-    ){
-
-        window.location.replace(
-            "delivery-dashboard.html"
-        );
-
-        return;
-
-    }
-
-
-    redirectToLogin();
+    box.className =
+        "message";
 
 }
 
@@ -1785,10 +1545,13 @@ async function initialize(){
 
     try{
 
+        hideMessage();
 
-        /* =============================================
+
+        /* =================================================
+           STEP 1
            CHECK SESSION
-        ============================================= */
+        ================================================= */
 
         const {
             data:sessionData,
@@ -1801,16 +1564,10 @@ async function initialize(){
 
         if(sessionError){
 
-            throw sessionError;
-
-        }
-
-
-        const session =
-            sessionData?.session;
-
-
-        if(!session){
+            console.error(
+                "Session error:",
+                sessionError
+            );
 
             redirectToLogin();
 
@@ -1819,31 +1576,18 @@ async function initialize(){
         }
 
 
-        /* =============================================
-           GET USER
-        ============================================= */
-
-        const {
-            data:userData,
-            error:userError
-        } =
-        await supabaseClient
-            .auth
-            .getUser();
+        const session =
+            sessionData?.session;
 
 
-        if(userError){
+        /* =================================================
+           NOT LOGGED IN
+        ================================================= */
 
-            throw userError;
-
-        }
-
-
-        const user =
-            userData?.user;
-
-
-        if(!user){
+        if(
+            !session ||
+            !session.user
+        ){
 
             redirectToLogin();
 
@@ -1853,14 +1597,16 @@ async function initialize(){
 
 
         currentUser =
-            user;
+            session.user;
 
 
-        /* =============================================
+        /* =================================================
            EMAIL VERIFICATION
-        ============================================= */
+        ================================================= */
 
-        if(!user.email_confirmed_at){
+        if(
+            !currentUser.email_confirmed_at
+        ){
 
             await supabaseClient
                 .auth
@@ -1873,9 +1619,10 @@ async function initialize(){
         }
 
 
-        /* =============================================
-           USER ROLE
-        ============================================= */
+        /* =================================================
+           STEP 2
+           GET USER ROLE
+        ================================================= */
 
         const {
             data:roleData,
@@ -1888,17 +1635,32 @@ async function initialize(){
             )
             .eq(
                 "user_id",
-                user.id
+                currentUser.id
             )
             .maybeSingle();
 
 
         if(roleError){
 
-            throw roleError;
+            console.error(
+                "Role error:",
+                roleError
+            );
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            redirectToLogin();
+
+            return;
 
         }
 
+
+        /* =================================================
+           NO ROLE
+        ================================================= */
 
         if(!roleData){
 
@@ -1913,6 +1675,10 @@ async function initialize(){
         }
 
 
+        /* =================================================
+           ROLE
+        ================================================= */
+
         const role =
             String(
                 roleData.role || ""
@@ -1921,34 +1687,18 @@ async function initialize(){
             .trim();
 
 
-        /* =============================================
-           ROLE CHECK
-        ============================================= */
+        /* =================================================
+           ONLY RESTAURANT
+        ================================================= */
 
-        if(role !== "restaurant"){
-
-            redirectByRole(
-                role
-            );
-
-            return;
-
-        }
-
-
-        /* =============================================
-           RESTAURANT ID
-        ============================================= */
-
-        if(!roleData.restaurant_id){
+        if(
+            role !== "restaurant" &&
+            role !== "restaurant_owner"
+        ){
 
             await supabaseClient
                 .auth
                 .signOut();
-
-            alert(
-                "Your restaurant account is not linked to a restaurant."
-            );
 
             redirectToLogin();
 
@@ -1957,13 +1707,39 @@ async function initialize(){
         }
 
 
-        restaurantId =
-            roleData.restaurant_id;
+        /* =================================================
+           RESTAURANT ID
+        ================================================= */
+
+        if(
+            !roleData.restaurant_id
+        ){
+
+            showMessage(
+                "Your restaurant account is not linked to a restaurant."
+            );
+
+            setTimeout(
+                async function(){
+
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+                    redirectToLogin();
+
+                },
+                1200
+            );
+
+            return;
+
+        }
 
 
-        /* =============================================
+        /* =================================================
            APPROVAL
-        ============================================= */
+        ================================================= */
 
         const approval =
             String(
@@ -1973,101 +1749,177 @@ async function initialize(){
             .trim();
 
 
-        if(approval !== "approved"){
+        if(
+            approval !== "approved"
+        ){
 
             await supabaseClient
                 .auth
                 .signOut();
 
-            alert(
-                "Your restaurant application is waiting for admin approval."
-            );
 
-            redirectToLogin();
+            if(
+                approval === "pending"
+            ){
+
+                window.location.replace(
+                    "login.html?message=pending"
+                );
+
+            }
+            else if(
+                approval === "rejected"
+            ){
+
+                window.location.replace(
+                    "login.html?message=rejected"
+                );
+
+            }
+            else{
+
+                redirectToLogin();
+
+            }
 
             return;
 
         }
 
 
-        /* =============================================
+        /* =================================================
+           STORE RESTAURANT ID
+        ================================================= */
+
+        restaurantId =
+            roleData.restaurant_id;
+
+
+        /* =================================================
            USER DISPLAY
-        ============================================= */
+        ================================================= */
 
         const email =
-            user.email ||
+            currentUser.email ||
             "Restaurant";
-
-
-        const displayName =
-            email.split("@")[0];
 
 
         document.getElementById(
             "ownerName"
         ).textContent =
-            displayName;
+            email.split("@")[0];
 
 
         document.getElementById(
             "avatar"
         ).textContent =
-            displayName
+            email
                 .charAt(0)
                 .toUpperCase();
 
 
-        /* =============================================
+        /* =================================================
            LOAD RESTAURANT
-        ============================================= */
+        ================================================= */
 
-        await loadRestaurant();
+        const {
+            data:restaurant,
+            error:restaurantError
+        } =
+        await supabaseClient
+            .from("restaurants")
+            .select(`
+                id,
+                name,
+                address,
+                phone,
+                description
+            `)
+            .eq(
+                "id",
+                restaurantId
+            )
+            .maybeSingle();
 
 
-        /* =============================================
+        if(restaurantError){
+
+            throw restaurantError;
+
+        }
+
+
+        if(!restaurant){
+
+            throw new Error(
+                "Restaurant details not found."
+            );
+
+        }
+
+
+        restaurantData =
+            restaurant;
+
+
+        /* =================================================
+           DISPLAY RESTAURANT
+        ================================================= */
+
+        document.getElementById(
+            "restaurantName"
+        ).textContent =
+            restaurant.name ||
+            "Restaurant";
+
+
+        document.getElementById(
+            "sideRestaurantName"
+        ).textContent =
+            restaurant.name ||
+            "Restaurant";
+
+
+        document.getElementById(
+            "restaurantAddress"
+        ).textContent =
+            restaurant.address ||
+            restaurant.phone ||
+            "Address not available";
+
+
+        /* =================================================
            LOAD DASHBOARD
-        ============================================= */
+        ================================================= */
 
         await loadDashboardData();
-
-
-        /* =============================================
-           SHOW PAGE
-        ============================================= */
-
-        document.documentElement.style.visibility =
-            "visible";
-
-
-        console.log(
-            "Restaurant authentication successful."
-        );
-
 
     }
     catch(error){
 
         console.error(
-            "Authentication error:",
+            "Dashboard error:",
             error
         );
 
-
-        try{
-
-            await supabaseClient
-                .auth
-                .signOut();
-
-        }
-        catch(e){
-
-            console.error(e);
-
-        }
+        showMessage(
+            error.message ||
+            "Unable to load restaurant dashboard."
+        );
 
 
-        redirectToLogin();
+        setTimeout(
+            async function(){
+
+                await supabaseClient
+                    .auth
+                    .signOut();
+
+                redirectToLogin();
+
+            },
+            1500
+        );
 
     }
 
@@ -2075,71 +1927,14 @@ async function initialize(){
 
 
 /* =========================================================
-   LOAD RESTAURANT
+   LOGIN REDIRECT
 ========================================================= */
 
-async function loadRestaurant(){
+function redirectToLogin(){
 
-    const {
-        data:restaurant,
-        error
-    } =
-    await supabaseClient
-        .from("restaurants")
-        .select(`
-            id,
-            name,
-            address,
-            phone,
-            description
-        `)
-        .eq(
-            "id",
-            restaurantId
-        )
-        .maybeSingle();
-
-
-    if(error){
-
-        throw error;
-
-    }
-
-
-    if(!restaurant){
-
-        throw new Error(
-            "Restaurant details not found."
-        );
-
-    }
-
-
-    restaurantData =
-        restaurant;
-
-
-    document.getElementById(
-        "restaurantName"
-    ).textContent =
-        restaurant.name ||
-        "Restaurant";
-
-
-    document.getElementById(
-        "sideRestaurantName"
-    ).textContent =
-        restaurant.name ||
-        "Restaurant";
-
-
-    document.getElementById(
-        "restaurantAddress"
-    ).textContent =
-        restaurant.address ||
-        restaurant.phone ||
-        "Address not available";
+    window.location.replace(
+        "login.html"
+    );
 
 }
 
@@ -2149,6 +1944,15 @@ async function loadRestaurant(){
 ========================================================= */
 
 async function loadDashboardData(){
+
+    if(!restaurantId){
+
+        throw new Error(
+            "Restaurant ID is missing."
+        );
+
+    }
+
 
     const {
         data:orders,
@@ -2183,18 +1987,7 @@ async function loadDashboardData(){
 
     if(error){
 
-        console.warn(
-            "Orders could not be loaded:",
-            error
-        );
-
-        allOrders = [];
-
-        updateStatistics();
-
-        renderRecentOrders([]);
-
-        return;
+        throw error;
 
     }
 
@@ -2229,13 +2022,9 @@ function updateStatistics(){
 
 
     let pending = 0;
-
     let confirmed = 0;
-
     let preparing = 0;
-
     let delivered = 0;
-
     let cancelled = 0;
 
     let todayCount = 0;
@@ -2251,37 +2040,27 @@ function updateStatistics(){
 
 
             if(status === "pending"){
-
                 pending++;
-
             }
 
 
             if(status === "confirmed"){
-
                 confirmed++;
-
             }
 
 
             if(status === "preparing"){
-
                 preparing++;
-
             }
 
 
             if(status === "delivered"){
-
                 delivered++;
-
             }
 
 
             if(status === "cancelled"){
-
                 cancelled++;
-
             }
 
 
@@ -2396,7 +2175,9 @@ function renderRecentOrders(
     if(!orders.length){
 
         table.innerHTML = `
+
             <tr>
+
                 <td
                     colspan="4"
                     class="empty">
@@ -2404,7 +2185,9 @@ function renderRecentOrders(
                     No orders found.
 
                 </td>
+
             </tr>
+
         `;
 
         return;
@@ -2413,97 +2196,100 @@ function renderRecentOrders(
 
 
     table.innerHTML =
-        orders.map(
-            order => {
+        orders
+            .map(
+                order => {
 
-                const status =
-                    normalizeStatus(
-                        order.status
-                    );
-
-
-                const total =
-                    Number(
-                        order.total_amount ??
-                        order.total ??
-                        0
-                    );
+                    const status =
+                        normalizeStatus(
+                            order.status
+                        );
 
 
-                return `
-                    <tr>
-
-                        <td>
-
-                            <div class="order-number">
-
-                                #${escapeHTML(
-                                    order.id
-                                )}
-
-                            </div>
-
-                        </td>
+                    const total =
+                        Number(
+                            order.total_amount ??
+                            order.total ??
+                            0
+                        );
 
 
-                        <td>
+                    return `
 
-                            <div class="order-customer">
+                        <tr>
 
-                                ${escapeHTML(
-                                    order.customer_name ||
-                                    "Customer"
-                                )}
+                            <td>
 
-                            </div>
+                                <div class="order-number">
 
+                                    #${escapeHTML(
+                                        order.id
+                                    )}
 
-                            <div class="order-phone">
+                                </div>
 
-                                ${escapeHTML(
-                                    order.customer_phone ||
-                                    order.phone ||
-                                    ""
-                                )}
-
-                            </div>
-
-                        </td>
+                            </td>
 
 
-                        <td>
+                            <td>
 
-                            <span
-                                class="status
-                                ${getStatusClass(status)}">
+                                <div class="order-customer">
 
-                                ${escapeHTML(
-                                    getStatusText(status)
-                                )}
+                                    ${escapeHTML(
+                                        order.customer_name ||
+                                        "Customer"
+                                    )}
 
-                            </span>
+                                </div>
 
-                        </td>
+                                <div class="order-phone">
+
+                                    ${escapeHTML(
+                                        order.customer_phone ||
+                                        order.phone ||
+                                        ""
+                                    )}
+
+                                </div>
+
+                            </td>
 
 
-                        <td>
+                            <td>
 
-                            <strong>
+                                <span
+                                    class="status ${getStatusClass(status)}">
 
-                                ₹${total.toLocaleString(
-                                    "en-IN"
-                                )}
+                                    ${escapeHTML(
+                                        getStatusText(
+                                            status
+                                        )
+                                    )}
 
-                            </strong>
+                                </span>
 
-                        </td>
+                            </td>
 
-                    </tr>
-                `;
 
-            }
-        )
-        .join("");
+                            <td>
+
+                                <strong>
+
+                                    ₹${total.toLocaleString(
+                                        "en-IN"
+                                    )}
+
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            )
+            .join("");
 
 }
 
@@ -2512,12 +2298,13 @@ function renderRecentOrders(
    STATUS
 ========================================================= */
 
-function normalizeStatus(value){
+function normalizeStatus(
+    value
+){
 
     const status =
         String(
-            value ||
-            "pending"
+            value || "pending"
         )
         .toLowerCase()
         .trim();
@@ -2565,7 +2352,9 @@ function normalizeStatus(value){
 }
 
 
-function getStatusText(status){
+function getStatusText(
+    status
+){
 
     const names = {
 
@@ -2593,7 +2382,7 @@ function getStatusText(status){
     };
 
 
-    return(
+    return (
         names[status] ||
         capitalize(status)
     );
@@ -2601,77 +2390,35 @@ function getStatusText(status){
 }
 
 
-function getStatusClass(status){
+function getStatusClass(
+    status
+){
 
-    if(
-        status === "confirmed"
-    ){
-
+    if(status === "confirmed"){
         return "status-confirmed";
-
     }
 
-
-    if(
-        status === "preparing"
-    ){
-
+    if(status === "preparing"){
         return "status-preparing";
-
     }
 
-
-    if(
-        status === "ready"
-    ){
-
+    if(status === "ready"){
         return "status-ready";
-
     }
 
-
-    if(
-        status === "out_for_delivery"
-    ){
-
+    if(status === "out_for_delivery"){
         return "status-out";
-
     }
 
-
-    if(
-        status === "delivered"
-    ){
-
+    if(status === "delivered"){
         return "status-delivered";
-
     }
 
-
-    if(
-        status === "cancelled"
-    ){
-
+    if(status === "cancelled"){
         return "status-cancelled";
-
     }
-
 
     return "status-pending";
-
-}
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-function toggleSidebar(){
-
-    document
-        .getElementById("sidebar")
-        .classList
-        .toggle("open");
 
 }
 
@@ -2743,20 +2490,24 @@ async function logout(){
 
 
     if(!yes){
-
         return;
-
     }
 
 
-    await supabaseClient
-        .auth
-        .signOut();
+    try{
 
+        await supabaseClient
+            .auth
+            .signOut();
 
-    window.location.replace(
-        "login.html"
-    );
+    }
+    finally{
+
+        window.location.replace(
+            "login.html"
+        );
+
+    }
 
 }
 
@@ -2765,7 +2516,9 @@ async function logout(){
    ESCAPE HTML
 ========================================================= */
 
-function escapeHTML(value){
+function escapeHTML(
+    value
+){
 
     return String(
         value ?? ""
@@ -2798,7 +2551,9 @@ function escapeHTML(value){
    CAPITALIZE
 ========================================================= */
 
-function capitalize(text){
+function capitalize(
+    text
+){
 
     text =
         String(
@@ -2806,7 +2561,7 @@ function capitalize(text){
         );
 
 
-    return(
+    return (
         text.charAt(0).toUpperCase() +
         text.slice(1)
     );
@@ -2823,4 +2578,5 @@ initialize();
 </script>
 
 </body>
+
 </html>
