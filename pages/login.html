@@ -16,6 +16,10 @@
 
 <style>
 
+/* =========================
+   RESET
+========================= */
+
 *{
     box-sizing:border-box;
 }
@@ -44,7 +48,13 @@ body{
         #f6f7f9;
 }
 
+
+/* =========================
+   LOGIN PAGE
+========================= */
+
 .login-page{
+
     min-height:100vh;
 
     display:flex;
@@ -57,11 +67,19 @@ body{
 }
 
 .login-container{
+
     width:100%;
+
     max-width:430px;
 }
 
+
+/* =========================
+   LOGO
+========================= */
+
 .logo{
+
     text-align:center;
 
     font-size:42px;
@@ -76,10 +94,12 @@ body{
 }
 
 .logo span{
+
     color:#171717;
 }
 
 .welcome{
+
     text-align:center;
 
     color:#777;
@@ -89,7 +109,13 @@ body{
     margin:0 0 28px;
 }
 
+
+/* =========================
+   LOGIN CARD
+========================= */
+
 .login-card{
+
     background:#fff;
 
     border-radius:24px;
@@ -103,6 +129,7 @@ body{
 }
 
 .login-card h1{
+
     margin:0;
 
     font-size:27px;
@@ -111,6 +138,7 @@ body{
 }
 
 .subtitle{
+
     color:#777;
 
     font-size:14px;
@@ -118,11 +146,18 @@ body{
     margin:9px 0 25px;
 }
 
+
+/* =========================
+   INPUT
+========================= */
+
 .input-group{
+
     margin-bottom:16px;
 }
 
 .input-group label{
+
     display:block;
 
     font-size:13px;
@@ -135,6 +170,7 @@ body{
 }
 
 .input-group input{
+
     width:100%;
 
     height:50px;
@@ -155,6 +191,7 @@ body{
 }
 
 .input-group input:focus{
+
     border-color:#e53935;
 
     background:#fff;
@@ -164,7 +201,13 @@ body{
         rgba(229,57,53,.10);
 }
 
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
 .login-button{
+
     width:100%;
 
     height:52px;
@@ -189,12 +232,14 @@ body{
 }
 
 .login-button:hover{
+
     background:#d92f2b;
 
     transform:translateY(-1px);
 }
 
 .login-button:disabled{
+
     opacity:.65;
 
     cursor:not-allowed;
@@ -202,7 +247,13 @@ body{
     transform:none;
 }
 
+
+/* =========================
+   LINKS
+========================= */
+
 .create-account{
+
     text-align:center;
 
     margin-top:22px;
@@ -217,10 +268,12 @@ body{
 }
 
 .create-account:hover{
+
     text-decoration:underline;
 }
 
 .close-login{
+
     text-align:center;
 
     margin-top:16px;
@@ -233,8 +286,14 @@ body{
 }
 
 .close-login:hover{
+
     color:#222;
 }
+
+
+/* =========================
+   MESSAGES
+========================= */
 
 #loginMessage,
 #registerMessage{
@@ -279,6 +338,7 @@ body{
 }
 
 .register-modal.show{
+
     display:flex;
 }
 
@@ -354,6 +414,11 @@ body{
     margin:0 0 22px;
 }
 
+
+/* =========================
+   REGISTER BUTTON
+========================= */
+
 .register-button{
 
     width:100%;
@@ -410,24 +475,29 @@ body{
 @media(max-width:500px){
 
     .login-page{
+
         padding:18px;
     }
 
     .login-card{
+
         padding:25px 20px;
 
         border-radius:20px;
     }
 
     .logo{
+
         font-size:36px;
     }
 
     .login-card h1{
+
         font-size:24px;
     }
 
     .register-box{
+
         padding:24px 20px;
 
         border-radius:20px;
@@ -449,105 +519,121 @@ body{
 
 <div class="login-page">
 
-<div class="login-container">
+    <div class="login-container">
 
 
-<div class="logo">
+        <div class="logo">
 
-    Beat<span>root</span>
+            Beat<span>root</span>
 
-</div>
-
-
-<p class="welcome">
-
-    Welcome to Beatroot
-
-</p>
+        </div>
 
 
-<div class="login-card">
+        <p class="welcome">
+
+            Welcome to Beatroot
+
+        </p>
 
 
-<h1>
-    Login to Beatroot
-</h1>
+        <div class="login-card">
 
 
-<p class="subtitle">
-    Login using your email and password.
-</p>
+            <h1>
+
+                Login to Beatroot
+
+            </h1>
 
 
-<div class="input-group">
+            <p class="subtitle">
 
-<label>
-    Email Address
-</label>
+                Login using your email and password.
 
-<input
-    type="email"
-    id="loginEmail"
-    placeholder="Enter your email"
-    autocomplete="email"
->
-
-</div>
+            </p>
 
 
-<div class="input-group">
+            <!-- EMAIL -->
 
-<label>
-    Password
-</label>
+            <div class="input-group">
 
-<input
-    type="password"
-    id="loginPassword"
-    placeholder="Enter your password"
-    autocomplete="current-password"
->
+                <label>
+                    Email Address
+                </label>
 
-</div>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                >
 
-
-<button
-    class="login-button"
-    id="loginButton"
-    type="button"
-    onclick="loginUser()">
-
-    Login
-
-</button>
+            </div>
 
 
-<div
-    class="create-account"
-    onclick="openRegister()">
+            <!-- PASSWORD -->
 
-    Create New Account
+            <div class="input-group">
 
-</div>
+                <label>
+                    Password
+                </label>
 
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                >
 
-<div
-    class="close-login"
-    onclick="goBack()">
-
-    Close
-
-</div>
-
-
-<div
-    id="loginMessage">
-</div>
+            </div>
 
 
-</div>
+            <!-- LOGIN -->
 
-</div>
+            <button
+                class="login-button"
+                id="loginButton"
+                type="button"
+                onclick="loginUser()">
+
+                Login
+
+            </button>
+
+
+            <!-- REGISTER -->
+
+            <div
+                class="create-account"
+                onclick="openRegister()">
+
+                Create New Account
+
+            </div>
+
+
+            <!-- CLOSE -->
+
+            <div
+                class="close-login"
+                onclick="goBack()">
+
+                Close
+
+            </div>
+
+
+            <!-- LOGIN MESSAGE -->
+
+            <div
+                id="loginMessage">
+            </div>
+
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -564,149 +650,155 @@ body{
 >
 
 
-<div class="register-box">
+    <div class="register-box">
 
 
-<div class="register-header">
+        <div class="register-header">
 
-<h2>
-    Create Account
-</h2>
-
-
-<button
-    class="register-close"
-    onclick="closeRegister()">
-
-    ×
-
-</button>
-
-</div>
+            <h2>
+                Create Account
+            </h2>
 
 
-<p class="register-subtitle">
+            <button
+                class="register-close"
+                onclick="closeRegister()">
 
-    Create your Beatroot customer account.
+                ×
 
-</p>
+            </button>
 
-
-<!-- FULL NAME -->
-
-<div class="input-group">
-
-<label>
-    Full Name
-</label>
-
-<input
-    type="text"
-    id="registerName"
-    placeholder="Enter your full name"
-    autocomplete="name"
->
-
-</div>
+        </div>
 
 
-<!-- PHONE -->
+        <p class="register-subtitle">
 
-<div class="input-group">
+            Create your Beatroot customer account.
 
-<label>
-    Phone Number
-</label>
-
-<input
-    type="tel"
-    id="registerPhone"
-    placeholder="Enter your phone number"
-    autocomplete="tel"
->
-
-</div>
+        </p>
 
 
-<!-- EMAIL -->
+        <!-- FULL NAME -->
 
-<div class="input-group">
+        <div class="input-group">
 
-<label>
-    Email Address
-</label>
+            <label>
+                Full Name
+            </label>
 
-<input
-    type="email"
-    id="registerEmail"
-    placeholder="Enter your email"
-    autocomplete="email"
->
+            <input
+                type="text"
+                id="registerName"
+                placeholder="Enter your full name"
+                autocomplete="name"
+            >
 
-</div>
-
-
-<!-- PASSWORD -->
-
-<div class="input-group">
-
-<label>
-    Password
-</label>
-
-<input
-    type="password"
-    id="registerPassword"
-    placeholder="Create a password"
-    autocomplete="new-password"
->
-
-</div>
+        </div>
 
 
-<!-- CONFIRM PASSWORD -->
+        <!-- PHONE -->
 
-<div class="input-group">
+        <div class="input-group">
 
-<label>
-    Confirm Password
-</label>
+            <label>
+                Phone Number
+            </label>
 
-<input
-    type="password"
-    id="registerConfirmPassword"
-    placeholder="Confirm your password"
-    autocomplete="new-password"
->
+            <input
+                type="tel"
+                id="registerPhone"
+                placeholder="Enter your phone number"
+                autocomplete="tel"
+            >
 
-</div>
-
-
-<button
-    class="register-button"
-    id="registerButton"
-    onclick="registerUser()">
-
-    Create Account
-
-</button>
+        </div>
 
 
-<div
-    class="back-login"
-    onclick="closeRegister()">
+        <!-- EMAIL -->
 
-    ← Back to Login
+        <div class="input-group">
 
-</div>
+            <label>
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="registerEmail"
+                placeholder="Enter your email"
+                autocomplete="email"
+            >
+
+        </div>
 
 
-<div
-    id="registerMessage">
-</div>
+        <!-- PASSWORD -->
+
+        <div class="input-group">
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Create a password"
+                autocomplete="new-password"
+            >
+
+        </div>
 
 
-</div>
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="input-group">
+
+            <label>
+                Confirm Password
+            </label>
+
+            <input
+                type="password"
+                id="registerConfirmPassword"
+                placeholder="Confirm your password"
+                autocomplete="new-password"
+            >
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <button
+            class="register-button"
+            id="registerButton"
+            onclick="registerUser()">
+
+            Create Account
+
+        </button>
+
+
+        <!-- BACK -->
+
+        <div
+            class="back-login"
+            onclick="closeRegister()">
+
+            ← Back to Login
+
+        </div>
+
+
+        <!-- REGISTER MESSAGE -->
+
+        <div
+            id="registerMessage">
+        </div>
+
+
+    </div>
 
 </div>
 
@@ -726,10 +818,6 @@ const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
 
-const ADMIN_EMAIL =
-    "itnedumangad@gmail.com";
-
-
 const sb =
     supabase.createClient(
         SUPABASE_URL,
@@ -747,7 +835,8 @@ async function loginUser(){
         document
         .getElementById("loginEmail")
         .value
-        .trim();
+        .trim()
+        .toLowerCase();
 
 
     const password =
@@ -757,13 +846,15 @@ async function loginUser(){
 
 
     const message =
-        document
-        .getElementById("loginMessage");
+        document.getElementById(
+            "loginMessage"
+        );
 
 
     const button =
-        document
-        .getElementById("loginButton");
+        document.getElementById(
+            "loginButton"
+        );
 
 
     message.style.display =
@@ -778,18 +869,20 @@ async function loginUser(){
         );
 
         return;
-
     }
 
 
-    button.disabled =
-        true;
+    button.disabled = true;
 
     button.textContent =
         "Logging in...";
 
 
     try{
+
+        /* =========================
+           AUTH LOGIN
+        ========================= */
 
         const {
             data,
@@ -818,61 +911,306 @@ async function loginUser(){
             );
 
 
-            button.disabled =
-                false;
+            button.disabled = false;
 
             button.textContent =
                 "Login";
 
-
             return;
-
         }
 
 
-        if(!data.session){
+        if(
+            !data ||
+            !data.user
+        ){
 
             showLoginMessage(
-                "Login session create cheyyan kazhinjilla.",
+                "Login failed. Please try again.",
                 "error"
             );
 
 
-            button.disabled =
-                false;
+            button.disabled = false;
 
             button.textContent =
                 "Login";
 
-
             return;
-
         }
+
+
+        const user =
+            data.user;
 
 
         console.log(
-            "Login successful:",
-            data.user
+            "Logged in user:",
+            user
         );
 
 
-        if(
-            data.user.email &&
-            data.user.email.toLowerCase()
-            ===
-            ADMIN_EMAIL.toLowerCase()
-        ){
+        /* =========================
+           GET ROLE
+        ========================= */
 
-            window.location.href =
-                "./admin-dashboard.html";
+        const {
+            data:roleData,
+            error:roleError
+        } =
+        await sb
+        .from("user_roles")
+        .select(`
+            role,
+            restaurant_id,
+            delivery_boy_id
+        `)
+        .eq(
+            "user_id",
+            user.id
+        )
+        .maybeSingle();
 
+
+        if(roleError){
+
+            console.error(
+                "Role Error:",
+                roleError
+            );
+
+
+            await sb.auth.signOut();
+
+
+            showLoginMessage(
+                "User role load cheyyan kazhinjilla. Please try again.",
+                "error"
+            );
+
+
+            button.disabled = false;
+
+            button.textContent =
+                "Login";
+
+            return;
         }
-        else{
+
+
+        /* =========================
+           ROLE NOT FOUND
+        ========================= */
+
+        if(!roleData){
+
+            /*
+              New customer accounts can be
+              created by registration.
+
+              If trigger has not yet created
+              user_roles, create customer role.
+            */
+
+            const {
+                error:createRoleError
+            } =
+            await sb
+            .from("user_roles")
+            .insert({
+
+                user_id:user.id,
+
+                role:"customer"
+
+            });
+
+
+            if(createRoleError){
+
+                console.error(
+                    "Create Role Error:",
+                    createRoleError
+                );
+
+
+                await sb.auth.signOut();
+
+
+                showLoginMessage(
+                    "User role kandethan kazhinjilla. Admin-ne contact cheyyuka.",
+                    "error"
+                );
+
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Login";
+
+                return;
+            }
+
 
             window.location.href =
                 "../index.html";
 
+            return;
         }
+
+
+        /* =========================
+           NORMALIZE ROLE
+        ========================= */
+
+        const role =
+            String(
+                roleData.role || ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        console.log(
+            "User Role:",
+            role
+        );
+
+
+        /* =========================
+           ADMIN
+        ========================= */
+
+        if(role === "admin"){
+
+            window.location.href =
+                "./admin-dashboard.html";
+
+            return;
+        }
+
+
+        /* =========================
+           RESTAURANT
+        ========================= */
+
+        if(role === "restaurant"){
+
+            if(!roleData.restaurant_id){
+
+                await sb.auth.signOut();
+
+
+                showLoginMessage(
+                    "Restaurant account proper restaurant-umayi link cheythittilla. Admin-ne contact cheyyuka.",
+                    "error"
+                );
+
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Login";
+
+                return;
+            }
+
+
+            /*
+              Store restaurant ID temporarily
+              for dashboard initialization.
+            */
+
+            sessionStorage.setItem(
+                "beatrootRestaurantId",
+                String(
+                    roleData.restaurant_id
+                )
+            );
+
+
+            window.location.href =
+                "./restaurant-dashboard.html";
+
+            return;
+        }
+
+
+        /* =========================
+           DELIVERY BOY
+        ========================= */
+
+        if(
+            role === "delivery_boy" ||
+            role === "delivery-boy" ||
+            role === "delivery"
+        ){
+
+            if(!roleData.delivery_boy_id){
+
+                await sb.auth.signOut();
+
+
+                showLoginMessage(
+                    "Delivery Boy account proper profile-umayi link cheythittilla. Admin-ne contact cheyyuka.",
+                    "error"
+                );
+
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Login";
+
+                return;
+            }
+
+
+            sessionStorage.setItem(
+                "beatrootDeliveryBoyId",
+                String(
+                    roleData.delivery_boy_id
+                )
+            );
+
+
+            window.location.href =
+                "./delivery-dashboard.html";
+
+            return;
+        }
+
+
+        /* =========================
+           CUSTOMER
+        ========================= */
+
+        if(role === "customer"){
+
+            window.location.href =
+                "../index.html";
+
+            return;
+        }
+
+
+        /* =========================
+           UNKNOWN ROLE
+        ========================= */
+
+        await sb.auth.signOut();
+
+
+        showLoginMessage(
+            "Invalid user role. Admin-ne contact cheyyuka.",
+            "error"
+        );
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "Login";
 
     }
 
@@ -890,12 +1228,10 @@ async function loginUser(){
         );
 
 
-        button.disabled =
-            false;
+        button.disabled = false;
 
         button.textContent =
             "Login";
-
     }
 
 }
@@ -946,7 +1282,6 @@ function showLoginMessage(
 
         message.style.border =
             "1px solid #bbf7d0";
-
     }
 
 }
@@ -989,9 +1324,7 @@ function closeRegister(){
 }
 
 
-function closeRegisterOutside(
-    event
-){
+function closeRegisterOutside(event){
 
     if(
         event.target ===
@@ -1008,7 +1341,7 @@ function closeRegisterOutside(
 
 
 /* =========================================
-   REGISTER
+   CUSTOMER REGISTRATION
 ========================================= */
 
 async function registerUser(){
@@ -1077,7 +1410,6 @@ async function registerUser(){
        VALIDATION
     ========================= */
 
-
     if(
         !name ||
         !phone ||
@@ -1092,7 +1424,6 @@ async function registerUser(){
         );
 
         return;
-
     }
 
 
@@ -1104,7 +1435,6 @@ async function registerUser(){
         );
 
         return;
-
     }
 
 
@@ -1125,7 +1455,6 @@ async function registerUser(){
         );
 
         return;
-
     }
 
 
@@ -1137,7 +1466,6 @@ async function registerUser(){
         );
 
         return;
-
     }
 
 
@@ -1152,12 +1480,10 @@ async function registerUser(){
         );
 
         return;
-
     }
 
 
-    button.disabled =
-        true;
+    button.disabled = true;
 
     button.textContent =
         "Creating Account...";
@@ -1165,9 +1491,8 @@ async function registerUser(){
 
     try{
 
-
         /* =========================
-           CREATE AUTH ACCOUNT
+           CREATE AUTH USER
         ========================= */
 
         const {
@@ -1198,7 +1523,7 @@ async function registerUser(){
         if(error){
 
             console.error(
-                "Signup error:",
+                "Signup Error:",
                 error
             );
 
@@ -1209,15 +1534,12 @@ async function registerUser(){
             );
 
 
-            button.disabled =
-                false;
+            button.disabled = false;
 
             button.textContent =
                 "Create Account";
 
-
             return;
-
         }
 
 
@@ -1229,28 +1551,54 @@ async function registerUser(){
             );
 
 
-            button.disabled =
-                false;
+            button.disabled = false;
 
             button.textContent =
                 "Create Account";
 
-
             return;
-
         }
 
 
         /* =========================
-           PROFILE
+           CUSTOMER ROLE
         ========================= */
 
         /*
-          Profile is created automatically by the Supabase
-          database trigger after the Auth user is created.
+          Normally the database trigger
+          should create user_roles.
 
-          Do NOT insert/upsert into public.profiles here.
+          If it does not, create it here.
         */
+
+        if(data.session){
+
+            const {
+                error:roleError
+            } =
+            await sb
+            .from("user_roles")
+            .upsert({
+
+                user_id:data.user.id,
+
+                role:"customer"
+
+            },{
+                onConflict:"user_id"
+            });
+
+
+            if(roleError){
+
+                console.error(
+                    "Customer role error:",
+                    roleError
+                );
+
+            }
+
+        }
 
 
         /* =========================
@@ -1258,7 +1606,7 @@ async function registerUser(){
         ========================= */
 
         showRegisterMessage(
-            "Account successfully created! Check your email if confirmation is required.",
+            "Account successfully created!",
             "success"
         );
 
@@ -1267,14 +1615,11 @@ async function registerUser(){
             "Account Created";
 
 
-        /*
-          If email confirmation is enabled,
-          user must confirm email first.
-        */
+        /* =========================
+           EMAIL CONFIRMATION
+        ========================= */
 
-        if(
-            !data.session
-        ){
+        if(!data.session){
 
             setTimeout(
                 function(){
@@ -1286,6 +1631,7 @@ async function registerUser(){
 
                     closeRegister();
 
+
                     document.getElementById(
                         "loginEmail"
                     ).value =
@@ -1296,31 +1642,19 @@ async function registerUser(){
             );
 
         }
+
         else{
 
             /*
-              Auto-login if confirmation
-              is disabled.
+              New registration is always
+              a CUSTOMER account.
             */
 
             setTimeout(
                 function(){
 
-                    if(
-                        email ===
-                        ADMIN_EMAIL
-                    ){
-
-                        window.location.href =
-                            "./admin-dashboard.html";
-
-                    }
-                    else{
-
-                        window.location.href =
-                            "../index.html";
-
-                    }
+                    window.location.href =
+                        "../index.html";
 
                 },
                 800
@@ -1333,7 +1667,7 @@ async function registerUser(){
     catch(error){
 
         console.error(
-            "Registration exception:",
+            "Registration Exception:",
             error
         );
 
@@ -1344,12 +1678,10 @@ async function registerUser(){
         );
 
 
-        button.disabled =
-            false;
+        button.disabled = false;
 
         button.textContent =
             "Create Account";
-
     }
 
 }
@@ -1400,7 +1732,6 @@ function showRegisterMessage(
 
         message.style.border =
             "1px solid #bbf7d0";
-
     }
 
 }
