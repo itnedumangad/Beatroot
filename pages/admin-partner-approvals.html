@@ -18,21 +18,27 @@
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f5f7fb;
-    color:#111827;
+    color:#171717;
 }
 
-button,
-input,
-select{
+button{
     font-family:inherit;
 }
 
-.side{
-    position:fixed;
-    inset:0 auto 0 0;
+.dashboard{
+    min-height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
     width:250px;
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
     background:#111827;
-    color:white;
+    color:#fff;
     padding:25px 15px;
     z-index:1000;
 }
@@ -47,22 +53,21 @@ select{
     color:#ef4444;
 }
 
-.label{
+.admin-label{
     color:#9ca3af;
-    font-size:12px;
+    font-size:11px;
     text-transform:uppercase;
     padding:0 15px 10px;
 }
 
-.menu button,
-.logout{
+.menu button{
     width:100%;
     border:0;
     background:transparent;
     color:#d1d5db;
     padding:13px 15px;
-    text-align:left;
     border-radius:10px;
+    text-align:left;
     cursor:pointer;
     margin:3px 0;
     font-size:14px;
@@ -71,35 +76,48 @@ select{
 .menu button:hover,
 .menu button.active{
     background:#ef4444;
-    color:white;
+    color:#fff;
 }
 
-.bottom{
+.logout-area{
     position:absolute;
-    bottom:20px;
     left:15px;
     right:15px;
+    bottom:20px;
 }
 
 .logout{
+    width:100%;
+    padding:12px;
     border:1px solid #374151;
+    background:transparent;
+    color:#d1d5db;
+    border-radius:10px;
+    cursor:pointer;
 }
+
+.logout:hover{
+    background:#1f2937;
+}
+
+/* ================= MAIN ================= */
 
 .main{
     margin-left:250px;
+    min-height:100vh;
 }
 
-.top{
+.topbar{
     height:75px;
-    background:white;
+    background:#fff;
     border-bottom:1px solid #e5e7eb;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
     padding:0 30px;
     position:sticky;
     top:0;
-    z-index:500;
+    z-index:100;
 }
 
 .title{
@@ -118,7 +136,7 @@ select{
     height:40px;
     border-radius:50%;
     background:#ef4444;
-    color:white;
+    color:#fff;
     display:grid;
     place-items:center;
     font-weight:bold;
@@ -128,47 +146,62 @@ select{
     padding:30px;
 }
 
-.head{
-    margin-bottom:22px;
+.page-head{
+    margin-bottom:25px;
 }
 
-.head h1{
+.page-head h1{
     font-size:28px;
     margin-bottom:6px;
 }
 
-.head p{
+.page-head p{
     color:#6b7280;
-    font-size:14px;
 }
+
+/* ================= STATS ================= */
 
 .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:18px;
-    margin-bottom:22px;
+    margin-bottom:25px;
 }
 
 .stat{
-    background:white;
+    background:#fff;
     border:1px solid #e5e7eb;
-    border-radius:15px;
+    border-radius:16px;
     padding:20px;
 }
 
-.stat-label{
+.stat-title{
     color:#6b7280;
     font-size:13px;
-    margin-bottom:9px;
 }
 
-.stat-value{
-    font-size:27px;
+.stat-number{
+    font-size:28px;
     font-weight:800;
+    margin-top:10px;
 }
+
+.pending{
+    color:#d97706;
+}
+
+.rest{
+    color:#2563eb;
+}
+
+.delivery{
+    color:#7c3aed;
+}
+
+/* ================= CARD ================= */
 
 .card{
-    background:white;
+    background:#fff;
     border:1px solid #e5e7eb;
     border-radius:16px;
     padding:22px;
@@ -185,7 +218,7 @@ select{
     flex:1;
     min-width:220px;
     height:44px;
-    border:1px solid #d1d5db;
+    border:1px solid #ddd;
     border-radius:10px;
     padding:0 13px;
     outline:none;
@@ -197,48 +230,49 @@ select{
 
 .filter{
     height:44px;
-    border:1px solid #d1d5db;
+    border:1px solid #ddd;
     border-radius:10px;
     padding:0 12px;
-    background:white;
+    background:#fff;
 }
 
 .refresh{
     height:44px;
-    padding:0 17px;
+    padding:0 16px;
     border:0;
     border-radius:10px;
     background:#111827;
-    color:white;
+    color:#fff;
     cursor:pointer;
 }
 
-.table-wrap{
+/* ================= TABLE ================= */
+
+.table{
     overflow:auto;
 }
 
 table{
     width:100%;
-    min-width:950px;
     border-collapse:collapse;
+    min-width:900px;
 }
 
 th,
 td{
-    text-align:left;
-    padding:14px 11px;
+    padding:14px 10px;
     border-bottom:1px solid #eee;
+    text-align:left;
     font-size:13px;
 }
 
 th{
     color:#6b7280;
     font-size:11px;
-    text-transform:uppercase;
 }
 
 .type-badge{
-    display:inline-flex;
+    display:inline-block;
     padding:6px 10px;
     border-radius:20px;
     font-size:11px;
@@ -246,50 +280,45 @@ th{
 }
 
 .type-restaurant{
-    background:#fee2e2;
-    color:#dc2626;
-}
-
-.type-delivery{
     background:#dbeafe;
     color:#2563eb;
 }
 
-.status{
-    display:inline-flex;
+.type-delivery{
+    background:#ede9fe;
+    color:#7c3aed;
+}
+
+.status-badge{
     padding:6px 10px;
     border-radius:20px;
     font-size:11px;
     font-weight:700;
 }
 
-.status.pending{
+.status-pending{
     background:#fef3c7;
     color:#92400e;
 }
 
-.status.approved{
+.status-approved{
     background:#dcfce7;
     color:#15803d;
 }
 
-.status.rejected{
+.status-rejected{
     background:#fee2e2;
     color:#dc2626;
 }
 
-.actions{
-    display:flex;
-    gap:7px;
-}
-
-.btn{
+.action-btn{
     border:0;
-    border-radius:8px;
     padding:8px 11px;
+    border-radius:8px;
     cursor:pointer;
     font-size:12px;
     font-weight:700;
+    margin-right:4px;
 }
 
 .view{
@@ -307,46 +336,29 @@ th{
     color:#dc2626;
 }
 
-.btn:disabled{
-    opacity:.5;
-    cursor:not-allowed;
+.action-btn:hover{
+    opacity:.8;
 }
+
+/* ================= EMPTY ================= */
 
 .message{
-    display:none;
-    padding:13px 15px;
-    border-radius:10px;
-    margin-bottom:18px;
-    font-size:13px;
-}
-
-.message.error{
-    display:block;
-    background:#fee2e2;
-    color:#b91c1c;
-}
-
-.message.success{
-    display:block;
-    background:#dcfce7;
-    color:#15803d;
-}
-
-.empty{
     text-align:center;
     padding:45px;
-    color:#6b7280;
+    color:#777;
 }
 
+/* ================= MODAL ================= */
+
 .modal{
+    display:none;
     position:fixed;
     inset:0;
     background:rgba(0,0,0,.55);
-    display:none;
+    z-index:5000;
     align-items:center;
     justify-content:center;
     padding:20px;
-    z-index:5000;
 }
 
 .modal.show{
@@ -355,11 +367,11 @@ th{
 
 .modal-box{
     width:100%;
-    max-width:600px;
+    max-width:650px;
     max-height:90vh;
     overflow:auto;
-    background:white;
-    border-radius:18px;
+    background:#fff;
+    border-radius:20px;
 }
 
 .modal-head{
@@ -368,6 +380,9 @@ th{
     align-items:center;
     padding:20px;
     border-bottom:1px solid #eee;
+    position:sticky;
+    top:0;
+    background:#fff;
 }
 
 .modal-head h2{
@@ -375,8 +390,8 @@ th{
 }
 
 .close{
-    width:35px;
-    height:35px;
+    width:36px;
+    height:36px;
     border:0;
     border-radius:50%;
     background:#f3f4f6;
@@ -398,20 +413,20 @@ th{
     background:#f8fafc;
     border:1px solid #e5e7eb;
     border-radius:10px;
-    padding:12px;
+    padding:13px;
 }
 
 .detail.full{
     grid-column:1/-1;
 }
 
-.detail-label{
+.label{
     color:#6b7280;
     font-size:11px;
     margin-bottom:5px;
 }
 
-.detail-value{
+.value{
     font-size:14px;
     font-weight:600;
     word-break:break-word;
@@ -428,24 +443,26 @@ th{
     height:45px;
     border:0;
     border-radius:10px;
-    font-weight:700;
     cursor:pointer;
+    font-weight:700;
 }
 
 .modal-approve{
     background:#16a34a;
-    color:white;
+    color:#fff;
 }
 
 .modal-reject{
     background:#dc2626;
-    color:white;
+    color:#fff;
 }
 
-@media(max-width:750px){
+/* ================= MOBILE ================= */
 
-    .side{
-        display:none;
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
     }
 
     .main{
@@ -456,7 +473,7 @@ th{
         padding:20px 15px;
     }
 
-    .top{
+    .topbar{
         padding:0 15px;
     }
 
@@ -471,21 +488,20 @@ th{
     .detail.full{
         grid-column:auto;
     }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-
-<aside class="side">
+<aside class="sidebar">
 
     <div class="brand">
         Beat<span>root</span>
     </div>
 
-    <div class="label">
+    <div class="admin-label">
         Admin Panel
     </div>
 
@@ -495,15 +511,15 @@ th{
             📊 Dashboard
         </button>
 
-        <button onclick="go('my-orders.html')">
+        <button onclick="go('admin-orders.html')">
             🛒 Orders
         </button>
 
-        <button onclick="go('customers.html')">
+        <button onclick="go('admin-customers.html')">
             👥 Customers
         </button>
 
-        <button onclick="go('restaurants.html')">
+        <button onclick="go('admin-restaurants.html')">
             🍔 Restaurants
         </button>
 
@@ -511,7 +527,7 @@ th{
             🤝 Partner Approvals
         </button>
 
-        <button onclick="go('reports.html')">
+        <button onclick="go('admin-reports.html')">
             📈 Reports
         </button>
 
@@ -521,14 +537,10 @@ th{
 
     </div>
 
-    <div class="bottom">
+    <div class="logout-area">
 
-        <button
-            class="logout"
-            onclick="logout()">
-
+        <button class="logout" onclick="logout()">
             🚪 Logout
-
         </button>
 
     </div>
@@ -536,11 +548,9 @@ th{
 </aside>
 
 
-<!-- MAIN -->
-
 <div class="main">
 
-<header class="top">
+<header class="topbar">
 
     <div class="title">
         Partner Approvals
@@ -548,9 +558,7 @@ th{
 
     <div class="profile">
 
-        <div
-            class="avatar"
-            id="avatar">
+        <div class="avatar" id="avatar">
             A
         </div>
 
@@ -565,7 +573,7 @@ th{
 
 <main class="content">
 
-    <div class="head">
+    <div class="page-head">
 
         <h1>
             Partner Approvals
@@ -578,24 +586,16 @@ th{
     </div>
 
 
-    <div
-        id="message"
-        class="message">
-    </div>
-
-
-    <!-- STATS -->
-
     <div class="stats">
 
         <div class="stat">
 
-            <div class="stat-label">
-                Pending Requests
+            <div class="stat-title">
+                Pending Applications
             </div>
 
             <div
-                class="stat-value"
+                class="stat-number pending"
                 id="pendingCount">
                 0
             </div>
@@ -605,12 +605,12 @@ th{
 
         <div class="stat">
 
-            <div class="stat-label">
-                Restaurants
+            <div class="stat-title">
+                Restaurant Applications
             </div>
 
             <div
-                class="stat-value"
+                class="stat-number rest"
                 id="restaurantCount">
                 0
             </div>
@@ -620,12 +620,12 @@ th{
 
         <div class="stat">
 
-            <div class="stat-label">
-                Delivery Boys
+            <div class="stat-title">
+                Delivery Boy Applications
             </div>
 
             <div
-                class="stat-value"
+                class="stat-number delivery"
                 id="deliveryCount">
                 0
             </div>
@@ -635,8 +635,6 @@ th{
     </div>
 
 
-    <!-- TABLE -->
-
     <section class="card">
 
         <div class="toolbar">
@@ -645,14 +643,22 @@ th{
                 type="text"
                 id="search"
                 class="search"
-                placeholder="Search name, email, phone...">
+                placeholder="Search name, email or phone...">
 
             <select
                 id="filter"
                 class="filter">
 
                 <option value="">
-                    All Requests
+                    All Applications
+                </option>
+
+                <option value="restaurant">
+                    Restaurants
+                </option>
+
+                <option value="delivery_boy">
+                    Delivery Boys
                 </option>
 
                 <option value="pending">
@@ -667,19 +673,11 @@ th{
                     Rejected
                 </option>
 
-                <option value="restaurant">
-                    Restaurants
-                </option>
-
-                <option value="delivery_boy">
-                    Delivery Boys
-                </option>
-
             </select>
 
             <button
                 class="refresh"
-                onclick="loadRequests()">
+                onclick="loadApplications()">
 
                 ↻ Refresh
 
@@ -688,47 +686,59 @@ th{
         </div>
 
 
-        <div class="table-wrap">
+        <div class="table">
 
             <table>
 
                 <thead>
 
-                <tr>
+                    <tr>
 
-                    <th>ID</th>
+                        <th>
+                            NAME
+                        </th>
 
-                    <th>Type</th>
+                        <th>
+                            TYPE
+                        </th>
 
-                    <th>Name</th>
+                        <th>
+                            EMAIL
+                        </th>
 
-                    <th>Email</th>
+                        <th>
+                            PHONE
+                        </th>
 
-                    <th>Phone</th>
+                        <th>
+                            STATUS
+                        </th>
 
-                    <th>Status</th>
+                        <th>
+                            DATE
+                        </th>
 
-                    <th>Date</th>
+                        <th>
+                            ACTION
+                        </th>
 
-                    <th>Actions</th>
-
-                </tr>
+                    </tr>
 
                 </thead>
 
                 <tbody id="rows">
 
-                <tr>
+                    <tr>
 
-                    <td
-                        colspan="8"
-                        class="empty">
+                        <td
+                            colspan="7"
+                            class="message">
 
-                        Loading requests...
+                            Loading applications...
 
-                    </td>
+                        </td>
 
-                </tr>
+                    </tr>
 
                 </tbody>
 
@@ -743,7 +753,7 @@ th{
 </div>
 
 
-<!-- MODAL -->
+<!-- ================= MODAL ================= -->
 
 <div
     class="modal"
@@ -755,7 +765,7 @@ th{
         <div class="modal-head">
 
             <h2>
-                Partner Details
+                Application Details
             </h2>
 
             <button
@@ -768,10 +778,11 @@ th{
 
         </div>
 
-
         <div
             class="modal-body"
             id="modalBody">
+
+            Loading...
 
         </div>
 
@@ -782,9 +793,9 @@ th{
 
 <script>
 
-/* =====================================================
+/* =========================================================
    SUPABASE
-===================================================== */
+========================================================= */
 
 const SUPABASE_URL =
     "https://jhihjnsxazmftdqlitgk.supabase.co";
@@ -795,6 +806,7 @@ const SUPABASE_KEY =
 const ADMIN_EMAIL =
     "itnedumangad@gmail.com";
 
+
 const sb =
     supabase.createClient(
         SUPABASE_URL,
@@ -802,18 +814,13 @@ const sb =
     );
 
 
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let requests = [];
-
-let selectedRequest = null;
+let applications = [];
+let selectedApplication = null;
 
 
-/* =====================================================
+/* =========================================================
    ELEMENTS
-===================================================== */
+========================================================= */
 
 const rows =
     document.getElementById("rows");
@@ -831,9 +838,9 @@ const modalBody =
     document.getElementById("modalBody");
 
 
-/* =====================================================
+/* =========================================================
    ESCAPE
-===================================================== */
+========================================================= */
 
 function esc(value){
 
@@ -847,9 +854,9 @@ function esc(value){
 }
 
 
-/* =====================================================
+/* =========================================================
    NAVIGATION
-===================================================== */
+========================================================= */
 
 function go(page){
 
@@ -858,35 +865,9 @@ function go(page){
 }
 
 
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-function showMessage(text,type="success"){
-
-    const box =
-        document.getElementById("message");
-
-    box.textContent = text;
-
-    box.className =
-        "message " + type;
-
-    setTimeout(() => {
-
-        box.className =
-            "message";
-
-        box.textContent = "";
-
-    },4000);
-
-}
-
-
-/* =====================================================
+/* =========================================================
    AUTH
-===================================================== */
+========================================================= */
 
 async function checkAdmin(){
 
@@ -909,16 +890,11 @@ async function checkAdmin(){
 
     }
 
-
     const user =
         data.user;
 
-
-    /*
-     * Admin email check
-     */
-
     if(
+        !user.email ||
         user.email.toLowerCase() !==
         ADMIN_EMAIL.toLowerCase()
     ){
@@ -927,61 +903,79 @@ async function checkAdmin(){
             "Access denied. Admin only."
         );
 
+        await sb.auth.signOut();
+
         window.location.href =
-            "../index.html";
+            "login.html";
 
         return false;
 
     }
-
 
     document.getElementById(
         "adminName"
     ).textContent =
         user.email.split("@")[0];
 
-
     document.getElementById(
         "avatar"
     ).textContent =
         user.email.charAt(0).toUpperCase();
-
 
     return true;
 
 }
 
 
-/* =====================================================
-   LOAD REQUESTS
-===================================================== */
+/* =========================================================
+   LOAD APPLICATIONS
+========================================================= */
 
-async function loadRequests(){
+async function loadApplications(){
+
+    if(!await checkAdmin()){
+        return;
+    }
 
     rows.innerHTML = `
         <tr>
-            <td colspan="8" class="empty">
-                Loading requests...
+            <td colspan="7" class="message">
+                Loading applications...
             </td>
         </tr>
     `;
 
 
-    if(!await checkAdmin()){
-
-        return;
-
-    }
-
-
     try{
+
+        /*
+         IMPORTANT:
+
+         This page expects a table named
+         partner_applications.
+
+         Expected columns:
+
+         id
+         user_id
+         full_name
+         email
+         phone
+         type
+         status
+         created_at
+         business_name
+         address
+         vehicle_number
+         license_number
+         */
 
         const {
             data,
             error
         } =
         await sb
-            .from("partner_signup_requests")
+            .from("partner_applications")
             .select("*")
             .order(
                 "created_at",
@@ -992,13 +986,11 @@ async function loadRequests(){
 
 
         if(error){
-
             throw error;
-
         }
 
 
-        requests =
+        applications =
             data || [];
 
 
@@ -1013,9 +1005,8 @@ async function loadRequests(){
 
         rows.innerHTML = `
             <tr>
-                <td colspan="8" class="empty">
-                    Unable to load requests.
-                    <br><br>
+                <td colspan="7" class="message">
+                    Unable to load applications.<br><br>
                     ${esc(error.message)}
                 </td>
             </tr>
@@ -1026,113 +1017,186 @@ async function loadRequests(){
 }
 
 
-/* =====================================================
+/* =========================================================
    STATS
-===================================================== */
+========================================================= */
 
 function updateStats(){
 
     const pending =
-        requests.filter(
-            x => x.status === "pending"
+        applications.filter(
+            x =>
+                normalizeStatus(x.status)
+                === "pending"
         ).length;
 
 
     const restaurants =
-        requests.filter(
+        applications.filter(
             x =>
-                x.role === "restaurant" &&
-                x.status === "pending"
+                normalizeType(x.type)
+                === "restaurant"
         ).length;
 
 
     const delivery =
-        requests.filter(
+        applications.filter(
             x =>
-                x.role === "delivery_boy" &&
-                x.status === "pending"
+                normalizeType(x.type)
+                === "delivery_boy"
         ).length;
 
 
     document.getElementById(
         "pendingCount"
-    ).textContent = pending;
+    ).textContent =
+        pending;
 
 
     document.getElementById(
         "restaurantCount"
-    ).textContent = restaurants;
+    ).textContent =
+        restaurants;
 
 
     document.getElementById(
         "deliveryCount"
-    ).textContent = delivery;
+    ).textContent =
+        delivery;
 
 }
 
 
-/* =====================================================
+/* =========================================================
+   NORMALIZE TYPE
+========================================================= */
+
+function normalizeType(type){
+
+    const value =
+        String(type || "")
+        .toLowerCase()
+        .trim();
+
+    if(
+        value === "restaurant" ||
+        value === "restaurant_owner"
+    ){
+
+        return "restaurant";
+
+    }
+
+    if(
+        value === "delivery" ||
+        value === "delivery_boy"
+    ){
+
+        return "delivery_boy";
+
+    }
+
+    return value;
+
+}
+
+
+/* =========================================================
+   NORMALIZE STATUS
+========================================================= */
+
+function normalizeStatus(status){
+
+    const value =
+        String(status || "pending")
+        .toLowerCase()
+        .trim();
+
+    if(value === "approved"){
+        return "approved";
+    }
+
+    if(
+        value === "rejected" ||
+        value === "declined"
+    ){
+
+        return "rejected";
+
+    }
+
+    return "pending";
+
+}
+
+
+/* =========================================================
    RENDER
-===================================================== */
+========================================================= */
 
 function render(){
 
-    const q =
+    const query =
         search.value
-            .toLowerCase()
-            .trim();
+        .toLowerCase()
+        .trim();
 
-    const f =
+    const selected =
         filter.value;
 
 
     const list =
-        requests.filter(request => {
+        applications.filter(
+            app => {
 
-            const text =
-                (
-                    request.full_name +
-                    " " +
-                    request.email +
-                    " " +
-                    request.phone +
-                    " " +
-                    request.restaurant_name
-                )
-                .toLowerCase();
+                const name =
+                    String(
+                        app.full_name ||
+                        app.business_name ||
+                        ""
+                    ).toLowerCase();
+
+                const email =
+                    String(
+                        app.email || ""
+                    ).toLowerCase();
+
+                const phone =
+                    String(
+                        app.phone || ""
+                    ).toLowerCase();
+
+                const type =
+                    normalizeType(
+                        app.type
+                    );
+
+                const status =
+                    normalizeStatus(
+                        app.status
+                    );
 
 
-            const searchMatch =
-                !q ||
-                text.includes(q);
+                const searchMatch =
+                    !query ||
+                    name.includes(query) ||
+                    email.includes(query) ||
+                    phone.includes(query);
 
 
-            let filterMatch = true;
+                const filterMatch =
+                    !selected ||
+                    selected === type ||
+                    selected === status;
 
 
-            if(
-                f === "restaurant" ||
-                f === "delivery_boy"
-            ){
-
-                filterMatch =
-                    request.role === f;
+                return (
+                    searchMatch &&
+                    filterMatch
+                );
 
             }
-            else if(f){
-
-                filterMatch =
-                    request.status === f;
-
-            }
-
-
-            return (
-                searchMatch &&
-                filterMatch
-            );
-
-        });
+        );
 
 
     if(!list.length){
@@ -1140,10 +1204,10 @@ function render(){
         rows.innerHTML = `
             <tr>
                 <td
-                    colspan="8"
-                    class="empty">
+                    colspan="7"
+                    class="message">
 
-                    No requests found.
+                    No applications found.
 
                 </td>
             </tr>
@@ -1155,400 +1219,389 @@ function render(){
 
 
     rows.innerHTML =
-        list.map(request => {
+        list.map(
+            app => {
 
-            const isRestaurant =
-                request.role ===
-                "restaurant";
+                const type =
+                    normalizeType(
+                        app.type
+                    );
+
+                const status =
+                    normalizeStatus(
+                        app.status
+                    );
+
+                const name =
+                    app.business_name ||
+                    app.full_name ||
+                    "Applicant";
 
 
-            const date =
-                request.created_at
+                const date =
+                    app.created_at
                     ? new Date(
-                        request.created_at
-                    ).toLocaleString(
+                        app.created_at
+                      ).toLocaleDateString(
                         "en-IN"
-                    )
+                      )
                     : "-";
 
 
-            return `
+                return `
 
-            <tr>
+<tr>
 
-                <td>
-                    #${esc(request.id)}
-                </td>
+<td>
+    <strong>
+        ${esc(name)}
+    </strong>
+</td>
 
-                <td>
 
-                    <span
-                        class="type-badge ${
-                            isRestaurant
-                                ? "type-restaurant"
-                                : "type-delivery"
-                        }">
+<td>
 
-                        ${
-                            isRestaurant
-                                ? "🏪 Restaurant"
-                                : "🚴 Delivery"
-                        }
+    <span
+        class="type-badge
+        ${
+            type === "restaurant"
+            ? "type-restaurant"
+            : "type-delivery"
+        }">
 
-                    </span>
+        ${
+            type === "restaurant"
+            ? "🏪 Restaurant"
+            : "🚴 Delivery Boy"
+        }
 
-                </td>
+    </span>
 
-                <td>
-                    <strong>
-                        ${esc(
-                            request.full_name
-                        )}
-                    </strong>
-                </td>
+</td>
 
-                <td>
-                    ${esc(
-                        request.email
-                    )}
-                </td>
 
-                <td>
-                    ${esc(
-                        request.phone
-                    )}
-                </td>
+<td>
+    ${esc(app.email || "-")}
+</td>
 
-                <td>
 
-                    <span
-                        class="status ${
-                            request.status
-                        }">
+<td>
+    ${esc(app.phone || "-")}
+</td>
 
-                        ${esc(
-                            request.status
-                        )}
 
-                    </span>
+<td>
 
-                </td>
+    <span
+        class="status-badge status-${status}">
 
-                <td>
-                    ${esc(date)}
-                </td>
+        ${
+            status.charAt(0).toUpperCase()
+            + status.slice(1)
+        }
 
-                <td>
+    </span>
 
-                    <div class="actions">
+</td>
 
-                        <button
-                            class="btn view"
-                            onclick="
-                                openDetails(
-                                    ${request.id}
-                                )
-                            ">
 
-                            View
+<td>
+    ${esc(date)}
+</td>
 
-                        </button>
 
-                        ${
-                            request.status === "pending"
-                            ? `
+<td>
 
-                            <button
-                                class="btn approve"
-                                onclick="
-                                    approveRequest(
-                                        ${request.id}
-                                    )
-                                ">
+    <button
+        class="action-btn view"
+        onclick="viewApplication('${esc(app.id)}')">
 
-                                Approve
+        View
 
-                            </button>
+    </button>
 
-                            <button
-                                class="btn reject"
-                                onclick="
-                                    rejectRequest(
-                                        ${request.id}
-                                    )
-                                ">
 
-                                Reject
+    ${
+        status === "pending"
+        ? `
 
-                            </button>
+        <button
+            class="action-btn approve"
+            onclick="approveApplication('${esc(app.id)}')">
 
-                            `
-                            : ""
-                        }
+            Approve
 
-                    </div>
+        </button>
 
-                </td>
+        <button
+            class="action-btn reject"
+            onclick="rejectApplication('${esc(app.id)}')">
 
-            </tr>
+            Reject
 
-            `;
+        </button>
 
-        }).join("");
+        `
+        : ""
+    }
+
+</td>
+
+</tr>
+
+`;
+
+            }
+        ).join("");
 
 }
 
 
-/* =====================================================
-   VIEW DETAILS
-===================================================== */
+/* =========================================================
+   VIEW APPLICATION
+========================================================= */
 
-function openDetails(id){
+function viewApplication(id){
 
-    const request =
-        requests.find(
-            x => Number(x.id) ===
-                 Number(id)
+    const app =
+        applications.find(
+            x =>
+                String(x.id) ===
+                String(id)
         );
 
 
-    if(!request){
-
+    if(!app){
         return;
-
     }
 
 
-    selectedRequest =
-        request;
+    selectedApplication =
+        app;
 
 
-    const isRestaurant =
-        request.role === "restaurant";
+    const type =
+        normalizeType(
+            app.type
+        );
+
+    const status =
+        normalizeStatus(
+            app.status
+        );
 
 
     modalBody.innerHTML = `
 
-        <div class="detail-grid">
+<div class="detail-grid">
 
-            <div class="detail">
+    <div class="detail">
 
-                <div class="detail-label">
-                    Request ID
-                </div>
+        <div class="label">
+            Applicant Name
+        </div>
 
-                <div class="detail-value">
-                    #${esc(request.id)}
-                </div>
+        <div class="value">
+            ${esc(app.full_name || "-")}
+        </div>
 
-            </div>
-
-
-            <div class="detail">
-
-                <div class="detail-label">
-                    Account Type
-                </div>
-
-                <div class="detail-value">
-
-                    ${
-                        isRestaurant
-                            ? "🏪 Restaurant"
-                            : "🚴 Delivery Boy"
-                    }
-
-                </div>
-
-            </div>
+    </div>
 
 
-            <div class="detail">
+    <div class="detail">
 
-                <div class="detail-label">
-                    Full Name
-                </div>
+        <div class="label">
+            Account Type
+        </div>
 
-                <div class="detail-value">
-                    ${esc(request.full_name)}
-                </div>
-
-            </div>
-
-
-            <div class="detail">
-
-                <div class="detail-label">
-                    Phone
-                </div>
-
-                <div class="detail-value">
-                    ${esc(request.phone)}
-                </div>
-
-            </div>
-
-
-            <div class="detail full">
-
-                <div class="detail-label">
-                    Email
-                </div>
-
-                <div class="detail-value">
-                    ${esc(request.email)}
-                </div>
-
-            </div>
-
+        <div class="value">
 
             ${
-                isRestaurant
-                ? `
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Restaurant Name
-                    </div>
-
-                    <div class="detail-value">
-                        ${esc(
-                            request.restaurant_name ||
-                            "-"
-                        )}
-                    </div>
-
-                </div>
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Address
-                    </div>
-
-                    <div class="detail-value">
-                        ${esc(
-                            request.address ||
-                            "-"
-                        )}
-                    </div>
-
-                </div>
-
-                `
-                :
-                `
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Vehicle
-                    </div>
-
-                    <div class="detail-value">
-                        ${esc(
-                            request.vehicle_type ||
-                            "-"
-                        )}
-                    </div>
-
-                </div>
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Address
-                    </div>
-
-                    <div class="detail-value">
-                        ${esc(
-                            request.address ||
-                            "-"
-                        )}
-                    </div>
-
-                </div>
-
-                `
+                type === "restaurant"
+                ? "🏪 Restaurant"
+                : "🚴 Delivery Boy"
             }
 
+        </div>
 
-            <div class="detail">
+    </div>
 
-                <div class="detail-label">
-                    Status
-                </div>
 
-                <div class="detail-value">
-                    ${esc(request.status)}
-                </div>
+    ${
+        type === "restaurant"
+        ? `
 
+        <div class="detail full">
+
+            <div class="label">
+                Restaurant / Business Name
             </div>
 
+            <div class="value">
+                ${esc(app.business_name || "-")}
+            </div>
 
-            <div class="detail">
+        </div>
 
-                <div class="detail-label">
-                    Registered
-                </div>
+        `
+        : ""
+    }
 
-                <div class="detail-value">
 
-                    ${
-                        request.created_at
-                            ? new Date(
-                                request.created_at
-                              ).toLocaleString(
-                                "en-IN"
-                              )
-                            : "-"
-                    }
+    <div class="detail">
 
-                </div>
+        <div class="label">
+            Email
+        </div>
 
+        <div class="value">
+            ${esc(app.email || "-")}
+        </div>
+
+    </div>
+
+
+    <div class="detail">
+
+        <div class="label">
+            Phone
+        </div>
+
+        <div class="value">
+            ${esc(app.phone || "-")}
+        </div>
+
+    </div>
+
+
+    <div class="detail full">
+
+        <div class="label">
+            Address
+        </div>
+
+        <div class="value">
+            ${esc(app.address || "-")}
+        </div>
+
+    </div>
+
+
+    ${
+        type === "delivery_boy"
+        ? `
+
+        <div class="detail">
+
+            <div class="label">
+                Vehicle Number
+            </div>
+
+            <div class="value">
+                ${esc(app.vehicle_number || "-")}
             </div>
 
         </div>
 
 
-        ${
-            request.status === "pending"
-            ? `
+        <div class="detail">
 
-            <div class="modal-actions">
-
-                <button
-                    class="modal-approve"
-                    onclick="
-                        approveRequest(
-                            ${request.id}
-                        )
-                    ">
-
-                    ✓ Approve
-
-                </button>
-
-                <button
-                    class="modal-reject"
-                    onclick="
-                        rejectRequest(
-                            ${request.id}
-                        )
-                    ">
-
-                    ✕ Reject
-
-                </button>
-
+            <div class="label">
+                License Number
             </div>
 
-            `
-            : ""
-        }
+            <div class="value">
+                ${esc(app.license_number || "-")}
+            </div>
 
-    `;
+        </div>
+
+        `
+        : ""
+    }
+
+
+    <div class="detail">
+
+        <div class="label">
+            Status
+        </div>
+
+        <div class="value">
+            ${status.toUpperCase()}
+        </div>
+
+    </div>
+
+
+    <div class="detail">
+
+        <div class="label">
+            Application Date
+        </div>
+
+        <div class="value">
+
+            ${
+                app.created_at
+                ? new Date(
+                    app.created_at
+                  ).toLocaleString(
+                    "en-IN"
+                  )
+                : "-"
+            }
+
+        </div>
+
+    </div>
+
+
+    <div class="detail full">
+
+        <div class="label">
+            User ID
+        </div>
+
+        <div class="value">
+            ${esc(app.user_id || "-")}
+        </div>
+
+    </div>
+
+</div>
+
+
+${
+    status === "pending"
+    ? `
+
+<div class="modal-actions">
+
+    <button
+        class="modal-approve"
+        onclick="approveApplication('${esc(app.id)}')">
+
+        ✓ Approve Application
+
+    </button>
+
+
+    <button
+        class="modal-reject"
+        onclick="rejectApplication('${esc(app.id)}')">
+
+        ✕ Reject Application
+
+    </button>
+
+</div>
+
+`
+: ""
+}
+
+`;
 
 
     modal.classList.add("show");
@@ -1556,45 +1609,30 @@ function openDetails(id){
 }
 
 
-/* =====================================================
+/* =========================================================
    APPROVE
-===================================================== */
+========================================================= */
 
-async function approveRequest(id){
+async function approveApplication(id){
 
-    const request =
-        requests.find(
-            x => Number(x.id) ===
-                 Number(id)
+    const app =
+        applications.find(
+            x =>
+                String(x.id) ===
+                String(id)
         );
 
 
-    if(!request){
-
+    if(!app){
         return;
-
     }
 
 
-    if(request.status !== "pending"){
-
-        showMessage(
-            "This request has already been processed.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const confirmed =
-        confirm(
-            `Approve ${request.full_name}?`
-        );
-
-
-    if(!confirmed){
+    if(
+        !confirm(
+            "Approve this application?"
+        )
+    ){
 
         return;
 
@@ -1604,206 +1642,22 @@ async function approveRequest(id){
     try{
 
         /*
-         * 1. Update request status
-         */
+         STEP 1
+         Update application status
+        */
 
         const {
-            error:requestError
+            error
         } =
         await sb
-            .from("partner_signup_requests")
+            .from("partner_applications")
             .update({
-
                 status:"approved",
-
-                reviewed_at:
-                    new Date().toISOString()
-
-            })
-            .eq(
-                "id",
-                id
-            );
-
-
-        if(requestError){
-
-            throw requestError;
-
-        }
-
-
-        /*
-         * 2. Create role
-         */
-
-        const {
-            error:roleError
-        } =
-        await sb
-            .from("user_roles")
-            .upsert({
-
-                user_id:
-                    request.user_id,
-
-                role:
-                    request.role
-
-            });
-
-
-        if(roleError){
-
-            /*
-             * Rollback request status
-             */
-
-            await sb
-                .from(
-                    "partner_signup_requests"
-                )
-                .update({
-                    status:"pending"
-                })
-                .eq(
-                    "id",
-                    id
-                );
-
-            throw roleError;
-
-        }
-
-
-        /*
-         * 3. Restaurant record
-         */
-
-        if(request.role === "restaurant"){
-
-            const {
-                error:restaurantError
-            } =
-            await sb
-                .from("restaurants")
-                .insert({
-
-                    name:
-                        request.restaurant_name ||
-                        request.full_name,
-
-                    description:
-                        "Beatroot Restaurant",
-
-                    phone:
-                        request.phone,
-
-                    address:
-                        request.address
-
-                });
-
-
-            if(restaurantError){
-
-                console.error(
-                    "Restaurant creation error:",
-                    restaurantError
-                );
-
-            }
-
-        }
-
-
-        /*
-         * 4. Refresh
-         */
-
-        showMessage(
-            "Partner approved successfully.",
-            "success"
-        );
-
-
-        closeModal();
-
-        await loadRequests();
-
-    }
-    catch(error){
-
-        console.error(
-            "Approval error:",
-            error
-        );
-
-        showMessage(
-            "Approval failed: " +
-            error.message,
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   REJECT
-===================================================== */
-
-async function rejectRequest(id){
-
-    const request =
-        requests.find(
-            x => Number(x.id) ===
-                 Number(id)
-        );
-
-
-    if(!request){
-
-        return;
-
-    }
-
-
-    if(request.status !== "pending"){
-
-        return;
-
-    }
-
-
-    const confirmed =
-        confirm(
-            `Reject ${request.full_name}'s registration?`
-        );
-
-
-    if(!confirmed){
-
-        return;
-
-    }
-
-
-    try{
-
-        const {
-            error
-        } =
-        await sb
-            .from("partner_signup_requests")
-            .update({
-
-                status:"rejected",
-
-                reviewed_at:
-                    new Date().toISOString()
-
+                approved_at:new Date().toISOString(),
+                approved_by:
+                    (
+                        await sb.auth.getUser()
+                    ).data.user?.id || null
             })
             .eq(
                 "id",
@@ -1812,47 +1666,78 @@ async function rejectRequest(id){
 
 
         if(error){
-
             throw error;
+        }
+
+
+        /*
+         STEP 2
+         Assign role
+
+         Restaurant -> restaurant
+         Delivery -> delivery_boy
+        */
+
+        const type =
+            normalizeType(
+                app.type
+            );
+
+
+        if(app.user_id){
+
+            const role =
+                type === "restaurant"
+                ? "restaurant"
+                : "delivery_boy";
+
+
+            const {
+                error:roleError
+            } =
+            await sb
+                .from("user_roles")
+                .upsert({
+
+                    user_id:
+                        app.user_id,
+
+                    role:role
+
+                },{
+                    onConflict:
+                        "user_id"
+                });
+
+
+            if(roleError){
+                throw roleError;
+            }
 
         }
 
 
         /*
-         * Remove any role if previously created
-         */
-
-        await sb
-            .from("user_roles")
-            .delete()
-            .eq(
-                "user_id",
-                request.user_id
-            );
-
-
-        showMessage(
-            "Registration rejected.",
-            "success"
-        );
-
+         STEP 3
+         Reload
+        */
 
         closeModal();
 
-        await loadRequests();
+        await loadApplications();
+
+        alert(
+            "Application approved successfully."
+        );
 
     }
     catch(error){
 
-        console.error(
-            "Reject error:",
-            error
-        );
+        console.error(error);
 
-        showMessage(
-            "Rejection failed: " +
-            error.message,
-            "error"
+        alert(
+            "Approval failed:\n" +
+            error.message
         );
 
     }
@@ -1860,22 +1745,88 @@ async function rejectRequest(id){
 }
 
 
-/* =====================================================
-   MODAL
-===================================================== */
+/* =========================================================
+   REJECT
+========================================================= */
+
+async function rejectApplication(id){
+
+    if(
+        !confirm(
+            "Reject this application?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await sb
+            .from("partner_applications")
+            .update({
+                status:"rejected",
+                rejected_at:
+                    new Date().toISOString()
+            })
+            .eq(
+                "id",
+                id
+            );
+
+
+        if(error){
+            throw error;
+        }
+
+
+        closeModal();
+
+        await loadApplications();
+
+        alert(
+            "Application rejected."
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Rejection failed:\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
 
 function closeModal(){
 
     modal.classList.remove("show");
 
-    selectedRequest = null;
+    selectedApplication =
+        null;
 
 }
 
 
 function closeOutside(event){
 
-    if(event.target === modal){
+    if(
+        event.target === modal
+    ){
 
         closeModal();
 
@@ -1886,7 +1837,7 @@ function closeOutside(event){
 
 document.addEventListener(
     "keydown",
-    function(event){
+    event => {
 
         if(event.key === "Escape"){
 
@@ -1898,19 +1849,14 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   SEARCH
-===================================================== */
+/* =========================================================
+   SEARCH / FILTER
+========================================================= */
 
 search.addEventListener(
     "input",
     render
 );
-
-
-/* =====================================================
-   FILTER
-===================================================== */
 
 filter.addEventListener(
     "change",
@@ -1918,19 +1864,17 @@ filter.addEventListener(
 );
 
 
-/* =====================================================
+/* =========================================================
    LOGOUT
-===================================================== */
+========================================================= */
 
 async function logout(){
 
-    const confirmed =
-        confirm(
+    if(
+        !confirm(
             "Are you sure you want to logout?"
-        );
-
-
-    if(!confirmed){
+        )
+    ){
 
         return;
 
@@ -1939,18 +1883,17 @@ async function logout(){
 
     await sb.auth.signOut();
 
-
     window.location.href =
         "login.html";
 
 }
 
 
-/* =====================================================
+/* =========================================================
    START
-===================================================== */
+========================================================= */
 
-loadRequests();
+loadApplications();
 
 </script>
 
