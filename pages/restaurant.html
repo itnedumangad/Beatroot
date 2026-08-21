@@ -6,15 +6,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Restaurant Menu - Beatroot</title>
+<title>Beatroot - Restaurant Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-/* =========================
-   RESET
-========================= */
 
 *{
     box-sizing:border-box;
@@ -22,1041 +18,1108 @@
     padding:0;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
 body{
-    font-family:Inter,Arial,Helvetica,sans-serif;
-    background:#f7f8fc;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
     color:#171717;
 }
 
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
+}
 
-/* =========================
-   REMOVE UNDERLINES
-========================= */
+button{
+    cursor:pointer;
+}
 
-a,
-a:link,
-a:visited,
-a:hover,
-a:active,
-a:focus{
-    text-decoration:none !important;
+.dashboard{
+    display:flex;
+    min-height:100vh;
 }
 
 
-/* =========================
-   HEADER
-========================= */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-.header{
-    height:72px;
+.sidebar{
 
-    background:rgba(255,255,255,.96);
+    width:250px;
 
-    backdrop-filter:blur(14px);
+    background:#111827;
 
-    border-bottom:1px solid #e8e8e8;
+    color:white;
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    position:fixed;
 
-    padding:0 6%;
-
-    position:sticky;
+    left:0;
     top:0;
+    bottom:0;
 
-    z-index:1000;
+    padding:25px 15px;
+
+    z-index:100;
 }
 
-.logo{
-    font-size:29px;
-    font-weight:900;
-    letter-spacing:-1.5px;
-    color:#ef3f3f;
+.brand{
+
+    font-size:27px;
+
+    font-weight:800;
+
+    padding:0 15px 30px;
 }
 
-.logo span{
-    color:#171717;
+.brand span{
+    color:#ef4444;
 }
 
+.restaurant-label{
 
-/* =========================
-   NAV
-========================= */
+    font-size:11px;
 
-.nav{
-    display:flex;
-    align-items:center;
-    gap:8px;
+    color:#9ca3af;
+
+    padding:0 15px;
+
+    margin-bottom:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
 }
 
-.nav-link{
-    color:#333;
+.menu{
+    list-style:none;
+}
 
-    font-size:14px;
-    font-weight:700;
+.menu li{
+    margin:5px 0;
+}
 
-    padding:10px 13px;
+.menu button{
+
+    width:100%;
+
+    border:0;
+
+    background:transparent;
+
+    color:#d1d5db;
+
+    padding:13px 15px;
+
+    text-align:left;
 
     border-radius:10px;
 
-    transition:.2s ease;
-}
-
-.nav-link:hover{
-    background:#f3f4f6;
-    color:#ef3f3f;
-}
-
-
-/* =========================
-   ANIMATED CART
-========================= */
-
-.cart-link{
-
-    position:relative;
-
-    display:flex;
-    align-items:center;
-
-    gap:8px;
-
-    background:#ef3f3f;
-
-    color:#fff !important;
-
-    padding:10px 15px;
-
-    border-radius:11px;
-
     font-size:14px;
-    font-weight:800;
-
-    box-shadow:
-        0 5px 15px rgba(239,62,62,.20);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
 }
 
-.cart-link:hover{
+.menu button:hover,
+.menu button.active{
 
-    background:#d93232;
-
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 8px 22px rgba(239,62,62,.30);
-}
-
-
-/* CART ICON */
-
-.cart-icon{
-
-    display:inline-flex;
-
-    font-size:19px;
-
-    transform-origin:center;
-}
-
-.cart-link:hover .cart-icon{
-
-    animation:cartBounce .55s ease;
-}
-
-
-@keyframes cartBounce{
-
-    0%{
-        transform:translateY(0) rotate(0deg);
-    }
-
-    25%{
-        transform:translateY(-4px) rotate(-8deg);
-    }
-
-    50%{
-        transform:translateY(0) rotate(8deg);
-    }
-
-    75%{
-        transform:translateY(-2px) rotate(-4deg);
-    }
-
-    100%{
-        transform:translateY(0) rotate(0deg);
-    }
-
-}
-
-
-/* CART BADGE */
-
-.cart-badge{
-
-    min-width:21px;
-    height:21px;
-
-    padding:0 5px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:#fff;
-
-    color:#ef3f3f;
-
-    border-radius:50px;
-
-    font-size:11px;
-    font-weight:900;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,.15);
-}
-
-.cart-badge.pop{
-
-    animation:cartCountPop .35s ease;
-}
-
-
-@keyframes cartCountPop{
-
-    0%{
-        transform:scale(.7);
-    }
-
-    50%{
-        transform:scale(1.3);
-    }
-
-    100%{
-        transform:scale(1);
-    }
-
-}
-
-
-/* =========================
-   RESTAURANT HERO
-========================= */
-
-.restaurant-hero{
-
-    background:
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(239,62,62,.22),
-            transparent 35%
-        ),
-        linear-gradient(
-            135deg,
-            #171717,
-            #252525
-        );
+    background:#ef4444;
 
     color:white;
 }
 
-.restaurant-hero-inner{
+.menu-icon{
 
-    max-width:1200px;
+    width:25px;
 
-    margin:auto;
-
-    padding:40px 22px;
+    display:inline-block;
 }
 
+.sidebar-bottom{
 
-/* BACK */
+    position:absolute;
 
-.back-link{
+    left:15px;
+    right:15px;
 
-    display:inline-flex;
+    bottom:20px;
+}
 
-    align-items:center;
+.logout{
 
-    gap:7px;
+    width:100%;
+
+    border:1px solid #374151;
+
+    background:transparent;
 
     color:#d1d5db;
 
-    font-size:14px;
+    padding:12px;
+
+    border-radius:10px;
+}
+
+.logout:hover{
+
+    background:#1f2937;
+
+    color:white;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+
+    margin-left:250px;
+
+    width:calc(100% - 250px);
+
+    min-height:100vh;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+
+    height:75px;
+
+    background:white;
+
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:50;
+}
+
+.mobile-menu{
+
+    display:none;
+
+    border:0;
+
+    background:#f3f4f6;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    font-size:18px;
+}
+
+.top-title{
+
+    font-size:21px;
 
     font-weight:700;
+}
+
+.top-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.notification{
+
+    width:40px;
+    height:40px;
+
+    border:1px solid #e5e7eb;
+
+    background:white;
+
+    border-radius:10px;
+
+    font-size:18px;
+}
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.avatar{
+
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:#ef4444;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:bold;
+}
+
+.profile-text strong{
+
+    display:block;
+
+    font-size:13px;
+}
+
+.profile-text small{
+
+    color:#888;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+    padding:30px;
+}
+
+.welcome{
+    margin-bottom:25px;
+}
+
+.welcome h1{
+
+    font-size:27px;
+
+    margin-bottom:6px;
+}
+
+.welcome p{
+
+    color:#6b7280;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message{
+
+    display:none;
+
+    padding:13px 15px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    font-size:13px;
+}
+
+.message.success{
+
+    display:block;
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    border:1px solid #bbf7d0;
+}
+
+.message.error{
+
+    display:block;
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border:1px solid #fecaca;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:18px;
 
     margin-bottom:25px;
 }
 
-.back-link:hover{
+.stat-card{
 
-    color:white;
+    background:white;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:16px;
+
+    padding:21px;
 }
 
-
-/* RESTAURANT MAIN */
-
-.restaurant-main{
+.stat-top{
 
     display:flex;
 
-    align-items:flex-end;
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.stat-icon{
+
+    width:44px;
+    height:44px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+}
+
+.red{
+    background:#fee2e2;
+}
+
+.orange{
+    background:#ffedd5;
+}
+
+.green{
+    background:#dcfce7;
+}
+
+.blue{
+    background:#dbeafe;
+}
+
+.stat-card h2{
+
+    margin-top:17px;
+
+    font-size:26px;
+}
+
+.stat-card p{
+
+    margin-top:5px;
+
+    color:#6b7280;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:20px;
+}
+
+.card{
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:16px;
+
+    padding:22px;
+}
+
+.card-header{
+
+    display:flex;
 
     justify-content:space-between;
 
-    gap:30px;
+    align-items:center;
+
+    margin-bottom:20px;
 }
 
-.restaurant-title{
+.card-header h2{
 
-    font-size:42px;
+    font-size:18px;
+}
 
-    line-height:1.1;
+.primary-btn{
 
-    letter-spacing:-1.5px;
+    border:0;
+
+    background:#ef4444;
+
+    color:white;
+
+    padding:10px 15px;
+
+    border-radius:9px;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.primary-btn:hover{
+
+    background:#dc2626;
+}
+
+
+/* =========================================================
+   ORDERS
+========================================================= */
+
+.order-list{
+
+    display:grid;
+
+    gap:12px;
+}
+
+.order-item{
+
+    border:1px solid #eee;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    background:#fafafa;
+}
+
+.order-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
 
     margin-bottom:10px;
 }
 
-.restaurant-description{
+.order-number{
 
-    color:#d1d5db;
+    font-weight:bold;
 
-    font-size:15px;
-
-    line-height:1.6;
-
-    max-width:650px;
+    font-size:13px;
 }
 
-.restaurant-meta{
+.order-time{
+
+    color:#9ca3af;
+
+    font-size:11px;
+}
+
+.order-details{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.order-total{
+
+    font-weight:bold;
+
+    font-size:14px;
+}
+
+.status{
+
+    display:inline-block;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:10px;
+
+    font-weight:bold;
+}
+
+.status-pending{
+
+    background:#fef3c7;
+
+    color:#92400e;
+}
+
+.status-confirmed{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+}
+
+.status-preparing{
+
+    background:#ffedd5;
+
+    color:#c2410c;
+}
+
+.status-ready{
+
+    background:#ede9fe;
+
+    color:#6d28d9;
+}
+
+.status-delivered{
+
+    background:#dcfce7;
+
+    color:#15803d;
+}
+
+.status-cancelled{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+}
+
+.order-actions{
+
+    display:flex;
+
+    gap:8px;
+
+    margin-top:12px;
+}
+
+.small-btn{
+
+    border:0;
+
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    font-size:11px;
+
+    font-weight:bold;
+}
+
+.confirm-btn{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+}
+
+.prepare-btn{
+
+    background:#ffedd5;
+
+    color:#c2410c;
+}
+
+.ready-btn{
+
+    background:#ede9fe;
+
+    color:#6d28d9;
+}
+
+.complete-btn{
+
+    background:#dcfce7;
+
+    color:#15803d;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+.quick-actions{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+}
+
+.quick-btn{
+
+    border:1px solid #e5e7eb;
+
+    background:#fafafa;
+
+    padding:18px 10px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+}
+
+.quick-btn:hover{
+
+    background:#fff1f2;
+
+    border-color:#fecaca;
+}
+
+.quick-btn .icon{
+
+    font-size:23px;
+
+    margin-bottom:7px;
+}
+
+.quick-btn span{
+
+    display:block;
+
+    font-size:11px;
+
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   MENU SECTION
+========================================================= */
+
+.menu-section{
+
+    margin-top:20px;
+}
+
+.menu-list{
+
+    display:grid;
+
+    gap:10px;
+}
+
+.menu-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:13px;
+
+    border:1px solid #eee;
+
+    border-radius:11px;
+}
+
+.menu-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+}
+
+.food-icon{
+
+    width:42px;
+    height:42px;
+
+    background:#fff1f2;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+}
+
+.menu-info h4{
+
+    font-size:13px;
+
+    margin-bottom:3px;
+}
+
+.menu-info p{
+
+    font-size:11px;
+
+    color:#888;
+}
+
+.menu-price{
+
+    font-weight:bold;
+
+    font-size:13px;
+}
+
+.menu-actions{
+
+    display:flex;
+
+    gap:6px;
+}
+
+.icon-btn{
+
+    border:0;
+
+    width:32px;
+    height:32px;
+
+    border-radius:8px;
+
+    background:#f3f4f6;
+
+}
+
+.icon-btn:hover{
+    background:#e5e7eb;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+
+    text-align:center;
+
+    padding:35px 15px;
+
+    color:#777;
+
+    font-size:13px;
+}
+
+.empty-icon{
+
+    font-size:35px;
+
+    margin-bottom:8px;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(17,24,39,.55);
+
+    z-index:500;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.modal.show{
+
+    display:flex;
+}
+
+.modal-box{
+
+    width:100%;
+
+    max-width:500px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+}
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+
+    font-size:20px;
+}
+
+.close-btn{
+
+    border:0;
+
+    background:#f3f4f6;
+
+    width:35px;
+    height:35px;
+
+    border-radius:8px;
+
+    font-size:20px;
+}
+
+.form-group{
+
+    margin-bottom:15px;
+}
+
+.form-group label{
+
+    display:block;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    margin-bottom:7px;
+
+    color:#374151;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+
+    width:100%;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:9px;
+
+    padding:11px;
+
+    outline:none;
+
+    font-size:13px;
+
+    background:#fafafa;
+}
+
+.form-group input{
+
+    height:45px;
+}
+
+.form-group textarea{
+
+    min-height:80px;
+
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+
+    border-color:#ef4444;
+
+    background:white;
+
+    box-shadow:
+        0 0 0 4px rgba(239,68,68,.08);
+}
+
+.modal-actions{
 
     display:flex;
 
     gap:10px;
 
-    flex-wrap:wrap;
-
-    margin-top:18px;
+    margin-top:20px;
 }
 
-.meta-badge{
+.secondary-btn{
 
-    background:rgba(255,255,255,.10);
+    flex:1;
 
-    border:1px solid rgba(255,255,255,.12);
+    border:1px solid #e5e7eb;
 
-    padding:7px 11px;
+    background:#f9fafb;
 
-    border-radius:20px;
+    padding:12px;
+
+    border-radius:9px;
+
+    font-weight:bold;
 
     font-size:12px;
 }
 
-.rating{
+.modal-actions .primary-btn{
 
-    background:#16803c;
-
-    border:none;
-
-    color:white;
+    flex:1;
 }
 
 
-/* =========================
-   SEARCH
-========================= */
-
-.search-area{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:28px 22px 15px;
-}
-
-.search-box{
-
-    height:52px;
-
-    background:white;
-
-    border:1px solid #e5e7eb;
-
-    border-radius:14px;
-
-    display:flex;
-
-    align-items:center;
-
-    padding:0 16px;
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,.03);
-}
-
-.search-icon{
-
-    font-size:19px;
-
-    margin-right:10px;
-}
-
-.search-box input{
-
-    width:100%;
-
-    height:100%;
-
-    border:0;
-
-    outline:none;
-
-    background:transparent;
-
-    font-size:15px;
-}
-
-
-/* =========================
-   CATEGORIES
-========================= */
-
-.category-area{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:0 22px 20px;
-}
-
-.categories{
-
-    display:flex;
-
-    gap:9px;
-
-    overflow-x:auto;
-
-    padding:5px 0 8px;
-}
-
-.categories::-webkit-scrollbar{
-
-    height:3px;
-}
-
-.category-btn{
-
-    flex-shrink:0;
-
-    border:1px solid #e5e7eb;
-
-    background:white;
-
-    color:#555;
-
-    border-radius:25px;
-
-    padding:9px 17px;
-
-    cursor:pointer;
-
-    font-size:13px;
-
-    font-weight:700;
-
-    transition:.2s ease;
-}
-
-.category-btn:hover{
-
-    border-color:#ef3f3f;
-
-    color:#ef3f3f;
-}
-
-.category-btn.active{
-
-    background:#ef3f3f;
-
-    color:white;
-
-    border-color:#ef3f3f;
-}
-
-
-/* =========================
-   MENU
-========================= */
-
-.menu-section{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:0 22px 65px;
-}
-
-.section-head{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    margin-bottom:18px;
-}
-
-.section-head h2{
-
-    font-size:24px;
-
-    letter-spacing:-.5px;
-}
-
-.item-count{
-
-    color:#777;
-
-    font-size:13px;
-}
-
-
-/* =========================
-   MENU GRID
-========================= */
-
-.menu-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:20px;
-}
-
-
-/* =========================
-   FOOD CARD
-========================= */
-
-.food-card{
-
-    background:white;
-
-    border:1px solid #e7e7e7;
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-    transition:.25s ease;
-}
-
-.food-card:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.08);
-}
-
-
-/* FOOD IMAGE */
-
-.food-image{
-
-    width:100%;
-
-    height:190px;
-
-    object-fit:cover;
-
-    display:block;
-
-    background:#f0f0f0;
-}
-
-.image-placeholder{
-
-    width:100%;
-
-    height:190px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff0f0,
-            #f8f8f8
-        );
-
-    font-size:52px;
-}
-
-
-/* FOOD CONTENT */
-
-.food-content{
-
-    padding:17px;
-}
-
-.food-top{
-
-    display:flex;
-
-    align-items:flex-start;
-
-    justify-content:space-between;
-
-    gap:12px;
-}
-
-.food-name{
-
-    font-size:17px;
-
-    font-weight:800;
-}
-
-.food-price{
-
-    color:#ef3f3f;
-
-    font-size:17px;
-
-    font-weight:900;
-
-    white-space:nowrap;
-}
-
-.food-description{
-
-    color:#777;
-
-    font-size:13px;
-
-    line-height:1.5;
-
-    margin:8px 0 15px;
-
-    min-height:39px;
-}
-
-
-/* =========================
-   ADD BUTTON
-========================= */
-
-.add-btn{
-
-    width:100%;
-
-    border:0;
-
-    background:#ef3f3f;
-
-    color:white;
-
-    padding:12px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-size:14px;
-
-    font-weight:800;
-
-    transition:.2s ease;
-}
-
-.add-btn:hover{
-
-    background:#d93232;
-
-    transform:translateY(-1px);
-}
-
-.add-btn:disabled{
-
-    opacity:.6;
-
-    cursor:not-allowed;
-
-    transform:none;
-}
-
-
-/* =========================
-   QUANTITY
-========================= */
-
-.quantity-control{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:16px;
-
-    border:1px solid #eeeeee;
-
-    border-radius:10px;
-
-    padding:5px;
-}
-
-.qty-btn{
-
-    width:34px;
-
-    height:34px;
-
-    border:0;
-
-    border-radius:8px;
-
-    background:#f1f2f5;
-
-    cursor:pointer;
-
-    font-size:19px;
-
-    font-weight:800;
-
-    transition:.2s ease;
-}
-
-.qty-btn:hover{
-
-    background:#e5e7eb;
-
-    transform:scale(1.04);
-}
-
-.qty-number{
-
-    min-width:25px;
-
-    text-align:center;
-
-    font-weight:800;
-}
-
-
-/* =========================
-   LOADING
-========================= */
-
-.loading{
-
-    grid-column:1/-1;
-
-    background:white;
-
-    border:1px solid #eee;
-
-    border-radius:18px;
-
-    padding:60px 20px;
-
-    text-align:center;
-
-    color:#777;
-}
-
-.spinner{
-
-    width:36px;
-
-    height:36px;
-
-    margin:0 auto 15px;
-
-    border:4px solid #eee;
-
-    border-top-color:#ef3f3f;
-
-    border-radius:50%;
-
-    animation:spin .8s linear infinite;
-}
-
-
-@keyframes spin{
-
-    to{
-        transform:rotate(360deg);
-    }
-
-}
-
-
-/* =========================
-   EMPTY
-========================= */
-
-.empty{
-
-    grid-column:1/-1;
-
-    background:white;
-
-    border:1px solid #eee;
-
-    border-radius:18px;
-
-    padding:60px 20px;
-
-    text-align:center;
-}
-
-.empty-icon{
-
-    font-size:52px;
-
-    margin-bottom:12px;
-}
-
-.empty h3{
-
-    margin-bottom:7px;
-}
-
-.empty p{
-
-    color:#777;
-
-    font-size:14px;
-}
-
-
-/* =========================
-   ERROR
-========================= */
-
-.error-box{
-
-    display:none;
-
-    background:#fff0f0;
-
-    color:#c62828;
-
-    border:1px solid #ffd0d0;
-
-    border-radius:12px;
-
-    padding:14px;
-
-    margin-bottom:20px;
-
-    font-size:14px;
-}
-
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-
-    position:fixed;
-
-    right:25px;
-
-    bottom:25px;
-
-    background:#111827;
-
-    color:white;
-
-    padding:14px 19px;
-
-    border-radius:11px;
-
-    display:none;
-
-    z-index:3000;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.20);
-
-    font-size:14px;
-
-    font-weight:600;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer{
-
-    background:#111827;
-
-    color:white;
-
-    padding:35px 22px;
-}
-
-.footer-inner{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    text-align:center;
-}
-
-.footer-logo{
-
-    font-size:25px;
-
-    font-weight:900;
-
-    margin-bottom:8px;
-}
-
-.footer-logo span{
-
-    color:#ef3f3f;
-}
-
-.footer p{
-
-    color:#9ca3af;
-
-    font-size:13px;
-}
-
-
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
-@media(max-width:900px){
+@media(max-width:1000px){
 
-    .menu-grid{
+    .stats{
 
-        grid-template-columns:
-            repeat(2,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .restaurant-title{
+    .grid{
 
-        font-size:35px;
+        grid-template-columns:1fr;
     }
 
 }
 
+@media(max-width:700px){
 
-@media(max-width:600px){
+    .sidebar{
 
-    .header{
+        transform:translateX(-100%);
 
-        height:64px;
-
-        padding:0 15px;
+        transition:.25s;
     }
 
-    .logo{
+    .sidebar.open{
 
-        font-size:25px;
+        transform:translateX(0);
     }
 
-    .nav-link{
+    .main{
 
-        display:none;
+        margin-left:0;
+
+        width:100%;
     }
 
-    .cart-link{
-
-        padding:9px 12px;
-    }
-
-    .cart-text{
-
-        display:none;
-    }
-
-    .restaurant-hero-inner{
-
-        padding:28px 15px;
-    }
-
-    .restaurant-main{
+    .mobile-menu{
 
         display:block;
     }
 
-    .restaurant-title{
+    .topbar{
 
-        font-size:30px;
+        padding:0 15px;
     }
 
-    .restaurant-description{
+    .top-title{
 
-        font-size:14px;
+        font-size:17px;
     }
 
-    .search-area,
-    .category-area,
-    .menu-section{
+    .profile-text{
 
-        padding-left:15px;
-
-        padding-right:15px;
+        display:none;
     }
 
-    .menu-grid{
+    .content{
 
-        grid-template-columns:1fr;
-
-        gap:15px;
+        padding:20px 15px;
     }
 
-    .food-image,
-    .image-placeholder{
+}
 
-        height:205px;
+@media(max-width:500px){
+
+    .stats{
+
+        grid-template-columns:1fr 1fr;
+
+        gap:10px;
     }
 
-    .toast{
+    .stat-card{
 
-        right:15px;
+        padding:15px;
+    }
 
-        left:15px;
+    .stat-card h2{
 
-        bottom:15px;
+        font-size:22px;
+    }
 
-        text-align:center;
+    .order-details{
+
+        align-items:flex-start;
+
+        flex-direction:column;
     }
 
 }
@@ -1069,236 +1132,564 @@ a:focus{
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
+<div class="dashboard">
 
-<header class="header">
 
-    <a
-        href="../index.html"
-        class="logo">
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
+<aside
+    class="sidebar"
+    id="sidebar">
+
+
+    <div class="brand">
         Beat<span>root</span>
-
-    </a>
-
-
-    <nav class="nav">
-
-        <a
-            href="restaurants.html"
-            class="nav-link">
-
-            Restaurants
-
-        </a>
-
-
-        <a
-            href="my-orders.html"
-            class="nav-link">
-
-            Orders
-
-        </a>
-
-
-        <a
-            href="profile.html"
-            class="nav-link">
-
-            Profile
-
-        </a>
-
-
-        <!-- ANIMATED CART -->
-
-        <a
-            href="cart.html"
-            class="cart-link">
-
-            <span class="cart-icon">
-                🛒
-            </span>
-
-            <span class="cart-text">
-                Cart
-            </span>
-
-            <span
-                class="cart-badge"
-                id="cartCount">
-
-                0
-
-            </span>
-
-        </a>
-
-    </nav>
-
-</header>
-
-
-
-<!-- =========================
-     RESTAURANT HERO
-========================= -->
-
-<section class="restaurant-hero">
-
-    <div class="restaurant-hero-inner">
-
-        <a
-            href="restaurants.html"
-            class="back-link">
-
-            ← Back to Restaurants
-
-        </a>
-
-
-        <div class="restaurant-main">
-
-            <div>
-
-                <h1
-                    class="restaurant-title"
-                    id="restaurantName">
-
-                    Loading...
-
-                </h1>
-
-
-                <p
-                    class="restaurant-description"
-                    id="restaurantDescription">
-
-                    Loading restaurant details...
-
-                </p>
-
-
-                <div class="restaurant-meta">
-
-                    <span
-                        class="meta-badge"
-                        id="restaurantCategory">
-
-                        🍴 Restaurant
-
-                    </span>
-
-
-                    <span
-                        class="meta-badge rating"
-                        id="restaurantRating">
-
-                        ★ --
-
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
 
-</section>
 
-
-
-<!-- =========================
-     SEARCH
-========================= -->
-
-<section class="search-area">
-
-    <div class="search-box">
-
-        <span class="search-icon">
-            🔍
-        </span>
-
-
-        <input
-            type="text"
-            id="menuSearch"
-            placeholder="Search food..."
-            autocomplete="off">
-
+    <div class="restaurant-label">
+        Restaurant Panel
     </div>
 
-</section>
+
+    <ul class="menu">
 
 
+        <li>
 
-<!-- =========================
-     CATEGORIES
-========================= -->
+            <button
+                class="active"
+                onclick="showDashboard()">
 
-<section class="category-area">
+                <span class="menu-icon">
+                    📊
+                </span>
 
-    <div
-        class="categories"
-        id="categories">
+                Dashboard
+
+            </button>
+
+        </li>
+
+
+        <li>
+
+            <button
+                onclick="showOrders()">
+
+                <span class="menu-icon">
+                    🛒
+                </span>
+
+                Orders
+
+            </button>
+
+        </li>
+
+
+        <li>
+
+            <button
+                onclick="showMenu()">
+
+                <span class="menu-icon">
+                    🍔
+                </span>
+
+                Menu Management
+
+            </button>
+
+        </li>
+
+
+        <li>
+
+            <button
+                onclick="showProfile()">
+
+                <span class="menu-icon">
+                    🏪
+                </span>
+
+                Restaurant Profile
+
+            </button>
+
+        </li>
+
+
+    </ul>
+
+
+    <div class="sidebar-bottom">
 
         <button
-            class="category-btn active"
-            data-category="all">
+            class="logout"
+            onclick="logout()">
 
-            All
+            🚪 Logout
 
         </button>
 
     </div>
 
-</section>
+
+</aside>
 
 
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
-<!-- =========================
-     MENU
-========================= -->
+<div class="main">
 
-<main class="menu-section">
 
-    <div class="section-head">
+<header class="topbar">
 
-        <h2>
-            Popular Menu
+
+    <div
+        style="
+            display:flex;
+            align-items:center;
+            gap:12px;
+        ">
+
+
+        <button
+            class="mobile-menu"
+            onclick="toggleSidebar()">
+
+            ☰
+
+        </button>
+
+
+        <div class="top-title">
+
+            Restaurant Dashboard
+
+        </div>
+
+
+    </div>
+
+
+    <div class="top-right">
+
+
+        <button
+            class="notification"
+            onclick="loadDashboard()">
+
+            🔔
+
+        </button>
+
+
+        <div class="profile">
+
+
+            <div
+                class="avatar"
+                id="avatar">
+
+                R
+
+            </div>
+
+
+            <div class="profile-text">
+
+
+                <strong id="restaurantTitle">
+
+                    Restaurant
+
+                </strong>
+
+
+                <small>
+
+                    Restaurant Partner
+
+                </small>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</header>
+
+
+<main class="content">
+
+
+<div class="welcome">
+
+
+    <h1>
+        Welcome Back 👋
+    </h1>
+
+
+    <p id="welcomeText">
+        Manage your restaurant and orders from one place.
+    </p>
+
+
+</div>
+
+
+<div
+    id="messageBox"
+    class="message">
+</div>
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats">
+
+
+    <div class="stat-card">
+
+
+        <div class="stat-top">
+
+
+            <div>
+
+                <small>
+                    Today's Orders
+                </small>
+
+            </div>
+
+
+            <div class="stat-icon blue">
+                🛒
+            </div>
+
+
+        </div>
+
+
+        <h2 id="todayOrders">
+            0
         </h2>
 
 
-        <span
-            class="item-count"
-            id="itemCount">
+        <p>
+            Orders today
+        </p>
 
-            Loading...
 
-        </span>
+    </div>
+
+
+    <div class="stat-card">
+
+
+        <div class="stat-top">
+
+
+            <div>
+
+                <small>
+                    Today's Sales
+                </small>
+
+            </div>
+
+
+            <div class="stat-icon green">
+                💰
+            </div>
+
+
+        </div>
+
+
+        <h2 id="todaySales">
+            ₹0
+        </h2>
+
+
+        <p>
+            Today's revenue
+        </p>
+
+
+    </div>
+
+
+    <div class="stat-card">
+
+
+        <div class="stat-top">
+
+
+            <div>
+
+                <small>
+                    Pending Orders
+                </small>
+
+            </div>
+
+
+            <div class="stat-icon orange">
+                📦
+            </div>
+
+
+        </div>
+
+
+        <h2 id="pendingOrders">
+            0
+        </h2>
+
+
+        <p>
+            Need attention
+        </p>
+
+
+    </div>
+
+
+    <div class="stat-card">
+
+
+        <div class="stat-top">
+
+
+            <div>
+
+                <small>
+                    Menu Items
+                </small>
+
+            </div>
+
+
+            <div class="stat-icon red">
+                🍔
+            </div>
+
+
+        </div>
+
+
+        <h2 id="menuCount">
+            0
+        </h2>
+
+
+        <p>
+            Active menu items
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     GRID
+===================================================== -->
+
+<section class="grid">
+
+
+<!-- =====================================================
+     ORDERS
+===================================================== -->
+
+<div class="card">
+
+
+    <div class="card-header">
+
+
+        <h2>
+            Recent Orders
+        </h2>
+
+
+        <button
+            class="primary-btn"
+            onclick="showOrders()">
+
+            View All
+
+        </button>
+
 
     </div>
 
 
     <div
-        class="error-box"
-        id="errorBox">
+        id="ordersList"
+        class="order-list">
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                ⏳
+            </div>
+
+            Loading orders...
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     QUICK ACTIONS
+===================================================== -->
+
+<div>
+
+
+<div class="card">
+
+
+    <div class="card-header">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+    </div>
+
+
+    <div class="quick-actions">
+
+
+        <button
+            class="quick-btn"
+            onclick="openAddMenu()">
+
+            <div class="icon">
+                ➕
+            </div>
+
+            <span>
+                Add Food
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="showMenu()">
+
+            <div class="icon">
+                🍔
+            </div>
+
+            <span>
+                Manage Menu
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="showOrders()">
+
+            <div class="icon">
+                🛒
+            </div>
+
+            <span>
+                Orders
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="showProfile()">
+
+            <div class="icon">
+                🏪
+            </div>
+
+            <span>
+                Profile
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     MENU
+===================================================== -->
+
+<div
+    class="card menu-section"
+    id="menuCard">
+
+
+    <div class="card-header">
+
+
+        <h2>
+            Menu
+        </h2>
+
+
+        <button
+            class="primary-btn"
+            onclick="openAddMenu()">
+
+            + Add
+
+        </button>
+
+
     </div>
 
 
     <div
-        class="menu-grid"
-        id="menuGrid">
+        id="menuList"
+        class="menu-list">
 
-        <div class="loading">
+        <div class="empty">
 
-            <div class="spinner"></div>
+            <div class="empty-icon">
+                🍔
+            </div>
 
             Loading menu...
 
@@ -1306,49 +1697,178 @@ a:focus{
 
     </div>
 
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
 </main>
 
 
+</div>
 
-<!-- =========================
-     FOOTER
-========================= -->
 
-<footer class="footer">
+</div>
 
-    <div class="footer-inner">
 
-        <div class="footer-logo">
+<!-- =====================================================
+     ADD / EDIT MENU MODAL
+===================================================== -->
 
-            Beat<span>root</span>
+<div
+    class="modal"
+    id="menuModal">
+
+
+<div class="modal-box">
+
+
+    <div class="modal-header">
+
+
+        <h2 id="menuModalTitle">
+            Add Food Item
+        </h2>
+
+
+        <button
+            class="close-btn"
+            onclick="closeMenuModal()">
+
+            ×
+
+        </button>
+
+
+    </div>
+
+
+    <form id="menuForm">
+
+
+        <div class="form-group">
+
+            <label>
+                Food Name
+            </label>
+
+            <input
+                type="text"
+                id="foodName"
+                placeholder="Example: Chicken Biriyani"
+                required>
 
         </div>
 
 
-        <p>
-            Delicious food. Easy ordering.
-        </p>
+        <div class="form-group">
 
-    </div>
+            <label>
+                Price
+            </label>
 
-</footer>
+            <input
+                type="number"
+                id="foodPrice"
+                placeholder="Enter price"
+                min="0"
+                step="0.01"
+                required>
+
+        </div>
 
 
+        <div class="form-group">
 
-<!-- TOAST -->
+            <label>
+                Category
+            </label>
 
-<div
-    class="toast"
-    id="toast">
+            <input
+                type="text"
+                id="foodCategory"
+                placeholder="Example: Biriyani">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                id="foodDescription"
+                placeholder="Food description"></textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Availability
+            </label>
+
+            <select id="foodAvailable">
+
+                <option value="true">
+                    Available
+                </option>
+
+                <option value="false">
+                    Not Available
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+
+            <button
+                type="button"
+                class="secondary-btn"
+                onclick="closeMenuModal()">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="submit"
+                class="primary-btn">
+
+                Save Food Item
+
+            </button>
+
+
+        </div>
+
+
+    </form>
+
+
 </div>
 
+</div>
 
 
 <script>
 
-/* =========================================
+/* =========================================================
    SUPABASE
-========================================= */
+========================================================= */
 
 const SUPABASE_URL =
     "https://jhihjnsxazmftdqlitgk.supabase.co";
@@ -1357,527 +1877,539 @@ const SUPABASE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
 
-const sb =
+const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
     );
 
 
-/* =========================================
-   VARIABLES
-========================================= */
-
-let restaurantId = null;
-
-let restaurant = null;
-
-let menuItems = [];
-
-let selectedCategory = "all";
+/* =========================================================
+   STATE
+========================================================= */
 
 let currentUser = null;
 
+let restaurantId = null;
 
-/* =========================================
-   HTML ESCAPE
-========================================= */
+let restaurantData = null;
 
-function escapeHTML(value){
+let menuItems = [];
 
-    return String(value ?? "")
+let orders = [];
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+let editingMenuId = null;
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
+/* =========================================================
+   MESSAGE
+========================================================= */
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+function showMessage(
+    message,
+    type="success"
+){
 
-        .replace(
-            /'/g,
-            "&#039;"
+    const box =
+        document.getElementById(
+            "messageBox"
         );
 
-}
-
-
-/* =========================================
-   TOAST
-========================================= */
-
-function showToast(message){
-
-    const toast =
-        document.getElementById("toast");
-
-
-    toast.textContent =
+    box.textContent =
         message;
 
-
-    toast.style.display =
-        "block";
-
-
-    setTimeout(() => {
-
-        toast.style.display =
-            "none";
-
-    },2200);
+    box.className =
+        "message " + type;
 
 }
 
 
-/* =========================================
-   GET RESTAURANT ID
-========================================= */
+function hideMessage(){
 
-function getRestaurantId(){
-
-    const params =
-        new URLSearchParams(
-            window.location.search
+    const box =
+        document.getElementById(
+            "messageBox"
         );
 
+    box.textContent =
+        "";
 
-    return params.get("id");
+    box.className =
+        "message";
 
 }
 
 
-/* =========================================
-   GET CURRENT USER
-========================================= */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-async function getCurrentUser(){
+function toggleSidebar(){
 
-    const {
-        data,
-        error
-    } = await sb.auth.getUser();
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+}
 
 
-    if(error){
+/* =========================================================
+   AUTH + RESTAURANT
+========================================================= */
 
-        console.error(error);
+async function initializeRestaurant(){
 
-        return null;
+    try{
+
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        if(!currentUser){
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
+
+
+        /* ===============================================
+           USER ROLE
+        =============================================== */
+
+        const {
+            data:roleData,
+            error:roleError
+        } =
+        await supabaseClient
+            .from("user_roles")
+            .select(`
+                role,
+                restaurant_id,
+                approval_status
+            `)
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+
+        if(roleError){
+
+            throw roleError;
+
+        }
+
+
+        if(!roleData){
+
+            await supabaseClient.auth.signOut();
+
+            alert(
+                "Restaurant account information not found."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
+
+
+        const role =
+            String(
+                roleData.role || ""
+            )
+            .toLowerCase();
+
+
+        if(
+            role !== "restaurant" &&
+            role !== "restaurant_owner"
+        ){
+
+            await supabaseClient.auth.signOut();
+
+            alert(
+                "Access denied. Restaurant account required."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
+
+
+        /* ===============================================
+           APPROVAL CHECK
+        =============================================== */
+
+        const approval =
+            String(
+                roleData.approval_status ||
+                ""
+            )
+            .toLowerCase();
+
+
+        if(
+            approval !== "approved"
+        ){
+
+            await supabaseClient.auth.signOut();
+
+            alert(
+                "Your restaurant application is still waiting for admin approval."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
+
+
+        restaurantId =
+            roleData.restaurant_id;
+
+
+        if(!restaurantId){
+
+            throw new Error(
+                "Restaurant ID is missing from your account."
+            );
+
+        }
+
+
+        /* ===============================================
+           LOAD RESTAURANT
+        =============================================== */
+
+        const {
+            data:restaurant,
+            error:restaurantError
+        } =
+        await supabaseClient
+            .from("restaurants")
+            .select("*")
+            .eq(
+                "id",
+                restaurantId
+            )
+            .maybeSingle();
+
+
+        if(restaurantError){
+
+            throw restaurantError;
+
+        }
+
+
+        if(!restaurant){
+
+            throw new Error(
+                "Restaurant profile not found."
+            );
+
+        }
+
+
+        restaurantData =
+            restaurant;
+
+
+        const restaurantName =
+            restaurant.name ||
+            "Restaurant";
+
+
+        document.getElementById(
+            "restaurantTitle"
+        ).textContent =
+            restaurantName;
+
+
+        document.getElementById(
+            "welcomeText"
+        ).textContent =
+            "Manage " +
+            restaurantName +
+            " from one place.";
+
+
+        document.getElementById(
+            "avatar"
+        ).textContent =
+            restaurantName
+                .charAt(0)
+                .toUpperCase();
+
+
+        return true;
 
     }
+    catch(error){
 
+        console.error(
+            "Restaurant initialization error:",
+            error
+        );
 
-    currentUser =
-        data?.user || null;
-
-
-    return currentUser;
-
-}
-
-
-/* =========================================
-   LOAD RESTAURANT
-========================================= */
-
-async function loadRestaurant(){
-
-    const {
-        data,
-        error
-    } = await sb
-
-        .from("restaurants")
-
-        .select("*")
-
-        .eq(
-            "id",
-            restaurantId
-        )
-
-        .single();
-
-
-    if(error){
-
-        console.error(error);
-
-        showPageError(
-            "Restaurant load cheyyan kazhinjilla."
+        showMessage(
+            error.message ||
+            "Unable to load restaurant account.",
+            "error"
         );
 
         return false;
 
     }
 
-
-    restaurant =
-        data;
-
-
-    document.getElementById(
-        "restaurantName"
-    ).textContent =
-        restaurant.name ||
-        "Restaurant";
-
-
-    document.getElementById(
-        "restaurantDescription"
-    ).textContent =
-        restaurant.description ||
-        "Delicious food and great service.";
-
-
-    document.getElementById(
-        "restaurantCategory"
-    ).textContent =
-        "🍴 " +
-        (
-            restaurant.category ||
-            restaurant.cuisine ||
-            "Restaurant"
-        );
-
-
-    if(
-        restaurant.rating !== null &&
-        restaurant.rating !== undefined
-    ){
-
-        document.getElementById(
-            "restaurantRating"
-        ).textContent =
-            "★ " +
-            restaurant.rating;
-
-    }
-    else{
-
-        document.getElementById(
-            "restaurantRating"
-        ).textContent =
-            "★ --";
-
-    }
-
-
-    return true;
-
 }
 
 
-/* =========================================
-   LOAD MENU
-========================================= */
+/* =========================================================
+   LOAD DASHBOARD
+========================================================= */
 
-async function loadMenu(){
+async function loadDashboard(){
 
-    const grid =
-        document.getElementById(
-            "menuGrid"
-        );
+    hideMessage();
 
 
-    grid.innerHTML = `
-
-        <div class="loading">
-
-            <div class="spinner"></div>
-
-            Loading menu...
-
-        </div>
-
-    `;
+    const initialized =
+        await initializeRestaurant();
 
 
-    const {
-        data,
-        error
-    } = await sb
-
-        .from("menu_items")
-
-        .select("*")
-
-        .eq(
-            "restaurant_id",
-            restaurantId
-        )
-
-        .order(
-            "id",
-            {
-                ascending:true
-            }
-        );
-
-
-    if(error){
-
-        console.error(error);
-
-
-        showPageError(
-            "Menu load cheyyan kazhinjilla."
-        );
-
+    if(!initialized){
 
         return;
 
     }
 
 
-    menuItems =
-        data || [];
+    await Promise.all([
 
+        loadOrders(),
 
-    createCategories();
+        loadMenu()
 
-    renderMenu();
+    ]);
 
 }
 
 
-/* =========================================
-   CREATE CATEGORIES
-========================================= */
+/* =========================================================
+   LOAD ORDERS
+========================================================= */
 
-function createCategories(){
+async function loadOrders(){
 
-    const container =
-        document.getElementById(
-            "categories"
-        );
+    try{
 
+        /*
+         * This query assumes orders.restaurant_id
+         * contains the restaurant ID.
+         */
 
-    const categories = [];
-
-
-    menuItems.forEach(item => {
-
-        const category =
-            item.category ||
-            item.type ||
-            item.menu_category ||
-            "";
-
-
-        if(
-            category &&
-            !categories.includes(
-                category
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("orders")
+            .select("*")
+            .eq(
+                "restaurant_id",
+                restaurantId
             )
-        ){
-
-            categories.push(
-                category
-            );
-
-        }
-
-    });
-
-
-    container.innerHTML = `
-
-        <button
-            class="category-btn active"
-            data-category="all">
-
-            All
-
-        </button>
-
-    `;
-
-
-    categories.forEach(
-        category => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.className =
-                "category-btn";
-
-
-            button.dataset.category =
-                category;
-
-
-            button.textContent =
-                category;
-
-
-            container.appendChild(
-                button
-            );
-
-        }
-    );
-
-
-    container
-        .querySelectorAll(
-            ".category-btn"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                function(){
-
-                    container
-                        .querySelectorAll(
-                            ".category-btn"
-                        )
-                        .forEach(btn =>
-                            btn.classList.remove(
-                                "active"
-                            )
-                        );
-
-
-                    this.classList.add(
-                        "active"
-                    );
-
-
-                    selectedCategory =
-                        this.dataset.category;
-
-
-                    renderMenu();
-
+            .order(
+                "created_at",
+                {
+                    ascending:false
                 }
             );
 
-        });
 
-}
+        if(error){
+
+            throw error;
+
+        }
 
 
-/* =========================================
-   RENDER MENU
-========================================= */
+        orders =
+            data || [];
 
-function renderMenu(){
 
-    const grid =
-        document.getElementById(
-            "menuGrid"
+        updateOrderStats();
+
+        renderOrders();
+
+    }
+    catch(error){
+
+        console.error(
+            "Orders error:",
+            error
         );
 
 
-    const count =
         document.getElementById(
-            "itemCount"
-        );
-
-
-    const search =
-        document.getElementById(
-            "menuSearch"
-        )
-        .value
-        .toLowerCase()
-        .trim();
-
-
-    const filtered =
-        menuItems.filter(item => {
-
-            const name =
-                String(
-                    item.name || ""
-                )
-                .toLowerCase();
-
-
-            const description =
-                String(
-                    item.description || ""
-                )
-                .toLowerCase();
-
-
-            const category =
-                String(
-                    item.category ||
-                    item.type ||
-                    item.menu_category ||
-                    ""
-                );
-
-
-            const matchesSearch =
-                !search ||
-                name.includes(search) ||
-                description.includes(search) ||
-                category
-                    .toLowerCase()
-                    .includes(search);
-
-
-            const matchesCategory =
-                selectedCategory === "all" ||
-                category === selectedCategory;
-
-
-            return (
-                matchesSearch &&
-                matchesCategory
-            );
-
-        });
-
-
-    count.textContent =
-        filtered.length +
-        (
-            filtered.length === 1
-                ? " item"
-                : " items"
-        );
-
-
-    if(!filtered.length){
-
-        grid.innerHTML = `
+            "ordersList"
+        ).innerHTML = `
 
             <div class="empty">
 
                 <div class="empty-icon">
-                    🍽️
+                    ⚠️
                 </div>
 
-                <h3>
-                    No food items found
-                </h3>
+                Unable to load orders.
 
-                <p>
-                    Try another search or category.
-                </p>
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   ORDER STATS
+========================================================= */
+
+function updateOrderStats(){
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    const todayOrders =
+        orders.filter(
+            order =>
+                order.created_at &&
+                order.created_at
+                    .startsWith(today)
+        );
+
+
+    const todaySales =
+        todayOrders.reduce(
+            (
+                sum,
+                order
+            ) => {
+
+                return (
+                    sum +
+                    Number(
+                        order.total || 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    const pending =
+        orders.filter(
+            order => {
+
+                const status =
+                    String(
+                        order.status || ""
+                    )
+                    .toLowerCase();
+
+                return (
+                    status === "pending" ||
+                    status === "confirmed" ||
+                    status === "preparing"
+                );
+
+            }
+        );
+
+
+    document.getElementById(
+        "todayOrders"
+    ).textContent =
+        todayOrders.length;
+
+
+    document.getElementById(
+        "todaySales"
+    ).textContent =
+        "₹" +
+        todaySales.toLocaleString(
+            "en-IN"
+        );
+
+
+    document.getElementById(
+        "pendingOrders"
+    ).textContent =
+        pending.length;
+
+}
+
+
+/* =========================================================
+   RENDER ORDERS
+========================================================= */
+
+function renderOrders(){
+
+    const list =
+        document.getElementById(
+            "ordersList"
+        );
+
+
+    if(!orders.length){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🛒
+                </div>
+
+                No orders yet.
 
             </div>
 
@@ -1888,138 +2420,106 @@ function renderMenu(){
     }
 
 
-    grid.innerHTML =
-        filtered
+    list.innerHTML =
+        orders
+            .slice(
+                0,
+                8
+            )
             .map(
-                createFoodCard
+                order =>
+                    createOrderHTML(
+                        order
+                    )
             )
             .join("");
-
-
-    restoreQuantities();
 
 }
 
 
-/* =========================================
-   CREATE FOOD CARD
-========================================= */
+/* =========================================================
+   ORDER HTML
+========================================================= */
 
-function createFoodCard(item){
+function createOrderHTML(
+    order
+){
 
-    const image =
-        item.image_url || "";
-
-
-    let imageHTML;
-
-
-    if(image){
-
-        imageHTML = `
-
-            <img
-                class="food-image"
-                src="${escapeHTML(image)}"
-                alt="${escapeHTML(item.name)}"
-                loading="lazy"
-                onerror="
-                    this.style.display='none';
-                    this.nextElementSibling.style.display='flex';
-                "
-            >
+    const status =
+        String(
+            order.status ||
+            "pending"
+        )
+        .toLowerCase();
 
 
-            <div
-                class="image-placeholder"
-                style="display:none;">
-
-                🍽️
-
-            </div>
-
-        `;
-
-    }
-    else{
-
-        imageHTML = `
-
-            <div class="image-placeholder">
-
-                🍽️
-
-            </div>
-
-        `;
-
-    }
+    const total =
+        Number(
+            order.total || 0
+        );
 
 
     return `
 
-        <div
-            class="food-card"
-            data-id="${item.id}">
+        <div class="order-item">
 
 
-            ${imageHTML}
+            <div class="order-top">
+
+                <span class="order-number">
+
+                    #${escapeHTML(
+                        order.id
+                    )}
+
+                </span>
 
 
-            <div class="food-content">
+                <span class="order-time">
+
+                    ${formatDate(
+                        order.created_at
+                    )}
+
+                </span>
+
+            </div>
 
 
-                <div class="food-top">
+            <div class="order-details">
 
-                    <span class="food-name">
 
-                        ${escapeHTML(
-                            item.name
+                <div>
+
+                    <span
+                        class="status
+                        status-${getStatusClass(
+                            status
+                        )}">
+
+                        ${capitalize(
+                            status
                         )}
 
                     </span>
 
-
-                    <span class="food-price">
-
-                        ₹${Number(
-                            item.price || 0
-                        ).toFixed(2)}
-
-                    </span>
-
                 </div>
 
 
-                <p class="food-description">
+                <div class="order-total">
 
-                    ${escapeHTML(
-                        item.description ||
-                        "Delicious food."
+                    ₹${total.toLocaleString(
+                        "en-IN"
                     )}
 
-                </p>
-
-
-                <div
-                    id="controls-${item.id}">
-
-                    <button
-                        class="add-btn"
-                        onclick="
-                            addToCart(
-                                ${item.id}
-                            )
-                        ">
-
-                        Add to Cart
-
-                    </button>
-
                 </div>
 
-
             </div>
+
+
+            ${createOrderActions(
+                order
+            )}
 
         </div>
 
@@ -2028,91 +2528,723 @@ function createFoodCard(item){
 }
 
 
-/* =========================================
-   SEARCH
-========================================= */
+/* =========================================================
+   ORDER ACTIONS
+========================================================= */
 
-document
-    .getElementById(
-        "menuSearch"
-    )
-    .addEventListener(
-        "input",
-        renderMenu
-    );
-
-
-/* =========================================
-   ADD TO CART
-========================================= */
-
-async function addToCart(
-    menuItemId
+function createOrderActions(
+    order
 ){
 
-    const user =
-        await getCurrentUser();
+    const status =
+        String(
+            order.status ||
+            "pending"
+        )
+        .toLowerCase();
 
 
-    if(!user){
+    if(
+        status === "pending"
+    ){
 
-        showToast(
-            "Please login to add items."
+        return `
+
+            <div class="order-actions">
+
+                <button
+                    class="small-btn confirm-btn"
+                    onclick="updateOrderStatus('${escapeJS(order.id)}','confirmed')">
+
+                    Confirm Order
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(
+        status === "confirmed"
+    ){
+
+        return `
+
+            <div class="order-actions">
+
+                <button
+                    class="small-btn prepare-btn"
+                    onclick="updateOrderStatus('${escapeJS(order.id)}','preparing')">
+
+                    Start Preparing
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(
+        status === "preparing"
+    ){
+
+        return `
+
+            <div class="order-actions">
+
+                <button
+                    class="small-btn ready-btn"
+                    onclick="updateOrderStatus('${escapeJS(order.id)}','ready')">
+
+                    Mark Ready
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(
+        status === "ready"
+    ){
+
+        return `
+
+            <div class="order-actions">
+
+                <button
+                    class="small-btn complete-btn"
+                    onclick="updateOrderStatus('${escapeJS(order.id)}','delivered')">
+
+                    Mark Delivered
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   UPDATE ORDER STATUS
+========================================================= */
+
+async function updateOrderStatus(
+    orderId,
+    newStatus
+){
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("orders")
+            .update({
+
+                status:
+                    newStatus
+
+            })
+            .eq(
+                "id",
+                orderId
+            )
+            .eq(
+                "restaurant_id",
+                restaurantId
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        showMessage(
+            "Order status updated successfully.",
+            "success"
         );
 
 
-        setTimeout(() => {
+        await loadOrders();
 
-            window.location.href =
-                "login.html";
+    }
+    catch(error){
 
-        },800);
+        console.error(
+            "Order update error:",
+            error
+        );
 
+        showMessage(
+            "Unable to update order: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD MENU
+========================================================= */
+
+async function loadMenu(){
+
+    try{
+
+        /*
+         * Assumes table:
+         * menu_items
+         *
+         * and restaurant_id column.
+         */
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("menu_items")
+            .select("*")
+            .eq(
+                "restaurant_id",
+                restaurantId
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        menuItems =
+            data || [];
+
+
+        document.getElementById(
+            "menuCount"
+        ).textContent =
+            menuItems.length;
+
+
+        renderMenu();
+
+    }
+    catch(error){
+
+        console.error(
+            "Menu error:",
+            error
+        );
+
+
+        document.getElementById(
+            "menuList"
+        ).innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                Unable to load menu.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER MENU
+========================================================= */
+
+function renderMenu(){
+
+    const list =
+        document.getElementById(
+            "menuList"
+        );
+
+
+    if(!menuItems.length){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🍔
+                </div>
+
+                No food items added yet.
+
+                <br><br>
+
+                Click "+ Add" to create your first menu item.
+
+            </div>
+
+        `;
 
         return;
 
     }
 
 
+    list.innerHTML =
+        menuItems
+            .map(
+                item => `
+
+                    <div class="menu-item">
+
+
+                        <div class="menu-info">
+
+
+                            <div class="food-icon">
+                                🍔
+                            </div>
+
+
+                            <div>
+
+                                <h4>
+                                    ${escapeHTML(
+                                        item.name ||
+                                        "Food Item"
+                                    )}
+                                </h4>
+
+
+                                <p>
+                                    ${escapeHTML(
+                                        item.category ||
+                                        "Food"
+                                    )}
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="menu-price">
+
+                                ₹${Number(
+                                    item.price || 0
+                                ).toLocaleString(
+                                    "en-IN"
+                                )}
+
+                            </div>
+
+
+                            <div class="menu-actions">
+
+
+                                <button
+                                    class="icon-btn"
+                                    onclick="editMenu('${escapeJS(item.id)}')">
+
+                                    ✏️
+
+                                </button>
+
+
+                                <button
+                                    class="icon-btn"
+                                    onclick="deleteMenu('${escapeJS(item.id)}')">
+
+                                    🗑️
+
+                                </button>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   OPEN ADD MENU
+========================================================= */
+
+function openAddMenu(){
+
+    editingMenuId =
+        null;
+
+
+    document.getElementById(
+        "menuModalTitle"
+    ).textContent =
+        "Add Food Item";
+
+
+    document.getElementById(
+        "menuForm"
+    ).reset();
+
+
+    document.getElementById(
+        "foodAvailable"
+    ).value =
+        "true";
+
+
+    document
+        .getElementById(
+            "menuModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =========================================================
+   EDIT MENU
+========================================================= */
+
+function editMenu(
+    id
+){
+
     const item =
         menuItems.find(
-            x =>
-                Number(x.id) ===
-                Number(menuItemId)
+            menu =>
+                String(menu.id) ===
+                String(id)
         );
 
 
     if(!item){
 
-        showToast(
-            "Food item not found."
-        );
-
         return;
 
     }
 
 
-    const controls =
-        document.getElementById(
-            "controls-" +
-            menuItemId
+    editingMenuId =
+        item.id;
+
+
+    document.getElementById(
+        "menuModalTitle"
+    ).textContent =
+        "Edit Food Item";
+
+
+    document.getElementById(
+        "foodName"
+    ).value =
+        item.name || "";
+
+
+    document.getElementById(
+        "foodPrice"
+    ).value =
+        item.price || "";
+
+
+    document.getElementById(
+        "foodCategory"
+    ).value =
+        item.category || "";
+
+
+    document.getElementById(
+        "foodDescription"
+    ).value =
+        item.description || "";
+
+
+    document.getElementById(
+        "foodAvailable"
+    ).value =
+        String(
+            item.is_available !== false
         );
 
 
-    if(controls){
+    document
+        .getElementById(
+            "menuModal"
+        )
+        .classList.add(
+            "show"
+        );
 
-        controls.innerHTML = `
+}
 
-            <button
-                class="add-btn"
-                disabled>
 
-                Adding...
+/* =========================================================
+   CLOSE MENU MODAL
+========================================================= */
 
-            </button>
+function closeMenuModal(){
 
-        `;
+    document
+        .getElementById(
+            "menuModal"
+        )
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =========================================================
+   SAVE MENU
+========================================================= */
+
+document
+    .getElementById(
+        "menuForm"
+    )
+    .addEventListener(
+        "submit",
+        async function(event){
+
+            event.preventDefault();
+
+
+            const name =
+                document.getElementById(
+                    "foodName"
+                ).value.trim();
+
+
+            const price =
+                Number(
+                    document.getElementById(
+                        "foodPrice"
+                    ).value
+                );
+
+
+            const category =
+                document.getElementById(
+                    "foodCategory"
+                ).value.trim();
+
+
+            const description =
+                document.getElementById(
+                    "foodDescription"
+                ).value.trim();
+
+
+            const isAvailable =
+                document.getElementById(
+                    "foodAvailable"
+                ).value ===
+                "true";
+
+
+            if(!name){
+
+                alert(
+                    "Please enter food name."
+                );
+
+                return;
+
+            }
+
+
+            if(
+                Number.isNaN(price) ||
+                price < 0
+            ){
+
+                alert(
+                    "Please enter a valid price."
+                );
+
+                return;
+
+            }
+
+
+            try{
+
+                const payload = {
+
+                    restaurant_id:
+                        restaurantId,
+
+                    name:
+                        name,
+
+                    price:
+                        price,
+
+                    category:
+                        category,
+
+                    description:
+                        description,
+
+                    is_available:
+                        isAvailable
+
+                };
+
+
+                if(editingMenuId){
+
+                    const {
+                        error
+                    } =
+                    await supabaseClient
+                        .from("menu_items")
+                        .update(
+                            payload
+                        )
+                        .eq(
+                            "id",
+                            editingMenuId
+                        )
+                        .eq(
+                            "restaurant_id",
+                            restaurantId
+                        );
+
+
+                    if(error){
+
+                        throw error;
+
+                    }
+
+
+                    showMessage(
+                        "Food item updated successfully.",
+                        "success"
+                    );
+
+                }
+                else{
+
+                    const {
+                        error
+                    } =
+                    await supabaseClient
+                        .from("menu_items")
+                        .insert(
+                            payload
+                        );
+
+
+                    if(error){
+
+                        throw error;
+
+                    }
+
+
+                    showMessage(
+                        "Food item added successfully.",
+                        "success"
+                    );
+
+                }
+
+
+                closeMenuModal();
+
+                await loadMenu();
+
+            }
+            catch(error){
+
+                console.error(
+                    "Menu save error:",
+                    error
+                );
+
+
+                showMessage(
+                    "Unable to save food item: " +
+                    error.message,
+                    "error"
+                );
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   DELETE MENU
+========================================================= */
+
+async function deleteMenu(
+    id
+){
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this food item?"
+        );
+
+
+    if(!confirmDelete){
+
+        return;
 
     }
 
@@ -2120,124 +3252,49 @@ async function addToCart(
     try{
 
         const {
-            data:existing,
-            error:findError
-        } = await sb
-
-            .from("cart_items")
-
-            .select(
-                "id,quantity"
-            )
-
+            error
+        } =
+        await supabaseClient
+            .from("menu_items")
+            .delete()
             .eq(
-                "customer_id",
-                user.id
+                "id",
+                id
             )
-
             .eq(
-                "menu_item_id",
-                menuItemId
-            )
-
-            .maybeSingle();
+                "restaurant_id",
+                restaurantId
+            );
 
 
-        if(findError){
+        if(error){
 
-            throw findError;
+            throw error;
 
         }
 
 
-        if(existing){
-
-            const {
-                error:updateError
-            } = await sb
-
-                .from("cart_items")
-
-                .update({
-
-                    quantity:
-                        Number(
-                            existing.quantity || 0
-                        ) + 1
-
-                })
-
-                .eq(
-                    "id",
-                    existing.id
-                );
-
-
-            if(updateError){
-
-                throw updateError;
-
-            }
-
-        }
-        else{
-
-            const {
-                error:insertError
-            } = await sb
-
-                .from("cart_items")
-
-                .insert({
-
-                    customer_id:
-                        user.id,
-
-                    menu_item_id:
-                        menuItemId,
-
-                    quantity:1
-
-                });
-
-
-            if(insertError){
-
-                throw insertError;
-
-            }
-
-        }
-
-
-        showToast(
-            item.name +
-            " added to cart ✓"
+        showMessage(
+            "Food item deleted successfully.",
+            "success"
         );
 
 
-        await updateCartCount();
-
-        await restoreQuantity(
-            menuItemId
-        );
+        await loadMenu();
 
     }
     catch(error){
 
         console.error(
-            "Add to cart error:",
+            "Delete menu error:",
             error
         );
 
 
-        showToast(
-            "Cart update failed."
-        );
-
-
-        await restoreQuantity(
-            menuItemId
+        showMessage(
+            "Unable to delete food item: " +
+            error.message,
+            "error"
         );
 
     }
@@ -2245,510 +3302,318 @@ async function addToCart(
 }
 
 
-/* =========================================
-   CHANGE QUANTITY
-========================================= */
+/* =========================================================
+   NAVIGATION / SECTIONS
+========================================================= */
 
-async function changeQuantity(
-    menuItemId,
-    change
-){
+function showDashboard(){
 
-    const user =
-        await getCurrentUser();
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
 
 
-    if(!user){
+function showOrders(){
+
+    document
+        .getElementById(
+            "ordersList"
+        )
+        .scrollIntoView({
+
+            behavior:"smooth"
+
+        });
+
+}
+
+
+function showMenu(){
+
+    document
+        .getElementById(
+            "menuCard"
+        )
+        .scrollIntoView({
+
+            behavior:"smooth"
+
+        });
+
+}
+
+
+function showProfile(){
+
+    if(!restaurantData){
 
         return;
 
     }
 
 
-    const {
-        data:item,
-        error
-    } = await sb
+    alert(
 
-        .from("cart_items")
+        "Restaurant Profile\n\n" +
 
-        .select(
-            "id,quantity"
-        )
+        "Name: " +
+        (restaurantData.name || "-") +
 
-        .eq(
-            "customer_id",
-            user.id
-        )
+        "\nPhone: " +
+        (restaurantData.phone || "-") +
 
-        .eq(
-            "menu_item_id",
-            menuItemId
-        )
+        "\nAddress: " +
+        (restaurantData.address || "-")
 
-        .maybeSingle();
+    );
+
+}
 
 
-    if(error){
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-        console.error(error);
+async function logout(){
 
-        return;
+    const confirmLogout =
+        confirm(
+            "Are you sure you want to logout?"
+        );
 
-    }
 
-
-    if(!item){
+    if(!confirmLogout){
 
         return;
 
     }
 
 
-    const newQuantity =
-        Number(
-            item.quantity || 0
-        ) +
-        Number(change);
+    await supabaseClient.auth.signOut();
 
 
-    if(newQuantity <= 0){
+    window.location.href =
+        "login.html";
 
-        const {
-            error:deleteError
-        } = await sb
-
-            .from("cart_items")
-
-            .delete()
-
-            .eq(
-                "id",
-                item.id
-            );
+}
 
 
-        if(deleteError){
+/* =========================================================
+   MODAL BACKDROP
+========================================================= */
 
-            console.error(
-                deleteError
-            );
+document
+    .getElementById(
+        "menuModal"
+    )
+    .addEventListener(
+        "click",
+        function(event){
 
-            return;
+            if(
+                event.target ===
+                this
+            ){
+
+                closeMenuModal();
+
+            }
 
         }
-
-    }
-    else{
-
-        const {
-            error:updateError
-        } = await sb
-
-            .from("cart_items")
-
-            .update({
-
-                quantity:
-                    newQuantity
-
-            })
-
-            .eq(
-                "id",
-                item.id
-            );
-
-
-        if(updateError){
-
-            console.error(
-                updateError
-            );
-
-            return;
-
-        }
-
-    }
-
-
-    await restoreQuantity(
-        menuItemId
     );
 
 
-    await updateCartCount();
+/* =========================================================
+   HELPERS
+========================================================= */
 
-}
-
-
-/* =========================================
-   RESTORE QUANTITY
-========================================= */
-
-async function restoreQuantity(
-    menuItemId
+function getStatusClass(
+    status
 ){
 
-    const controls =
-        document.getElementById(
-            "controls-" +
-            menuItemId
-        );
-
-
-    if(!controls){
-
-        return;
-
-    }
-
-
-    const user =
-        await getCurrentUser();
-
-
-    if(!user){
-
-        controls.innerHTML = `
-
-            <button
-                class="add-btn"
-                onclick="
-                    addToCart(
-                        ${menuItemId}
-                    )
-                ">
-
-                Add to Cart
-
-            </button>
-
-        `;
-
-        return;
-
-    }
-
-
-    const {
-        data:item,
-        error
-    } = await sb
-
-        .from("cart_items")
-
-        .select(
-            "quantity"
+    const value =
+        String(
+            status || ""
         )
-
-        .eq(
-            "customer_id",
-            user.id
-        )
-
-        .eq(
-            "menu_item_id",
-            menuItemId
-        )
-
-        .maybeSingle();
-
-
-    if(error){
-
-        console.error(error);
-
-        return;
-
-    }
-
-
-    const quantity =
-        Number(
-            item?.quantity || 0
-        );
-
-
-    if(quantity <= 0){
-
-        controls.innerHTML = `
-
-            <button
-                class="add-btn"
-                onclick="
-                    addToCart(
-                        ${menuItemId}
-                    )
-                ">
-
-                Add to Cart
-
-            </button>
-
-        `;
-
-        return;
-
-    }
-
-
-    controls.innerHTML = `
-
-        <div class="quantity-control">
-
-
-            <button
-                class="qty-btn"
-                onclick="
-                    changeQuantity(
-                        ${menuItemId},
-                        -1
-                    )
-                ">
-
-                −
-
-            </button>
-
-
-            <span class="qty-number">
-
-                ${quantity}
-
-            </span>
-
-
-            <button
-                class="qty-btn"
-                onclick="
-                    changeQuantity(
-                        ${menuItemId},
-                        1
-                    )
-                ">
-
-                +
-
-            </button>
-
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================
-   RESTORE ALL QUANTITIES
-========================================= */
-
-async function restoreQuantities(){
-
-    for(
-        const item
-        of menuItems
-    ){
-
-        await restoreQuantity(
-            item.id
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   CART COUNT
-========================================= */
-
-async function updateCartCount(){
-
-    const user =
-        await getCurrentUser();
-
-
-    const badge =
-        document.getElementById(
-            "cartCount"
-        );
-
-
-    if(!user){
-
-        badge.textContent =
-            "0";
-
-        return;
-
-    }
-
-
-    const {
-        data,
-        error
-    } = await sb
-
-        .from("cart_items")
-
-        .select(
-            "quantity"
-        )
-
-        .eq(
-            "customer_id",
-            user.id
-        );
-
-
-    if(error){
-
-        console.error(error);
-
-        badge.textContent =
-            "0";
-
-        return;
-
-    }
-
-
-    const total =
-        (data || [])
-        .reduce(
-            (sum,item) =>
-                sum +
-                Number(
-                    item.quantity || 0
-                ),
-            0
-        );
-
-
-    const oldCount =
-        Number(
-            badge.textContent || 0
-        );
-
-
-    badge.textContent =
-        total;
+        .toLowerCase();
 
 
     if(
-        total !==
-        oldCount
+        value === "confirmed"
     ){
 
-        badge.classList.remove(
-            "pop"
-        );
-
-
-        void badge.offsetWidth;
-
-
-        badge.classList.add(
-            "pop"
-        );
+        return "confirmed";
 
     }
+
+
+    if(
+        value === "preparing" ||
+        value === "processing"
+    ){
+
+        return "preparing";
+
+    }
+
+
+    if(
+        value === "ready"
+    ){
+
+        return "ready";
+
+    }
+
+
+    if(
+        value === "delivered" ||
+        value === "completed"
+    ){
+
+        return "delivered";
+
+    }
+
+
+    if(
+        value === "cancelled" ||
+        value === "canceled"
+    ){
+
+        return "cancelled";
+
+    }
+
+
+    return "pending";
 
 }
 
 
-/* =========================================
-   PAGE ERROR
-========================================= */
-
-function showPageError(
-    message
+function capitalize(
+    value
 ){
 
-    document.getElementById(
-        "restaurantName"
-    ).textContent =
-        "Unable to load";
-
-
-    document.getElementById(
-        "restaurantDescription"
-    ).textContent =
-        message;
-
-
-    document.getElementById(
-        "menuGrid"
-    ).innerHTML = `
-
-        <div class="empty">
-
-            <div class="empty-icon">
-                ⚠️
-            </div>
-
-            <h3>
-                Something went wrong
-            </h3>
-
-            <p>
-                ${escapeHTML(message)}
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-async function init(){
-
-    restaurantId =
-        getRestaurantId();
-
-
-    if(!restaurantId){
-
-        showPageError(
-            "Restaurant ID missing."
+    const text =
+        String(
+            value || ""
         );
 
-        return;
 
-    }
-
-
-    await getCurrentUser();
-
-
-    const loaded =
-        await loadRestaurant();
-
-
-    if(!loaded){
-
-        return;
-
-    }
-
-
-    await loadMenu();
-
-
-    await updateCartCount();
+    return (
+        text.charAt(0).toUpperCase() +
+        text.slice(1)
+    );
 
 }
 
 
-init();
+function formatDate(
+    value
+){
+
+    if(!value){
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "-";
+
+    }
+
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+
+            day:"2-digit",
+
+            month:"short",
+
+            hour:"2-digit",
+
+            minute:"2-digit"
+
+        }
+    );
+
+}
+
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function escapeJS(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadDashboard();
 
 </script>
 
