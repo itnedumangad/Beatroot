@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Beatroot Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#171717;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+button{
+    text-decoration:none !important;
+}
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+
+    width:250px;
+
+    background:#111827;
+
+    color:white;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    padding:25px 15px;
+
+    z-index:100;
+}
+
+.brand{
+
+    font-size:27px;
+
+    font-weight:800;
+
+    padding:0 15px 30px;
+}
+
+.brand span{
+    color:#ef4444;
+}
+
+.admin-label{
+
+    font-size:12px;
+
+    color:#9ca3af;
+
+    padding:0 15px;
+
+    margin-bottom:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin:5px 0;
+}
+
+.menu button{
+
+    width:100%;
+
+    border:0;
+
+    background:transparent;
+
+    color:#d1d5db;
+
+    padding:13px 15px;
+
+    text-align:left;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:14px;
+}
+
+.menu button:hover,
+.menu button.active{
+
+    background:#ef4444;
+
+    color:white;
+}
+
+.menu-icon{
+
+    width:25px;
+
+    display:inline-block;
+}
+
+.sidebar-bottom{
+
+    position:absolute;
+
+    left:15px;
+    right:15px;
+
+    bottom:20px;
+}
+
+.logout{
+
+    width:100%;
+
+    border:1px solid #374151;
+
+    background:transparent;
+
+    color:#d1d5db;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+.logout:hover{
+
+    background:#1f2937;
+
+    color:white;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+
+    margin-left:250px;
+
+    width:calc(100% - 250px);
+
+    min-height:100vh;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+
+    height:75px;
+
+    background:white;
+
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:50;
+}
+
+.mobile-menu{
+
+    display:none;
+
+    border:0;
+
+    background:#f3f4f6;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
+
+.top-title{
+
+    font-size:22px;
+
+    font-weight:700;
+}
+
+.top-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.notification{
+
+    width:40px;
+    height:40px;
+
+    border-radius:10px;
+
+    border:1px solid #e5e7eb;
+
+    background:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+.notification:hover{
+    background:#f9fafb;
+}
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.avatar{
+
+    width:40px;
+    height:40px;
+
+    background:#ef4444;
+
+    color:white;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:bold;
+}
+
+.profile-text strong{
+
+    display:block;
+
+    font-size:13px;
+}
+
+.profile-text small{
+    color:#888;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+    padding:30px;
+}
+
+.welcome{
+    margin-bottom:25px;
+}
+
+.welcome h1{
+
+    font-size:27px;
+
+    margin-bottom:6px;
+}
+
+.welcome p{
+    color:#6b7280;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    display:none;
+}
+
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:25px;
+}
+
+.stat-card{
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:16px;
+
+    padding:22px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.stat-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:80px;
+    height:80px;
+
+    border-radius:50%;
+
+    right:-25px;
+    top:-25px;
+
+    background:#f3f4f6;
+}
+
+.stat-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    position:relative;
+
+    z-index:2;
+}
+
+.stat-icon{
+
+    width:45px;
+    height:45px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:21px;
+}
+
+.red{
+    background:#fee2e2;
+}
+
+.green{
+    background:#dcfce7;
+}
+
+.orange{
+    background:#ffedd5;
+}
+
+.blue{
+    background:#dbeafe;
+}
+
+.stat-card h3{
+
+    margin-top:18px;
+
+    font-size:27px;
+}
+
+.stat-card p{
+
+    color:#6b7280;
+
+    font-size:13px;
+
+    margin-top:5px;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:20px;
+}
+
+.card{
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:16px;
+
+    padding:22px;
+}
+
+.card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.card-header h2{
+    font-size:18px;
+}
+
+.view-all{
+
+    border:0;
+
+    background:#fff1f2;
+
+    color:#e53935;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.view-all:hover{
+    background:#fee2e2;
+}
+
+
+/* =========================================================
+   ORDER TABLE
+========================================================= */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+th{
+
+    text-align:left;
+
+    font-size:12px;
+
+    color:#6b7280;
+
+    padding:12px 8px;
+
+    border-bottom:1px solid #eee;
+}
+
+td{
+
+    padding:15px 8px;
+
+    border-bottom:1px solid #f1f1f1;
+
+    font-size:13px;
+}
+
+.order-number{
+    font-weight:bold;
+}
+
+.status{
+
+    display:inline-block;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
+    font-weight:bold;
+}
+
+.status-confirmed{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+}
+
+.status-preparing{
+
+    background:#ffedd5;
+
+    color:#c2410c;
+}
+
+.status-delivered{
+
+    background:#dcfce7;
+
+    color:#15803d;
+}
+
+.status-cancelled{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+}
+
+.status-pending{
+
+    background:#fef3c7;
+
+    color:#92400e;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+.quick-actions{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+}
+
+.quick-btn{
+
+    border:1px solid #e5e7eb;
+
+    background:#fafafa;
+
+    padding:18px 10px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    text-align:center;
+}
+
+.quick-btn:hover{
+
+    background:#fff1f2;
+
+    border-color:#fecaca;
+}
+
+.quick-btn .icon{
+
+    font-size:24px;
+
+    margin-bottom:8px;
+}
+
+.quick-btn span{
+
+    display:block;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   PARTNER APPLICATION QUICK ACTION
+========================================================= */
+
+.partner-quick{
+
+    grid-column:1 / -1;
+
+    position:relative;
+}
+
+.partner-badge{
+
+    position:absolute;
+
+    top:8px;
+
+    right:8px;
+
+    min-width:20px;
+    height:20px;
+
+    padding:0 6px;
+
+    border-radius:20px;
+
+    background:#ef4444;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:10px;
+
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   ORDER SUMMARY
+========================================================= */
+
+.summary{
+    margin-top:20px;
+}
+
+.summary-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #eee;
+
+    font-size:13px;
+}
+
+.summary-row:last-child{
+    border-bottom:0;
+}
+
+.summary-value{
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#777;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .stats{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+
+        transform:translateX(-100%);
+
+        transition:.25s;
+    }
+
+    .sidebar.open{
+
+        transform:translateX(0);
+    }
+
+    .main{
+
+        margin-left:0;
+
+        width:100%;
+    }
+
+    .mobile-menu{
+
+        display:block;
+    }
+
+    .topbar{
+
+        padding:0 15px;
+    }
+
+    .top-title{
+
+        font-size:17px;
+    }
+
+    .profile-text{
+
+        display:none;
+    }
+
+    .content{
+
+        padding:20px 15px;
+    }
+
+    .stats{
+
+        grid-template-columns:1fr 1fr;
+
+        gap:12px;
+    }
+
+    .stat-card{
+
+        padding:16px;
+    }
+
+    .stat-card h3{
+
+        font-size:22px;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .stats{
+
+        grid-template-columns:1fr;
+    }
+
+    .quick-actions{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+
+    <div class="brand">
+        Beat<span>root</span>
+    </div>
+
+
+    <div class="admin-label">
+        Admin Panel
+    </div>
+
+
+    <ul class="menu">
+
+
+        <li>
+
+            <button
+                class="active"
+                onclick="showDashboard()">
+
+                <span class="menu-icon">
+                    📊
+                </span>
+
+                Dashboard
+
+            </button>
+
+        </li>
+
+
+        <li>
+
+            <button
+                onclick="openOrders()">
+
+                <span class="menu-icon">
+                    🛒
+                </span>
+
+                Orders
+
+            </button>
+
+        </li>
+
+
+        <li>
+
+            <button
+                onclick="openCustomers()">
+
+                <span class="menu-icon">
+                    👥
+                </span>
+
+                Customers
+
+            </button>
+
+        </li>
+
+
+        <!-- PARTNER APPLICATIONS -->
+
+        <li>
+
+            <button
+                onclick="openPartners()">
+
+                <span class="menu-icon">
+                    🤝
+                </span>
+
+                Partner Applications
+
+            </button>
+
+        </li>
+
+
+        <li>
+
+            <button
+                onclick="openRestaurants()">
+
+                <span class="menu-icon">
+                    🍔
+                </span>
+
+                Restaurants
+
+            </button>
+
+        </li>
+
+
+        <li>
+
+            <button
+                onclick="openReports()">
+
+                <span class="menu-icon">
+                    📈
+                </span>
+
+                Reports
+
+            </button>
+
+        </li>
+
+
+        <li>
+
+            <button
+                onclick="openSettings()">
+
+                <span class="menu-icon">
+                    ⚙️
+                </span>
+
+                Settings
+
+            </button>
+
+        </li>
+
+
+    </ul>
+
+
+    <div class="sidebar-bottom">
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            🚪 Logout
+
+        </button>
+
+    </div>
+
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+
+<header class="topbar">
+
+
+    <div
+        style="
+            display:flex;
+            align-items:center;
+            gap:12px;
+        ">
+
+
+        <button
+            class="mobile-menu"
+            onclick="toggleSidebar()">
+
+            ☰
+
+        </button>
+
+
+        <div class="top-title">
+
+            Admin Dashboard
+
+        </div>
+
+
+    </div>
+
+
+    <div class="top-right">
+
+
+        <button
+            class="notification"
+            onclick="openPartners()">
+
+            🔔
+
+        </button>
+
+
+        <div class="profile">
+
+
+            <div
+                class="avatar"
+                id="avatar">
+
+                A
+
+            </div>
+
+
+            <div class="profile-text">
+
+                <strong id="adminName">
+
+                    Admin
+
+                </strong>
+
+
+                <small>
+
+                    Administrator
+
+                </small>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</header>
+
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
+<main class="content">
+
+
+<div class="welcome">
+
+
+    <h1>
+        Dashboard Overview 👋
+    </h1>
+
+
+    <p>
+        Welcome back! Here's what's happening with Beatroot today.
+    </p>
+
+
+</div>
+
+
+<div
+    class="error"
+    id="errorBox">
+</div>
+
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
+<section class="stats">
+
+
+    <div class="stat-card">
+
+
+        <div class="stat-top">
+
+
+            <div>
+
+                <small>
+                    Total Orders
+                </small>
+
+            </div>
+
+
+            <div class="stat-icon blue">
+
+                🛒
+
+            </div>
+
+
+        </div>
+
+
+        <h3 id="totalOrders">
+            0
+        </h3>
+
+
+        <p>
+            All orders
+        </p>
+
+
+    </div>
+
+
+    <div class="stat-card">
+
+
+        <div class="stat-top">
+
+
+            <div>
+
+                <small>
+                    Today's Orders
+                </small>
+
+            </div>
+
+
+            <div class="stat-icon orange">
+
+                📦
+
+            </div>
+
+
+        </div>
+
+
+        <h3 id="todayOrders">
+            0
+        </h3>
+
+
+        <p>
+            Orders today
+        </p>
+
+
+    </div>
+
+
+    <div class="stat-card">
+
+
+        <div class="stat-top">
+
+
+            <div>
+
+                <small>
+                    Total Revenue
+                </small>
+
+            </div>
+
+
+            <div class="stat-icon green">
+
+                💰
+
+            </div>
+
+
+        </div>
+
+
+        <h3 id="totalRevenue">
+            ₹0
+        </h3>
+
+
+        <p>
+            Total sales
+        </p>
+
+
+    </div>
+
+
+    <div class="stat-card">
+
+
+        <div class="stat-top">
+
+
+            <div>
+
+                <small>
+                    Customers
+                </small>
+
+            </div>
+
+
+            <div class="stat-icon red">
+
+                👥
+
+            </div>
+
+
+        </div>
+
+
+        <h3 id="totalCustomers">
+            0
+        </h3>
+
+
+        <p>
+            Unique customers
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     MAIN GRID
+===================================================== -->
+
+<section class="grid">
+
+
+<!-- RECENT ORDERS -->
+
+<div class="card">
+
+
+    <div class="card-header">
+
+
+        <h2>
+            Recent Orders
+        </h2>
+
+
+        <button
+            class="view-all"
+            onclick="openOrders()">
+
+            View All
+
+        </button>
+
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+
+        <table>
+
+
+            <thead>
+
+
+                <tr>
+
+
+                    <th>
+                        ORDER
+                    </th>
+
+
+                    <th>
+                        CUSTOMER
+                    </th>
+
+
+                    <th>
+                        STATUS
+                    </th>
+
+
+                    <th>
+                        TOTAL
+                    </th>
+
+
+                </tr>
+
+
+            </thead>
+
+
+            <tbody
+                id="ordersTable">
+
+
+                <tr>
+
+
+                    <td
+                        colspan="4"
+                        class="loading">
+
+                        Loading orders...
+
+                    </td>
+
+
+                </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- RIGHT SIDE -->
+
+<div>
+
+
+<!-- QUICK ACTIONS -->
+
+<div class="card">
+
+
+    <div class="card-header">
+
+
+        <h2>
+            Quick Actions
+        </h2>
+
+
+    </div>
+
+
+    <div class="quick-actions">
+
+
+        <button
+            class="quick-btn"
+            onclick="openOrders()">
+
+
+            <div class="icon">
+                🛒
+            </div>
+
+
+            <span>
+                Orders
+            </span>
+
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="openCustomers()">
+
+
+            <div class="icon">
+                👥
+            </div>
+
+
+            <span>
+                Customers
+            </span>
+
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="openRestaurants()">
+
+
+            <div class="icon">
+                🍔
+            </div>
+
+
+            <span>
+                Restaurants
+            </span>
+
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="openReports()">
+
+
+            <div class="icon">
+                📈
+            </div>
+
+
+            <span>
+                Reports
+            </span>
+
+
+        </button>
+
+
+        <!-- PARTNER APPLICATIONS -->
+
+        <button
+            class="quick-btn partner-quick"
+            onclick="openPartners()">
+
+
+            <div class="icon">
+                🤝
+            </div>
+
+
+            <span>
+                Partner Applications
+            </span>
+
+
+            <span
+                class="partner-badge"
+                id="pendingPartnerBadge">
+
+                0
+
+            </span>
+
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ORDER SUMMARY -->
+
+<div class="card summary">
+
+
+    <div class="card-header">
+
+
+        <h2>
+            Order Summary
+        </h2>
+
+
+    </div>
+
+
+    <div class="summary-row">
+
+
+        <span>
+            Confirmed
+        </span>
+
+
+        <span
+            class="summary-value"
+            id="confirmedCount">
+
+            0
+
+        </span>
+
+
+    </div>
+
+
+    <div class="summary-row">
+
+
+        <span>
+            Preparing
+        </span>
+
+
+        <span
+            class="summary-value"
+            id="preparingCount">
+
+            0
+
+        </span>
+
+
+    </div>
+
+
+    <div class="summary-row">
+
+
+        <span>
+            Delivered
+        </span>
+
+
+        <span
+            class="summary-value"
+            id="deliveredCount">
+
+            0
+
+        </span>
+
+
+    </div>
+
+
+    <div class="summary-row">
+
+
+        <span>
+            Cancelled
+        </span>
+
+
+        <span
+            class="summary-value"
+            id="cancelledCount">
+
+            0
+
+        </span>
+
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://jhihjnsxazmftdqlitgk.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =========================================================
+   ADMIN EMAIL
+========================================================= */
+
+const ADMIN_EMAIL =
+    "itnedumangad@gmail.com";
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   LOAD DASHBOARD
+========================================================= */
+
+async function loadDashboard(){
+
+    try{
+
+
+        /* ===============================================
+           LOGIN CHECK
+        =============================================== */
+
+        const {
+            data:{
+                user
+            },
+            error:authError
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if(authError){
+
+            throw authError;
+
+        }
+
+
+        if(!user){
+
+            alert(
+                "Admin login required."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /* ===============================================
+           ADMIN ONLY
+        =============================================== */
+
+        if(
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ){
+
+            alert(
+                "Access denied. Admin only."
+            );
+
+            await supabaseClient.auth.signOut();
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /* ===============================================
+           ADMIN NAME
+        =============================================== */
+
+        const email =
+            user.email ||
+            "Admin";
+
+
+        document.getElementById(
+            "adminName"
+        ).textContent =
+            email.split("@")[0];
+
+
+        document.getElementById(
+            "avatar"
+        ).textContent =
+            email
+                .charAt(0)
+                .toUpperCase();
+
+
+        /* ===============================================
+           LOAD ORDERS
+        =============================================== */
+
+        const {
+            data:orders,
+            error
+        } =
+        await supabaseClient
+            .from("orders")
+            .select(`
+                id,
+                status,
+                total,
+                customer_id,
+                created_at
+            `)
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        const allOrders =
+            orders || [];
+
+
+        /* ===============================================
+           TOTAL ORDERS
+        =============================================== */
+
+        document.getElementById(
+            "totalOrders"
+        ).textContent =
+            allOrders.length;
+
+
+        /* ===============================================
+           TODAY
+        =============================================== */
+
+        const today =
+            new Date();
+
+
+        const todayString =
+            today
+                .toISOString()
+                .split("T")[0];
+
+
+        const todayOrders =
+            allOrders.filter(
+                order => {
+
+                    return (
+                        order.created_at &&
+                        order.created_at
+                            .startsWith(
+                                todayString
+                            )
+                    );
+
+                }
+            );
+
+
+        document.getElementById(
+            "todayOrders"
+        ).textContent =
+            todayOrders.length;
+
+
+        /* ===============================================
+           REVENUE
+        =============================================== */
+
+        const revenue =
+            allOrders.reduce(
+                (
+                    sum,
+                    order
+                ) => {
+
+                    return (
+                        sum +
+                        Number(
+                            order.total || 0
+                        )
+                    );
+
+                },
+                0
+            );
+
+
+        document.getElementById(
+            "totalRevenue"
+        ).textContent =
+            "₹" +
+            revenue.toLocaleString(
+                "en-IN"
+            );
+
+
+        /* ===============================================
+           CUSTOMERS
+        =============================================== */
+
+        const customers =
+            new Set(
+                allOrders
+                    .map(
+                        order =>
+                            order.customer_id
+                    )
+                    .filter(Boolean)
+            );
+
+
+        document.getElementById(
+            "totalCustomers"
+        ).textContent =
+            customers.size;
+
+
+        /* ===============================================
+           STATUS COUNTS
+        =============================================== */
+
+        let confirmed = 0;
+
+        let preparing = 0;
+
+        let delivered = 0;
+
+        let cancelled = 0;
+
+
+        allOrders.forEach(
+            order => {
+
+                const status =
+                    String(
+                        order.status || ""
+                    )
+                    .toLowerCase();
+
+
+                if(
+                    status ===
+                    "confirmed"
+                ){
+
+                    confirmed++;
+
+                }
+
+
+                if(
+                    status === "preparing" ||
+                    status === "processing"
+                ){
+
+                    preparing++;
+
+                }
+
+
+                if(
+                    status === "delivered" ||
+                    status === "completed"
+                ){
+
+                    delivered++;
+
+                }
+
+
+                if(
+                    status === "cancelled" ||
+                    status === "canceled"
+                ){
+
+                    cancelled++;
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "confirmedCount"
+        ).textContent =
+            confirmed;
+
+
+        document.getElementById(
+            "preparingCount"
+        ).textContent =
+            preparing;
+
+
+        document.getElementById(
+            "deliveredCount"
+        ).textContent =
+            delivered;
+
+
+        document.getElementById(
+            "cancelledCount"
+        ).textContent =
+            cancelled;
+
+
+        /* ===============================================
+           RECENT ORDERS
+        =============================================== */
+
+        renderRecentOrders(
+            allOrders.slice(
+                0,
+                8
+            )
+        );
+
+
+        /* ===============================================
+           PENDING PARTNERS
+        =============================================== */
+
+        await loadPendingPartnerCount();
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+
+        const errorBox =
+            document.getElementById(
+                "errorBox"
+            );
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.textContent =
+            "Dashboard loading error: " +
+            error.message;
+
+    }
+
+}
+
+
+/* =========================================================
+   PENDING PARTNER COUNT
+========================================================= */
+
+async function loadPendingPartnerCount(){
+
+    try{
+
+        const {
+            count,
+            error
+        } =
+        await supabaseClient
+            .from("partner_applications")
+            .select(
+                "id",
+                {
+                    count:"exact",
+                    head:true
+                }
+            )
+            .eq(
+                "status",
+                "pending"
+            );
+
+
+        if(error){
+
+            console.error(
+                "Partner count error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "pendingPartnerBadge"
+        ).textContent =
+            count || 0;
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER RECENT ORDERS
+========================================================= */
+
+function renderRecentOrders(
+    orders
+){
+
+    const table =
+        document.getElementById(
+            "ordersTable"
+        );
+
+
+    if(!orders.length){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    class="loading">
+
+                    No orders found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        orders
+            .map(
+                order => {
+
+                    const status =
+                        String(
+                            order.status ||
+                            "Pending"
+                        );
+
+
+                    return `
+
+                        <tr>
+
+                            <td>
+
+                                <div class="order-number">
+
+                                    #${escapeHTML(
+                                        order.id
+                                    )}
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                Customer
+
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="status
+                                    ${getStatusClass(
+                                        status
+                                    )}">
+
+                                    ${escapeHTML(
+                                        capitalize(
+                                            status
+                                        )
+                                    )}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <strong>
+
+                                    ₹${Number(
+                                        order.total || 0
+                                    ).toLocaleString(
+                                        "en-IN"
+                                    )}
+
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   STATUS CLASS
+========================================================= */
+
+function getStatusClass(
+    status
+){
+
+    const value =
+        String(
+            status
+        )
+        .toLowerCase();
+
+
+    if(
+        value === "delivered" ||
+        value === "completed"
+    ){
+
+        return "status-delivered";
+
+    }
+
+
+    if(
+        value === "preparing" ||
+        value === "processing"
+    ){
+
+        return "status-preparing";
+
+    }
+
+
+    if(
+        value === "cancelled" ||
+        value === "canceled"
+    ){
+
+        return "status-cancelled";
+
+    }
+
+
+    if(
+        value === "confirmed"
+    ){
+
+        return "status-confirmed";
+
+    }
+
+
+    return "status-pending";
+
+}
+
+
+/* =========================================================
+   CAPITALIZE
+========================================================= */
+
+function capitalize(
+    text
+){
+
+    text =
+        String(
+            text || ""
+        );
+
+
+    return (
+        text.charAt(0).toUpperCase() +
+        text.slice(1)
+    );
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showDashboard(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+function openOrders(){
+
+    window.location.href =
+        "admin-orders.html";
+
+}
+
+
+function openCustomers(){
+
+    window.location.href =
+        "admin-customers.html";
+
+}
+
+
+/* =========================================================
+   PARTNER APPLICATIONS
+========================================================= */
+
+function openPartners(){
+
+    window.location.href =
+        "admin-partners.html";
+
+}
+
+
+function openRestaurants(){
+
+    window.location.href =
+        "admin-restaurants.html";
+
+}
+
+
+function openReports(){
+
+    window.location.href =
+        "admin-reports.html";
+
+}
+
+
+function openSettings(){
+
+    window.location.href =
+        "settings.html";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+    const confirmLogout =
+        confirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if(!confirmLogout){
+
+        return;
+
+    }
+
+
+    await supabaseClient.auth.signOut();
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadDashboard();
+
+</script>
+
+</body>
+
+</html>

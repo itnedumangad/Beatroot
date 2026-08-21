@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cart - Beatroot</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    background:#f6f7f9;
+    color:#171717;
+}
+
+
+/* =========================
+   REMOVE UNDERLINES
+========================= */
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus{
+    text-decoration:none !important;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    height:72px;
+
+    background:rgba(255,255,255,.96);
+
+    backdrop-filter:blur(14px);
+
+    border-bottom:1px solid #e8e8e8;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    position:sticky;
+    top:0;
+
+    z-index:1000;
+}
+
+.logo{
+    text-decoration:none;
+
+    font-size:29px;
+
+    font-weight:900;
+
+    letter-spacing:-1.5px;
+
+    color:#ef3f3f;
+}
+
+.logo span{
+    color:#171717;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav{
+    display:flex;
+    align-items:center;
+
+    gap:22px;
+}
+
+.nav a{
+    text-decoration:none;
+
+    color:#333;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.2s ease;
+}
+
+.nav a:not(.cart-link):hover{
+    color:#ef3f3f;
+}
+
+
+/* =========================
+   ANIMATED CART
+========================= */
+
+.cart-link{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    background:#ef3f3f;
+
+    color:#fff !important;
+
+    padding:10px 15px;
+
+    border-radius:11px;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    box-shadow:
+        0 5px 15px rgba(239,62,62,.20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.cart-link:hover{
+
+    background:#d93232;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(239,62,62,.30);
+}
+
+
+/* CART ICON */
+
+.cart-icon{
+
+    display:inline-flex;
+
+    font-size:19px;
+
+    transform-origin:center;
+
+    transition:transform .25s ease;
+}
+
+
+/* Cart hover animation */
+
+.cart-link:hover .cart-icon{
+
+    animation:cartBounce .55s ease;
+}
+
+
+@keyframes cartBounce{
+
+    0%{
+        transform:translateY(0) rotate(0deg);
+    }
+
+    25%{
+        transform:translateY(-4px) rotate(-8deg);
+    }
+
+    50%{
+        transform:translateY(0) rotate(8deg);
+    }
+
+    75%{
+        transform:translateY(-2px) rotate(-4deg);
+    }
+
+    100%{
+        transform:translateY(0) rotate(0deg);
+    }
+
+}
+
+
+/* =========================
+   CART BADGE
+========================= */
+
+.cart-badge{
+
+    min-width:21px;
+
+    height:21px;
+
+    padding:0 5px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#fff;
+
+    color:#ef3f3f;
+
+    border-radius:50px;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.15);
+
+    transition:
+        transform .2s ease;
+}
+
+
+/* Badge pop */
+
+.cart-badge.pop{
+
+    animation:cartCountPop .35s ease;
+}
+
+
+@keyframes cartCountPop{
+
+    0%{
+        transform:scale(.7);
+    }
+
+    50%{
+        transform:scale(1.3);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.container{
+
+    max-width:1150px;
+
+    margin:0 auto;
+
+    padding:40px 20px 70px;
+}
+
+.page-title{
+
+    font-size:34px;
+
+    font-weight:850;
+
+    letter-spacing:-.8px;
+
+    margin-bottom:8px;
+}
+
+.page-subtitle{
+
+    color:#777;
+
+    font-size:15px;
+
+    margin-bottom:28px;
+}
+
+
+/* =========================
+   CART LAYOUT
+========================= */
+
+.cart-layout{
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr) 360px;
+
+    gap:24px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+
+    background:#fff;
+
+    border:1px solid #e8e8e8;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.05);
+}
+
+
+/* =========================
+   CART ITEM
+========================= */
+
+.cart-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:18px 0;
+
+    border-bottom:1px solid #eeeeee;
+}
+
+.cart-item:last-child{
+
+    border-bottom:none;
+}
+
+
+/* =========================
+   FOOD IMAGE
+========================= */
+
+.food-image{
+
+    width:92px;
+
+    height:92px;
+
+    object-fit:cover;
+
+    border-radius:14px;
+
+    background:#f1f1f1;
+
+    flex-shrink:0;
+}
+
+
+/* =========================
+   ITEM INFO
+========================= */
+
+.item-info{
+
+    flex:1;
+
+    min-width:0;
+}
+
+.item-name{
+
+    font-size:18px;
+
+    font-weight:750;
+
+    margin-bottom:5px;
+}
+
+.restaurant-name{
+
+    color:#777;
+
+    font-size:13px;
+
+    margin-bottom:8px;
+}
+
+.item-price{
+
+    font-size:14px;
+
+    color:#555;
+}
+
+.item-total{
+
+    font-size:18px;
+
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+
+/* =========================
+   QUANTITY
+========================= */
+
+.quantity{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    margin-top:12px;
+}
+
+.quantity button{
+
+    width:32px;
+
+    height:32px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#f0f1f3;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+}
+
+.quantity button:hover{
+
+    background:#e4e5e7;
+
+    transform:scale(1.05);
+}
+
+.quantity span{
+
+    min-width:24px;
+
+    text-align:center;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   REMOVE
+========================= */
+
+.remove{
+
+    margin-top:9px;
+
+    border:none;
+
+    background:none;
+
+    color:#e53935;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    padding:0;
+
+    transition:.2s ease;
+}
+
+.remove:hover{
+
+    color:#b71c1c;
+
+    text-decoration:underline;
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary{
+
+    position:sticky;
+
+    top:95px;
+
+    height:max-content;
+}
+
+.summary h2{
+
+    font-size:21px;
+
+    margin-bottom:20px;
+}
+
+.summary-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:10px 0;
+
+    color:#555;
+
+    font-size:14px;
+}
+
+.summary-row strong{
+
+    color:#222;
+}
+
+
+/* =========================
+   TOTAL
+========================= */
+
+.summary-total{
+
+    border-top:1px solid #e5e5e5;
+
+    margin-top:10px;
+
+    padding-top:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:21px;
+
+    font-weight:800;
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+.checkout-btn{
+
+    width:100%;
+
+    height:52px;
+
+    margin-top:22px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:#ef3f3f;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+
+    box-shadow:
+        0 5px 15px rgba(239,62,62,.18);
+}
+
+.checkout-btn:hover{
+
+    background:#d93434;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(239,62,62,.25);
+}
+
+
+/* =========================
+   CONTINUE
+========================= */
+
+.continue{
+
+    display:block;
+
+    text-align:center;
+
+    margin-top:16px;
+
+    color:#ef3f3f;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.2s ease;
+}
+
+.continue:hover{
+
+    color:#c62828;
+}
+
+
+/* =========================
+   EMPTY CART
+========================= */
+
+.empty{
+
+    text-align:center;
+
+    padding:80px 20px;
+}
+
+.empty-icon{
+
+    font-size:58px;
+
+    margin-bottom:15px;
+
+    animation:emptyCartFloat 2s ease-in-out infinite;
+}
+
+
+@keyframes emptyCartFloat{
+
+    0%,
+    100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+
+}
+
+.empty h2{
+
+    font-size:24px;
+
+    margin-bottom:8px;
+}
+
+.empty p{
+
+    color:#777;
+
+    margin-bottom:25px;
+}
+
+.shop-btn{
+
+    display:inline-block;
+
+    text-decoration:none;
+
+    background:#ef3f3f;
+
+    color:#fff;
+
+    padding:13px 22px;
+
+    border-radius:10px;
+
+    font-weight:700;
+
+    transition:.2s ease;
+}
+
+.shop-btn:hover{
+
+    background:#d93434;
+
+    transform:translateY(-2px);
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+
+    display:none;
+
+    padding:14px 16px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    font-size:14px;
+}
+
+.message.error{
+
+    display:block;
+
+    background:#fff0f0;
+
+    color:#d32f2f;
+
+    border:1px solid #ffd1d1;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+
+    text-align:center;
+
+    padding:60px;
+
+    color:#777;
+}
+
+
+/* =========================
+   LOADING SPINNER
+========================= */
+
+.loading-spinner{
+
+    width:34px;
+
+    height:34px;
+
+    margin:0 auto 14px;
+
+    border:4px solid #eeeeee;
+
+    border-top-color:#ef3f3f;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+}
+
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+    .header{
+
+        padding:0 18px;
+    }
+
+    .nav{
+
+        gap:8px;
+    }
+
+    .nav a:not(.cart-link){
+
+        display:none;
+    }
+
+    .container{
+
+        padding:28px 15px 50px;
+    }
+
+    .page-title{
+
+        font-size:28px;
+    }
+
+    .cart-layout{
+
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+
+        position:static;
+    }
+
+    .cart-text{
+
+        display:none;
+    }
+
+    .cart-link{
+
+        padding:10px 12px;
+    }
+
+}
+
+
+@media(max-width:520px){
+
+    .logo{
+
+        font-size:25px;
+    }
+
+    .card{
+
+        padding:16px;
+    }
+
+    .cart-item{
+
+        align-items:flex-start;
+
+        gap:12px;
+    }
+
+    .food-image{
+
+        width:72px;
+
+        height:72px;
+    }
+
+    .item-name{
+
+        font-size:15px;
+    }
+
+    .item-total{
+
+        font-size:15px;
+    }
+
+    .cart-link{
+
+        padding:9px 11px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <a href="../index.html" class="logo">
+        Beat<span>root</span>
+    </a>
+
+
+    <nav class="nav">
+
+        <a href="../index.html">
+            Home
+        </a>
+
+        <a href="restaurants.html">
+            Restaurants
+        </a>
+
+        <a href="my-orders.html">
+            My Orders
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+
+        <!-- ANIMATED CART -->
+
+        <a href="cart.html" class="cart-link">
+
+            <span class="cart-icon">
+                🛒
+            </span>
+
+            <span class="cart-text">
+                Cart
+            </span>
+
+            <span
+                class="cart-badge"
+                id="cartCount">
+                0
+            </span>
+
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+    <h1 class="page-title">
+        Your Cart
+    </h1>
+
+    <p class="page-subtitle">
+        Review your items before checkout
+    </p>
+
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+
+    <div id="cartArea">
+
+        <div class="loading">
+
+            <div class="loading-spinner"></div>
+
+            Loading cart...
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+    "https://jhihjnsxazmftdqlitgk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
+
+
+const sb =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+let cart = [];
+
+let currentUser = null;
+
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showError(text){
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = text;
+
+    box.className =
+        "message error";
+
+}
+
+
+function hideMessage(){
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = "";
+
+    box.className =
+        "message";
+
+}
+
+
+
+/* =========================================
+   AUTH
+========================================= */
+
+async function checkUser(){
+
+    try{
+
+        const result =
+            await sb.auth.getUser();
+
+
+        if(
+            result.error ||
+            !result.data ||
+            !result.data.user
+        ){
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
+
+
+        currentUser =
+            result.data.user;
+
+
+        return true;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+}
+
+
+
+/* =========================================
+   LOAD CART
+========================================= */
+
+async function loadCart(){
+
+    hideMessage();
+
+
+    const authenticated =
+        await checkUser();
+
+
+    if(!authenticated){
+
+        return;
+
+    }
+
+
+    const result =
+        await sb
+        .from("cart_items")
+        .select(`
+            id,
+            quantity,
+            menu_item_id,
+            created_at,
+
+            menu_items (
+                id,
+                restaurant_id,
+                name,
+                description,
+                price,
+                image_url,
+
+                restaurants (
+                    id,
+                    name
+                )
+            )
+        `)
+        .eq(
+            "customer_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(result.error){
+
+        console.error(
+            "Cart Error:",
+            result.error
+        );
+
+
+        showError(
+            "Cart load cheyyan kazhinjilla. " +
+            result.error.message
+        );
+
+
+        document.getElementById(
+            "cartArea"
+        ).innerHTML = `
+
+            <div class="card empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h2>
+                    Unable to load cart
+                </h2>
+
+                <p>
+                    Please refresh the page and try again.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    cart =
+        result.data || [];
+
+
+    renderCart();
+
+}
+
+
+
+/* =========================================
+   CART COUNT + ANIMATION
+========================================= */
+
+function updateCartCount(){
+
+    const count =
+        cart.reduce(
+            (sum,item) =>
+                sum +
+                Number(item.quantity || 0),
+            0
+        );
+
+
+    const badge =
+        document.getElementById(
+            "cartCount"
+        );
+
+
+    const oldCount =
+        Number(
+            badge.textContent || 0
+        );
+
+
+    badge.textContent =
+        count;
+
+
+    /*
+       Animate badge whenever
+       cart count changes.
+    */
+
+    if(count !== oldCount){
+
+        badge.classList.remove("pop");
+
+
+        /*
+           Force browser reflow
+           so animation can restart.
+        */
+
+        void badge.offsetWidth;
+
+
+        badge.classList.add("pop");
+
+    }
+
+}
+
+
+
+/* =========================================
+   CHANGE QUANTITY
+========================================= */
+
+async function changeQuantity(
+    cartId,
+    quantity
+){
+
+    if(quantity <= 0){
+
+        await removeItem(
+            cartId
+        );
+
+        return;
+
+    }
+
+
+    const result =
+        await sb
+        .from("cart_items")
+        .update({
+
+            quantity:quantity
+
+        })
+        .eq(
+            "id",
+            cartId
+        )
+        .eq(
+            "customer_id",
+            currentUser.id
+        );
+
+
+    if(result.error){
+
+        console.error(result.error);
+
+        showError(
+            "Quantity update cheyyan kazhinjilla."
+        );
+
+        return;
+
+    }
+
+
+    await loadCart();
+
+}
+
+
+
+/* =========================================
+   REMOVE ITEM
+========================================= */
+
+async function removeItem(cartId){
+
+    const result =
+        await sb
+        .from("cart_items")
+        .delete()
+        .eq(
+            "id",
+            cartId
+        )
+        .eq(
+            "customer_id",
+            currentUser.id
+        );
+
+
+    if(result.error){
+
+        console.error(result.error);
+
+        showError(
+            "Item remove cheyyan kazhinjilla."
+        );
+
+        return;
+
+    }
+
+
+    await loadCart();
+
+}
+
+
+
+/* =========================================
+   RENDER CART
+========================================= */
+
+function renderCart(){
+
+    updateCartCount();
+
+
+    const area =
+        document.getElementById(
+            "cartArea"
+        );
+
+
+    /*
+       EMPTY CART
+    */
+
+    if(cart.length === 0){
+
+        area.innerHTML = `
+
+            <div class="card empty">
+
+                <div class="empty-icon">
+                    🛒
+                </div>
+
+                <h2>
+                    Your cart is empty
+                </h2>
+
+                <p>
+                    Add some delicious food
+                    from our restaurants.
+                </p>
+
+                <a
+                    href="restaurants.html"
+                    class="shop-btn">
+
+                    Browse Restaurants
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    let subtotal = 0;
+
+    let html = "";
+
+
+
+    cart.forEach(item => {
+
+        const food =
+            item.menu_items;
+
+
+        /*
+           If menu item was deleted,
+           skip it safely.
+        */
+
+        if(!food){
+
+            return;
+
+        }
+
+
+        const price =
+            Number(
+                food.price || 0
+            );
+
+
+        const quantity =
+            Number(
+                item.quantity || 1
+            );
+
+
+        const total =
+            price * quantity;
+
+
+        subtotal += total;
+
+
+
+        const image =
+            food.image_url ||
+            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80";
+
+
+        const restaurant =
+            food.restaurants?.name ||
+            "Restaurant";
+
+
+
+        html += `
+
+            <div class="cart-item">
+
+                <img
+                    class="food-image"
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(food.name)}"
+                >
+
+
+                <div class="item-info">
+
+                    <div class="item-name">
+
+                        ${escapeHTML(
+                            food.name
+                        )}
+
+                    </div>
+
+
+                    <div class="restaurant-name">
+
+                        ${escapeHTML(
+                            restaurant
+                        )}
+
+                    </div>
+
+
+                    <div class="item-price">
+
+                        ₹${price.toFixed(2)}
+
+                    </div>
+
+
+                    <div class="quantity">
+
+
+                        <button
+                            type="button"
+                            onclick="
+                                changeQuantity(
+                                    ${item.id},
+                                    ${quantity - 1}
+                                )
+                            ">
+
+                            −
+
+                        </button>
+
+
+                        <span>
+
+                            ${quantity}
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            onclick="
+                                changeQuantity(
+                                    ${item.id},
+                                    ${quantity + 1}
+                                )
+                            ">
+
+                            +
+
+                        </button>
+
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="remove"
+                        onclick="
+                            removeItem(
+                                ${item.id}
+                            )
+                        ">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+
+                <div class="item-total">
+
+                    ₹${total.toFixed(2)}
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+
+    /*
+       DELIVERY FEE
+       ₹40 below ₹500
+       FREE from ₹500
+    */
+
+    const delivery =
+        subtotal >= 500
+            ? 0
+            : 40;
+
+
+    const grandTotal =
+        subtotal + delivery;
+
+
+
+    /*
+       FINAL CART UI
+    */
+
+    area.innerHTML = `
+
+        <div class="cart-layout">
+
+
+            <!-- CART ITEMS -->
+
+            <div class="card">
+
+                ${html}
+
+            </div>
+
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="card summary">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        ₹${subtotal.toFixed(2)}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery Fee
+                    </span>
+
+                    <strong>
+
+                        ${
+                            delivery === 0
+                            ? "FREE"
+                            : "₹" +
+                              delivery.toFixed(2)
+                        }
+
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span>
+                        ₹${grandTotal.toFixed(2)}
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="checkout-btn"
+                    onclick="goCheckout()">
+
+                    Proceed to Checkout
+
+                </button>
+
+
+                <a
+                    href="restaurants.html"
+                    class="continue">
+
+                    ← Continue Shopping
+
+                </a>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* =========================================
+   CHECKOUT
+========================================= */
+
+function goCheckout(){
+
+    if(cart.length === 0){
+
+        showError(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    window.location.href =
+        "checkout.html";
+
+}
+
+
+
+/* =========================================
+   HTML ESCAPE
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =========================================
+   START
+========================================= */
+
+loadCart();
+
+</script>
+
+
+</body>
+
+</html>
