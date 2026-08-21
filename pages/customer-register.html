@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Beatroot - Create Customer Account</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Beatroot - Create Account</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -17,14 +22,26 @@
 
 body{
     min-height:100vh;
+
     font-family:Arial,Helvetica,sans-serif;
+
     background:
-        radial-gradient(circle at top left,#ffe8e6,transparent 35%),
-        radial-gradient(circle at bottom right,#ffeef0,transparent 35%),
+        radial-gradient(
+            circle at top left,
+            #ffe8e8,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #fff0f0,
+            transparent 35%
+        ),
         #f7f8fc;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     padding:20px;
 }
 
@@ -32,59 +49,102 @@ a{
     text-decoration:none;
 }
 
-.wrapper{
+/* =========================
+   WRAPPER
+========================= */
+
+.register-wrapper{
+
     width:100%;
-    max-width:1050px;
-    min-height:650px;
+    max-width:1080px;
+
     background:#fff;
+
     border-radius:28px;
+
     overflow:hidden;
-    box-shadow:0 25px 70px rgba(0,0,0,.12);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.12);
+
     display:grid;
+
     grid-template-columns:1fr 1fr;
 }
 
-/* LEFT */
+/* =========================
+   LEFT
+========================= */
 
 .left{
-    background:linear-gradient(145deg,#111827,#1f2937);
+
+    background:
+        linear-gradient(
+            145deg,
+            #111827,
+            #1f2937
+        );
+
     color:white;
+
     padding:55px;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
+
     position:relative;
+
     overflow:hidden;
 }
 
-.left:before{
+.left::before{
+
     content:"";
+
     position:absolute;
-    width:300px;
-    height:300px;
+
+    width:330px;
+    height:330px;
+
     border-radius:50%;
-    background:rgba(239,68,68,.12);
-    top:-120px;
-    right:-100px;
+
+    background:
+        rgba(239,68,68,.13);
+
+    top:-130px;
+    right:-120px;
 }
 
-.left:after{
+.left::after{
+
     content:"";
+
     position:absolute;
-    width:250px;
-    height:250px;
+
+    width:260px;
+    height:260px;
+
     border-radius:50%;
-    background:rgba(255,255,255,.04);
-    bottom:-100px;
-    left:-80px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    bottom:-110px;
+    left:-90px;
 }
 
 .brand{
+
     position:relative;
+
     z-index:2;
+
     font-size:38px;
-    font-weight:800;
-    margin-bottom:40px;
+
+    font-weight:900;
+
+    margin-bottom:45px;
 }
 
 .brand span{
@@ -92,208 +152,459 @@ a{
 }
 
 .left h1{
+
     position:relative;
+
     z-index:2;
+
     font-size:40px;
+
     line-height:1.15;
+
     margin-bottom:18px;
 }
 
 .left p{
+
     position:relative;
+
     z-index:2;
+
     color:#d1d5db;
+
     font-size:15px;
+
     line-height:1.7;
-    max-width:420px;
+
+    max-width:430px;
 }
 
+/* =========================
+   BENEFITS
+========================= */
+
 .features{
+
     position:relative;
+
     z-index:2;
+
     margin-top:35px;
 }
 
 .feature{
+
     display:flex;
+
     align-items:center;
+
     gap:12px;
-    margin:15px 0;
+
+    margin:14px 0;
+
     color:#e5e7eb;
+
     font-size:14px;
 }
 
 .feature-icon{
+
     width:36px;
     height:36px;
+
     border-radius:10px;
+
     background:#ef4444;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
+    font-size:18px;
 }
 
-/* RIGHT */
+/* =========================
+   RIGHT
+========================= */
 
 .right{
+
     padding:45px 55px;
+
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
 }
 
 .title{
-    font-size:30px;
+
+    font-size:29px;
+
     font-weight:800;
+
     color:#111827;
+
     margin-bottom:7px;
 }
 
 .subtitle{
+
     color:#6b7280;
+
     font-size:14px;
-    line-height:1.5;
+
     margin-bottom:25px;
 }
 
+/* =========================
+   MESSAGE
+========================= */
+
 .message{
+
     display:none;
+
     padding:12px 14px;
+
     border-radius:10px;
+
     font-size:13px;
+
+    margin-bottom:17px;
+
     line-height:1.5;
-    margin-bottom:18px;
 }
 
 .message.error{
+
     display:block;
+
     background:#fee2e2;
+
     color:#b91c1c;
+
     border:1px solid #fecaca;
 }
 
 .message.success{
+
     display:block;
+
     background:#dcfce7;
+
     color:#15803d;
+
     border:1px solid #bbf7d0;
 }
 
+/* =========================
+   FORM
+========================= */
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:14px;
+}
+
 .form-group{
-    margin-bottom:15px;
+
+    margin-bottom:16px;
 }
 
 .form-group label{
+
     display:block;
-    font-size:13px;
+
+    font-size:12px;
+
     font-weight:700;
+
     color:#374151;
+
     margin-bottom:7px;
 }
 
 .input-box{
+
     position:relative;
 }
 
 .input-box input{
+
     width:100%;
+
     height:48px;
+
     border:1px solid #e5e7eb;
+
     border-radius:11px;
+
     padding:0 14px;
-    font-size:14px;
+
     outline:none;
+
     background:#fafafa;
+
+    font-size:14px;
+
     transition:.2s;
 }
 
 .input-box input:focus{
+
     border-color:#ef4444;
+
     background:white;
-    box-shadow:0 0 0 4px rgba(239,68,68,.08);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(239,68,68,.08);
 }
 
 .password-toggle{
+
     position:absolute;
-    right:13px;
+
+    right:12px;
+
     top:50%;
+
     transform:translateY(-50%);
+
     border:0;
+
     background:transparent;
+
     cursor:pointer;
+
     font-size:17px;
 }
 
+/* =========================
+   TERMS
+========================= */
+
+.terms{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:8px;
+
+    margin:2px 0 20px;
+
+    color:#6b7280;
+
+    font-size:11px;
+
+    line-height:1.5;
+}
+
+.terms input{
+
+    margin-top:2px;
+
+    accent-color:#ef4444;
+}
+
+.terms a{
+
+    color:#ef4444;
+
+    font-weight:700;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
 .register-btn{
+
     width:100%;
+
     height:50px;
+
     border:0;
+
     border-radius:11px;
+
     background:#ef4444;
+
     color:white;
+
     font-size:15px;
+
     font-weight:800;
+
     cursor:pointer;
-    margin-top:5px;
+
     transition:.2s;
 }
 
 .register-btn:hover{
+
     background:#dc2626;
+
     transform:translateY(-1px);
-    box-shadow:0 8px 20px rgba(239,68,68,.25);
+
+    box-shadow:
+        0 8px 20px
+        rgba(239,68,68,.25);
 }
 
 .register-btn:disabled{
+
     opacity:.65;
+
     cursor:not-allowed;
+
     transform:none;
+
+    box-shadow:none;
 }
 
-.login-link{
-    text-align:center;
-    margin-top:18px;
-    font-size:13px;
-    color:#6b7280;
-}
-
-.login-link a{
-    color:#ef4444;
-    font-weight:800;
-}
-
-.info{
-    margin-top:15px;
-    padding:11px 13px;
-    background:#fff7ed;
-    border:1px solid #fed7aa;
-    color:#9a3412;
-    border-radius:10px;
-    font-size:11px;
-    line-height:1.5;
-}
+/* =========================
+   SPINNER
+========================= */
 
 .loading{
+
     display:inline-flex;
+
     align-items:center;
+
     justify-content:center;
+
     gap:8px;
 }
 
 .spinner{
+
     width:16px;
     height:16px;
-    border:2px solid rgba(255,255,255,.4);
+
+    border:2px solid
+        rgba(255,255,255,.4);
+
     border-top-color:white;
+
     border-radius:50%;
+
     animation:spin .7s linear infinite;
 }
 
 @keyframes spin{
+
     to{
         transform:rotate(360deg);
     }
+
 }
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-link{
+
+    text-align:center;
+
+    color:#6b7280;
+
+    font-size:12px;
+
+    margin-top:18px;
+}
+
+.login-link a{
+
+    color:#ef4444;
+
+    font-weight:800;
+}
+
+/* =========================
+   PARTNER
+========================= */
+
+.partner-box{
+
+    margin-top:25px;
+
+    padding-top:20px;
+
+    border-top:1px solid #eee;
+}
+
+.partner-title{
+
+    text-align:center;
+
+    color:#6b7280;
+
+    font-size:11px;
+
+    margin-bottom:12px;
+
+    font-weight:700;
+}
+
+.partner-options{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+}
+
+.partner-btn{
+
+    height:43px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:10px;
+
+    background:#fafafa;
+
+    color:#374151;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.partner-btn:hover{
+
+    border-color:#fecaca;
+
+    background:#fff1f2;
+
+    color:#ef4444;
+}
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:800px){
 
@@ -301,60 +612,88 @@ a{
         padding:12px;
     }
 
-    .wrapper{
+    .register-wrapper{
+
         grid-template-columns:1fr;
+
         max-width:520px;
     }
 
     .left{
-        padding:35px 30px;
-        min-height:260px;
+
+        padding:32px 28px;
+
+        min-height:280px;
     }
 
     .brand{
+
         font-size:30px;
+
         margin-bottom:25px;
     }
 
     .left h1{
+
         font-size:30px;
     }
 
     .left p{
+
         font-size:14px;
     }
 
     .features{
+
         display:none;
     }
 
     .right{
-        padding:35px 25px;
+
+        padding:32px 25px;
     }
+
 }
 
-@media(max-width:450px){
+@media(max-width:480px){
+
+    .form-row{
+
+        grid-template-columns:1fr;
+
+        gap:0;
+    }
 
     .left{
-        padding:30px 22px;
+
+        padding:28px 20px;
     }
 
     .right{
-        padding:30px 20px;
+
+        padding:28px 20px;
     }
 
     .title{
+
         font-size:25px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
-<div class="wrapper">
 
-<!-- LEFT -->
+<div class="register-wrapper">
+
+
+<!-- =========================
+     LEFT SIDE
+========================= -->
 
 <section class="left">
 
@@ -363,30 +702,52 @@ a{
     </div>
 
     <h1>
-        Join Beatroot
+        Create Your Account
     </h1>
 
     <p>
-        Create your customer account and start
-        discovering restaurants, ordering delicious
-        food and tracking your orders easily.
+        Join Beatroot and enjoy easy food ordering,
+        fast delivery and a better restaurant experience.
     </p>
 
     <div class="features">
 
         <div class="feature">
-            <div class="feature-icon">🍔</div>
-            <span>Discover restaurants</span>
+
+            <div class="feature-icon">
+                🍔
+            </div>
+
+            <span>
+                Order food from your favourite restaurants
+            </span>
+
         </div>
 
-        <div class="feature">
-            <div class="feature-icon">🛒</div>
-            <span>Order your favourite food</span>
-        </div>
 
         <div class="feature">
-            <div class="feature-icon">🚴</div>
-            <span>Track your deliveries</span>
+
+            <div class="feature-icon">
+                🚴
+            </div>
+
+            <span>
+                Track your orders easily
+            </span>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ❤️
+            </div>
+
+            <span>
+                Save your favourite food and restaurants
+            </span>
+
         </div>
 
     </div>
@@ -394,7 +755,9 @@ a{
 </section>
 
 
-<!-- RIGHT -->
+<!-- =========================
+     RIGHT SIDE
+========================= -->
 
 <section class="right">
 
@@ -406,10 +769,15 @@ a{
         Create your Beatroot customer account.
     </p>
 
-    <div id="messageBox" class="message"></div>
+
+    <div
+        id="messageBox"
+        class="message">
+    </div>
 
 
     <form id="registerForm">
+
 
         <!-- NAME -->
 
@@ -462,7 +830,7 @@ a{
         <div class="form-group">
 
             <label for="phone">
-                Mobile Number
+                Phone Number
             </label>
 
             <div class="input-box">
@@ -470,7 +838,7 @@ a{
                 <input
                     type="tel"
                     id="phone"
-                    placeholder="Enter your mobile number"
+                    placeholder="Enter your phone number"
                     autocomplete="tel"
                     maxlength="15"
                     required
@@ -481,94 +849,117 @@ a{
         </div>
 
 
-        <!-- PASSWORD -->
+        <!-- PASSWORD ROW -->
 
-        <div class="form-group">
+        <div class="form-row">
 
-            <label for="password">
-                Password
-            </label>
 
-            <div class="input-box">
+            <!-- PASSWORD -->
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Create a password"
-                    autocomplete="new-password"
-                    minlength="6"
-                    required
-                >
+            <div class="form-group">
 
-                <button
-                    type="button"
-                    class="password-toggle"
-                    onclick="togglePassword('password','passwordToggle')"
-                    id="passwordToggle">
+                <label for="password">
+                    Password
+                </label>
 
-                    👁️
+                <div class="input-box">
 
-                </button>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Create password"
+                        autocomplete="new-password"
+                        minlength="6"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('password','passwordToggle')"
+                        id="passwordToggle">
+
+                        👁️
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM -->
+
+            <div class="form-group">
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <div class="input-box">
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm password"
+                        autocomplete="new-password"
+                        minlength="6"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('confirmPassword','confirmToggle')"
+                        id="confirmToggle">
+
+                        👁️
+
+                    </button>
+
+                </div>
 
             </div>
 
         </div>
 
 
-        <!-- CONFIRM PASSWORD -->
+        <!-- TERMS -->
 
-        <div class="form-group">
+        <label class="terms">
 
-            <label for="confirmPassword">
-                Confirm Password
-            </label>
+            <input
+                type="checkbox"
+                id="terms"
+                required
+            >
 
-            <div class="input-box">
+            <span>
+                I agree to the Beatroot
+                <a href="#">Terms & Conditions</a>
+                and
+                <a href="#">Privacy Policy</a>.
+            </span>
 
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="Confirm your password"
-                    autocomplete="new-password"
-                    minlength="6"
-                    required
-                >
+        </label>
 
-                <button
-                    type="button"
-                    class="password-toggle"
-                    onclick="togglePassword('confirmPassword','confirmToggle')"
-                    id="confirmToggle">
 
-                    👁️
-
-                </button>
-
-            </div>
-
-        </div>
-
+        <!-- REGISTER -->
 
         <button
             type="submit"
             class="register-btn"
             id="registerBtn">
 
-            Create Customer Account
+            Create Account
 
         </button>
+
 
     </form>
 
 
-    <div class="info">
-
-        📧 After registration, a verification email will be
-        sent to your email address. Please verify your email
-        before logging in.
-
-    </div>
-
+    <!-- LOGIN -->
 
     <div class="login-link">
 
@@ -579,6 +970,40 @@ a{
         </a>
 
     </div>
+
+
+    <!-- PARTNER -->
+
+    <div class="partner-box">
+
+        <div class="partner-title">
+            ARE YOU A BEATROOT PARTNER?
+        </div>
+
+
+        <div class="partner-options">
+
+            <a
+                href="restaurant-register.html"
+                class="partner-btn">
+
+                🏪 Restaurant
+
+            </a>
+
+
+            <a
+                href="delivery-register.html"
+                class="partner-btn">
+
+                🚴 Delivery Boy
+
+            </a>
+
+        </div>
+
+    </div>
+
 
 </section>
 
@@ -594,14 +1019,14 @@ a{
 const SUPABASE_URL =
     "https://jhihjnsxazmftdqlitgk.supabase.co";
 
-const SUPABASE_KEY =
+const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_r_zMn0-GhFNtuvs5-UOo9w_D8SW8J57";
 
 
 const supabaseClient =
     supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_KEY
+        SUPABASE_PUBLISHABLE_KEY
     );
 
 
@@ -610,13 +1035,19 @@ const supabaseClient =
 ========================================================= */
 
 const registerForm =
-    document.getElementById("registerForm");
+    document.getElementById(
+        "registerForm"
+    );
 
 const registerBtn =
-    document.getElementById("registerBtn");
+    document.getElementById(
+        "registerBtn"
+    );
 
 const messageBox =
-    document.getElementById("messageBox");
+    document.getElementById(
+        "messageBox"
+    );
 
 
 /* =========================================================
@@ -625,7 +1056,7 @@ const messageBox =
 
 function showMessage(
     message,
-    type="error"
+    type = "error"
 ){
 
     messageBox.textContent =
@@ -636,10 +1067,10 @@ function showMessage(
 
 }
 
+
 function hideMessage(){
 
-    messageBox.textContent =
-        "";
+    messageBox.textContent = "";
 
     messageBox.className =
         "message";
@@ -669,39 +1100,18 @@ function togglePassword(
 
     if(input.type === "password"){
 
-        input.type =
-            "text";
+        input.type = "text";
 
-        button.textContent =
-            "🙈";
+        button.textContent = "🙈";
 
     }
     else{
 
-        input.type =
-            "password";
+        input.type = "password";
 
-        button.textContent =
-            "👁️";
+        button.textContent = "👁️";
 
     }
-
-}
-
-
-/* =========================================================
-   VALIDATE PHONE
-========================================================= */
-
-function validatePhone(phone){
-
-    const cleaned =
-        phone.replace(/\D/g,"");
-
-    return (
-        cleaned.length >= 10 &&
-        cleaned.length <= 15
-    );
 
 }
 
@@ -753,25 +1163,26 @@ registerForm.addEventListener(
                 .value;
 
 
+        const terms =
+            document
+                .getElementById("terms")
+                .checked;
+
+
         /* =========================
            VALIDATION
         ========================= */
 
-        if(fullName.length < 2){
+        if(
+            !fullName ||
+            !email ||
+            !phone ||
+            !password ||
+            !confirmPassword
+        ){
 
             showMessage(
-                "Please enter your full name."
-            );
-
-            return;
-
-        }
-
-
-        if(!validatePhone(phone)){
-
-            showMessage(
-                "Please enter a valid mobile number."
+                "Please fill in all required fields."
             );
 
             return;
@@ -801,9 +1212,22 @@ registerForm.addEventListener(
         }
 
 
-        registerBtn.disabled =
-            true;
+        if(!terms){
 
+            showMessage(
+                "Please accept the Terms & Conditions."
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        registerBtn.disabled = true;
 
         registerBtn.innerHTML = `
             <span class="loading">
@@ -815,9 +1239,10 @@ registerForm.addEventListener(
 
         try{
 
-            /* =========================================
-               SUPABASE AUTH SIGNUP
-            ========================================= */
+
+            /* =========================
+               CREATE SUPABASE USER
+            ========================= */
 
             const {
                 data,
@@ -842,10 +1267,7 @@ registerForm.addEventListener(
                                 fullName,
 
                             phone:
-                                phone,
-
-                            role:
-                                "customer"
+                                phone
 
                         }
 
@@ -861,10 +1283,13 @@ registerForm.addEventListener(
             }
 
 
-            if(!data || !data.user){
+            if(
+                !data ||
+                !data.user
+            ){
 
                 throw new Error(
-                    "Account creation failed."
+                    "Unable to create account."
                 );
 
             }
@@ -874,9 +1299,9 @@ registerForm.addEventListener(
                 data.user;
 
 
-            /* =========================================
-               PROFILE
-            ========================================= */
+            /* =========================
+               CREATE PROFILE
+            ========================= */
 
             const {
                 error:profileError
@@ -906,12 +1331,18 @@ registerForm.addEventListener(
                     profileError
                 );
 
+                /*
+                   Do not stop registration
+                   if email verification is
+                   still pending.
+                */
+
             }
 
 
-            /* =========================================
-               USER ROLE
-            ========================================= */
+            /* =========================
+               CREATE USER ROLE
+            ========================= */
 
             const {
                 error:roleError
@@ -939,12 +1370,19 @@ registerForm.addEventListener(
             }
 
 
-            /* =========================================
+            /* =========================
+               SIGN OUT
+            ========================= */
+
+            await supabaseClient.auth.signOut();
+
+
+            /* =========================
                SUCCESS
-            ========================================= */
+            ========================= */
 
             showMessage(
-                "Account created successfully! Please check your email and verify your account before signing in.",
+                "Account created successfully! Please check your email and click the verification link before signing in.",
                 "success"
             );
 
@@ -952,11 +1390,25 @@ registerForm.addEventListener(
             registerForm.reset();
 
 
-            registerBtn.disabled =
-                false;
+            registerBtn.disabled = false;
 
             registerBtn.textContent =
-                "Create Customer Account";
+                "Create Account";
+
+
+            /* =========================
+               GO LOGIN
+            ========================= */
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                        "login.html";
+
+                },
+                4000
+            );
 
 
         }
@@ -973,32 +1425,28 @@ registerForm.addEventListener(
                 "Unable to create account.";
 
 
-            const lower =
-                message.toLowerCase();
-
+            /* FRIENDLY ERRORS */
 
             if(
-                lower.includes(
-                    "already registered"
-                ) ||
-                lower.includes(
-                    "user already registered"
-                )
+                message
+                    .toLowerCase()
+                    .includes(
+                        "user already registered"
+                    )
             ){
 
                 message =
-                    "This email is already registered. Please sign in instead.";
+                    "This email is already registered. Please sign in.";
 
             }
 
 
             if(
-                lower.includes(
-                    "password"
-                ) &&
-                lower.includes(
-                    "6"
-                )
+                message
+                    .toLowerCase()
+                    .includes(
+                        "password should be at least"
+                    )
             ){
 
                 message =
@@ -1016,7 +1464,7 @@ registerForm.addEventListener(
                 false;
 
             registerBtn.textContent =
-                "Create Customer Account";
+                "Create Account";
 
         }
 
@@ -1024,6 +1472,7 @@ registerForm.addEventListener(
 );
 
 </script>
+
 
 </body>
 </html>
