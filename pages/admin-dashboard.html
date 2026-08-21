@@ -27,8 +27,6 @@ body{
     color:#171717;
 }
 
-/* REMOVE UNDERLINES */
-
 a,
 a:link,
 a:visited,
@@ -100,6 +98,7 @@ button{
     border-radius:10px;
     cursor:pointer;
     font-size:14px;
+    position:relative;
 }
 
 .menu button:hover,
@@ -111,6 +110,24 @@ button{
 .menu-icon{
     width:25px;
     display:inline-block;
+}
+
+.approval-badge{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    min-width:21px;
+    height:21px;
+    padding:0 6px;
+    border-radius:20px;
+    background:#f59e0b;
+    color:white;
+    font-size:11px;
+    font-weight:800;
+    display:none;
+    align-items:center;
+    justify-content:center;
 }
 
 .sidebar-bottom{
@@ -476,6 +493,31 @@ td{
 }
 
 /* =========================================================
+   APPROVAL QUICK BUTTON
+========================================================= */
+
+.partner-btn{
+    position:relative;
+}
+
+.partner-btn .pending-mini{
+    position:absolute;
+    top:7px;
+    right:7px;
+    min-width:19px;
+    height:19px;
+    padding:0 5px;
+    border-radius:20px;
+    background:#f59e0b;
+    color:white;
+    font-size:10px;
+    font-weight:800;
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+/* =========================================================
    ORDER SUMMARY
 ========================================================= */
 
@@ -639,6 +681,26 @@ td{
             </button>
         </li>
 
+        <!-- NEW PARTNER APPROVALS -->
+
+        <li>
+            <button onclick="openPartnerApprovals()">
+
+                <span class="menu-icon">
+                    🤝
+                </span>
+
+                Partner Approvals
+
+                <span
+                    class="approval-badge"
+                    id="approvalBadge">
+                    0
+                </span>
+
+            </button>
+        </li>
+
         <li>
             <button onclick="openReports()">
                 <span class="menu-icon">📈</span>
@@ -666,434 +728,456 @@ td{
 </aside>
 
 
+
 <!-- =====================================================
      MAIN
 ===================================================== -->
 
 <div class="main">
 
-    <!-- TOPBAR -->
+<header class="topbar">
 
-    <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
 
-        <div style="display:flex;align-items:center;gap:12px;">
+        <button
+            class="mobile-menu"
+            onclick="toggleSidebar()">
+            ☰
+        </button>
 
-            <button
-                class="mobile-menu"
-                onclick="toggleSidebar()">
-                ☰
-            </button>
+        <div class="top-title">
+            Admin Dashboard
+        </div>
 
-            <div class="top-title">
-                Admin Dashboard
+    </div>
+
+    <div class="top-right">
+
+        <button
+            class="notification"
+            onclick="openPartnerApprovals()">
+            🔔
+        </button>
+
+        <div class="profile">
+
+            <div class="avatar" id="avatar">
+                A
+            </div>
+
+            <div class="profile-text">
+
+                <strong id="adminName">
+                    Admin
+                </strong>
+
+                <small>
+                    Administrator
+                </small>
+
             </div>
 
         </div>
 
-        <div class="top-right">
+    </div>
 
-            <button class="notification">
-                🔔
-            </button>
+</header>
 
-            <div class="profile">
 
-                <div class="avatar" id="avatar">
-                    A
-                </div>
 
-                <div class="profile-text">
+<main class="content">
 
-                    <strong id="adminName">
-                        Admin
-                    </strong>
+<div class="welcome">
 
-                    <small>
-                        Administrator
-                    </small>
+    <h1>
+        Dashboard Overview 👋
+    </h1>
 
-                </div>
+    <p>
+        Welcome back! Here's what's happening with Beatroot today.
+    </p>
 
-            </div>
+</div>
 
+
+
+<div class="error" id="errorBox"></div>
+
+
+
+<!-- =================================================
+     STATISTICS
+================================================= -->
+
+<section class="stats">
+
+<div class="stat-card">
+
+    <div class="stat-top">
+
+        <div>
+            <small>Total Orders</small>
         </div>
 
-    </header>
-
-
-    <!-- CONTENT -->
-
-    <main class="content">
-
-        <div class="welcome">
-
-            <h1>
-                Dashboard Overview 👋
-            </h1>
-
-            <p>
-                Welcome back! Here's what's happening with Beatroot today.
-            </p>
-
+        <div class="stat-icon blue">
+            🛒
         </div>
 
+    </div>
 
-        <div class="error" id="errorBox"></div>
+    <h3 id="totalOrders">
+        0
+    </h3>
+
+    <p>
+        All orders
+    </p>
+
+</div>
 
 
-        <!-- =================================================
-             STATISTICS
-        ================================================= -->
 
-        <section class="stats">
+<div class="stat-card">
 
-            <div class="stat-card">
+    <div class="stat-top">
 
-                <div class="stat-top">
+        <div>
+            <small>Today's Orders</small>
+        </div>
 
-                    <div>
-                        <small>Total Orders</small>
-                    </div>
+        <div class="stat-icon orange">
+            📦
+        </div>
 
-                    <div class="stat-icon blue">
-                        🛒
-                    </div>
+    </div>
 
-                </div>
+    <h3 id="todayOrders">
+        0
+    </h3>
 
-                <h3 id="totalOrders">
-                    0
-                </h3>
+    <p>
+        Orders today
+    </p>
 
-                <p>
-                    All orders
-                </p>
+</div>
 
+
+
+<div class="stat-card">
+
+    <div class="stat-top">
+
+        <div>
+            <small>Total Revenue</small>
+        </div>
+
+        <div class="stat-icon green">
+            💰
+        </div>
+
+    </div>
+
+    <h3 id="totalRevenue">
+        ₹0
+    </h3>
+
+    <p>
+        Total sales
+    </p>
+
+</div>
+
+
+
+<div class="stat-card">
+
+    <div class="stat-top">
+
+        <div>
+            <small>Customers</small>
+        </div>
+
+        <div class="stat-icon red">
+            👥
+        </div>
+
+    </div>
+
+    <h3 id="totalCustomers">
+        0
+    </h3>
+
+    <p>
+        Unique customers
+    </p>
+
+</div>
+
+</section>
+
+
+
+<section class="grid">
+
+<!-- RECENT ORDERS -->
+
+<div class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Recent Orders
+        </h2>
+
+        <button
+            class="view-all"
+            onclick="openOrders()">
+            View All
+        </button>
+
+    </div>
+
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ORDER</th>
+                    <th>CUSTOMER</th>
+                    <th>STATUS</th>
+                    <th>TOTAL</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="ordersTable">
+
+                <tr>
+
+                    <td
+                        colspan="4"
+                        class="loading">
+
+                        Loading orders...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<!-- RIGHT SIDE -->
+
+<div>
+
+<!-- QUICK ACTIONS -->
+
+<div class="card">
+
+    <div class="card-header">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+    </div>
+
+
+
+    <div class="quick-actions">
+
+        <button
+            class="quick-btn"
+            onclick="openOrders()">
+
+            <div class="icon">
+                🛒
             </div>
 
+            <span>
+                Orders
+            </span>
 
-            <div class="stat-card">
+        </button>
 
-                <div class="stat-top">
 
-                    <div>
-                        <small>Today's Orders</small>
-                    </div>
 
-                    <div class="stat-icon orange">
-                        📦
-                    </div>
+        <button
+            class="quick-btn"
+            onclick="openCustomers()">
 
-                </div>
-
-                <h3 id="todayOrders">
-                    0
-                </h3>
-
-                <p>
-                    Orders today
-                </p>
-
+            <div class="icon">
+                👥
             </div>
 
+            <span>
+                Customers
+            </span>
 
-            <div class="stat-card">
+        </button>
 
-                <div class="stat-top">
 
-                    <div>
-                        <small>Total Revenue</small>
-                    </div>
 
-                    <div class="stat-icon green">
-                        💰
-                    </div>
+        <button
+            class="quick-btn"
+            onclick="openRestaurants()">
 
-                </div>
-
-                <h3 id="totalRevenue">
-                    ₹0
-                </h3>
-
-                <p>
-                    Total sales
-                </p>
-
+            <div class="icon">
+                🍔
             </div>
 
+            <span>
+                Restaurants
+            </span>
 
-            <div class="stat-card">
+        </button>
 
-                <div class="stat-top">
 
-                    <div>
-                        <small>Customers</small>
-                    </div>
 
-                    <div class="stat-icon red">
-                        👥
-                    </div>
+        <button
+            class="quick-btn partner-btn"
+            onclick="openPartnerApprovals()">
 
-                </div>
-
-                <h3 id="totalCustomers">
-                    0
-                </h3>
-
-                <p>
-                    Unique customers
-                </p>
-
+            <div class="icon">
+                🤝
             </div>
 
-        </section>
+            <span>
+                Partner Approvals
+            </span>
+
+            <span
+                class="pending-mini"
+                id="quickApprovalBadge">
+                0
+            </span>
+
+        </button>
 
 
-        <!-- =================================================
-             MAIN GRID
-        ================================================= -->
 
-        <section class="grid">
+        <button
+            class="quick-btn"
+            onclick="openReports()">
 
-
-            <!-- RECENT ORDERS -->
-
-            <div class="card">
-
-                <div class="card-header">
-
-                    <h2>
-                        Recent Orders
-                    </h2>
-
-                    <button
-                        class="view-all"
-                        onclick="openOrders()">
-                        View All
-                    </button>
-
-                </div>
-
-
-                <div class="table-wrapper">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    ORDER
-                                </th>
-
-                                <th>
-                                    CUSTOMER
-                                </th>
-
-                                <th>
-                                    STATUS
-                                </th>
-
-                                <th>
-                                    TOTAL
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody id="ordersTable">
-
-                            <tr>
-
-                                <td
-                                    colspan="4"
-                                    class="loading">
-
-                                    Loading orders...
-
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
+            <div class="icon">
+                📈
             </div>
 
+            <span>
+                Reports
+            </span>
 
-            <!-- RIGHT SIDE -->
+        </button>
 
-            <div>
+    </div>
 
-
-                <!-- QUICK ACTIONS -->
-
-                <div class="card">
-
-                    <div class="card-header">
-
-                        <h2>
-                            Quick Actions
-                        </h2>
-
-                    </div>
+</div>
 
 
-                    <div class="quick-actions">
 
-                        <button
-                            class="quick-btn"
-                            onclick="openOrders()">
+<!-- ORDER SUMMARY -->
 
-                            <div class="icon">
-                                🛒
-                            </div>
+<div class="card summary">
 
-                            <span>
-                                Orders
-                            </span>
+    <div class="card-header">
 
-                        </button>
+        <h2>
+            Order Summary
+        </h2>
+
+    </div>
 
 
-                        <button
-                            class="quick-btn"
-                            onclick="openCustomers()">
 
-                            <div class="icon">
-                                👥
-                            </div>
+    <div class="summary-row">
 
-                            <span>
-                                Customers
-                            </span>
+        <span>
+            Confirmed
+        </span>
 
-                        </button>
+        <span
+            class="summary-value"
+            id="confirmedCount">
+            0
+        </span>
 
-
-                        <button
-                            class="quick-btn"
-                            onclick="openRestaurants()">
-
-                            <div class="icon">
-                                🍔
-                            </div>
-
-                            <span>
-                                Restaurants
-                            </span>
-
-                        </button>
+    </div>
 
 
-                        <button
-                            class="quick-btn"
-                            onclick="openReports()">
 
-                            <div class="icon">
-                                📈
-                            </div>
+    <div class="summary-row">
 
-                            <span>
-                                Reports
-                            </span>
+        <span>
+            Preparing
+        </span>
 
-                        </button>
+        <span
+            class="summary-value"
+            id="preparingCount">
+            0
+        </span>
 
-                    </div>
-
-                </div>
+    </div>
 
 
-                <!-- ORDER SUMMARY -->
 
-                <div class="card summary">
+    <div class="summary-row">
 
-                    <div class="card-header">
+        <span>
+            Delivered
+        </span>
 
-                        <h2>
-                            Order Summary
-                        </h2>
+        <span
+            class="summary-value"
+            id="deliveredCount">
+            0
+        </span>
 
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            Confirmed
-                        </span>
-
-                        <span
-                            class="summary-value"
-                            id="confirmedCount">
-                            0
-                        </span>
-
-                    </div>
+    </div>
 
 
-                    <div class="summary-row">
 
-                        <span>
-                            Preparing
-                        </span>
+    <div class="summary-row">
 
-                        <span
-                            class="summary-value"
-                            id="preparingCount">
-                            0
-                        </span>
+        <span>
+            Cancelled
+        </span>
 
-                    </div>
+        <span
+            class="summary-value"
+            id="cancelledCount">
+            0
+        </span>
 
-
-                    <div class="summary-row">
-
-                        <span>
-                            Delivered
-                        </span>
-
-                        <span
-                            class="summary-value"
-                            id="deliveredCount">
-                            0
-                        </span>
-
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            Cancelled
-                        </span>
-
-                        <span
-                            class="summary-value"
-                            id="cancelledCount">
-                            0
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
+    </div>
 
 </div>
 
 </div>
+
+</section>
+
+</main>
+
+</div>
+
+</div>
+
 
 
 <script>
@@ -1115,12 +1199,14 @@ const supabaseClient =
     );
 
 
+
 /* =========================================================
    ADMIN EMAIL
 ========================================================= */
 
 const ADMIN_EMAIL =
     "itnedumangad@gmail.com";
+
 
 
 /* =========================================================
@@ -1136,6 +1222,7 @@ function toggleSidebar(){
 }
 
 
+
 /* =========================================================
    LOAD DASHBOARD
 ========================================================= */
@@ -1144,15 +1231,12 @@ async function loadDashboard(){
 
     try{
 
-        /* -----------------------------------------------
-           LOGIN CHECK
-        ----------------------------------------------- */
-
         const {
-            data: { user },
-            error: authError
+            data:{user},
+            error:authError
         } =
         await supabaseClient.auth.getUser();
+
 
 
         if(authError){
@@ -1160,6 +1244,7 @@ async function loadDashboard(){
             throw authError;
 
         }
+
 
 
         if(!user){
@@ -1176,9 +1261,6 @@ async function loadDashboard(){
         }
 
 
-        /* -----------------------------------------------
-           ADMIN ONLY CHECK
-        ----------------------------------------------- */
 
         if(
             !user.email ||
@@ -1200,12 +1282,10 @@ async function loadDashboard(){
         }
 
 
-        /* -----------------------------------------------
-           ADMIN NAME
-        ----------------------------------------------- */
 
         const email =
             user.email || "Admin";
+
 
 
         document.getElementById(
@@ -1214,20 +1294,20 @@ async function loadDashboard(){
             email.split("@")[0];
 
 
+
         document.getElementById(
             "avatar"
         ).textContent =
-            email
-                .charAt(0)
-                .toUpperCase();
+            email.charAt(0).toUpperCase();
 
 
-        /* -----------------------------------------------
+
+        /* =================================================
            LOAD ORDERS
-        ----------------------------------------------- */
+        ================================================= */
 
         const {
-            data: orders,
+            data:orders,
             error
         } =
         await supabaseClient
@@ -1247,6 +1327,7 @@ async function loadDashboard(){
             );
 
 
+
         if(error){
 
             throw error;
@@ -1254,13 +1335,11 @@ async function loadDashboard(){
         }
 
 
+
         const allOrders =
             orders || [];
 
 
-        /* -----------------------------------------------
-           TOTAL ORDERS
-        ----------------------------------------------- */
 
         document.getElementById(
             "totalOrders"
@@ -1268,9 +1347,6 @@ async function loadDashboard(){
             allOrders.length;
 
 
-        /* -----------------------------------------------
-           TODAY ORDERS
-        ----------------------------------------------- */
 
         const today =
             new Date();
@@ -1279,14 +1355,16 @@ async function loadDashboard(){
             today.toISOString()
                 .split("T")[0];
 
+
+
         const todayOrders =
-            allOrders.filter(order => {
-
-                return order.created_at &&
+            allOrders.filter(
+                order =>
+                    order.created_at &&
                     order.created_at
-                        .startsWith(todayString);
+                        .startsWith(todayString)
+            );
 
-            });
 
 
         document.getElementById(
@@ -1295,20 +1373,15 @@ async function loadDashboard(){
             todayOrders.length;
 
 
-        /* -----------------------------------------------
-           REVENUE
-        ----------------------------------------------- */
 
         const revenue =
             allOrders.reduce(
-                (sum, order) => {
-
-                    return sum +
-                        Number(order.total || 0);
-
-                },
+                (sum,order) =>
+                    sum +
+                    Number(order.total || 0),
                 0
             );
+
 
 
         document.getElementById(
@@ -1318,18 +1391,17 @@ async function loadDashboard(){
             revenue.toLocaleString("en-IN");
 
 
-        /* -----------------------------------------------
-           CUSTOMERS
-        ----------------------------------------------- */
 
         const customers =
             new Set(
                 allOrders
-                    .map(order =>
-                        order.customer_id
+                    .map(
+                        order =>
+                            order.customer_id
                     )
                     .filter(Boolean)
             );
+
 
 
         document.getElementById(
@@ -1338,14 +1410,12 @@ async function loadDashboard(){
             customers.size;
 
 
-        /* -----------------------------------------------
-           STATUS COUNTS
-        ----------------------------------------------- */
 
         let confirmed = 0;
         let preparing = 0;
         let delivered = 0;
         let cancelled = 0;
+
 
 
         allOrders.forEach(order => {
@@ -1356,43 +1426,40 @@ async function loadDashboard(){
                 ).toLowerCase();
 
 
+
             if(status === "confirmed"){
-
                 confirmed++;
-
             }
+
 
 
             if(
                 status === "preparing" ||
                 status === "processing"
             ){
-
                 preparing++;
-
             }
+
 
 
             if(
                 status === "delivered" ||
                 status === "completed"
             ){
-
                 delivered++;
-
             }
+
 
 
             if(
                 status === "cancelled" ||
                 status === "canceled"
             ){
-
                 cancelled++;
-
             }
 
         });
+
 
 
         document.getElementById(
@@ -1401,10 +1468,12 @@ async function loadDashboard(){
             confirmed;
 
 
+
         document.getElementById(
             "preparingCount"
         ).textContent =
             preparing;
+
 
 
         document.getElementById(
@@ -1413,20 +1482,25 @@ async function loadDashboard(){
             delivered;
 
 
+
         document.getElementById(
             "cancelledCount"
         ).textContent =
             cancelled;
 
 
-        /* -----------------------------------------------
-           RECENT ORDERS
-        ----------------------------------------------- */
 
         renderRecentOrders(
             allOrders.slice(0,8)
         );
 
+
+
+        /* =================================================
+           LOAD PARTNER APPROVAL COUNT
+        ================================================= */
+
+        await loadApprovalCount();
 
     }
     catch(error){
@@ -1437,14 +1511,17 @@ async function loadDashboard(){
         );
 
 
+
         const errorBox =
             document.getElementById(
                 "errorBox"
             );
 
 
+
         errorBox.style.display =
             "block";
+
 
 
         errorBox.textContent =
@@ -1454,6 +1531,118 @@ async function loadDashboard(){
     }
 
 }
+
+
+
+/* =========================================================
+   PARTNER APPROVAL COUNT
+========================================================= */
+
+async function loadApprovalCount(){
+
+    const badge =
+        document.getElementById(
+            "approvalBadge"
+        );
+
+    const quickBadge =
+        document.getElementById(
+            "quickApprovalBadge"
+        );
+
+
+
+    try{
+
+        /*
+         * Expected table:
+         * partner_requests
+         *
+         * status:
+         * pending / approved / rejected
+         */
+
+        const {
+            count,
+            error
+        } =
+        await supabaseClient
+            .from("partner_requests")
+            .select(
+                "id",
+                {
+                    count:"exact",
+                    head:true
+                }
+            )
+            .eq(
+                "status",
+                "pending"
+            );
+
+
+
+        if(error){
+
+            console.warn(
+                "Partner approval count:",
+                error.message
+            );
+
+            return;
+
+        }
+
+
+
+        const total =
+            Number(count || 0);
+
+
+
+        if(total > 0){
+
+            badge.textContent =
+                total > 99
+                    ? "99+"
+                    : total;
+
+            badge.style.display =
+                "flex";
+
+
+
+            quickBadge.textContent =
+                total > 99
+                    ? "99+"
+                    : total;
+
+            quickBadge.style.display =
+                "flex";
+
+        }
+        else{
+
+            badge.style.display =
+                "none";
+
+            quickBadge.style.display =
+                "none";
+
+        }
+
+    }
+    catch(error){
+
+        console.warn(
+            "Approval count unavailable:",
+            error
+        );
+
+    }
+
+}
+
 
 
 /* =========================================================
@@ -1466,6 +1655,7 @@ function renderRecentOrders(orders){
         document.getElementById(
             "ordersTable"
         );
+
 
 
     if(!orders.length){
@@ -1491,6 +1681,7 @@ function renderRecentOrders(orders){
     }
 
 
+
     table.innerHTML =
         orders.map(order => {
 
@@ -1498,6 +1689,7 @@ function renderRecentOrders(orders){
                 String(
                     order.status || "Pending"
                 );
+
 
 
             return `
@@ -1515,11 +1707,13 @@ function renderRecentOrders(orders){
                     </td>
 
 
+
                     <td>
 
                         Customer
 
                     </td>
+
 
 
                     <td>
@@ -1535,6 +1729,7 @@ function renderRecentOrders(orders){
                         </span>
 
                     </td>
+
 
 
                     <td>
@@ -1560,6 +1755,7 @@ function renderRecentOrders(orders){
 }
 
 
+
 /* =========================================================
    STATUS CLASS
 ========================================================= */
@@ -1571,48 +1767,46 @@ function getStatusClass(status){
         .toLowerCase();
 
 
+
     if(
         value === "delivered" ||
         value === "completed"
     ){
-
         return "status-delivered";
-
     }
+
 
 
     if(
         value === "preparing" ||
         value === "processing"
     ){
-
         return "status-preparing";
-
     }
+
 
 
     if(
         value === "cancelled" ||
         value === "canceled"
     ){
-
         return "status-cancelled";
-
     }
+
 
 
     if(
         value === "confirmed"
     ){
-
         return "status-confirmed";
-
     }
+
 
 
     return "status-pending";
 
 }
+
 
 
 /* =========================================================
@@ -1632,6 +1826,7 @@ function capitalize(text){
 }
 
 
+
 /* =========================================================
    HTML ESCAPE
 ========================================================= */
@@ -1648,6 +1843,7 @@ function escapeHTML(value){
 }
 
 
+
 /* =========================================================
    NAVIGATION
 ========================================================= */
@@ -1662,12 +1858,14 @@ function showDashboard(){
 }
 
 
+
 function openOrders(){
 
     window.location.href =
         "admin-orders.html";
 
 }
+
 
 
 function openCustomers(){
@@ -1678,12 +1876,27 @@ function openCustomers(){
 }
 
 
+
 function openRestaurants(){
 
     window.location.href =
         "admin-restaurants.html";
 
 }
+
+
+
+/* =========================================================
+   PARTNER APPROVALS
+========================================================= */
+
+function openPartnerApprovals(){
+
+    window.location.href =
+        "admin-partner-approvals.html";
+
+}
+
 
 
 function openReports(){
@@ -1694,12 +1907,14 @@ function openReports(){
 }
 
 
+
 function openSettings(){
 
     window.location.href =
         "settings.html";
 
 }
+
 
 
 /* =========================================================
@@ -1714,6 +1929,7 @@ async function logout(){
         );
 
 
+
     if(!confirmLogout){
 
         return;
@@ -1721,13 +1937,16 @@ async function logout(){
     }
 
 
+
     await supabaseClient.auth.signOut();
+
 
 
     window.location.href =
         "login.html";
 
 }
+
 
 
 /* =========================================================
